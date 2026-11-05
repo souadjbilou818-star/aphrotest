@@ -6,7 +6,7 @@
 <title>Aplomb Style Tile</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="robots" content="noindex">
-<link rel="preload" href="../assets/bodoni-moda.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/cormorant-garamond.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* Polices : OFL, auto-hébergées, sous-ensemble latin. Aucun CDN. */
@@ -15,19 +15,16 @@
 @font-face{font-family:"Hanken Grotesk";src:url("../assets/hanken-grotesk.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
 @font-face{font-family:"Hanken Grotesk";src:url("../assets/hanken-grotesk-italic.woff2") format("woff2");font-weight:100 900;font-style:italic;font-display:swap}
 @font-face{font-family:"IBM Plex Mono";src:url("../assets/ibm-plex-mono.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"Baskervville";src:url("fonts/baskervville.woff2") format("woff2");font-weight:400 700;font-style:normal;font-display:swap}
-@font-face{font-family:"Baskervville";src:url("fonts/baskervville-italic.woff2") format("woff2");font-weight:400 700;font-style:italic;font-display:swap}
-@font-face{font-family:"Ysabeau Office";src:url("fonts/ysabeau-office.woff2") format("woff2");font-weight:1 1000;font-style:normal;font-display:swap}
-@font-face{font-family:"Ysabeau Office";src:url("fonts/ysabeau-office-italic.woff2") format("woff2");font-weight:1 1000;font-style:italic;font-display:swap}
+@font-face{font-family:"Cormorant Garamond";src:url("../assets/cormorant-garamond.woff2") format("woff2");font-weight:300 700;font-style:normal;font-display:swap}
+@font-face{font-family:"Cormorant Garamond";src:url("../assets/cormorant-garamond-italic.woff2") format("woff2");font-weight:300 700;font-style:italic;font-display:swap}
 /* Espace fine insécable (U+202F) : absente des polices, fournie par une micro-police déclarée en dernier. */
 @font-face{font-family:"Bodoni Moda";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:400 900;font-style:normal}
 @font-face{font-family:"Bodoni Moda";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:400 900;font-style:italic}
 @font-face{font-family:"Hanken Grotesk";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:100 900;font-style:normal}
 @font-face{font-family:"Hanken Grotesk";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:100 900;font-style:italic}
+@font-face{font-family:"Cormorant Garamond";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:300 700;font-style:normal}
+@font-face{font-family:"Cormorant Garamond";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:300 700;font-style:italic}
 @font-face{font-family:"IBM Plex Mono";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:400;font-style:normal}
-@font-face{font-family:"Baskervville";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:400 700;font-style:normal}
-@font-face{font-family:"Baskervville";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:400 700;font-style:italic}
-@font-face{font-family:"Ysabeau Office";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:1 1000;font-style:normal}
 
 :root{
   /* Grille : feuille de salle. 12 colonnes asymétriques — titres de planche en marge (col. 1-3), contenu décalé (col. 4-12), folios à droite. */
@@ -41,12 +38,17 @@
   --line:rgb(27 29 34 / .2);        /* filet encre des tableaux */
   --on-dark:#F3EFE7;
   --on-dark-soft:rgb(243 239 231 / .78);
-  --serif:"Bodoni Moda","Bodoni 72",Didot,"Times New Roman",serif;
+  --laiton:#B79B6A;                 /* décor sur fond sombre seulement : 6,4:1 sur ink, 4,6:1 sur forest, 2,3:1 sur chalk */
+  --serif-a:"Bodoni Moda","Bodoni 72",Didot,"Times New Roman",serif;
+  --serif-b:"Cormorant Garamond",Cormorant,Garamond,"Times New Roman",serif;
+  --serif:var(--serif-b);           /* piste B par défaut ; A via data-paire="a" */
+  --serif-w:500;
+  --serif-k:1.1;                    /* Cormorant : œil plus petit, titres +10 % */
   --sans:"Hanken Grotesk","Helvetica Neue",Arial,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
-  --fs-display:clamp(2.5rem,1.15rem + 5.4vw,5.75rem);
-  --fs-acte:clamp(2rem,1.25rem + 2.9vw,3.75rem);
-  --fs-planche:clamp(1.75rem,1.25rem + 1.5vw,2.625rem);
+  --fs-display:calc(clamp(2.5rem,1.15rem + 5.4vw,5.75rem) * var(--serif-k));
+  --fs-acte:calc(clamp(2rem,1.25rem + 2.9vw,3.75rem) * var(--serif-k));
+  --fs-planche:calc(clamp(1.75rem,1.25rem + 1.5vw,2.625rem) * var(--serif-k));
   --fs-h3:clamp(1.375rem,1.1rem + .9vw,1.875rem);
   --fs-lead:clamp(1.125rem,1.02rem + .45vw,1.375rem);
   --fs-body:clamp(1rem,.96rem + .2vw,1.125rem);
@@ -57,6 +59,7 @@
   --maxw:1440px;
   color-scheme:light;
 }
+:root[data-paire="a"]{--serif:var(--serif-a);--serif-w:400;--serif-k:1}
 
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:auto}
@@ -66,7 +69,7 @@ a{color:inherit;text-decoration-line:underline;text-decoration-color:var(--oxblo
 a:hover{text-decoration-thickness:2px}
 :focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .on-dark :focus-visible{outline-color:var(--on-dark)}
-h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;text-wrap:balance}
+h1,h2,h3{font-family:var(--serif);font-weight:var(--serif-w);margin:0;text-wrap:balance}
 p,ul,ol,figure,fieldset{margin:0}
 ul,ol{padding:0}
 em{font-style:italic}
@@ -93,8 +96,10 @@ code{font-family:var(--mono);font-size:.92em}
 
 /* ---------- En-tête ---------- */
 .masthead{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:20px 16px}
-.wordmark{display:inline-flex;align-items:flex-end;gap:12px;text-decoration:none;font:500 1.1875rem/1 var(--serif);letter-spacing:.34em;padding-right:.1em}
-.wordmark svg{width:12px;height:30px;flex:none}
+.marque{display:inline-flex;color:var(--ink);text-decoration:none}
+.marque .logo{height:34px;width:auto}
+.masthead .btn--sm{white-space:nowrap}
+@media (max-width:699px){.marque .logo{height:24px}.masthead .btn--sm{padding:0 .8em;letter-spacing:.1em}}
 .masthead__nav{display:none;gap:clamp(20px,2.6vw,40px)}
 .masthead__nav a{text-decoration:none}
 .masthead__nav a:hover{text-decoration:underline;text-decoration-color:var(--oxblood)}
@@ -125,7 +130,7 @@ code{font-family:var(--mono);font-size:.92em}
 /* ---------- Hero ---------- */
 .hero{row-gap:clamp(18px,2.2vw,30px);padding-bottom:clamp(8px,2vw,24px)}
 .hero__meta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 24px;padding-top:12px;color:var(--ink-soft)}
-.hero__devise{font:italic 400 1.0625rem/1.2 var(--serif);color:var(--ink);letter-spacing:0;text-transform:none}
+.hero__devise{font:italic var(--serif-w) 1.0625rem/1.2 var(--serif);color:var(--ink);letter-spacing:0;text-transform:none}
 @media (max-width:699px){.hero__lieu{display:none}}
 .hero__titre{font-size:var(--fs-display);line-height:1.02;letter-spacing:-.014em;margin-top:clamp(4px,1vw,12px)}
 .hero__titre em{letter-spacing:-.006em}
@@ -142,7 +147,7 @@ code{font-family:var(--mono);font-size:.92em}
 .sommaire ol{list-style:none;display:grid}
 .sommaire a{display:grid;grid-template-columns:2.6em minmax(0,1fr) auto;align-items:baseline;gap:10px;padding:13px 0;border-top:1px solid var(--line);text-decoration:none}
 .sommaire a:hover .sommaire__titre{text-decoration:underline;text-decoration-color:var(--oxblood)}
-.sommaire__num{font:italic 400 1.25rem/1 var(--serif)}
+.sommaire__num{font:italic var(--serif-w) 1.25rem/1 var(--serif)}
 .sommaire__titre{display:flex;align-items:baseline;gap:8px;min-width:0}
 .sommaire__titre::after{content:"";flex:1;border-bottom:1px dotted var(--ink-soft);transform:translateY(-.25em);min-width:12px}
 .sommaire__folio{font:400 .75rem/1 var(--mono);color:var(--ink-soft)}
@@ -225,7 +230,7 @@ code{font-family:var(--mono);font-size:.92em}
 .nuancier>li{display:grid;grid-template-columns:44px minmax(0,1fr) auto;column-gap:16px;row-gap:2px;align-items:baseline;padding:14px 0;border-top:1px solid var(--line)}
 .nuancier>li:last-child{border-bottom:1px solid var(--line)}
 .puce{grid-row:1/span 3;align-self:start;width:44px;height:44px;background:var(--c);border:1px solid var(--line)}
-.nuancier__nom{font:italic 400 1.25rem/1.2 var(--serif)}
+.nuancier__nom{font:italic var(--serif-w) 1.25rem/1.2 var(--serif)}
 .nuancier__hex{font:400 .8125rem/1.2 var(--mono);text-align:right}
 .nuancier__role{grid-column:2/-1;font-size:.9375rem;line-height:1.45}
 .nuancier__ratio{grid-column:2/-1;font:400 .75rem/1.45 var(--mono);color:var(--ink-soft)}
@@ -238,16 +243,17 @@ code{font-family:var(--mono);font-size:.92em}
 
 /* Typographie */
 .paire{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;padding-bottom:clamp(28px,3vw,40px);border-bottom:1px solid var(--line)}
-.paire--b{--serif:"Baskervville","Baskerville","Libre Baskerville",Georgia,serif;--sans:"Ysabeau Office","Gill Sans","Helvetica Neue",Arial,sans-serif}
+.paire--a{--serif:var(--serif-a);--serif-w:400;--serif-k:1}
+.paire--b{--serif:var(--serif-b);--serif-w:500;--serif-k:1.1}
 .paire--b,.paire--b .paire__corps,.paire--b .paire__pourquoi{font-family:var(--sans)}
 .paire__specimen{text-wrap:balance}
 .paire__entete{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 20px}
-.paire__nom{font:400 var(--fs-h3)/1.2 var(--serif)}
+.paire__nom{font:var(--serif-w) var(--fs-h3)/1.2 var(--serif)}
 .paire__nom em{color:var(--ink-soft)}
-.paire__specimen,.paire__acte,.acte__titre{font-family:var(--serif);font-weight:400}
-.paire__specimen{font-size:clamp(2.125rem,1.2rem + 3.6vw,4.75rem);line-height:1.04;letter-spacing:-.012em;max-width:16ch}
+.paire__specimen,.paire__acte,.acte__titre{font-family:var(--serif);font-weight:var(--serif-w)}
+.paire__specimen{font-size:calc(clamp(2.125rem,1.2rem + 3.6vw,4.75rem) * var(--serif-k));line-height:1.04;letter-spacing:-.012em;max-width:16ch}
 .paire__cols{display:grid;gap:22px}
-.paire__acte{display:flex;flex-wrap:wrap;align-items:baseline;gap:.35em;font-size:clamp(2rem,1.4rem + 1.6vw,3rem);line-height:1}
+.paire__acte{display:flex;flex-wrap:wrap;align-items:baseline;gap:.35em;font-size:calc(clamp(2rem,1.4rem + 1.6vw,3rem) * var(--serif-k));line-height:1}
 .paire__acte span{font-style:italic}
 .paire__corps{font-size:var(--fs-body);line-height:1.62;max-width:60ch}
 .paire__specs{display:grid;gap:10px;align-content:start}
@@ -281,8 +287,8 @@ code{font-family:var(--mono);font-size:.92em}
 .edition input::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--oxblood);transform:scale(0);transition:transform .15s ease}
 .edition input:checked::after{transform:scale(1)}
 .edition input:focus-visible{outline:none}
-.edition__nom{font:400 1.5rem/1.15 var(--serif)}
-.edition__prix{font:400 1.125rem/1.3 var(--serif);white-space:nowrap}
+.edition__nom{font:var(--serif-w) 1.5rem/1.15 var(--serif)}
+.edition__prix{font:var(--serif-w) 1.125rem/1.3 var(--serif);white-space:nowrap}
 .edition__prix small{display:block;font:400 .6875rem/1.3 var(--mono);color:var(--ink-soft);text-align:right}
 .edition__contenu{grid-column:2/-1;font-size:.9375rem;line-height:1.5;color:var(--ink)}
 @media (min-width:640px){.editions{grid-template-columns:1fr 1fr}.editions legend{grid-column:1/-1}}
@@ -290,7 +296,7 @@ code{font-family:var(--mono);font-size:.92em}
 .collant__ecran{height:150px;background:var(--pierre);display:grid;place-items:center;font:400 .75rem/1.4 var(--mono);color:var(--ink-soft);text-align:center;padding:16px}
 .collant__barre{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--ink);background:var(--chalk)}
 .collant__produit{display:grid;line-height:1.25}
-.collant__produit b{font:400 1.0625rem/1.2 var(--serif)}
+.collant__produit b{font:var(--serif-w) 1.0625rem/1.2 var(--serif)}
 .collant__produit span{font:400 .75rem/1.3 var(--mono);color:var(--ink-soft)}
 
 /* Filets & ornements */
@@ -300,7 +306,7 @@ code{font-family:var(--mono);font-size:.92em}
 .specimens__desc{font:400 .75rem/1.5 var(--mono);color:var(--ink-soft)}
 @media (min-width:860px){.specimens>li{grid-template-columns:minmax(0,1fr) 15rem;column-gap:32px}}
 .acte{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:baseline;gap:6px 18px;padding-top:14px}
-.acte__num{font:italic 400 var(--fs-acte)/1 var(--serif)}
+.acte__num{font:italic var(--serif-w) var(--fs-acte)/1 var(--serif)}
 .acte__titre{font-size:var(--fs-acte);line-height:1}
 .acte__folio{font:400 .75rem/1 var(--mono);color:var(--ink-soft)}
 .titre-courant{display:flex;justify-content:space-between;gap:16px;padding-bottom:8px;border-bottom:1px solid var(--line);font:400 .75rem/1.3 var(--mono);color:var(--ink-soft)}
@@ -308,7 +314,7 @@ code{font-family:var(--mono);font-size:.92em}
 .distribution li{display:flex;align-items:baseline;gap:10px}
 .distribution li::after{content:"";order:1;flex:1;border-bottom:1px dotted var(--ink-soft);transform:translateY(-.25em)}
 .distribution__role{order:0;font:500 var(--fs-label)/1.4 var(--sans);letter-spacing:.16em;text-transform:uppercase}
-.distribution__nom{order:2;font:italic 400 1.125rem/1.3 var(--serif)}
+.distribution__nom{order:2;font:italic var(--serif-w) 1.125rem/1.3 var(--serif)}
 .frise{width:100%;height:40px}
 .frise .lame{stroke:var(--parquet);stroke-width:.75}
 .frise .lame--a{fill:rgb(169 120 79 / .34)}
@@ -316,13 +322,12 @@ code{font-family:var(--mono);font-size:.92em}
 .frise .joint{stroke:var(--parquet);stroke-width:.75}
 .on-dark .frise .lame--a{fill:rgb(169 120 79 / .42)}
 .on-dark .frise .lame--b{fill:rgb(169 120 79 / .2)}
-.plomb-grand{width:20px;height:52px}
 .entracte{background:var(--forest);color:var(--on-dark);padding:clamp(28px,4vw,56px) clamp(20px,4vw,56px);display:grid;gap:18px}
 .entracte .label{color:var(--on-dark-soft)}
-.entracte__titre{font:italic 400 var(--fs-acte)/1.02 var(--serif)}
+.entracte__titre{font:italic var(--serif-w) var(--fs-acte)/1.02 var(--serif)}
 .entracte__texte{color:var(--on-dark-soft);max-width:44ch}
 .question{border:0;padding:0;display:grid;gap:12px;margin-top:8px}
-.question legend{padding:0;margin-bottom:12px;font:400 1.125rem/1.35 var(--serif)}
+.question legend{padding:0;margin-bottom:12px;font:var(--serif-w) 1.125rem/1.35 var(--serif)}
 .question legend .mono{color:var(--on-dark-soft);margin-right:.6em}
 .choix{display:flex;flex-wrap:wrap;gap:10px}
 .choix label{position:relative;display:inline-flex;align-items:center;min-height:46px;padding:0 1.1em;border:1px solid var(--on-dark-soft);cursor:pointer;font-size:.9375rem}
@@ -332,7 +337,7 @@ code{font-family:var(--mono);font-size:.92em}
 .entracte__note{font-size:.8125rem;color:var(--on-dark-soft);border-top:1px solid rgb(243 239 231 / .3);padding-top:14px}
 .comparatif{width:100%;border-collapse:collapse;font-size:.9375rem;line-height:1.45}
 .comparatif th,.comparatif td{text-align:left;vertical-align:top;padding:12px 14px;border-top:1px solid var(--line)}
-.comparatif thead th{font:400 1.125rem/1.25 var(--serif);border-top:0;padding-bottom:14px;vertical-align:bottom}
+.comparatif thead th{font:var(--serif-w) 1.125rem/1.25 var(--serif);border-top:0;padding-bottom:14px;vertical-align:bottom}
 .comparatif tbody th{font:500 var(--fs-label)/1.5 var(--sans);letter-spacing:.16em;text-transform:uppercase;padding-left:0;width:8.5rem}
 .comparatif .is-aplomb{background:var(--pierre)}
 .comparatif thead .is-aplomb{box-shadow:inset 0 3px 0 var(--oxblood);font-style:italic;font-size:1.375rem}
@@ -363,7 +368,7 @@ code{font-family:var(--mono);font-size:.92em}
     linear-gradient(var(--ink),var(--ink)) left bottom/1px 16px no-repeat,
     linear-gradient(var(--ink),var(--ink)) right bottom/16px 1px no-repeat,
     linear-gradient(var(--ink),var(--ink)) right bottom/1px 16px no-repeat;opacity:.55}
-.cadre__didascalie{font:italic 400 clamp(1rem,.9rem + .5vw,1.375rem)/1.4 var(--serif);max-width:32ch;color:var(--ink)}
+.cadre__didascalie{font:italic var(--serif-w) clamp(1rem,.9rem + .5vw,1.375rem)/1.4 var(--serif);max-width:32ch;color:var(--ink)}
 .cadre__tech{position:absolute;right:24px;bottom:20px;font:400 .6875rem/1 var(--mono);color:var(--ink-soft)}
 .cadre__son{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px;font:400 .75rem/1 var(--mono);color:var(--ink)}
 .cadre__son svg{width:28px;height:28px}
@@ -373,7 +378,7 @@ code{font-family:var(--mono);font-size:.92em}
 .plans{width:100%;border-collapse:collapse;font-size:.875rem;line-height:1.45}
 .plans th,.plans td{text-align:left;vertical-align:baseline;padding:10px 14px 10px 0;border-top:1px solid var(--line)}
 .plans thead th{font:500 .6875rem/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);border-top:0}
-.plans td:first-child{font:italic 400 1.0625rem/1.3 var(--serif);white-space:nowrap}
+.plans td:first-child{font:italic var(--serif-w) 1.0625rem/1.3 var(--serif);white-space:nowrap}
 .plans td.n{font-family:var(--mono);font-size:.8125rem;white-space:nowrap}
 @media (max-width:699px){
   .plans thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
@@ -405,7 +410,7 @@ code{font-family:var(--mono);font-size:.92em}
 .regles{list-style:none;display:grid}
 .regles>li{display:grid;gap:6px;padding:14px 0;border-top:1px solid var(--line)}
 .regles>li:last-child{border-bottom:1px solid var(--line)}
-.regles__ex{font:400 1.25rem/1.4 var(--serif)}
+.regles__ex{font:var(--serif-w) 1.25rem/1.4 var(--serif)}
 .regles__ex mark{background:none;color:inherit;box-shadow:inset 0 -2px 0 var(--parquet)}
 .regles__dit{font:400 .75rem/1.45 var(--mono);color:var(--ink-soft)}
 @media (min-width:860px){.regles>li{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:32px;align-items:baseline}}
@@ -418,8 +423,10 @@ code{font-family:var(--mono);font-size:.92em}
 .pied{background:var(--ink);color:var(--on-dark);margin-top:clamp(72px,9vw,140px)}
 .pied .frise{display:block}
 .pied__grille{row-gap:28px;padding-block:clamp(36px,5vw,64px) 28px}
-.pied .wordmark{color:var(--on-dark)}
-.pied__devise{font:italic 400 1.25rem/1.3 var(--serif);color:var(--on-dark);margin-top:14px}
+.pied .marque{color:var(--on-dark)}
+.pied .marque .logo{height:auto;width:min(250px,64vw)}
+.pied .logo__mono{fill:var(--laiton)}
+.pied__devise{font:italic var(--serif-w) 1.25rem/1.3 var(--serif);color:var(--on-dark);margin-top:14px}
 .pied__maison{color:var(--on-dark-soft);max-width:34ch}
 .pied nav ul{list-style:none;display:grid;gap:10px}
 .pied nav a{text-decoration-color:rgb(243 239 231 / .45)}
@@ -430,6 +437,54 @@ code{font-family:var(--mono);font-size:.92em}
   .pied nav{grid-column:9/span 4}
 }
 .fin{font:400 .75rem/1.5 var(--mono);color:var(--on-dark-soft)}
+
+/* Bascule de paire typographique (document de travail) */
+.bascule{display:inline-flex;align-items:center;gap:6px}
+.bascule button{font:400 .75rem/1 var(--mono);min-height:26px;padding:0 8px;border:1px solid var(--ink);border-radius:0;background:transparent;color:var(--ink);cursor:pointer}
+.bascule button[aria-pressed="true"]{background:var(--ink);color:var(--chalk)}
+
+/* Identité */
+.identite{display:grid;grid-template-columns:minmax(0,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.identite>figure{background:var(--chalk);padding:clamp(18px,3vw,36px);display:grid;grid-template-rows:auto 1fr;gap:20px;min-height:clamp(200px,24vw,300px)}
+.identite figcaption{font:500 .6875rem/1.3 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+.identite .logo{place-self:center;height:auto;color:var(--ink)}
+.id-principal .logo{width:min(320px,82%)}
+.id-mono{background:var(--pierre)!important}
+.id-mono .logo{width:min(120px,42%)}
+.id-horizontal .logo{width:min(400px,92%)}
+.id-sombre{background:var(--forest)!important}
+.id-sombre figcaption{color:var(--on-dark-soft)}
+.id-sombre .logo{color:var(--on-dark);width:min(260px,74%)}
+.id-sombre .logo__mono{fill:var(--laiton)}
+@media (min-width:860px){.identite{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}}
+.signature{font:italic var(--serif-w) clamp(1.375rem,1.1rem + 1vw,2rem)/1.2 var(--serif)}
+.signature--caps{font:500 .8125rem/1.4 var(--sans);font-style:normal;letter-spacing:.3em;text-transform:uppercase}
+
+/* Iconographie : le trait du dessin technique */
+.icones{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 16px}
+@media (min-width:700px){.icones{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:1100px){.icones{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.icones li{display:grid;gap:10px;align-content:start;font-size:.875rem;line-height:1.35}
+.icones svg{width:52px;height:52px;fill:none;stroke:var(--ink);stroke-width:1.4;stroke-linecap:square;stroke-linejoin:miter}
+.icones svg *{vector-effect:non-scaling-stroke}
+.icones .plein{fill:var(--ink);stroke:none}
+.icones small{display:block;font:400 .6875rem/1.4 var(--mono);color:var(--ink-soft)}
+
+/* Soir : l'élégance publique */
+.soir{background:var(--ink);color:var(--on-dark);padding:clamp(22px,4vw,56px);display:grid;gap:clamp(22px,3vw,40px)}
+.soir .label{color:var(--on-dark-soft)}
+.soir__titre{font:italic var(--serif-w) calc(clamp(2rem,1.2rem + 3vw,4.25rem) * var(--serif-k))/1.04 var(--serif);max-width:20ch}
+.soir__titre span{display:block;font-style:normal}
+.soir__cadres{display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
+@media (min-width:860px){.soir__cadres{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);align-items:end}}
+.soir .cadre__legende b{color:var(--on-dark)}
+.soir .cadre__legende span{color:var(--on-dark-soft)}
+.cadre__zone--image{padding:0;overflow:hidden}
+.cadre__zone--image::before{display:none}
+.cadre__zone--image img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ref{position:absolute;left:12px;bottom:12px;z-index:1;background:var(--chalk);color:var(--ink);font:400 .625rem/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:6px 8px}
+.cadres-refs{display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
+@media (min-width:860px){.cadres-refs{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);align-items:end}}
 </style>
 </head>
 <body>
@@ -437,7 +492,8 @@ code{font-family:var(--mono);font-size:.92em}
 
 <div class="doc" role="note">
   <div class="wrap">
-    <span>APLOMB — style tile — checkpoint I</span>
+    <span>L’APLOMB — style tile — checkpoint I, v2</span>
+    <span class="bascule" role="group" aria-label="Paire typographique de la feuille"><span>Titres :</span><button type="button" data-paire="a" aria-pressed="false">A · Bodoni Moda</button><button type="button" data-paire="b" aria-pressed="true">B · Cormorant</button></span>
     <span>5 novembre 2026 · document de travail, non publié</span>
   </div>
 </div>
@@ -445,10 +501,7 @@ code{font-family:var(--mono);font-size:.92em}
 <!-- ===== Spécimen : en-tête + hero de l'accueil (launch_mode = waitlist) ===== -->
 <div class="wrap">
   <header class="masthead">
-    <a class="wordmark" href="#top" aria-label="Aplomb, accueil">
-      <svg viewBox="0 0 12 30" aria-hidden="true"><line x1="6" y1="0" x2="6" y2="18" stroke="#5B1A1E" stroke-width="1"/><path d="M2.4 18.5h7.2l-.6 2.2L6 29.5l-3-8.8z" fill="#1B1D22"/></svg>
-      <span>APLOMB</span>
-    </a>
+    <a class="marque" href="#top" aria-label="L’Aplomb, accueil"><svg class="logo logo--compact" viewBox="0 0 649.7 72.5" aria-hidden="true" focusable="false" fill="currentColor"><g class="logo__mono" transform="translate(0 -27.5) scale(1.25)"><path d="M48.8 10C54.2 22.5 63.6 44.2 73.6 67.4C75.1 70.5 78.6 71.8 83.4 70.8C80.4 69.8 78.9 67.9 77.9 65.4C69.6 44.6 59.9 22.2 53.6 7.1C52.9 5.5 51.3 4.9 50.2 5.8L48.8 10Z"/><path d="M50.8 5.3C48.3 5.5 45.8 7 43.9 9.7C46.1 7.7 48.5 6.6 50.7 6.6Z"/><path d="M49.3 8.3L50.3 8.7L28.3 77.3L27.3 77Z"/><path d="M3.5 61.8C19.8 51.6 37.9 46.5 54 48.5C66.2 50.1 77.4 56.6 87.6 67.1C76.9 58.8 66.2 53.5 54 51.7C38.4 49.6 20.9 53.1 3.5 61.8Z"/></g><rect class="logo__filet" x="141" y="5.8" width="1.2" height="60.9"/><path class="logo__mot" transform="translate(168 62.5)" d="M19.4 -54.3V-8.5Q19.4 -5.9 19.95 -4.55Q20.5 -3.2 22.05 -2.75Q23.6 -2.3 26.7 -2.3H35.2Q41.7 -2.3 45.8 -6.1Q49.9 -9.9 51.2 -16.2Q51.2 -16.5 51.75 -16.45Q52.3 -16.4 52.3 -16.1Q52 -13.2 51.7 -9.1Q51.4 -5 51.4 -1.5Q51.4 0 49.9 0H3.3Q3.1 0 3.1 -0.6Q3.1 -1.2 3.3 -1.2Q6.8 -1.2 8.55 -1.7Q10.3 -2.2 10.9 -3.7Q11.5 -5.2 11.5 -8.1V-54.4Q11.5 -57.3 10.9 -58.75Q10.3 -60.2 8.55 -60.75Q6.8 -61.3 3.3 -61.3Q3.1 -61.3 3.1 -61.9Q3.1 -62.5 3.3 -62.5Q5.7 -62.5 8.85 -62.35Q12 -62.2 15.4 -62.2Q19 -62.2 22.05 -62.35Q25.1 -62.5 27.5 -62.5Q27.7 -62.5 27.7 -61.9Q27.7 -61.3 27.5 -61.3Q24 -61.3 22.3 -60.75Q20.6 -60.2 20 -58.7Q19.4 -57.2 19.4 -54.3Z M60.1 -63Q63.3 -63 65.1 -60.8Q66.9 -58.6 66.9 -54Q66.9 -49.1 64.7 -44.85Q62.5 -40.6 58.6 -36.5Q58.2 -36.2 57.9 -36.55Q57.6 -36.9 57.8 -37.2Q60.4 -40.6 61.15 -43.6Q61.9 -46.6 61.9 -49.9Q61.9 -52.9 61.15 -54.4Q60.4 -55.9 59.3 -56.9L63.1 -57.6Q63.2 -55.9 62.15 -55Q61.1 -54.1 59.4 -54.1Q57.3 -54.1 56.15 -55.3Q55 -56.5 55 -58.5Q55 -60.7 56.35 -61.85Q57.7 -63 60.1 -63Z M86.2 -26.1 87.4 -28.3H114.6L115.3 -26.1ZM137.9 -1.2Q138.4 -1.2 138.4 -0.6Q138.4 0 137.9 0Q135 0 131.95 -0.2Q128.9 -0.4 126 -0.4Q122.8 -0.4 120.45 -0.2Q118.1 0 115.2 0Q114.8 0 114.8 -0.6Q114.8 -1.2 115.2 -1.2Q120.1 -1.2 121.2 -2.75Q122.3 -4.3 120.1 -8.9L98.6 -53.6L101.8 -58.4L82.3 -13.2Q79.7 -7.1 82 -4.15Q84.3 -1.2 90.6 -1.2Q91.1 -1.2 91.1 -0.6Q91.1 0 90.6 0Q87.6 0 85.1 -0.2Q82.6 -0.4 78.8 -0.4Q75.1 -0.4 72.85 -0.2Q70.6 0 67.4 0Q67 0 67 -0.6Q67 -1.2 67.4 -1.2Q70.1 -1.2 72.1 -2.25Q74.1 -3.3 75.95 -6.1Q77.8 -8.9 80 -14.1L101.3 -63.2Q101.4 -63.5 102 -63.55Q102.6 -63.6 102.7 -63.2L126.7 -13.7Q129.1 -8.8 130.85 -6.05Q132.6 -3.3 134.3 -2.25Q136 -1.2 137.9 -1.2Z M161.6 -8.5Q161.6 -5.5 162.35 -3.95Q163.1 -2.4 165.5 -1.8Q167.9 -1.2 172.7 -1.2Q173 -1.2 173 -0.6Q173 0 172.7 0Q169.5 0 165.75 -0.1Q162 -0.2 157.6 -0.2Q154.3 -0.2 151.15 -0.1Q148 0 145.5 0Q145.3 0 145.3 -0.6Q145.3 -1.2 145.5 -1.2Q149 -1.2 150.75 -1.7Q152.5 -2.2 153.05 -3.7Q153.6 -5.2 153.6 -8.1V-54.4Q153.6 -57.3 153.05 -58.75Q152.5 -60.2 150.75 -60.75Q149 -61.3 145.5 -61.3Q145.3 -61.3 145.3 -61.9Q145.3 -62.5 145.5 -62.5Q148 -62.5 151.1 -62.35Q154.2 -62.2 157.5 -62.2Q160.1 -62.2 163.85 -62.5Q167.6 -62.8 171.4 -62.8Q177.2 -62.8 181.85 -61.1Q186.5 -59.4 189.3 -55.8Q192.1 -52.2 192.2 -46.4Q192.2 -41.2 190.3 -37.4Q188.4 -33.6 185.15 -31.1Q181.9 -28.6 177.95 -27.4Q174 -26.2 170.2 -26.2Q169 -26.2 167.75 -26.3Q166.5 -26.4 165.4 -26.7Q165 -26.8 165.15 -27.45Q165.3 -28.1 165.6 -28Q166.5 -27.8 167.45 -27.7Q168.4 -27.6 169.1 -27.6Q172.9 -27.6 176.1 -29.4Q179.3 -31.2 181.3 -34.95Q183.3 -38.7 183.3 -44.3Q183.3 -49.7 181.45 -53.4Q179.6 -57.1 176.3 -59.1Q173 -61.1 168.7 -61.1Q165.9 -61.1 164.35 -60.7Q162.8 -60.3 162.2 -58.8Q161.6 -57.3 161.6 -54.2Z M219.1 -54.3V-8.5Q219.1 -5.9 219.65 -4.55Q220.2 -3.2 221.75 -2.75Q223.3 -2.3 226.4 -2.3H234.9Q241.4 -2.3 245.5 -6.1Q249.6 -9.9 250.9 -16.2Q250.9 -16.5 251.45 -16.45Q252 -16.4 252 -16.1Q251.7 -13.2 251.4 -9.1Q251.1 -5 251.1 -1.5Q251.1 0 249.6 0H203Q202.8 0 202.8 -0.6Q202.8 -1.2 203 -1.2Q206.5 -1.2 208.25 -1.7Q210 -2.2 210.6 -3.7Q211.2 -5.2 211.2 -8.1V-54.4Q211.2 -57.3 210.6 -58.75Q210 -60.2 208.25 -60.75Q206.5 -61.3 203 -61.3Q202.8 -61.3 202.8 -61.9Q202.8 -62.5 203 -62.5Q205.4 -62.5 208.55 -62.35Q211.7 -62.2 215.1 -62.2Q218.7 -62.2 221.75 -62.35Q224.8 -62.5 227.2 -62.5Q227.4 -62.5 227.4 -61.9Q227.4 -61.3 227.2 -61.3Q223.7 -61.3 222 -60.75Q220.3 -60.2 219.7 -58.7Q219.1 -57.2 219.1 -54.3Z M293.5 1.2Q286.3 1.2 280.45 -1.35Q274.6 -3.9 270.45 -8.4Q266.3 -12.9 264.05 -18.75Q261.8 -24.6 261.8 -31.2Q261.8 -39.3 264.95 -45.4Q268.1 -51.5 273.3 -55.55Q278.5 -59.6 284.7 -61.6Q290.9 -63.6 297 -63.6Q304.4 -63.6 310.25 -60.95Q316.1 -58.3 320.2 -53.8Q324.3 -49.3 326.45 -43.6Q328.6 -37.9 328.6 -31.9Q328.6 -24.9 325.8 -18.9Q323 -12.9 318.15 -8.4Q313.3 -3.9 306.95 -1.35Q300.6 1.2 293.5 1.2ZM297 -1Q303.3 -1 308.45 -4.25Q313.6 -7.5 316.55 -13.75Q319.5 -20 319.5 -29.1Q319.5 -38.4 316.25 -45.65Q313 -52.9 307.05 -57.05Q301.1 -61.2 292.9 -61.2Q282.4 -61.2 276.65 -54.1Q270.9 -47 270.9 -34.7Q270.9 -27.6 272.75 -21.45Q274.6 -15.3 278.1 -10.7Q281.6 -6.1 286.4 -3.55Q291.2 -1 297 -1Z M348.9 -11.4 349.9 -60.2 352.4 -60 351.4 -11.4Q351.3 -6.2 353.25 -3.7Q355.2 -1.2 359.8 -1.2Q360.1 -1.2 360.1 -0.6Q360.1 0 359.8 0Q357.6 0 355.3 -0.1Q353 -0.2 350.1 -0.2Q347.4 -0.2 345 -0.1Q342.6 0 340.5 0Q340.3 0 340.3 -0.6Q340.3 -1.2 340.5 -1.2Q344.7 -1.2 346.75 -3.7Q348.8 -6.2 348.9 -11.4ZM418.9 -1.2Q419.1 -1.2 419.1 -0.6Q419.1 0 418.9 0Q416.4 0 413.3 -0.1Q410.2 -0.2 406.7 -0.2Q403.4 -0.2 400.5 -0.1Q397.6 0 395.3 0Q395 0 395 -0.6Q395 -1.2 395.3 -1.2Q400.2 -1.2 401.6 -2.5Q403 -3.8 402.7 -8.1L400.7 -55.2L404.6 -60.8L378.7 -0.7Q378.6 -0.3 377.95 -0.3Q377.3 -0.3 377.1 -0.7L351 -54.2Q347.5 -61.3 341.2 -61.3Q341 -61.3 341 -61.9Q341 -62.5 341.2 -62.5Q343 -62.5 344.95 -62.4Q346.9 -62.3 348.3 -62.3Q350.2 -62.3 351.75 -62.4Q353.3 -62.5 354.1 -62.5Q355.5 -62.5 356.3 -61.55Q357.1 -60.6 358.7 -57.3L381.4 -11.2L377.7 -4.8L401.8 -60Q402.3 -61.2 403.05 -61.85Q403.8 -62.5 404.8 -62.5Q405.5 -62.5 406.55 -62.4Q407.6 -62.3 409 -62.3Q411.8 -62.3 413.7 -62.4Q415.6 -62.5 417.6 -62.5Q417.8 -62.5 417.8 -61.9Q417.8 -61.3 417.6 -61.3Q412.8 -61.3 410.6 -59.75Q408.4 -58.2 408.5 -54.1L410.6 -8.1Q410.8 -5.2 411.4 -3.7Q412 -2.2 413.7 -1.7Q415.4 -1.2 418.9 -1.2Z M454.9 -34 456 -35.3Q462.2 -35.3 466.85 -33.1Q471.5 -30.9 474.05 -27.1Q476.6 -23.3 476.6 -18.3Q476.6 -13 473.85 -8.75Q471.1 -4.5 466.35 -2.05Q461.6 0.4 455.7 0.4Q452.7 0.4 448.6 0.1Q444.5 -0.2 441.1 -0.2Q437.7 -0.2 434.6 -0.1Q431.5 0 429 0Q428.7 0 428.7 -0.6Q428.7 -1.2 429 -1.2Q432.3 -1.2 434.1 -1.7Q435.9 -2.2 436.55 -3.7Q437.2 -5.2 437.2 -8.1V-54.4Q437.2 -57.3 436.6 -58.75Q436 -60.2 434.25 -60.75Q432.5 -61.3 429.1 -61.3Q428.9 -61.3 428.9 -61.9Q428.9 -62.5 429.1 -62.5Q431.6 -62.5 434.65 -62.35Q437.7 -62.2 441.1 -62.2Q443.8 -62.2 447.1 -62.5Q450.4 -62.8 453 -62.8Q459 -62.8 462.85 -61.15Q466.7 -59.5 468.6 -56.55Q470.5 -53.6 470.5 -49.7Q470.5 -44.1 466.3 -39.9Q462.1 -35.7 454.9 -34ZM451.1 -61.1Q448.9 -61.1 447.55 -60.65Q446.2 -60.2 445.65 -58.75Q445.1 -57.3 445.1 -54.2V-34.6L441.8 -35.4Q445 -35.2 447.1 -35.15Q449.2 -35.1 449.5 -35.1Q456.5 -35.1 459.6 -39.1Q462.7 -43.1 462.7 -48.9Q462.7 -52.5 461.45 -55.25Q460.2 -58 457.7 -59.55Q455.2 -61.1 451.1 -61.1ZM454.1 -1.6Q461.4 -1.6 464.75 -5.35Q468.1 -9.1 468.1 -15.9Q468.1 -23.3 464 -28.05Q459.9 -32.8 452 -32.8Q450 -32.9 447.4 -32.8Q444.8 -32.7 442.1 -32.3L445.1 -33.4V-8.1Q445.1 -5.8 445.75 -4.35Q446.4 -2.9 448.35 -2.25Q450.3 -1.6 454.1 -1.6Z"/></svg></a>
     <nav class="masthead__nav" aria-label="Principale">
       <a class="label" href="#chariot">Le mini-reformer</a>
       <a class="label" href="#programme">Le programme</a>
@@ -500,13 +553,37 @@ code{font-family:var(--mono);font-size:.92em}
 
   <div id="planches">
 
-  <!-- ===== Planche 2 : couleurs ===== -->
-  <section class="wrap grid planche" aria-labelledby="t-couleurs">
-    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">2 / 8</span></div>
+  <!-- ===== Planche 2 : identité ===== -->
+  <section class="wrap grid planche" aria-labelledby="t-identite">
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">2 / 9</span></div>
     <header class="planche__tete">
       <p class="label">Planche 2</p>
+      <h2 class="planche__titre" id="t-identite">Identité</h2>
+      <p class="planche__note">Le monogramme de vos planches, redessiné en vecteur : jambage plein, jambage délié, et une courbe à la place de la barre, comme un port de bras. Le logotype est composé en Cormorant Garamond puis vectorisé.</p>
+    </header>
+    <div class="planche__corps">
+      <div class="identite">
+        <figure class="id-principal"><figcaption>Logo principal</figcaption><svg class="logo logo--principal" viewBox="0 0 481.7 271.08" role="img" aria-label="L’Aplomb, Pilates à domicile" fill="currentColor"><g class="logo__mono" transform="translate(165.38 0) scale(1.64)"><path d="M48.8 10C54.2 22.5 63.6 44.2 73.6 67.4C75.1 70.5 78.6 71.8 83.4 70.8C80.4 69.8 78.9 67.9 77.9 65.4C69.6 44.6 59.9 22.2 53.6 7.1C52.9 5.5 51.3 4.9 50.2 5.8L48.8 10Z"/><path d="M50.8 5.3C48.3 5.5 45.8 7 43.9 9.7C46.1 7.7 48.5 6.6 50.7 6.6Z"/><path d="M49.3 8.3L50.3 8.7L28.3 77.3L27.3 77Z"/><path d="M3.5 61.8C19.8 51.6 37.9 46.5 54 48.5C66.2 50.1 77.4 56.6 87.6 67.1C76.9 58.8 66.2 53.5 54 51.7C38.4 49.6 20.9 53.1 3.5 61.8Z"/></g><path class="logo__mot" transform="translate(0 215.75)" d="M19.4 -54.3V-8.5Q19.4 -5.9 19.95 -4.55Q20.5 -3.2 22.05 -2.75Q23.6 -2.3 26.7 -2.3H35.2Q41.7 -2.3 45.8 -6.1Q49.9 -9.9 51.2 -16.2Q51.2 -16.5 51.75 -16.45Q52.3 -16.4 52.3 -16.1Q52 -13.2 51.7 -9.1Q51.4 -5 51.4 -1.5Q51.4 0 49.9 0H3.3Q3.1 0 3.1 -0.6Q3.1 -1.2 3.3 -1.2Q6.8 -1.2 8.55 -1.7Q10.3 -2.2 10.9 -3.7Q11.5 -5.2 11.5 -8.1V-54.4Q11.5 -57.3 10.9 -58.75Q10.3 -60.2 8.55 -60.75Q6.8 -61.3 3.3 -61.3Q3.1 -61.3 3.1 -61.9Q3.1 -62.5 3.3 -62.5Q5.7 -62.5 8.85 -62.35Q12 -62.2 15.4 -62.2Q19 -62.2 22.05 -62.35Q25.1 -62.5 27.5 -62.5Q27.7 -62.5 27.7 -61.9Q27.7 -61.3 27.5 -61.3Q24 -61.3 22.3 -60.75Q20.6 -60.2 20 -58.7Q19.4 -57.2 19.4 -54.3Z M60.1 -63Q63.3 -63 65.1 -60.8Q66.9 -58.6 66.9 -54Q66.9 -49.1 64.7 -44.85Q62.5 -40.6 58.6 -36.5Q58.2 -36.2 57.9 -36.55Q57.6 -36.9 57.8 -37.2Q60.4 -40.6 61.15 -43.6Q61.9 -46.6 61.9 -49.9Q61.9 -52.9 61.15 -54.4Q60.4 -55.9 59.3 -56.9L63.1 -57.6Q63.2 -55.9 62.15 -55Q61.1 -54.1 59.4 -54.1Q57.3 -54.1 56.15 -55.3Q55 -56.5 55 -58.5Q55 -60.7 56.35 -61.85Q57.7 -63 60.1 -63Z M86.2 -26.1 87.4 -28.3H114.6L115.3 -26.1ZM137.9 -1.2Q138.4 -1.2 138.4 -0.6Q138.4 0 137.9 0Q135 0 131.95 -0.2Q128.9 -0.4 126 -0.4Q122.8 -0.4 120.45 -0.2Q118.1 0 115.2 0Q114.8 0 114.8 -0.6Q114.8 -1.2 115.2 -1.2Q120.1 -1.2 121.2 -2.75Q122.3 -4.3 120.1 -8.9L98.6 -53.6L101.8 -58.4L82.3 -13.2Q79.7 -7.1 82 -4.15Q84.3 -1.2 90.6 -1.2Q91.1 -1.2 91.1 -0.6Q91.1 0 90.6 0Q87.6 0 85.1 -0.2Q82.6 -0.4 78.8 -0.4Q75.1 -0.4 72.85 -0.2Q70.6 0 67.4 0Q67 0 67 -0.6Q67 -1.2 67.4 -1.2Q70.1 -1.2 72.1 -2.25Q74.1 -3.3 75.95 -6.1Q77.8 -8.9 80 -14.1L101.3 -63.2Q101.4 -63.5 102 -63.55Q102.6 -63.6 102.7 -63.2L126.7 -13.7Q129.1 -8.8 130.85 -6.05Q132.6 -3.3 134.3 -2.25Q136 -1.2 137.9 -1.2Z M161.6 -8.5Q161.6 -5.5 162.35 -3.95Q163.1 -2.4 165.5 -1.8Q167.9 -1.2 172.7 -1.2Q173 -1.2 173 -0.6Q173 0 172.7 0Q169.5 0 165.75 -0.1Q162 -0.2 157.6 -0.2Q154.3 -0.2 151.15 -0.1Q148 0 145.5 0Q145.3 0 145.3 -0.6Q145.3 -1.2 145.5 -1.2Q149 -1.2 150.75 -1.7Q152.5 -2.2 153.05 -3.7Q153.6 -5.2 153.6 -8.1V-54.4Q153.6 -57.3 153.05 -58.75Q152.5 -60.2 150.75 -60.75Q149 -61.3 145.5 -61.3Q145.3 -61.3 145.3 -61.9Q145.3 -62.5 145.5 -62.5Q148 -62.5 151.1 -62.35Q154.2 -62.2 157.5 -62.2Q160.1 -62.2 163.85 -62.5Q167.6 -62.8 171.4 -62.8Q177.2 -62.8 181.85 -61.1Q186.5 -59.4 189.3 -55.8Q192.1 -52.2 192.2 -46.4Q192.2 -41.2 190.3 -37.4Q188.4 -33.6 185.15 -31.1Q181.9 -28.6 177.95 -27.4Q174 -26.2 170.2 -26.2Q169 -26.2 167.75 -26.3Q166.5 -26.4 165.4 -26.7Q165 -26.8 165.15 -27.45Q165.3 -28.1 165.6 -28Q166.5 -27.8 167.45 -27.7Q168.4 -27.6 169.1 -27.6Q172.9 -27.6 176.1 -29.4Q179.3 -31.2 181.3 -34.95Q183.3 -38.7 183.3 -44.3Q183.3 -49.7 181.45 -53.4Q179.6 -57.1 176.3 -59.1Q173 -61.1 168.7 -61.1Q165.9 -61.1 164.35 -60.7Q162.8 -60.3 162.2 -58.8Q161.6 -57.3 161.6 -54.2Z M219.1 -54.3V-8.5Q219.1 -5.9 219.65 -4.55Q220.2 -3.2 221.75 -2.75Q223.3 -2.3 226.4 -2.3H234.9Q241.4 -2.3 245.5 -6.1Q249.6 -9.9 250.9 -16.2Q250.9 -16.5 251.45 -16.45Q252 -16.4 252 -16.1Q251.7 -13.2 251.4 -9.1Q251.1 -5 251.1 -1.5Q251.1 0 249.6 0H203Q202.8 0 202.8 -0.6Q202.8 -1.2 203 -1.2Q206.5 -1.2 208.25 -1.7Q210 -2.2 210.6 -3.7Q211.2 -5.2 211.2 -8.1V-54.4Q211.2 -57.3 210.6 -58.75Q210 -60.2 208.25 -60.75Q206.5 -61.3 203 -61.3Q202.8 -61.3 202.8 -61.9Q202.8 -62.5 203 -62.5Q205.4 -62.5 208.55 -62.35Q211.7 -62.2 215.1 -62.2Q218.7 -62.2 221.75 -62.35Q224.8 -62.5 227.2 -62.5Q227.4 -62.5 227.4 -61.9Q227.4 -61.3 227.2 -61.3Q223.7 -61.3 222 -60.75Q220.3 -60.2 219.7 -58.7Q219.1 -57.2 219.1 -54.3Z M293.5 1.2Q286.3 1.2 280.45 -1.35Q274.6 -3.9 270.45 -8.4Q266.3 -12.9 264.05 -18.75Q261.8 -24.6 261.8 -31.2Q261.8 -39.3 264.95 -45.4Q268.1 -51.5 273.3 -55.55Q278.5 -59.6 284.7 -61.6Q290.9 -63.6 297 -63.6Q304.4 -63.6 310.25 -60.95Q316.1 -58.3 320.2 -53.8Q324.3 -49.3 326.45 -43.6Q328.6 -37.9 328.6 -31.9Q328.6 -24.9 325.8 -18.9Q323 -12.9 318.15 -8.4Q313.3 -3.9 306.95 -1.35Q300.6 1.2 293.5 1.2ZM297 -1Q303.3 -1 308.45 -4.25Q313.6 -7.5 316.55 -13.75Q319.5 -20 319.5 -29.1Q319.5 -38.4 316.25 -45.65Q313 -52.9 307.05 -57.05Q301.1 -61.2 292.9 -61.2Q282.4 -61.2 276.65 -54.1Q270.9 -47 270.9 -34.7Q270.9 -27.6 272.75 -21.45Q274.6 -15.3 278.1 -10.7Q281.6 -6.1 286.4 -3.55Q291.2 -1 297 -1Z M348.9 -11.4 349.9 -60.2 352.4 -60 351.4 -11.4Q351.3 -6.2 353.25 -3.7Q355.2 -1.2 359.8 -1.2Q360.1 -1.2 360.1 -0.6Q360.1 0 359.8 0Q357.6 0 355.3 -0.1Q353 -0.2 350.1 -0.2Q347.4 -0.2 345 -0.1Q342.6 0 340.5 0Q340.3 0 340.3 -0.6Q340.3 -1.2 340.5 -1.2Q344.7 -1.2 346.75 -3.7Q348.8 -6.2 348.9 -11.4ZM418.9 -1.2Q419.1 -1.2 419.1 -0.6Q419.1 0 418.9 0Q416.4 0 413.3 -0.1Q410.2 -0.2 406.7 -0.2Q403.4 -0.2 400.5 -0.1Q397.6 0 395.3 0Q395 0 395 -0.6Q395 -1.2 395.3 -1.2Q400.2 -1.2 401.6 -2.5Q403 -3.8 402.7 -8.1L400.7 -55.2L404.6 -60.8L378.7 -0.7Q378.6 -0.3 377.95 -0.3Q377.3 -0.3 377.1 -0.7L351 -54.2Q347.5 -61.3 341.2 -61.3Q341 -61.3 341 -61.9Q341 -62.5 341.2 -62.5Q343 -62.5 344.95 -62.4Q346.9 -62.3 348.3 -62.3Q350.2 -62.3 351.75 -62.4Q353.3 -62.5 354.1 -62.5Q355.5 -62.5 356.3 -61.55Q357.1 -60.6 358.7 -57.3L381.4 -11.2L377.7 -4.8L401.8 -60Q402.3 -61.2 403.05 -61.85Q403.8 -62.5 404.8 -62.5Q405.5 -62.5 406.55 -62.4Q407.6 -62.3 409 -62.3Q411.8 -62.3 413.7 -62.4Q415.6 -62.5 417.6 -62.5Q417.8 -62.5 417.8 -61.9Q417.8 -61.3 417.6 -61.3Q412.8 -61.3 410.6 -59.75Q408.4 -58.2 408.5 -54.1L410.6 -8.1Q410.8 -5.2 411.4 -3.7Q412 -2.2 413.7 -1.7Q415.4 -1.2 418.9 -1.2Z M454.9 -34 456 -35.3Q462.2 -35.3 466.85 -33.1Q471.5 -30.9 474.05 -27.1Q476.6 -23.3 476.6 -18.3Q476.6 -13 473.85 -8.75Q471.1 -4.5 466.35 -2.05Q461.6 0.4 455.7 0.4Q452.7 0.4 448.6 0.1Q444.5 -0.2 441.1 -0.2Q437.7 -0.2 434.6 -0.1Q431.5 0 429 0Q428.7 0 428.7 -0.6Q428.7 -1.2 429 -1.2Q432.3 -1.2 434.1 -1.7Q435.9 -2.2 436.55 -3.7Q437.2 -5.2 437.2 -8.1V-54.4Q437.2 -57.3 436.6 -58.75Q436 -60.2 434.25 -60.75Q432.5 -61.3 429.1 -61.3Q428.9 -61.3 428.9 -61.9Q428.9 -62.5 429.1 -62.5Q431.6 -62.5 434.65 -62.35Q437.7 -62.2 441.1 -62.2Q443.8 -62.2 447.1 -62.5Q450.4 -62.8 453 -62.8Q459 -62.8 462.85 -61.15Q466.7 -59.5 468.6 -56.55Q470.5 -53.6 470.5 -49.7Q470.5 -44.1 466.3 -39.9Q462.1 -35.7 454.9 -34ZM451.1 -61.1Q448.9 -61.1 447.55 -60.65Q446.2 -60.2 445.65 -58.75Q445.1 -57.3 445.1 -54.2V-34.6L441.8 -35.4Q445 -35.2 447.1 -35.15Q449.2 -35.1 449.5 -35.1Q456.5 -35.1 459.6 -39.1Q462.7 -43.1 462.7 -48.9Q462.7 -52.5 461.45 -55.25Q460.2 -58 457.7 -59.55Q455.2 -61.1 451.1 -61.1ZM454.1 -1.6Q461.4 -1.6 464.75 -5.35Q468.1 -9.1 468.1 -15.9Q468.1 -23.3 464 -28.05Q459.9 -32.8 452 -32.8Q450 -32.9 447.4 -32.8Q444.8 -32.7 442.1 -32.3L445.1 -33.4V-8.1Q445.1 -5.8 445.75 -4.35Q446.4 -2.9 448.35 -2.25Q450.3 -1.6 454.1 -1.6Z"/><path class="logo__sig" transform="translate(78.47 265.08)" d="M1.65 0V-15.33H6.38Q8.91 -15.33 10.22 -14.23Q11.53 -13.13 11.53 -10.96Q11.53 -8.8 10.21 -7.66Q8.89 -6.51 6.38 -6.51H3.87V0ZM3.87 -8.49H6.16Q7.63 -8.49 8.47 -9.07Q9.31 -9.66 9.31 -10.93Q9.31 -12.19 8.5 -12.76Q7.7 -13.33 6.16 -13.33H3.87Z M20.94 0V-15.33H23.19V0Z M33.53 0V-15.33H35.77V-2H42.53V0Z M50.18 0 56.14 -15.33H57.88L63.82 0H61.38L57.02 -12.08L52.65 0ZM53.7 -3.41 54.38 -5.41H59.62L60.37 -3.41Z M74.43 0V-13.33H69.41V-15.33H81.69V-13.33H76.69V0Z M90.68 0V-15.33H100.83V-13.33H92.93V-8.84H100.17V-6.84H92.93V-2H100.83V0Z M115.19 0.26Q112.84 0.26 111.33 -0.97Q109.82 -2.2 109.49 -4.25L111.67 -4.77Q111.91 -3.28 112.88 -2.51Q113.85 -1.74 115.26 -1.74Q116.07 -1.74 116.7 -2.04Q117.33 -2.33 117.7 -2.89Q118.07 -3.45 118.07 -4.16Q118.07 -4.91 117.67 -5.39Q117.26 -5.87 116.52 -6.26Q115.79 -6.64 114.75 -7.04Q113.41 -7.55 112.45 -8.14Q111.5 -8.73 110.98 -9.56Q110.46 -10.38 110.46 -11.55Q110.46 -12.74 111.04 -13.65Q111.63 -14.56 112.68 -15.09Q113.74 -15.62 115.13 -15.62Q116.6 -15.62 117.75 -14.95Q118.91 -14.28 119.59 -12.94L117.81 -11.84Q117.33 -12.72 116.63 -13.18Q115.94 -13.64 115.06 -13.64Q114.38 -13.64 113.84 -13.38Q113.3 -13.11 113 -12.66Q112.71 -12.21 112.71 -11.59Q112.71 -10.96 113.07 -10.49Q113.43 -10.03 114.15 -9.67Q114.86 -9.31 115.94 -8.91Q117.3 -8.38 118.27 -7.78Q119.24 -7.17 119.77 -6.34Q120.3 -5.5 120.3 -4.29Q120.3 -2.97 119.65 -1.95Q119 -0.92 117.85 -0.33Q116.71 0.26 115.19 0.26Z M141.33 0 147.29 -15.33H149.03L154.97 0H152.53L148.17 -12.08L143.79 0ZM144.85 -3.41 145.53 -5.41H150.77L151.51 -3.41ZM147.36 -16.72 144.39 -19.82H146.67L148.96 -16.72Z M176.75 0V-15.33H181.06Q184.84 -15.33 186.92 -13.3Q189 -11.26 189 -7.55Q189 -3.89 186.94 -1.95Q184.89 0 181.04 0ZM178.99 -2.07H180.84Q182.71 -2.07 184.03 -2.6Q185.35 -3.12 186.04 -4.36Q186.74 -5.59 186.74 -7.63Q186.74 -9.66 186.05 -10.9Q185.37 -12.14 184.1 -12.71Q182.82 -13.27 181.04 -13.27H178.99Z M205.26 0.29Q203.13 0.29 201.51 -0.7Q199.89 -1.69 198.99 -3.49Q198.09 -5.28 198.09 -7.66Q198.09 -10.05 198.99 -11.85Q199.89 -13.64 201.51 -14.63Q203.13 -15.62 205.26 -15.62Q207.44 -15.62 209.07 -14.63Q210.69 -13.64 211.6 -11.85Q212.5 -10.05 212.5 -7.66Q212.5 -5.28 211.58 -3.49Q210.67 -1.69 209.04 -0.7Q207.42 0.29 205.26 0.29ZM205.26 -1.85Q206.8 -1.85 207.9 -2.56Q209 -3.28 209.62 -4.59Q210.23 -5.9 210.23 -7.66Q210.23 -9.44 209.62 -10.75Q209 -12.06 207.9 -12.77Q206.8 -13.49 205.26 -13.49Q203.76 -13.49 202.65 -12.78Q201.54 -12.08 200.94 -10.77Q200.33 -9.46 200.33 -7.66Q200.33 -5.87 200.94 -4.56Q201.54 -3.26 202.65 -2.55Q203.76 -1.85 205.26 -1.85Z M222.22 0V-15.33H225.52L230.08 -3.54H229.68L234.23 -15.33H237.51V0H235.27V-12.74L235.47 -12.69L230.96 -1.32H228.78L224.27 -12.69L224.47 -12.74V0Z M247.85 0V-15.33H250.1V0Z M266.97 0.29Q264.84 0.29 263.22 -0.7Q261.6 -1.69 260.7 -3.5Q259.8 -5.3 259.8 -7.68Q259.8 -10.05 260.7 -11.85Q261.6 -13.64 263.22 -14.63Q264.84 -15.62 266.97 -15.62Q269.32 -15.62 271.05 -14.45Q272.78 -13.29 273.53 -11.22L271.44 -10.45Q270.89 -11.88 269.74 -12.68Q268.6 -13.49 266.97 -13.49Q265.47 -13.49 264.36 -12.77Q263.25 -12.06 262.65 -10.77Q262.04 -9.48 262.04 -7.68Q262.04 -5.87 262.65 -4.58Q263.25 -3.28 264.36 -2.56Q265.47 -1.85 266.97 -1.85Q268.6 -1.85 269.74 -2.65Q270.89 -3.45 271.44 -4.88L273.53 -4.14Q272.78 -2.09 271.05 -0.9Q269.32 0.29 266.97 0.29Z M283.01 0V-15.33H285.25V0Z M295.59 0V-15.33H297.84V-2H304.59V0Z M313.59 0V-15.33H323.73V-13.33H315.83V-8.84H323.07V-6.84H315.83V-2H323.73V0Z"/></svg></figure>
+        <figure class="id-mono"><figcaption>Monogramme</figcaption><svg class="logo logo--monogramme" viewBox="0 0 92 80" role="img" aria-label="L’Aplomb, Pilates à domicile" fill="currentColor"><g class="logo__mono" transform="translate(0 0) scale(1)"><path d="M48.8 10C54.2 22.5 63.6 44.2 73.6 67.4C75.1 70.5 78.6 71.8 83.4 70.8C80.4 69.8 78.9 67.9 77.9 65.4C69.6 44.6 59.9 22.2 53.6 7.1C52.9 5.5 51.3 4.9 50.2 5.8L48.8 10Z"/><path d="M50.8 5.3C48.3 5.5 45.8 7 43.9 9.7C46.1 7.7 48.5 6.6 50.7 6.6Z"/><path d="M49.3 8.3L50.3 8.7L28.3 77.3L27.3 77Z"/><path d="M3.5 61.8C19.8 51.6 37.9 46.5 54 48.5C66.2 50.1 77.4 56.6 87.6 67.1C76.9 58.8 66.2 53.5 54 51.7C38.4 49.6 20.9 53.1 3.5 61.8Z"/></g></svg></figure>
+        <figure class="id-horizontal"><figcaption>Version horizontale</figcaption><svg class="logo logo--horizontal" viewBox="0 0 664.08 107.83" role="img" aria-label="L’Aplomb, Pilates à domicile" fill="currentColor"><g class="logo__mono" transform="translate(0 -4.33) scale(1.41)"><path d="M48.8 10C54.2 22.5 63.6 44.2 73.6 67.4C75.1 70.5 78.6 71.8 83.4 70.8C80.4 69.8 78.9 67.9 77.9 65.4C69.6 44.6 59.9 22.2 53.6 7.1C52.9 5.5 51.3 4.9 50.2 5.8L48.8 10Z"/><path d="M50.8 5.3C48.3 5.5 45.8 7 43.9 9.7C46.1 7.7 48.5 6.6 50.7 6.6Z"/><path d="M49.3 8.3L50.3 8.7L28.3 77.3L27.3 77Z"/><path d="M3.5 61.8C19.8 51.6 37.9 46.5 54 48.5C66.2 50.1 77.4 56.6 87.6 67.1C76.9 58.8 66.2 53.5 54 51.7C38.4 49.6 20.9 53.1 3.5 61.8Z"/></g><rect class="logo__filet" x="155.38" y="8.31" width="1.2" height="87.22"/><path class="logo__mot" transform="translate(182.38 62.5)" d="M19.4 -54.3V-8.5Q19.4 -5.9 19.95 -4.55Q20.5 -3.2 22.05 -2.75Q23.6 -2.3 26.7 -2.3H35.2Q41.7 -2.3 45.8 -6.1Q49.9 -9.9 51.2 -16.2Q51.2 -16.5 51.75 -16.45Q52.3 -16.4 52.3 -16.1Q52 -13.2 51.7 -9.1Q51.4 -5 51.4 -1.5Q51.4 0 49.9 0H3.3Q3.1 0 3.1 -0.6Q3.1 -1.2 3.3 -1.2Q6.8 -1.2 8.55 -1.7Q10.3 -2.2 10.9 -3.7Q11.5 -5.2 11.5 -8.1V-54.4Q11.5 -57.3 10.9 -58.75Q10.3 -60.2 8.55 -60.75Q6.8 -61.3 3.3 -61.3Q3.1 -61.3 3.1 -61.9Q3.1 -62.5 3.3 -62.5Q5.7 -62.5 8.85 -62.35Q12 -62.2 15.4 -62.2Q19 -62.2 22.05 -62.35Q25.1 -62.5 27.5 -62.5Q27.7 -62.5 27.7 -61.9Q27.7 -61.3 27.5 -61.3Q24 -61.3 22.3 -60.75Q20.6 -60.2 20 -58.7Q19.4 -57.2 19.4 -54.3Z M60.1 -63Q63.3 -63 65.1 -60.8Q66.9 -58.6 66.9 -54Q66.9 -49.1 64.7 -44.85Q62.5 -40.6 58.6 -36.5Q58.2 -36.2 57.9 -36.55Q57.6 -36.9 57.8 -37.2Q60.4 -40.6 61.15 -43.6Q61.9 -46.6 61.9 -49.9Q61.9 -52.9 61.15 -54.4Q60.4 -55.9 59.3 -56.9L63.1 -57.6Q63.2 -55.9 62.15 -55Q61.1 -54.1 59.4 -54.1Q57.3 -54.1 56.15 -55.3Q55 -56.5 55 -58.5Q55 -60.7 56.35 -61.85Q57.7 -63 60.1 -63Z M86.2 -26.1 87.4 -28.3H114.6L115.3 -26.1ZM137.9 -1.2Q138.4 -1.2 138.4 -0.6Q138.4 0 137.9 0Q135 0 131.95 -0.2Q128.9 -0.4 126 -0.4Q122.8 -0.4 120.45 -0.2Q118.1 0 115.2 0Q114.8 0 114.8 -0.6Q114.8 -1.2 115.2 -1.2Q120.1 -1.2 121.2 -2.75Q122.3 -4.3 120.1 -8.9L98.6 -53.6L101.8 -58.4L82.3 -13.2Q79.7 -7.1 82 -4.15Q84.3 -1.2 90.6 -1.2Q91.1 -1.2 91.1 -0.6Q91.1 0 90.6 0Q87.6 0 85.1 -0.2Q82.6 -0.4 78.8 -0.4Q75.1 -0.4 72.85 -0.2Q70.6 0 67.4 0Q67 0 67 -0.6Q67 -1.2 67.4 -1.2Q70.1 -1.2 72.1 -2.25Q74.1 -3.3 75.95 -6.1Q77.8 -8.9 80 -14.1L101.3 -63.2Q101.4 -63.5 102 -63.55Q102.6 -63.6 102.7 -63.2L126.7 -13.7Q129.1 -8.8 130.85 -6.05Q132.6 -3.3 134.3 -2.25Q136 -1.2 137.9 -1.2Z M161.6 -8.5Q161.6 -5.5 162.35 -3.95Q163.1 -2.4 165.5 -1.8Q167.9 -1.2 172.7 -1.2Q173 -1.2 173 -0.6Q173 0 172.7 0Q169.5 0 165.75 -0.1Q162 -0.2 157.6 -0.2Q154.3 -0.2 151.15 -0.1Q148 0 145.5 0Q145.3 0 145.3 -0.6Q145.3 -1.2 145.5 -1.2Q149 -1.2 150.75 -1.7Q152.5 -2.2 153.05 -3.7Q153.6 -5.2 153.6 -8.1V-54.4Q153.6 -57.3 153.05 -58.75Q152.5 -60.2 150.75 -60.75Q149 -61.3 145.5 -61.3Q145.3 -61.3 145.3 -61.9Q145.3 -62.5 145.5 -62.5Q148 -62.5 151.1 -62.35Q154.2 -62.2 157.5 -62.2Q160.1 -62.2 163.85 -62.5Q167.6 -62.8 171.4 -62.8Q177.2 -62.8 181.85 -61.1Q186.5 -59.4 189.3 -55.8Q192.1 -52.2 192.2 -46.4Q192.2 -41.2 190.3 -37.4Q188.4 -33.6 185.15 -31.1Q181.9 -28.6 177.95 -27.4Q174 -26.2 170.2 -26.2Q169 -26.2 167.75 -26.3Q166.5 -26.4 165.4 -26.7Q165 -26.8 165.15 -27.45Q165.3 -28.1 165.6 -28Q166.5 -27.8 167.45 -27.7Q168.4 -27.6 169.1 -27.6Q172.9 -27.6 176.1 -29.4Q179.3 -31.2 181.3 -34.95Q183.3 -38.7 183.3 -44.3Q183.3 -49.7 181.45 -53.4Q179.6 -57.1 176.3 -59.1Q173 -61.1 168.7 -61.1Q165.9 -61.1 164.35 -60.7Q162.8 -60.3 162.2 -58.8Q161.6 -57.3 161.6 -54.2Z M219.1 -54.3V-8.5Q219.1 -5.9 219.65 -4.55Q220.2 -3.2 221.75 -2.75Q223.3 -2.3 226.4 -2.3H234.9Q241.4 -2.3 245.5 -6.1Q249.6 -9.9 250.9 -16.2Q250.9 -16.5 251.45 -16.45Q252 -16.4 252 -16.1Q251.7 -13.2 251.4 -9.1Q251.1 -5 251.1 -1.5Q251.1 0 249.6 0H203Q202.8 0 202.8 -0.6Q202.8 -1.2 203 -1.2Q206.5 -1.2 208.25 -1.7Q210 -2.2 210.6 -3.7Q211.2 -5.2 211.2 -8.1V-54.4Q211.2 -57.3 210.6 -58.75Q210 -60.2 208.25 -60.75Q206.5 -61.3 203 -61.3Q202.8 -61.3 202.8 -61.9Q202.8 -62.5 203 -62.5Q205.4 -62.5 208.55 -62.35Q211.7 -62.2 215.1 -62.2Q218.7 -62.2 221.75 -62.35Q224.8 -62.5 227.2 -62.5Q227.4 -62.5 227.4 -61.9Q227.4 -61.3 227.2 -61.3Q223.7 -61.3 222 -60.75Q220.3 -60.2 219.7 -58.7Q219.1 -57.2 219.1 -54.3Z M293.5 1.2Q286.3 1.2 280.45 -1.35Q274.6 -3.9 270.45 -8.4Q266.3 -12.9 264.05 -18.75Q261.8 -24.6 261.8 -31.2Q261.8 -39.3 264.95 -45.4Q268.1 -51.5 273.3 -55.55Q278.5 -59.6 284.7 -61.6Q290.9 -63.6 297 -63.6Q304.4 -63.6 310.25 -60.95Q316.1 -58.3 320.2 -53.8Q324.3 -49.3 326.45 -43.6Q328.6 -37.9 328.6 -31.9Q328.6 -24.9 325.8 -18.9Q323 -12.9 318.15 -8.4Q313.3 -3.9 306.95 -1.35Q300.6 1.2 293.5 1.2ZM297 -1Q303.3 -1 308.45 -4.25Q313.6 -7.5 316.55 -13.75Q319.5 -20 319.5 -29.1Q319.5 -38.4 316.25 -45.65Q313 -52.9 307.05 -57.05Q301.1 -61.2 292.9 -61.2Q282.4 -61.2 276.65 -54.1Q270.9 -47 270.9 -34.7Q270.9 -27.6 272.75 -21.45Q274.6 -15.3 278.1 -10.7Q281.6 -6.1 286.4 -3.55Q291.2 -1 297 -1Z M348.9 -11.4 349.9 -60.2 352.4 -60 351.4 -11.4Q351.3 -6.2 353.25 -3.7Q355.2 -1.2 359.8 -1.2Q360.1 -1.2 360.1 -0.6Q360.1 0 359.8 0Q357.6 0 355.3 -0.1Q353 -0.2 350.1 -0.2Q347.4 -0.2 345 -0.1Q342.6 0 340.5 0Q340.3 0 340.3 -0.6Q340.3 -1.2 340.5 -1.2Q344.7 -1.2 346.75 -3.7Q348.8 -6.2 348.9 -11.4ZM418.9 -1.2Q419.1 -1.2 419.1 -0.6Q419.1 0 418.9 0Q416.4 0 413.3 -0.1Q410.2 -0.2 406.7 -0.2Q403.4 -0.2 400.5 -0.1Q397.6 0 395.3 0Q395 0 395 -0.6Q395 -1.2 395.3 -1.2Q400.2 -1.2 401.6 -2.5Q403 -3.8 402.7 -8.1L400.7 -55.2L404.6 -60.8L378.7 -0.7Q378.6 -0.3 377.95 -0.3Q377.3 -0.3 377.1 -0.7L351 -54.2Q347.5 -61.3 341.2 -61.3Q341 -61.3 341 -61.9Q341 -62.5 341.2 -62.5Q343 -62.5 344.95 -62.4Q346.9 -62.3 348.3 -62.3Q350.2 -62.3 351.75 -62.4Q353.3 -62.5 354.1 -62.5Q355.5 -62.5 356.3 -61.55Q357.1 -60.6 358.7 -57.3L381.4 -11.2L377.7 -4.8L401.8 -60Q402.3 -61.2 403.05 -61.85Q403.8 -62.5 404.8 -62.5Q405.5 -62.5 406.55 -62.4Q407.6 -62.3 409 -62.3Q411.8 -62.3 413.7 -62.4Q415.6 -62.5 417.6 -62.5Q417.8 -62.5 417.8 -61.9Q417.8 -61.3 417.6 -61.3Q412.8 -61.3 410.6 -59.75Q408.4 -58.2 408.5 -54.1L410.6 -8.1Q410.8 -5.2 411.4 -3.7Q412 -2.2 413.7 -1.7Q415.4 -1.2 418.9 -1.2Z M454.9 -34 456 -35.3Q462.2 -35.3 466.85 -33.1Q471.5 -30.9 474.05 -27.1Q476.6 -23.3 476.6 -18.3Q476.6 -13 473.85 -8.75Q471.1 -4.5 466.35 -2.05Q461.6 0.4 455.7 0.4Q452.7 0.4 448.6 0.1Q444.5 -0.2 441.1 -0.2Q437.7 -0.2 434.6 -0.1Q431.5 0 429 0Q428.7 0 428.7 -0.6Q428.7 -1.2 429 -1.2Q432.3 -1.2 434.1 -1.7Q435.9 -2.2 436.55 -3.7Q437.2 -5.2 437.2 -8.1V-54.4Q437.2 -57.3 436.6 -58.75Q436 -60.2 434.25 -60.75Q432.5 -61.3 429.1 -61.3Q428.9 -61.3 428.9 -61.9Q428.9 -62.5 429.1 -62.5Q431.6 -62.5 434.65 -62.35Q437.7 -62.2 441.1 -62.2Q443.8 -62.2 447.1 -62.5Q450.4 -62.8 453 -62.8Q459 -62.8 462.85 -61.15Q466.7 -59.5 468.6 -56.55Q470.5 -53.6 470.5 -49.7Q470.5 -44.1 466.3 -39.9Q462.1 -35.7 454.9 -34ZM451.1 -61.1Q448.9 -61.1 447.55 -60.65Q446.2 -60.2 445.65 -58.75Q445.1 -57.3 445.1 -54.2V-34.6L441.8 -35.4Q445 -35.2 447.1 -35.15Q449.2 -35.1 449.5 -35.1Q456.5 -35.1 459.6 -39.1Q462.7 -43.1 462.7 -48.9Q462.7 -52.5 461.45 -55.25Q460.2 -58 457.7 -59.55Q455.2 -61.1 451.1 -61.1ZM454.1 -1.6Q461.4 -1.6 464.75 -5.35Q468.1 -9.1 468.1 -15.9Q468.1 -23.3 464 -28.05Q459.9 -32.8 452 -32.8Q450 -32.9 447.4 -32.8Q444.8 -32.7 442.1 -32.3L445.1 -33.4V-8.1Q445.1 -5.8 445.75 -4.35Q446.4 -2.9 448.35 -2.25Q450.3 -1.6 454.1 -1.6Z"/><path class="logo__sig" transform="translate(260.84 103.83)" d="M1.65 0V-15.33H6.38Q8.91 -15.33 10.22 -14.23Q11.53 -13.13 11.53 -10.96Q11.53 -8.8 10.21 -7.66Q8.89 -6.51 6.38 -6.51H3.87V0ZM3.87 -8.49H6.16Q7.63 -8.49 8.47 -9.07Q9.31 -9.66 9.31 -10.93Q9.31 -12.19 8.5 -12.76Q7.7 -13.33 6.16 -13.33H3.87Z M20.94 0V-15.33H23.19V0Z M33.53 0V-15.33H35.77V-2H42.53V0Z M50.18 0 56.14 -15.33H57.88L63.82 0H61.38L57.02 -12.08L52.65 0ZM53.7 -3.41 54.38 -5.41H59.62L60.37 -3.41Z M74.43 0V-13.33H69.41V-15.33H81.69V-13.33H76.69V0Z M90.68 0V-15.33H100.83V-13.33H92.93V-8.84H100.17V-6.84H92.93V-2H100.83V0Z M115.19 0.26Q112.84 0.26 111.33 -0.97Q109.82 -2.2 109.49 -4.25L111.67 -4.77Q111.91 -3.28 112.88 -2.51Q113.85 -1.74 115.26 -1.74Q116.07 -1.74 116.7 -2.04Q117.33 -2.33 117.7 -2.89Q118.07 -3.45 118.07 -4.16Q118.07 -4.91 117.67 -5.39Q117.26 -5.87 116.52 -6.26Q115.79 -6.64 114.75 -7.04Q113.41 -7.55 112.45 -8.14Q111.5 -8.73 110.98 -9.56Q110.46 -10.38 110.46 -11.55Q110.46 -12.74 111.04 -13.65Q111.63 -14.56 112.68 -15.09Q113.74 -15.62 115.13 -15.62Q116.6 -15.62 117.75 -14.95Q118.91 -14.28 119.59 -12.94L117.81 -11.84Q117.33 -12.72 116.63 -13.18Q115.94 -13.64 115.06 -13.64Q114.38 -13.64 113.84 -13.38Q113.3 -13.11 113 -12.66Q112.71 -12.21 112.71 -11.59Q112.71 -10.96 113.07 -10.49Q113.43 -10.03 114.15 -9.67Q114.86 -9.31 115.94 -8.91Q117.3 -8.38 118.27 -7.78Q119.24 -7.17 119.77 -6.34Q120.3 -5.5 120.3 -4.29Q120.3 -2.97 119.65 -1.95Q119 -0.92 117.85 -0.33Q116.71 0.26 115.19 0.26Z M141.33 0 147.29 -15.33H149.03L154.97 0H152.53L148.17 -12.08L143.79 0ZM144.85 -3.41 145.53 -5.41H150.77L151.51 -3.41ZM147.36 -16.72 144.39 -19.82H146.67L148.96 -16.72Z M176.75 0V-15.33H181.06Q184.84 -15.33 186.92 -13.3Q189 -11.26 189 -7.55Q189 -3.89 186.94 -1.95Q184.89 0 181.04 0ZM178.99 -2.07H180.84Q182.71 -2.07 184.03 -2.6Q185.35 -3.12 186.04 -4.36Q186.74 -5.59 186.74 -7.63Q186.74 -9.66 186.05 -10.9Q185.37 -12.14 184.1 -12.71Q182.82 -13.27 181.04 -13.27H178.99Z M205.26 0.29Q203.13 0.29 201.51 -0.7Q199.89 -1.69 198.99 -3.49Q198.09 -5.28 198.09 -7.66Q198.09 -10.05 198.99 -11.85Q199.89 -13.64 201.51 -14.63Q203.13 -15.62 205.26 -15.62Q207.44 -15.62 209.07 -14.63Q210.69 -13.64 211.6 -11.85Q212.5 -10.05 212.5 -7.66Q212.5 -5.28 211.58 -3.49Q210.67 -1.69 209.04 -0.7Q207.42 0.29 205.26 0.29ZM205.26 -1.85Q206.8 -1.85 207.9 -2.56Q209 -3.28 209.62 -4.59Q210.23 -5.9 210.23 -7.66Q210.23 -9.44 209.62 -10.75Q209 -12.06 207.9 -12.77Q206.8 -13.49 205.26 -13.49Q203.76 -13.49 202.65 -12.78Q201.54 -12.08 200.94 -10.77Q200.33 -9.46 200.33 -7.66Q200.33 -5.87 200.94 -4.56Q201.54 -3.26 202.65 -2.55Q203.76 -1.85 205.26 -1.85Z M222.22 0V-15.33H225.52L230.08 -3.54H229.68L234.23 -15.33H237.51V0H235.27V-12.74L235.47 -12.69L230.96 -1.32H228.78L224.27 -12.69L224.47 -12.74V0Z M247.85 0V-15.33H250.1V0Z M266.97 0.29Q264.84 0.29 263.22 -0.7Q261.6 -1.69 260.7 -3.5Q259.8 -5.3 259.8 -7.68Q259.8 -10.05 260.7 -11.85Q261.6 -13.64 263.22 -14.63Q264.84 -15.62 266.97 -15.62Q269.32 -15.62 271.05 -14.45Q272.78 -13.29 273.53 -11.22L271.44 -10.45Q270.89 -11.88 269.74 -12.68Q268.6 -13.49 266.97 -13.49Q265.47 -13.49 264.36 -12.77Q263.25 -12.06 262.65 -10.77Q262.04 -9.48 262.04 -7.68Q262.04 -5.87 262.65 -4.58Q263.25 -3.28 264.36 -2.56Q265.47 -1.85 266.97 -1.85Q268.6 -1.85 269.74 -2.65Q270.89 -3.45 271.44 -4.88L273.53 -4.14Q272.78 -2.09 271.05 -0.9Q269.32 0.29 266.97 0.29Z M283.01 0V-15.33H285.25V0Z M295.59 0V-15.33H297.84V-2H304.59V0Z M313.59 0V-15.33H323.73V-13.33H315.83V-8.84H323.07V-6.84H315.83V-2H323.73V0Z"/></svg></figure>
+        <figure class="id-sombre"><figcaption>Version sombre · monogramme laiton</figcaption><svg class="logo logo--principal" viewBox="0 0 481.7 271.08" role="img" aria-label="L’Aplomb, Pilates à domicile" fill="currentColor"><g class="logo__mono" transform="translate(165.38 0) scale(1.64)"><path d="M48.8 10C54.2 22.5 63.6 44.2 73.6 67.4C75.1 70.5 78.6 71.8 83.4 70.8C80.4 69.8 78.9 67.9 77.9 65.4C69.6 44.6 59.9 22.2 53.6 7.1C52.9 5.5 51.3 4.9 50.2 5.8L48.8 10Z"/><path d="M50.8 5.3C48.3 5.5 45.8 7 43.9 9.7C46.1 7.7 48.5 6.6 50.7 6.6Z"/><path d="M49.3 8.3L50.3 8.7L28.3 77.3L27.3 77Z"/><path d="M3.5 61.8C19.8 51.6 37.9 46.5 54 48.5C66.2 50.1 77.4 56.6 87.6 67.1C76.9 58.8 66.2 53.5 54 51.7C38.4 49.6 20.9 53.1 3.5 61.8Z"/></g><path class="logo__mot" transform="translate(0 215.75)" d="M19.4 -54.3V-8.5Q19.4 -5.9 19.95 -4.55Q20.5 -3.2 22.05 -2.75Q23.6 -2.3 26.7 -2.3H35.2Q41.7 -2.3 45.8 -6.1Q49.9 -9.9 51.2 -16.2Q51.2 -16.5 51.75 -16.45Q52.3 -16.4 52.3 -16.1Q52 -13.2 51.7 -9.1Q51.4 -5 51.4 -1.5Q51.4 0 49.9 0H3.3Q3.1 0 3.1 -0.6Q3.1 -1.2 3.3 -1.2Q6.8 -1.2 8.55 -1.7Q10.3 -2.2 10.9 -3.7Q11.5 -5.2 11.5 -8.1V-54.4Q11.5 -57.3 10.9 -58.75Q10.3 -60.2 8.55 -60.75Q6.8 -61.3 3.3 -61.3Q3.1 -61.3 3.1 -61.9Q3.1 -62.5 3.3 -62.5Q5.7 -62.5 8.85 -62.35Q12 -62.2 15.4 -62.2Q19 -62.2 22.05 -62.35Q25.1 -62.5 27.5 -62.5Q27.7 -62.5 27.7 -61.9Q27.7 -61.3 27.5 -61.3Q24 -61.3 22.3 -60.75Q20.6 -60.2 20 -58.7Q19.4 -57.2 19.4 -54.3Z M60.1 -63Q63.3 -63 65.1 -60.8Q66.9 -58.6 66.9 -54Q66.9 -49.1 64.7 -44.85Q62.5 -40.6 58.6 -36.5Q58.2 -36.2 57.9 -36.55Q57.6 -36.9 57.8 -37.2Q60.4 -40.6 61.15 -43.6Q61.9 -46.6 61.9 -49.9Q61.9 -52.9 61.15 -54.4Q60.4 -55.9 59.3 -56.9L63.1 -57.6Q63.2 -55.9 62.15 -55Q61.1 -54.1 59.4 -54.1Q57.3 -54.1 56.15 -55.3Q55 -56.5 55 -58.5Q55 -60.7 56.35 -61.85Q57.7 -63 60.1 -63Z M86.2 -26.1 87.4 -28.3H114.6L115.3 -26.1ZM137.9 -1.2Q138.4 -1.2 138.4 -0.6Q138.4 0 137.9 0Q135 0 131.95 -0.2Q128.9 -0.4 126 -0.4Q122.8 -0.4 120.45 -0.2Q118.1 0 115.2 0Q114.8 0 114.8 -0.6Q114.8 -1.2 115.2 -1.2Q120.1 -1.2 121.2 -2.75Q122.3 -4.3 120.1 -8.9L98.6 -53.6L101.8 -58.4L82.3 -13.2Q79.7 -7.1 82 -4.15Q84.3 -1.2 90.6 -1.2Q91.1 -1.2 91.1 -0.6Q91.1 0 90.6 0Q87.6 0 85.1 -0.2Q82.6 -0.4 78.8 -0.4Q75.1 -0.4 72.85 -0.2Q70.6 0 67.4 0Q67 0 67 -0.6Q67 -1.2 67.4 -1.2Q70.1 -1.2 72.1 -2.25Q74.1 -3.3 75.95 -6.1Q77.8 -8.9 80 -14.1L101.3 -63.2Q101.4 -63.5 102 -63.55Q102.6 -63.6 102.7 -63.2L126.7 -13.7Q129.1 -8.8 130.85 -6.05Q132.6 -3.3 134.3 -2.25Q136 -1.2 137.9 -1.2Z M161.6 -8.5Q161.6 -5.5 162.35 -3.95Q163.1 -2.4 165.5 -1.8Q167.9 -1.2 172.7 -1.2Q173 -1.2 173 -0.6Q173 0 172.7 0Q169.5 0 165.75 -0.1Q162 -0.2 157.6 -0.2Q154.3 -0.2 151.15 -0.1Q148 0 145.5 0Q145.3 0 145.3 -0.6Q145.3 -1.2 145.5 -1.2Q149 -1.2 150.75 -1.7Q152.5 -2.2 153.05 -3.7Q153.6 -5.2 153.6 -8.1V-54.4Q153.6 -57.3 153.05 -58.75Q152.5 -60.2 150.75 -60.75Q149 -61.3 145.5 -61.3Q145.3 -61.3 145.3 -61.9Q145.3 -62.5 145.5 -62.5Q148 -62.5 151.1 -62.35Q154.2 -62.2 157.5 -62.2Q160.1 -62.2 163.85 -62.5Q167.6 -62.8 171.4 -62.8Q177.2 -62.8 181.85 -61.1Q186.5 -59.4 189.3 -55.8Q192.1 -52.2 192.2 -46.4Q192.2 -41.2 190.3 -37.4Q188.4 -33.6 185.15 -31.1Q181.9 -28.6 177.95 -27.4Q174 -26.2 170.2 -26.2Q169 -26.2 167.75 -26.3Q166.5 -26.4 165.4 -26.7Q165 -26.8 165.15 -27.45Q165.3 -28.1 165.6 -28Q166.5 -27.8 167.45 -27.7Q168.4 -27.6 169.1 -27.6Q172.9 -27.6 176.1 -29.4Q179.3 -31.2 181.3 -34.95Q183.3 -38.7 183.3 -44.3Q183.3 -49.7 181.45 -53.4Q179.6 -57.1 176.3 -59.1Q173 -61.1 168.7 -61.1Q165.9 -61.1 164.35 -60.7Q162.8 -60.3 162.2 -58.8Q161.6 -57.3 161.6 -54.2Z M219.1 -54.3V-8.5Q219.1 -5.9 219.65 -4.55Q220.2 -3.2 221.75 -2.75Q223.3 -2.3 226.4 -2.3H234.9Q241.4 -2.3 245.5 -6.1Q249.6 -9.9 250.9 -16.2Q250.9 -16.5 251.45 -16.45Q252 -16.4 252 -16.1Q251.7 -13.2 251.4 -9.1Q251.1 -5 251.1 -1.5Q251.1 0 249.6 0H203Q202.8 0 202.8 -0.6Q202.8 -1.2 203 -1.2Q206.5 -1.2 208.25 -1.7Q210 -2.2 210.6 -3.7Q211.2 -5.2 211.2 -8.1V-54.4Q211.2 -57.3 210.6 -58.75Q210 -60.2 208.25 -60.75Q206.5 -61.3 203 -61.3Q202.8 -61.3 202.8 -61.9Q202.8 -62.5 203 -62.5Q205.4 -62.5 208.55 -62.35Q211.7 -62.2 215.1 -62.2Q218.7 -62.2 221.75 -62.35Q224.8 -62.5 227.2 -62.5Q227.4 -62.5 227.4 -61.9Q227.4 -61.3 227.2 -61.3Q223.7 -61.3 222 -60.75Q220.3 -60.2 219.7 -58.7Q219.1 -57.2 219.1 -54.3Z M293.5 1.2Q286.3 1.2 280.45 -1.35Q274.6 -3.9 270.45 -8.4Q266.3 -12.9 264.05 -18.75Q261.8 -24.6 261.8 -31.2Q261.8 -39.3 264.95 -45.4Q268.1 -51.5 273.3 -55.55Q278.5 -59.6 284.7 -61.6Q290.9 -63.6 297 -63.6Q304.4 -63.6 310.25 -60.95Q316.1 -58.3 320.2 -53.8Q324.3 -49.3 326.45 -43.6Q328.6 -37.9 328.6 -31.9Q328.6 -24.9 325.8 -18.9Q323 -12.9 318.15 -8.4Q313.3 -3.9 306.95 -1.35Q300.6 1.2 293.5 1.2ZM297 -1Q303.3 -1 308.45 -4.25Q313.6 -7.5 316.55 -13.75Q319.5 -20 319.5 -29.1Q319.5 -38.4 316.25 -45.65Q313 -52.9 307.05 -57.05Q301.1 -61.2 292.9 -61.2Q282.4 -61.2 276.65 -54.1Q270.9 -47 270.9 -34.7Q270.9 -27.6 272.75 -21.45Q274.6 -15.3 278.1 -10.7Q281.6 -6.1 286.4 -3.55Q291.2 -1 297 -1Z M348.9 -11.4 349.9 -60.2 352.4 -60 351.4 -11.4Q351.3 -6.2 353.25 -3.7Q355.2 -1.2 359.8 -1.2Q360.1 -1.2 360.1 -0.6Q360.1 0 359.8 0Q357.6 0 355.3 -0.1Q353 -0.2 350.1 -0.2Q347.4 -0.2 345 -0.1Q342.6 0 340.5 0Q340.3 0 340.3 -0.6Q340.3 -1.2 340.5 -1.2Q344.7 -1.2 346.75 -3.7Q348.8 -6.2 348.9 -11.4ZM418.9 -1.2Q419.1 -1.2 419.1 -0.6Q419.1 0 418.9 0Q416.4 0 413.3 -0.1Q410.2 -0.2 406.7 -0.2Q403.4 -0.2 400.5 -0.1Q397.6 0 395.3 0Q395 0 395 -0.6Q395 -1.2 395.3 -1.2Q400.2 -1.2 401.6 -2.5Q403 -3.8 402.7 -8.1L400.7 -55.2L404.6 -60.8L378.7 -0.7Q378.6 -0.3 377.95 -0.3Q377.3 -0.3 377.1 -0.7L351 -54.2Q347.5 -61.3 341.2 -61.3Q341 -61.3 341 -61.9Q341 -62.5 341.2 -62.5Q343 -62.5 344.95 -62.4Q346.9 -62.3 348.3 -62.3Q350.2 -62.3 351.75 -62.4Q353.3 -62.5 354.1 -62.5Q355.5 -62.5 356.3 -61.55Q357.1 -60.6 358.7 -57.3L381.4 -11.2L377.7 -4.8L401.8 -60Q402.3 -61.2 403.05 -61.85Q403.8 -62.5 404.8 -62.5Q405.5 -62.5 406.55 -62.4Q407.6 -62.3 409 -62.3Q411.8 -62.3 413.7 -62.4Q415.6 -62.5 417.6 -62.5Q417.8 -62.5 417.8 -61.9Q417.8 -61.3 417.6 -61.3Q412.8 -61.3 410.6 -59.75Q408.4 -58.2 408.5 -54.1L410.6 -8.1Q410.8 -5.2 411.4 -3.7Q412 -2.2 413.7 -1.7Q415.4 -1.2 418.9 -1.2Z M454.9 -34 456 -35.3Q462.2 -35.3 466.85 -33.1Q471.5 -30.9 474.05 -27.1Q476.6 -23.3 476.6 -18.3Q476.6 -13 473.85 -8.75Q471.1 -4.5 466.35 -2.05Q461.6 0.4 455.7 0.4Q452.7 0.4 448.6 0.1Q444.5 -0.2 441.1 -0.2Q437.7 -0.2 434.6 -0.1Q431.5 0 429 0Q428.7 0 428.7 -0.6Q428.7 -1.2 429 -1.2Q432.3 -1.2 434.1 -1.7Q435.9 -2.2 436.55 -3.7Q437.2 -5.2 437.2 -8.1V-54.4Q437.2 -57.3 436.6 -58.75Q436 -60.2 434.25 -60.75Q432.5 -61.3 429.1 -61.3Q428.9 -61.3 428.9 -61.9Q428.9 -62.5 429.1 -62.5Q431.6 -62.5 434.65 -62.35Q437.7 -62.2 441.1 -62.2Q443.8 -62.2 447.1 -62.5Q450.4 -62.8 453 -62.8Q459 -62.8 462.85 -61.15Q466.7 -59.5 468.6 -56.55Q470.5 -53.6 470.5 -49.7Q470.5 -44.1 466.3 -39.9Q462.1 -35.7 454.9 -34ZM451.1 -61.1Q448.9 -61.1 447.55 -60.65Q446.2 -60.2 445.65 -58.75Q445.1 -57.3 445.1 -54.2V-34.6L441.8 -35.4Q445 -35.2 447.1 -35.15Q449.2 -35.1 449.5 -35.1Q456.5 -35.1 459.6 -39.1Q462.7 -43.1 462.7 -48.9Q462.7 -52.5 461.45 -55.25Q460.2 -58 457.7 -59.55Q455.2 -61.1 451.1 -61.1ZM454.1 -1.6Q461.4 -1.6 464.75 -5.35Q468.1 -9.1 468.1 -15.9Q468.1 -23.3 464 -28.05Q459.9 -32.8 452 -32.8Q450 -32.9 447.4 -32.8Q444.8 -32.7 442.1 -32.3L445.1 -33.4V-8.1Q445.1 -5.8 445.75 -4.35Q446.4 -2.9 448.35 -2.25Q450.3 -1.6 454.1 -1.6Z"/><path class="logo__sig" transform="translate(78.47 265.08)" d="M1.65 0V-15.33H6.38Q8.91 -15.33 10.22 -14.23Q11.53 -13.13 11.53 -10.96Q11.53 -8.8 10.21 -7.66Q8.89 -6.51 6.38 -6.51H3.87V0ZM3.87 -8.49H6.16Q7.63 -8.49 8.47 -9.07Q9.31 -9.66 9.31 -10.93Q9.31 -12.19 8.5 -12.76Q7.7 -13.33 6.16 -13.33H3.87Z M20.94 0V-15.33H23.19V0Z M33.53 0V-15.33H35.77V-2H42.53V0Z M50.18 0 56.14 -15.33H57.88L63.82 0H61.38L57.02 -12.08L52.65 0ZM53.7 -3.41 54.38 -5.41H59.62L60.37 -3.41Z M74.43 0V-13.33H69.41V-15.33H81.69V-13.33H76.69V0Z M90.68 0V-15.33H100.83V-13.33H92.93V-8.84H100.17V-6.84H92.93V-2H100.83V0Z M115.19 0.26Q112.84 0.26 111.33 -0.97Q109.82 -2.2 109.49 -4.25L111.67 -4.77Q111.91 -3.28 112.88 -2.51Q113.85 -1.74 115.26 -1.74Q116.07 -1.74 116.7 -2.04Q117.33 -2.33 117.7 -2.89Q118.07 -3.45 118.07 -4.16Q118.07 -4.91 117.67 -5.39Q117.26 -5.87 116.52 -6.26Q115.79 -6.64 114.75 -7.04Q113.41 -7.55 112.45 -8.14Q111.5 -8.73 110.98 -9.56Q110.46 -10.38 110.46 -11.55Q110.46 -12.74 111.04 -13.65Q111.63 -14.56 112.68 -15.09Q113.74 -15.62 115.13 -15.62Q116.6 -15.62 117.75 -14.95Q118.91 -14.28 119.59 -12.94L117.81 -11.84Q117.33 -12.72 116.63 -13.18Q115.94 -13.64 115.06 -13.64Q114.38 -13.64 113.84 -13.38Q113.3 -13.11 113 -12.66Q112.71 -12.21 112.71 -11.59Q112.71 -10.96 113.07 -10.49Q113.43 -10.03 114.15 -9.67Q114.86 -9.31 115.94 -8.91Q117.3 -8.38 118.27 -7.78Q119.24 -7.17 119.77 -6.34Q120.3 -5.5 120.3 -4.29Q120.3 -2.97 119.65 -1.95Q119 -0.92 117.85 -0.33Q116.71 0.26 115.19 0.26Z M141.33 0 147.29 -15.33H149.03L154.97 0H152.53L148.17 -12.08L143.79 0ZM144.85 -3.41 145.53 -5.41H150.77L151.51 -3.41ZM147.36 -16.72 144.39 -19.82H146.67L148.96 -16.72Z M176.75 0V-15.33H181.06Q184.84 -15.33 186.92 -13.3Q189 -11.26 189 -7.55Q189 -3.89 186.94 -1.95Q184.89 0 181.04 0ZM178.99 -2.07H180.84Q182.71 -2.07 184.03 -2.6Q185.35 -3.12 186.04 -4.36Q186.74 -5.59 186.74 -7.63Q186.74 -9.66 186.05 -10.9Q185.37 -12.14 184.1 -12.71Q182.82 -13.27 181.04 -13.27H178.99Z M205.26 0.29Q203.13 0.29 201.51 -0.7Q199.89 -1.69 198.99 -3.49Q198.09 -5.28 198.09 -7.66Q198.09 -10.05 198.99 -11.85Q199.89 -13.64 201.51 -14.63Q203.13 -15.62 205.26 -15.62Q207.44 -15.62 209.07 -14.63Q210.69 -13.64 211.6 -11.85Q212.5 -10.05 212.5 -7.66Q212.5 -5.28 211.58 -3.49Q210.67 -1.69 209.04 -0.7Q207.42 0.29 205.26 0.29ZM205.26 -1.85Q206.8 -1.85 207.9 -2.56Q209 -3.28 209.62 -4.59Q210.23 -5.9 210.23 -7.66Q210.23 -9.44 209.62 -10.75Q209 -12.06 207.9 -12.77Q206.8 -13.49 205.26 -13.49Q203.76 -13.49 202.65 -12.78Q201.54 -12.08 200.94 -10.77Q200.33 -9.46 200.33 -7.66Q200.33 -5.87 200.94 -4.56Q201.54 -3.26 202.65 -2.55Q203.76 -1.85 205.26 -1.85Z M222.22 0V-15.33H225.52L230.08 -3.54H229.68L234.23 -15.33H237.51V0H235.27V-12.74L235.47 -12.69L230.96 -1.32H228.78L224.27 -12.69L224.47 -12.74V0Z M247.85 0V-15.33H250.1V0Z M266.97 0.29Q264.84 0.29 263.22 -0.7Q261.6 -1.69 260.7 -3.5Q259.8 -5.3 259.8 -7.68Q259.8 -10.05 260.7 -11.85Q261.6 -13.64 263.22 -14.63Q264.84 -15.62 266.97 -15.62Q269.32 -15.62 271.05 -14.45Q272.78 -13.29 273.53 -11.22L271.44 -10.45Q270.89 -11.88 269.74 -12.68Q268.6 -13.49 266.97 -13.49Q265.47 -13.49 264.36 -12.77Q263.25 -12.06 262.65 -10.77Q262.04 -9.48 262.04 -7.68Q262.04 -5.87 262.65 -4.58Q263.25 -3.28 264.36 -2.56Q265.47 -1.85 266.97 -1.85Q268.6 -1.85 269.74 -2.65Q270.89 -3.45 271.44 -4.88L273.53 -4.14Q272.78 -2.09 271.05 -0.9Q269.32 0.29 266.97 0.29Z M283.01 0V-15.33H285.25V0Z M295.59 0V-15.33H297.84V-2H304.59V0Z M313.59 0V-15.33H323.73V-13.33H315.83V-8.84H323.07V-6.84H315.83V-2H323.73V0Z"/></svg></figure>
+      </div>
+      <ul class="specimens">
+        <li><p class="signature signature--caps">Pilates à domicile</p><span class="specimens__desc">Signature sous le logo · capitales espacées</span></li>
+        <li><p class="signature">Pilates, avec aplomb.</p><span class="specimens__desc">Devise · en-tête de la feuille de salle, pied de page</span></li>
+        <li><p class="signature">L’élégance publique. La discipline privée.</p><span class="specimens__desc">Ligne de campagne · réservée aux moments forts (IV. La maison, réseaux)</span></li>
+        <li><p class="mono">Zone de protection : la hauteur du « L » tout autour<br>Taille minimale : 120 px (horizontale), 24 px (monogramme)<br>Laiton : sur forest ou ink uniquement<br>Pas de ® tant que la marque n’est pas enregistrée</p><span class="specimens__desc">Règles d’usage</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== Planche 3 : couleurs ===== -->
+  <section class="wrap grid planche" aria-labelledby="t-couleurs">
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">3 / 9</span></div>
+    <header class="planche__tete">
+      <p class="label">Planche 3</p>
       <h2 class="planche__titre" id="t-couleurs">Couleurs</h2>
-      <p class="planche__note">Six teintes, une seule voix. La craie domine, l’encre écrit, le sang-de-bœuf ne sert qu’aux appels à l’action et aux filets.</p>
+      <p class="planche__note">Les six teintes du brief, plus un laiton tiré de vos planches. La craie domine, l’encre écrit, le sang-de-bœuf ne sert qu’aux appels à l’action et aux filets.</p>
     </header>
     <div class="planche__corps">
       <div class="sous">
@@ -533,24 +610,25 @@ code{font-family:var(--mono);font-size:.92em}
           <li><span class="puce" style="--c:var(--forest)"></span><span class="nuancier__nom">Forest</span><code class="nuancier__hex">#1F3A2F</code><span class="nuancier__role">Entracte (quiz), velours sombre.</span><span class="nuancier__ratio">chalk sur forest 10,7 : 1 · AAA</span></li>
           <li><span class="puce" style="--c:var(--oxblood)"></span><span class="nuancier__nom">Oxblood</span><code class="nuancier__hex">#5B1A1E</code><span class="nuancier__role">Appels à l’action, filets, lignes de cote. Rien d’autre.</span><span class="nuancier__ratio">chalk sur oxblood 11,4 : 1 · AAA</span></li>
           <li><span class="puce" style="--c:var(--parquet)"></span><span class="nuancier__nom">Parquet</span><code class="nuancier__hex">#A9784F</code><span class="nuancier__role">Décor uniquement : frise point de Hongrie. Jamais de texte.</span><span class="nuancier__ratio">sur chalk 3,3 : 1 · ornement seulement</span></li>
+          <li><span class="puce" style="--c:var(--laiton)"></span><span class="nuancier__nom">Laiton <span class="soft">(planches)</span></span><code class="nuancier__hex">#B79B6A</code><span class="nuancier__role">Monogramme et détails sur fond sombre : coffret, pied de page.</span><span class="nuancier__ratio">sur ink 6,4 : 1 · sur forest 4,6 : 1 · jamais sur chalk (2,3 : 1)</span></li>
           <li><span class="puce" style="--c:var(--ink-soft)"></span><span class="nuancier__nom">Ink adouci <span class="soft">(dérivé)</span></span><code class="nuancier__hex">#57534C</code><span class="nuancier__role">Légendes, mentions, texte secondaire.</span><span class="nuancier__ratio">sur chalk 6,7 : 1 · sur pierre 5,3 : 1 · AA</span></li>
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- ===== Planche 3 : typographie ===== -->
+  <!-- ===== Planche 4 : typographie ===== -->
   <section class="wrap grid planche" aria-labelledby="t-typo">
-    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">3 / 8</span></div>
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">4 / 9</span></div>
     <header class="planche__tete">
-      <p class="label">Planche 3</p>
+      <p class="label">Planche 4</p>
       <h2 class="planche__titre" id="t-typo">Typographie</h2>
-      <p class="planche__note">Deux distributions possibles. Fichiers woff2 servis depuis le thème, sous-ensemble latin, licence OFL. Le mono ne sert qu’aux cotes et aux specs.</p>
+      <p class="planche__note">Deux distributions possibles ; le bouton « Titres » en haut de page bascule toute la feuille. Fichiers woff2 servis depuis le thème, sous-ensemble latin, licence OFL. Le mono ne sert qu’aux cotes et aux specs.</p>
     </header>
     <div class="planche__corps">
-      <article class="paire" aria-labelledby="paire-a">
+      <article class="paire paire--a" aria-labelledby="paire-a">
         <div class="paire__entete">
-          <h3 class="paire__nom" id="paire-a">A. <em>Piste par défaut</em></h3>
+          <h3 class="paire__nom" id="paire-a">A. <em>Didone, piste du brief</em></h3>
           <p class="mono soft">Bodoni Moda · Hanken Grotesk · IBM Plex Mono — ≈ 150 Ko au premier affichage</p>
         </div>
         <p class="paire__specimen">Le <span class="nowrap">mini-reformer</span> à chariot, <em>pensé pour l’appartement.</em></p>
@@ -565,7 +643,7 @@ code{font-family:var(--mono);font-size:.92em}
         <p class="paire__pourquoi">Un Didone à axe vertical, l’esthétique typographique de l’époque du Palais Garnier (1875). Contrastes vifs, l’italique sert d’accent. La version variable ajuste l’œil au corps : les déliés s’affinent en grand titre.</p>
         <div class="t-scroll">
           <table class="echelle">
-            <caption class="label soft">Échelle — piste A</caption>
+            <caption class="label soft">Échelle — piste A (piste B : titres +10 %)</caption>
             <thead><tr><th scope="col">Rôle</th><th scope="col">Réglage</th><th scope="col">390 px</th><th scope="col">1 440 px</th></tr></thead>
             <tbody>
               <tr><td>Titre (H1)</td><td>Bodoni Moda 400, italique en accent</td><td class="n">40 px / 1,02</td><td class="n">92 px / 1,02</td></tr>
@@ -582,8 +660,8 @@ code{font-family:var(--mono);font-size:.92em}
 
       <article class="paire paire--b" aria-labelledby="paire-b">
         <div class="paire__entete">
-          <h3 class="paire__nom" id="paire-b">B. <em>Variante</em></h3>
-          <p class="mono soft">Baskervville · Ysabeau Office · IBM Plex Mono — ≈ 145 Ko</p>
+          <h3 class="paire__nom" id="paire-b">B. <em>Garalde, d’après vos planches</em></h3>
+          <p class="mono soft">Cormorant Garamond · Hanken Grotesk · IBM Plex Mono — ≈ 150 Ko</p>
         </div>
         <p class="paire__specimen">Le <span class="nowrap">mini-reformer</span> à chariot, <em>pensé pour l’appartement.</em></p>
         <div class="paire__cols">
@@ -594,16 +672,16 @@ code{font-family:var(--mono);font-size:.92em}
           </div>
           <p class="paire__corps">Aplomb est né à Paris d’un constat simple : le reformer a changé notre façon de bouger, mais il ne tient ni dans un budget ni dans un deux-pièces. Nous avons gardé l’essentiel, un chariot qui glisse sur des rails, et retiré le reste. Pour pratiquer avec justesse, chez soi, avec aplomb.</p>
         </div>
-        <p class="paire__pourquoi">Baskerville redessiné par l’Atelier national de recherche typographique (Nancy). Plus littéraire, plus doux, moins « Opéra » ; Ysabeau Office garde des proportions de Garalde dans un texte sans empattement. Une maison d’édition plutôt qu’un théâtre.</p>
+        <p class="paire__pourquoi">La lettre la plus proche du logotype de vos planches, dessiné en Canela (licence payante). Cormorant Garamond est libre (OFL) : capitales larges, italique calligraphique, œil plus petit, d’où +10 % en titre. Playfair et Inter, proposés par les planches, restent exclus par le brief ; Hanken Grotesk tient le rôle d’Inter.</p>
       </article>
     </div>
   </section>
 
-  <!-- ===== Planche 4 : boutons, champs, sélecteur ===== -->
+  <!-- ===== Planche 5 : boutons, champs, sélecteur ===== -->
   <section class="wrap grid planche" aria-labelledby="t-boutons">
-    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">4 / 8</span></div>
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">5 / 9</span></div>
     <header class="planche__tete">
-      <p class="label">Planche 4</p>
+      <p class="label">Planche 5</p>
       <h2 class="planche__titre" id="t-boutons">Boutons, champs, <em>sélecteur</em></h2>
       <p class="planche__note">Angles droits, aucun dégradé, aucune ombre. Le focus clavier est toujours visible : contour encre de 2 px, décalé de 3 px.</p>
     </header>
@@ -668,12 +746,12 @@ code{font-family:var(--mono);font-size:.92em}
     </div>
   </section>
 
-  <!-- ===== Planche 5 : filets, folios, ornements ===== -->
+  <!-- ===== Planche 6 : filets, folios, ornements ===== -->
   <section class="wrap grid planche" aria-labelledby="t-filets">
-    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">5 / 8</span></div>
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">6 / 9</span></div>
     <header class="planche__tete">
-      <p class="label">Planche 5</p>
-      <h2 class="planche__titre" id="t-filets">Filets, folios, <em>ornements</em></h2>
+      <p class="label">Planche 6</p>
+      <h2 class="planche__titre" id="t-filets">Filets, ornements, <em>icônes</em></h2>
       <p class="planche__note">Le vocabulaire de la feuille de salle : actes numérotés, titres courants, points de conduite. La frise de parquet reste rare.</p>
     </header>
     <div class="planche__corps">
@@ -686,7 +764,7 @@ code{font-family:var(--mono);font-size:.92em}
           <span class="specimens__desc">Tête d’acte · chiffre romain italique, titre romain, folio mono</span>
         </li>
         <li>
-          <div class="titre-courant"><span>APLOMB — feuille de salle</span><span>III. Le programme · 4</span></div>
+          <div class="titre-courant"><span>L’APLOMB — feuille de salle</span><span>III. Le programme · 4</span></div>
           <span class="specimens__desc">Titre courant · en tête des sections longues</span>
         </li>
         <li>
@@ -702,11 +780,19 @@ code{font-family:var(--mono);font-size:.92em}
           <svg class="frise" aria-hidden="true"><defs><pattern id="hongrie" width="32" height="40" patternUnits="userSpaceOnUse"><polygon class="lame lame--a" points="-32,20 -16,20 4,0 -12,0"/><polygon class="lame lame--a" points="-32,20 -16,20 4,40 -12,40"/><polygon class="lame lame--b" points="-16,20 0,20 20,0 4,0"/><polygon class="lame lame--b" points="-16,20 0,20 20,40 4,40"/><polygon class="lame lame--a" points="0,20 16,20 36,0 20,0"/><polygon class="lame lame--a" points="0,20 16,20 36,40 20,40"/><polygon class="lame lame--b" points="16,20 32,20 52,0 36,0"/><polygon class="lame lame--b" points="16,20 32,20 52,40 36,40"/></pattern></defs><rect x="-1" y="0" width="102%" height="40" style="fill:url(#hongrie)"/><line class="joint" x1="0" y1=".5" x2="100%" y2=".5"/><line class="joint" x1="0" y1="39.5" x2="100%" y2="39.5"/></svg>
           <span class="specimens__desc">Frise point de Hongrie · parquet · ornement, jamais de texte</span>
         </li>
-        <li>
-          <svg class="plomb-grand" viewBox="0 0 12 30" aria-hidden="true"><line x1="6" y1="0" x2="6" y2="18" stroke="#5B1A1E" stroke-width="1"/><path d="M2.4 18.5h7.2l-.6 2.2L6 29.5l-3-8.8z" fill="#1B1D22"/></svg>
-          <span class="specimens__desc">Fil à plomb · marque de la maison · l’aplomb, la verticale juste</span>
-        </li>
       </ul>
+
+      <div class="sous">
+        <p class="sous__titre">Iconographie · le trait du dessin, des faits seulement</p>
+        <ul class="icones">
+          <li><svg viewBox="0 0 44 44" aria-hidden="true"><line x1="4" y1="30" x2="40" y2="30"/><line x1="4" y1="33" x2="40" y2="33"/><rect x="9" y="17" width="16" height="9"/><circle cx="12.5" cy="28" r="2"/><circle cx="21.5" cy="28" r="2"/><line x1="29" y1="21.5" x2="38" y2="21.5"/><polyline points="35,18.5 38,21.5 35,24.5"/></svg>Chariot sur rails acier<small>I. Le chariot</small></li>
+          <li><svg viewBox="0 0 44 44" aria-hidden="true"><polyline points="6,34 20,12 22,12 36,34"/><line x1="10" y1="34" x2="21" y2="16"/><line x1="32" y1="34" x2="23" y2="16"/><circle cx="21" cy="11" r="1.6" class="plein"/><line x1="4" y1="38" x2="40" y2="38"/></svg>Se plie en deux<small>Charnière centrale</small></li>
+          <li><svg viewBox="0 0 44 44" aria-hidden="true"><polyline points="8,40 8,5 36,5 36,40"/><polyline points="12,40 12,9 32,9 32,40"/><rect x="25" y="14" width="4" height="25"/><line x1="4" y1="40" x2="40" y2="40"/></svg>Se range debout<small>Derrière une porte</small></li>
+          <li><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="7" cy="22" r="2.5"/><path d="M9.5 20.5C18 18 26 18 34.5 20.5M9.5 23.5C18 26 26 26 34.5 23.5"/><rect x="34.5" y="17" width="5" height="10"/></svg>Élastiques<small>Plutôt que des ressorts</small></li>
+          <li><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="6" y="6" width="10" height="10"/><rect x="28" y="6" width="10" height="10"/><rect x="6" y="28" width="10" height="10"/><rect x="9.5" y="9.5" width="3" height="3" class="plein"/><rect x="31.5" y="9.5" width="3" height="3" class="plein"/><rect x="9.5" y="31.5" width="3" height="3" class="plein"/><rect x="21" y="21" width="3" height="3" class="plein"/><rect x="28" y="28" width="3" height="3" class="plein"/><rect x="34" y="34" width="4" height="4" class="plein"/><rect x="21" y="8" width="3" height="3" class="plein"/></svg>Programme par QR code<small>28 jours d’aplomb</small></li>
+          <li><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M4 36L14 26L24 36M14 36L24 26L34 36M24 36L34 26L40 32"/><line x1="4" y1="38" x2="40" y2="38"/><rect x="14" y="10" width="16" height="6"/><line x1="18" y1="16" x2="18" y2="19"/><line x1="26" y1="16" x2="26" y2="19"/></svg>Patins feutre<small>Édition Studio</small></li>
+        </ul>
+      </div>
 
       <div class="sous" id="entracte">
         <p class="sous__titre">Entracte · bandeau forest</p>
@@ -743,13 +829,13 @@ code{font-family:var(--mono);font-size:.92em}
     </div>
   </section>
 
-  <!-- ===== Planche 6 : cadres photo ===== -->
+  <!-- ===== Planche 7 : cadres photo ===== -->
   <section class="wrap grid planche" aria-labelledby="t-cadres">
-    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">6 / 8</span></div>
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">7 / 9</span></div>
     <header class="planche__tete">
-      <p class="label">Planche 6</p>
+      <p class="label">Planche 7</p>
       <h2 class="planche__titre" id="t-cadres">Cadres <em>photo</em></h2>
-      <p class="planche__note">Aucune image de synthèse ni de banque d’images. Chaque cadre attend sa photo : ratio fixe, fond pierre, didascalie du plan. Remplaçable par un réglage image_picker.</p>
+      <p class="planche__note">Sur le site, aucune image générée ni de banque d’images. Chaque cadre attend sa photo : ratio fixe, fond pierre, didascalie du plan, réglage image_picker. Ici, vos images de référence montrent un cadre rempli ; elles ne seront pas publiées.</p>
     </header>
     <div class="planche__corps">
       <div class="cadres">
@@ -777,6 +863,33 @@ code{font-family:var(--mono);font-size:.92em}
         </figure>
       </div>
       <div class="sous">
+        <p class="sous__titre">Cadres remplis · vos références, à titre d’exemple</p>
+        <div class="soir on-dark">
+          <p class="label">IV. La maison · moment fort</p>
+          <p class="soir__titre">L’élégance publique. <span>La discipline privée.</span></p>
+          <div class="soir__cadres">
+            <figure class="cadre">
+              <div class="cadre__zone cadre__zone--image" style="--ratio:3/2"><img src="references/ref-soiree.jpg" alt="Référence : une femme en robe de satin bordeaux, de dos, lors d’une soirée parisienne aux chandelles." width="1400" height="933" loading="lazy" decoding="async"><span class="ref">Référence · image générée · non publiée</span></div>
+              <figcaption class="cadre__legende"><b>Plan 09</b> <span>— l’élégance publique, une soirée, de dos</span></figcaption>
+            </figure>
+            <figure class="cadre">
+              <div class="cadre__zone cadre__zone--image" style="--ratio:4/5"><img src="references/ref-posture.jpg" alt="Référence : gainage latéral en justaucorps bordeaux, sur un tapis posé sur parquet, lumière rasante." width="1024" height="1280" loading="lazy" decoding="async"><span class="ref">Référence · image générée</span></div>
+              <figcaption class="cadre__legende"><b>Plan 06</b> <span>— la discipline privée, gainage latéral</span></figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+      <div class="cadres-refs">
+        <figure class="cadre">
+          <div class="cadre__zone cadre__zone--image" style="--ratio:3/2"><img src="references/ref-coffret.jpg" alt="Référence : coffret en toile vert forêt, ruban de satin bordeaux et carte crème, sur un socle de travertin." width="1400" height="933" loading="lazy" decoding="async"><span class="ref">Référence · image générée</span></div>
+          <figcaption class="cadre__legende"><b>Plan 07</b> <span>— le coffret, toile forest et ruban bordeaux</span></figcaption>
+        </figure>
+        <figure class="cadre">
+          <div class="cadre__zone cadre__zone--image" style="--ratio:4/5"><img src="references/ref-sac.jpg" alt="Référence : sac en toile crème et gants de satin bordeaux suspendus à une patère en laiton, sur une porte laquée." width="1086" height="1357" loading="lazy" decoding="async"><span class="ref">Référence · image générée</span></div>
+          <figcaption class="cadre__legende"><b>Plan 10</b> <span>— la housse et le sac, une porte laquée</span></figcaption>
+        </figure>
+      </div>
+      <div class="sous">
         <p class="sous__titre">Liste des plans à photographier</p>
         <table class="plans">
           <thead><tr><th scope="col">Plan</th><th scope="col">Sujet</th><th scope="col">Format</th><th scope="col">Emplacement</th></tr></thead>
@@ -787,19 +900,21 @@ code{font-family:var(--mono);font-size:.92em}
             <tr><td>04</td><td>Le pliage en trois temps</td><td class="n">3 × 4:5</td><td>II. L’appartement, « Comment ça marche »</td></tr>
             <tr><td>05</td><td>Rangé debout contre une moulure</td><td class="n">4:5</td><td>II. L’appartement, galerie</td></tr>
             <tr><td>06</td><td>Trois postures</td><td class="n">3 × 4:5</td><td>III. Le programme</td></tr>
-            <tr><td>07</td><td>Flat-lay du coffret</td><td class="n">4:5</td><td>Sélecteur d’édition, galerie</td></tr>
+            <tr><td>07</td><td>Le coffret : toile forest, ruban bordeaux, carte</td><td class="n">3:2 · 4:5</td><td>Sélecteur d’édition, galerie</td></tr>
             <tr><td>08</td><td>Les feutres sur parquet</td><td class="n">3:2</td><td>II. L’appartement, FAQ sol</td></tr>
+            <tr><td>09</td><td>L’élégance publique : soirée, robe bordeaux, de dos</td><td class="n">3:2</td><td>IV. La maison</td></tr>
+            <tr><td>10</td><td>La housse ou le sac sur une porte laquée, patère laiton</td><td class="n">4:5</td><td>Édition Studio, réseaux</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <!-- ===== Planche 7 : dessin technique ===== -->
+  <!-- ===== Planche 8 : dessin technique ===== -->
   <section class="wrap grid planche" aria-labelledby="t-dessin">
-    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">7 / 8</span></div>
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">8 / 9</span></div>
     <header class="planche__tete">
-      <p class="label">Planche 7</p>
+      <p class="label">Planche 8</p>
       <h2 class="planche__titre" id="t-dessin">Dessin <em>technique</em></h2>
       <p class="planche__note">Trait encre, cotes oxblood en Plex Mono. Le chariot parcourt la course C au défilement ; c’est la seule animation forte du site.</p>
     </header>
@@ -846,11 +961,11 @@ code{font-family:var(--mono);font-size:.92em}
     </div>
   </section>
 
-  <!-- ===== Planche 8 : ton ===== -->
+  <!-- ===== Planche 9 : ton ===== -->
   <section class="wrap grid planche" id="ton" aria-labelledby="t-ton">
-    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">8 / 8</span></div>
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">9 / 9</span></div>
     <header class="planche__tete">
-      <p class="label">Planche 8</p>
+      <p class="label">Planche 9</p>
       <h2 class="planche__titre" id="t-ton">Ton, <em>microtypographie</em></h2>
       <p class="planche__note">Vouvoiement, phrases courtes, pas de point d’exclamation. La retenue fait le luxe ; la vérité du produit fait la vente.</p>
     </header>
@@ -870,6 +985,7 @@ code{font-family:var(--mono);font-size:.92em}
             <li>réservation prioritaire, remboursable à tout moment</li>
             <li>conçu à Paris, fabriqué par un atelier partenaire</li>
             <li>bêta-testeuse, produit prêté</li>
+            <li>L’APLOMB dans le logo, Aplomb dans les phrases</li>
           </ul>
         </div>
         <div class="sous">
@@ -880,6 +996,8 @@ code{font-family:var(--mono);font-size:.92em}
             <li>révolutionnaire, ultime, incroyable</li>
             <li>−50 %, prix barré, offre limitée</li>
             <li>marquage CE, charge max ou dB non mesurés</li>
+            <li>® avant enregistrement de la marque</li>
+            <li>garantie 3 ans, programme 12 mois, livraison UE (non confirmés)</li>
           </ul>
         </div>
       </div>
@@ -893,10 +1011,7 @@ code{font-family:var(--mono);font-size:.92em}
   <svg class="frise" aria-hidden="true"><defs><pattern id="hongrie-pied" width="32" height="40" patternUnits="userSpaceOnUse"><polygon class="lame lame--a" points="-32,20 -16,20 4,0 -12,0"/><polygon class="lame lame--a" points="-32,20 -16,20 4,40 -12,40"/><polygon class="lame lame--b" points="-16,20 0,20 20,0 4,0"/><polygon class="lame lame--b" points="-16,20 0,20 20,40 4,40"/><polygon class="lame lame--a" points="0,20 16,20 36,0 20,0"/><polygon class="lame lame--a" points="0,20 16,20 36,40 20,40"/><polygon class="lame lame--b" points="16,20 32,20 52,0 36,0"/><polygon class="lame lame--b" points="16,20 32,20 52,40 36,40"/></pattern></defs><rect x="-1" y="0" width="102%" height="40" style="fill:url(#hongrie-pied)"/><line class="joint" x1="0" y1=".5" x2="100%" y2=".5"/><line class="joint" x1="0" y1="39.5" x2="100%" y2="39.5"/></svg>
   <div class="wrap grid pied__grille">
     <div class="pied__marque" id="maison">
-      <a class="wordmark" href="#top" aria-label="Aplomb, retour en haut">
-        <svg viewBox="0 0 12 30" aria-hidden="true"><line x1="6" y1="0" x2="6" y2="18" stroke="#A9784F" stroke-width="1"/><path d="M2.4 18.5h7.2l-.6 2.2L6 29.5l-3-8.8z" fill="#F3EFE7"/></svg>
-        <span>APLOMB</span>
-      </a>
+      <a class="marque" href="#top" aria-label="L’Aplomb, retour en haut"><svg class="logo logo--principal" viewBox="0 0 481.7 271.08" aria-hidden="true" focusable="false" fill="currentColor"><g class="logo__mono" transform="translate(165.38 0) scale(1.64)"><path d="M48.8 10C54.2 22.5 63.6 44.2 73.6 67.4C75.1 70.5 78.6 71.8 83.4 70.8C80.4 69.8 78.9 67.9 77.9 65.4C69.6 44.6 59.9 22.2 53.6 7.1C52.9 5.5 51.3 4.9 50.2 5.8L48.8 10Z"/><path d="M50.8 5.3C48.3 5.5 45.8 7 43.9 9.7C46.1 7.7 48.5 6.6 50.7 6.6Z"/><path d="M49.3 8.3L50.3 8.7L28.3 77.3L27.3 77Z"/><path d="M3.5 61.8C19.8 51.6 37.9 46.5 54 48.5C66.2 50.1 77.4 56.6 87.6 67.1C76.9 58.8 66.2 53.5 54 51.7C38.4 49.6 20.9 53.1 3.5 61.8Z"/></g><path class="logo__mot" transform="translate(0 215.75)" d="M19.4 -54.3V-8.5Q19.4 -5.9 19.95 -4.55Q20.5 -3.2 22.05 -2.75Q23.6 -2.3 26.7 -2.3H35.2Q41.7 -2.3 45.8 -6.1Q49.9 -9.9 51.2 -16.2Q51.2 -16.5 51.75 -16.45Q52.3 -16.4 52.3 -16.1Q52 -13.2 51.7 -9.1Q51.4 -5 51.4 -1.5Q51.4 0 49.9 0H3.3Q3.1 0 3.1 -0.6Q3.1 -1.2 3.3 -1.2Q6.8 -1.2 8.55 -1.7Q10.3 -2.2 10.9 -3.7Q11.5 -5.2 11.5 -8.1V-54.4Q11.5 -57.3 10.9 -58.75Q10.3 -60.2 8.55 -60.75Q6.8 -61.3 3.3 -61.3Q3.1 -61.3 3.1 -61.9Q3.1 -62.5 3.3 -62.5Q5.7 -62.5 8.85 -62.35Q12 -62.2 15.4 -62.2Q19 -62.2 22.05 -62.35Q25.1 -62.5 27.5 -62.5Q27.7 -62.5 27.7 -61.9Q27.7 -61.3 27.5 -61.3Q24 -61.3 22.3 -60.75Q20.6 -60.2 20 -58.7Q19.4 -57.2 19.4 -54.3Z M60.1 -63Q63.3 -63 65.1 -60.8Q66.9 -58.6 66.9 -54Q66.9 -49.1 64.7 -44.85Q62.5 -40.6 58.6 -36.5Q58.2 -36.2 57.9 -36.55Q57.6 -36.9 57.8 -37.2Q60.4 -40.6 61.15 -43.6Q61.9 -46.6 61.9 -49.9Q61.9 -52.9 61.15 -54.4Q60.4 -55.9 59.3 -56.9L63.1 -57.6Q63.2 -55.9 62.15 -55Q61.1 -54.1 59.4 -54.1Q57.3 -54.1 56.15 -55.3Q55 -56.5 55 -58.5Q55 -60.7 56.35 -61.85Q57.7 -63 60.1 -63Z M86.2 -26.1 87.4 -28.3H114.6L115.3 -26.1ZM137.9 -1.2Q138.4 -1.2 138.4 -0.6Q138.4 0 137.9 0Q135 0 131.95 -0.2Q128.9 -0.4 126 -0.4Q122.8 -0.4 120.45 -0.2Q118.1 0 115.2 0Q114.8 0 114.8 -0.6Q114.8 -1.2 115.2 -1.2Q120.1 -1.2 121.2 -2.75Q122.3 -4.3 120.1 -8.9L98.6 -53.6L101.8 -58.4L82.3 -13.2Q79.7 -7.1 82 -4.15Q84.3 -1.2 90.6 -1.2Q91.1 -1.2 91.1 -0.6Q91.1 0 90.6 0Q87.6 0 85.1 -0.2Q82.6 -0.4 78.8 -0.4Q75.1 -0.4 72.85 -0.2Q70.6 0 67.4 0Q67 0 67 -0.6Q67 -1.2 67.4 -1.2Q70.1 -1.2 72.1 -2.25Q74.1 -3.3 75.95 -6.1Q77.8 -8.9 80 -14.1L101.3 -63.2Q101.4 -63.5 102 -63.55Q102.6 -63.6 102.7 -63.2L126.7 -13.7Q129.1 -8.8 130.85 -6.05Q132.6 -3.3 134.3 -2.25Q136 -1.2 137.9 -1.2Z M161.6 -8.5Q161.6 -5.5 162.35 -3.95Q163.1 -2.4 165.5 -1.8Q167.9 -1.2 172.7 -1.2Q173 -1.2 173 -0.6Q173 0 172.7 0Q169.5 0 165.75 -0.1Q162 -0.2 157.6 -0.2Q154.3 -0.2 151.15 -0.1Q148 0 145.5 0Q145.3 0 145.3 -0.6Q145.3 -1.2 145.5 -1.2Q149 -1.2 150.75 -1.7Q152.5 -2.2 153.05 -3.7Q153.6 -5.2 153.6 -8.1V-54.4Q153.6 -57.3 153.05 -58.75Q152.5 -60.2 150.75 -60.75Q149 -61.3 145.5 -61.3Q145.3 -61.3 145.3 -61.9Q145.3 -62.5 145.5 -62.5Q148 -62.5 151.1 -62.35Q154.2 -62.2 157.5 -62.2Q160.1 -62.2 163.85 -62.5Q167.6 -62.8 171.4 -62.8Q177.2 -62.8 181.85 -61.1Q186.5 -59.4 189.3 -55.8Q192.1 -52.2 192.2 -46.4Q192.2 -41.2 190.3 -37.4Q188.4 -33.6 185.15 -31.1Q181.9 -28.6 177.95 -27.4Q174 -26.2 170.2 -26.2Q169 -26.2 167.75 -26.3Q166.5 -26.4 165.4 -26.7Q165 -26.8 165.15 -27.45Q165.3 -28.1 165.6 -28Q166.5 -27.8 167.45 -27.7Q168.4 -27.6 169.1 -27.6Q172.9 -27.6 176.1 -29.4Q179.3 -31.2 181.3 -34.95Q183.3 -38.7 183.3 -44.3Q183.3 -49.7 181.45 -53.4Q179.6 -57.1 176.3 -59.1Q173 -61.1 168.7 -61.1Q165.9 -61.1 164.35 -60.7Q162.8 -60.3 162.2 -58.8Q161.6 -57.3 161.6 -54.2Z M219.1 -54.3V-8.5Q219.1 -5.9 219.65 -4.55Q220.2 -3.2 221.75 -2.75Q223.3 -2.3 226.4 -2.3H234.9Q241.4 -2.3 245.5 -6.1Q249.6 -9.9 250.9 -16.2Q250.9 -16.5 251.45 -16.45Q252 -16.4 252 -16.1Q251.7 -13.2 251.4 -9.1Q251.1 -5 251.1 -1.5Q251.1 0 249.6 0H203Q202.8 0 202.8 -0.6Q202.8 -1.2 203 -1.2Q206.5 -1.2 208.25 -1.7Q210 -2.2 210.6 -3.7Q211.2 -5.2 211.2 -8.1V-54.4Q211.2 -57.3 210.6 -58.75Q210 -60.2 208.25 -60.75Q206.5 -61.3 203 -61.3Q202.8 -61.3 202.8 -61.9Q202.8 -62.5 203 -62.5Q205.4 -62.5 208.55 -62.35Q211.7 -62.2 215.1 -62.2Q218.7 -62.2 221.75 -62.35Q224.8 -62.5 227.2 -62.5Q227.4 -62.5 227.4 -61.9Q227.4 -61.3 227.2 -61.3Q223.7 -61.3 222 -60.75Q220.3 -60.2 219.7 -58.7Q219.1 -57.2 219.1 -54.3Z M293.5 1.2Q286.3 1.2 280.45 -1.35Q274.6 -3.9 270.45 -8.4Q266.3 -12.9 264.05 -18.75Q261.8 -24.6 261.8 -31.2Q261.8 -39.3 264.95 -45.4Q268.1 -51.5 273.3 -55.55Q278.5 -59.6 284.7 -61.6Q290.9 -63.6 297 -63.6Q304.4 -63.6 310.25 -60.95Q316.1 -58.3 320.2 -53.8Q324.3 -49.3 326.45 -43.6Q328.6 -37.9 328.6 -31.9Q328.6 -24.9 325.8 -18.9Q323 -12.9 318.15 -8.4Q313.3 -3.9 306.95 -1.35Q300.6 1.2 293.5 1.2ZM297 -1Q303.3 -1 308.45 -4.25Q313.6 -7.5 316.55 -13.75Q319.5 -20 319.5 -29.1Q319.5 -38.4 316.25 -45.65Q313 -52.9 307.05 -57.05Q301.1 -61.2 292.9 -61.2Q282.4 -61.2 276.65 -54.1Q270.9 -47 270.9 -34.7Q270.9 -27.6 272.75 -21.45Q274.6 -15.3 278.1 -10.7Q281.6 -6.1 286.4 -3.55Q291.2 -1 297 -1Z M348.9 -11.4 349.9 -60.2 352.4 -60 351.4 -11.4Q351.3 -6.2 353.25 -3.7Q355.2 -1.2 359.8 -1.2Q360.1 -1.2 360.1 -0.6Q360.1 0 359.8 0Q357.6 0 355.3 -0.1Q353 -0.2 350.1 -0.2Q347.4 -0.2 345 -0.1Q342.6 0 340.5 0Q340.3 0 340.3 -0.6Q340.3 -1.2 340.5 -1.2Q344.7 -1.2 346.75 -3.7Q348.8 -6.2 348.9 -11.4ZM418.9 -1.2Q419.1 -1.2 419.1 -0.6Q419.1 0 418.9 0Q416.4 0 413.3 -0.1Q410.2 -0.2 406.7 -0.2Q403.4 -0.2 400.5 -0.1Q397.6 0 395.3 0Q395 0 395 -0.6Q395 -1.2 395.3 -1.2Q400.2 -1.2 401.6 -2.5Q403 -3.8 402.7 -8.1L400.7 -55.2L404.6 -60.8L378.7 -0.7Q378.6 -0.3 377.95 -0.3Q377.3 -0.3 377.1 -0.7L351 -54.2Q347.5 -61.3 341.2 -61.3Q341 -61.3 341 -61.9Q341 -62.5 341.2 -62.5Q343 -62.5 344.95 -62.4Q346.9 -62.3 348.3 -62.3Q350.2 -62.3 351.75 -62.4Q353.3 -62.5 354.1 -62.5Q355.5 -62.5 356.3 -61.55Q357.1 -60.6 358.7 -57.3L381.4 -11.2L377.7 -4.8L401.8 -60Q402.3 -61.2 403.05 -61.85Q403.8 -62.5 404.8 -62.5Q405.5 -62.5 406.55 -62.4Q407.6 -62.3 409 -62.3Q411.8 -62.3 413.7 -62.4Q415.6 -62.5 417.6 -62.5Q417.8 -62.5 417.8 -61.9Q417.8 -61.3 417.6 -61.3Q412.8 -61.3 410.6 -59.75Q408.4 -58.2 408.5 -54.1L410.6 -8.1Q410.8 -5.2 411.4 -3.7Q412 -2.2 413.7 -1.7Q415.4 -1.2 418.9 -1.2Z M454.9 -34 456 -35.3Q462.2 -35.3 466.85 -33.1Q471.5 -30.9 474.05 -27.1Q476.6 -23.3 476.6 -18.3Q476.6 -13 473.85 -8.75Q471.1 -4.5 466.35 -2.05Q461.6 0.4 455.7 0.4Q452.7 0.4 448.6 0.1Q444.5 -0.2 441.1 -0.2Q437.7 -0.2 434.6 -0.1Q431.5 0 429 0Q428.7 0 428.7 -0.6Q428.7 -1.2 429 -1.2Q432.3 -1.2 434.1 -1.7Q435.9 -2.2 436.55 -3.7Q437.2 -5.2 437.2 -8.1V-54.4Q437.2 -57.3 436.6 -58.75Q436 -60.2 434.25 -60.75Q432.5 -61.3 429.1 -61.3Q428.9 -61.3 428.9 -61.9Q428.9 -62.5 429.1 -62.5Q431.6 -62.5 434.65 -62.35Q437.7 -62.2 441.1 -62.2Q443.8 -62.2 447.1 -62.5Q450.4 -62.8 453 -62.8Q459 -62.8 462.85 -61.15Q466.7 -59.5 468.6 -56.55Q470.5 -53.6 470.5 -49.7Q470.5 -44.1 466.3 -39.9Q462.1 -35.7 454.9 -34ZM451.1 -61.1Q448.9 -61.1 447.55 -60.65Q446.2 -60.2 445.65 -58.75Q445.1 -57.3 445.1 -54.2V-34.6L441.8 -35.4Q445 -35.2 447.1 -35.15Q449.2 -35.1 449.5 -35.1Q456.5 -35.1 459.6 -39.1Q462.7 -43.1 462.7 -48.9Q462.7 -52.5 461.45 -55.25Q460.2 -58 457.7 -59.55Q455.2 -61.1 451.1 -61.1ZM454.1 -1.6Q461.4 -1.6 464.75 -5.35Q468.1 -9.1 468.1 -15.9Q468.1 -23.3 464 -28.05Q459.9 -32.8 452 -32.8Q450 -32.9 447.4 -32.8Q444.8 -32.7 442.1 -32.3L445.1 -33.4V-8.1Q445.1 -5.8 445.75 -4.35Q446.4 -2.9 448.35 -2.25Q450.3 -1.6 454.1 -1.6Z"/><path class="logo__sig" transform="translate(78.47 265.08)" d="M1.65 0V-15.33H6.38Q8.91 -15.33 10.22 -14.23Q11.53 -13.13 11.53 -10.96Q11.53 -8.8 10.21 -7.66Q8.89 -6.51 6.38 -6.51H3.87V0ZM3.87 -8.49H6.16Q7.63 -8.49 8.47 -9.07Q9.31 -9.66 9.31 -10.93Q9.31 -12.19 8.5 -12.76Q7.7 -13.33 6.16 -13.33H3.87Z M20.94 0V-15.33H23.19V0Z M33.53 0V-15.33H35.77V-2H42.53V0Z M50.18 0 56.14 -15.33H57.88L63.82 0H61.38L57.02 -12.08L52.65 0ZM53.7 -3.41 54.38 -5.41H59.62L60.37 -3.41Z M74.43 0V-13.33H69.41V-15.33H81.69V-13.33H76.69V0Z M90.68 0V-15.33H100.83V-13.33H92.93V-8.84H100.17V-6.84H92.93V-2H100.83V0Z M115.19 0.26Q112.84 0.26 111.33 -0.97Q109.82 -2.2 109.49 -4.25L111.67 -4.77Q111.91 -3.28 112.88 -2.51Q113.85 -1.74 115.26 -1.74Q116.07 -1.74 116.7 -2.04Q117.33 -2.33 117.7 -2.89Q118.07 -3.45 118.07 -4.16Q118.07 -4.91 117.67 -5.39Q117.26 -5.87 116.52 -6.26Q115.79 -6.64 114.75 -7.04Q113.41 -7.55 112.45 -8.14Q111.5 -8.73 110.98 -9.56Q110.46 -10.38 110.46 -11.55Q110.46 -12.74 111.04 -13.65Q111.63 -14.56 112.68 -15.09Q113.74 -15.62 115.13 -15.62Q116.6 -15.62 117.75 -14.95Q118.91 -14.28 119.59 -12.94L117.81 -11.84Q117.33 -12.72 116.63 -13.18Q115.94 -13.64 115.06 -13.64Q114.38 -13.64 113.84 -13.38Q113.3 -13.11 113 -12.66Q112.71 -12.21 112.71 -11.59Q112.71 -10.96 113.07 -10.49Q113.43 -10.03 114.15 -9.67Q114.86 -9.31 115.94 -8.91Q117.3 -8.38 118.27 -7.78Q119.24 -7.17 119.77 -6.34Q120.3 -5.5 120.3 -4.29Q120.3 -2.97 119.65 -1.95Q119 -0.92 117.85 -0.33Q116.71 0.26 115.19 0.26Z M141.33 0 147.29 -15.33H149.03L154.97 0H152.53L148.17 -12.08L143.79 0ZM144.85 -3.41 145.53 -5.41H150.77L151.51 -3.41ZM147.36 -16.72 144.39 -19.82H146.67L148.96 -16.72Z M176.75 0V-15.33H181.06Q184.84 -15.33 186.92 -13.3Q189 -11.26 189 -7.55Q189 -3.89 186.94 -1.95Q184.89 0 181.04 0ZM178.99 -2.07H180.84Q182.71 -2.07 184.03 -2.6Q185.35 -3.12 186.04 -4.36Q186.74 -5.59 186.74 -7.63Q186.74 -9.66 186.05 -10.9Q185.37 -12.14 184.1 -12.71Q182.82 -13.27 181.04 -13.27H178.99Z M205.26 0.29Q203.13 0.29 201.51 -0.7Q199.89 -1.69 198.99 -3.49Q198.09 -5.28 198.09 -7.66Q198.09 -10.05 198.99 -11.85Q199.89 -13.64 201.51 -14.63Q203.13 -15.62 205.26 -15.62Q207.44 -15.62 209.07 -14.63Q210.69 -13.64 211.6 -11.85Q212.5 -10.05 212.5 -7.66Q212.5 -5.28 211.58 -3.49Q210.67 -1.69 209.04 -0.7Q207.42 0.29 205.26 0.29ZM205.26 -1.85Q206.8 -1.85 207.9 -2.56Q209 -3.28 209.62 -4.59Q210.23 -5.9 210.23 -7.66Q210.23 -9.44 209.62 -10.75Q209 -12.06 207.9 -12.77Q206.8 -13.49 205.26 -13.49Q203.76 -13.49 202.65 -12.78Q201.54 -12.08 200.94 -10.77Q200.33 -9.46 200.33 -7.66Q200.33 -5.87 200.94 -4.56Q201.54 -3.26 202.65 -2.55Q203.76 -1.85 205.26 -1.85Z M222.22 0V-15.33H225.52L230.08 -3.54H229.68L234.23 -15.33H237.51V0H235.27V-12.74L235.47 -12.69L230.96 -1.32H228.78L224.27 -12.69L224.47 -12.74V0Z M247.85 0V-15.33H250.1V0Z M266.97 0.29Q264.84 0.29 263.22 -0.7Q261.6 -1.69 260.7 -3.5Q259.8 -5.3 259.8 -7.68Q259.8 -10.05 260.7 -11.85Q261.6 -13.64 263.22 -14.63Q264.84 -15.62 266.97 -15.62Q269.32 -15.62 271.05 -14.45Q272.78 -13.29 273.53 -11.22L271.44 -10.45Q270.89 -11.88 269.74 -12.68Q268.6 -13.49 266.97 -13.49Q265.47 -13.49 264.36 -12.77Q263.25 -12.06 262.65 -10.77Q262.04 -9.48 262.04 -7.68Q262.04 -5.87 262.65 -4.58Q263.25 -3.28 264.36 -2.56Q265.47 -1.85 266.97 -1.85Q268.6 -1.85 269.74 -2.65Q270.89 -3.45 271.44 -4.88L273.53 -4.14Q272.78 -2.09 271.05 -0.9Q269.32 0.29 266.97 0.29Z M283.01 0V-15.33H285.25V0Z M295.59 0V-15.33H297.84V-2H304.59V0Z M313.59 0V-15.33H323.73V-13.33H315.83V-8.84H323.07V-6.84H315.83V-2H323.73V0Z"/></svg></a>
       <p class="pied__devise">Pilates, avec aplomb.</p>
     </div>
     <p class="pied__maison">Conçu à Paris, fabriqué par un atelier partenaire.</p>
@@ -910,14 +1025,27 @@ code{font-family:var(--mono);font-size:.92em}
       </ul>
     </nav>
     <div class="pied__colophon">
-      <span>© 2026 Aplomb · [SIREN] · [ADRESSE]</span>
-      <span class="fin">Fin de la feuille de style · checkpoint I</span>
+      <span>© 2026 L’Aplomb · [SIREN] · [ADRESSE]</span>
+      <span class="fin">Fin de la feuille de style · checkpoint I, v2</span>
     </div>
   </div>
 </footer>
 
 <script src="../assets/aplomb-dessin.js"></script>
 <script>
+  (function () {
+    var root = document.documentElement;
+    var boutons = document.querySelectorAll('.bascule button');
+    function choisir(p) {
+      if (p === 'a') root.setAttribute('data-paire', 'a'); else root.removeAttribute('data-paire');
+      boutons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.paire === p)); });
+      try { localStorage.setItem('aplomb-paire', p); } catch (e) {}
+    }
+    var initial = 'b';
+    try { initial = localStorage.getItem('aplomb-paire') || 'b'; } catch (e) {}
+    choisir(initial);
+    boutons.forEach(function (b) { b.addEventListener('click', function () { choisir(b.dataset.paire); }); });
+  })();
   document.querySelectorAll('form').forEach(function (f) {
     f.addEventListener('submit', function (e) { e.preventDefault(); });
   });

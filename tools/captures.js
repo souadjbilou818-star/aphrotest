@@ -27,6 +27,13 @@ const path = require('path');
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
     await page.screenshot({ path: path.join(out, `${prefix}-${s.name}-ecran.png`) });
+    // défilement complet : déclenche les images en chargement différé, puis retour en haut
+    await page.evaluate(async () => {
+      for (let y = 0; y < document.documentElement.scrollHeight; y += 600) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 60)); }
+      await Promise.all([...document.images].map((i) => (i.complete ? null : new Promise((r) => { i.onload = i.onerror = r; }))));
+      window.scrollTo(0, 0);
+    });
+    await page.waitForTimeout(300);
     const h = await page.evaluate(() => document.documentElement.scrollHeight);
     const sw = await page.evaluate(() => document.documentElement.scrollWidth);
     let i = 0;
