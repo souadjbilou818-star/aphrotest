@@ -1,4 +1,4 @@
-"""Dessin technique du mini-reformer Aplomb (SVG + calques HTML).
+"""Dessin technique du mini-reformer L’Aplomb (SVG + calques HTML).
 
 Une seule source pour la style tile et, plus tard, snippets/dessin-reformer.liquid.
 Repère : viewBox 0 0 1200 760 ; vue de dessus en haut, élévation en bas.
@@ -136,7 +136,7 @@ def svg(detail="simple", uid="d"):
         for (x1, y1, x2, y2) in [(330, 96, 330, 40), (410, 122, 410, 40)]:
             lead_mob.append(line(x1, y1, x2, y2, "d-l") + circle(x1, y1, 2.4, "d-dot"))
 
-    title = "Dessin technique du mini-reformer Aplomb"
+    title = "Dessin technique du mini-reformer L’Aplomb"
     desc = ("Vue de dessus et élévation. Un plateau en bois porte deux rails en acier ; "
             "le chariot roule sur ces rails, retenu par des élastiques fixés à une barre d'ancrage. "
             "Le plateau se plie en son milieu. Cotes : A longueur dépliée, B largeur, "

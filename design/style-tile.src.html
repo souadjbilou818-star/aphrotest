@@ -385,7 +385,7 @@ code{font-family:var(--mono);font-size:.92em}
   .plans,.plans tbody,.plans tr,.plans td{display:block}
   .plans tr{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;padding:12px 0;border-top:1px solid var(--line)}
   .plans td{border:0;padding:2px 0}
-  .plans td:first-child{grid-row:1/span 3}
+  .plans td:first-child{grid-row:1/span 4;min-width:1.7em}
 }
 
 /* Planche dessin */
@@ -482,6 +482,11 @@ code{font-family:var(--mono);font-size:.92em}
 .cadre__zone--image{padding:0;overflow:hidden}
 .cadre__zone--image::before{display:none}
 .cadre__zone--image img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.credit{display:block;margin-top:2px;font:400 .625rem/1.5 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+.soir .credit{color:var(--on-dark-soft)}
+.avant-apres{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+@media (min-width:700px){.avant-apres{grid-template-columns:1fr 1fr}}
+.verdict td:first-child{white-space:normal}
 .ref{position:absolute;left:12px;bottom:12px;z-index:1;background:var(--chalk);color:var(--ink);font:400 .625rem/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:6px 8px}
 .cadres-refs{display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
 @media (min-width:860px){.cadres-refs{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);align-items:end}}
@@ -532,7 +537,7 @@ code{font-family:var(--mono);font-size:.92em}
         <input type="hidden" name="contact[tags]" value="waitlist,aplomb">
         <button class="btn" type="submit">Rejoindre la liste d'attente</button>
       </div>
-      <p class="consent">En cliquant sur « Rejoindre la liste d'attente », vous acceptez de recevoir les e-mails d'Aplomb sur le lancement. Désinscription en un clic, à tout moment. <a href="#confidentialite">Politique de confidentialité</a></p>
+      <p class="consent">En cliquant sur « Rejoindre la liste d'attente », vous acceptez de recevoir les e-mails de L'Aplomb sur le lancement. Désinscription en un clic, à tout moment. <a href="#confidentialite">Politique de confidentialité</a></p>
     </form>
     <ul class="preuves hero__preuves" aria-label="En bref">
       <li>Un vrai chariot sur rails acier</li>
@@ -555,7 +560,7 @@ code{font-family:var(--mono);font-size:.92em}
 
   <!-- ===== Planche 2 : identité ===== -->
   <section class="wrap grid planche" aria-labelledby="t-identite">
-    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">2 / 9</span></div>
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">2 / 10</span></div>
     <header class="planche__tete">
       <p class="label">Planche 2</p>
       <h2 class="planche__titre" id="t-identite">Identité</h2>
@@ -579,7 +584,7 @@ code{font-family:var(--mono);font-size:.92em}
 
   <!-- ===== Planche 3 : couleurs ===== -->
   <section class="wrap grid planche" aria-labelledby="t-couleurs">
-    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">3 / 9</span></div>
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">3 / 10</span></div>
     <header class="planche__tete">
       <p class="label">Planche 3</p>
       <h2 class="planche__titre" id="t-couleurs">Couleurs</h2>
@@ -605,7 +610,7 @@ code{font-family:var(--mono);font-size:.92em}
         <p class="sous__titre">Nuancier et contrastes (WCAG)</p>
         <ul class="nuancier">
           <li><span class="puce" style="--c:var(--chalk)"></span><span class="nuancier__nom">Chalk</span><code class="nuancier__hex">#F3EFE7</code><span class="nuancier__role">Fond principal. Le papier du programme.</span><span class="nuancier__ratio">ink sur chalk 14,7 : 1 · AAA</span></li>
-          <li><span class="puce" style="--c:var(--pierre)"></span><span class="nuancier__nom">Pierre</span><code class="nuancier__hex">#DDD5C7</code><span class="nuancier__role">Cadres photo, colonne Aplomb, aplats secondaires.</span><span class="nuancier__ratio">ink sur pierre 11,6 : 1 · AAA</span></li>
+          <li><span class="puce" style="--c:var(--pierre)"></span><span class="nuancier__nom">Pierre</span><code class="nuancier__hex">#DDD5C7</code><span class="nuancier__role">Cadres photo, colonne L'Aplomb, aplats secondaires.</span><span class="nuancier__ratio">ink sur pierre 11,6 : 1 · AAA</span></li>
           <li><span class="puce" style="--c:var(--ink)"></span><span class="nuancier__nom">Ink</span><code class="nuancier__hex">#1B1D22</code><span class="nuancier__role">Texte, trait du dessin, pied de page.</span><span class="nuancier__ratio">chalk sur ink 14,7 : 1 · AAA</span></li>
           <li><span class="puce" style="--c:var(--forest)"></span><span class="nuancier__nom">Forest</span><code class="nuancier__hex">#1F3A2F</code><span class="nuancier__role">Entracte (quiz), velours sombre.</span><span class="nuancier__ratio">chalk sur forest 10,7 : 1 · AAA</span></li>
           <li><span class="puce" style="--c:var(--oxblood)"></span><span class="nuancier__nom">Oxblood</span><code class="nuancier__hex">#5B1A1E</code><span class="nuancier__role">Appels à l'action, filets, lignes de cote. Rien d'autre.</span><span class="nuancier__ratio">chalk sur oxblood 11,4 : 1 · AAA</span></li>
@@ -619,7 +624,7 @@ code{font-family:var(--mono);font-size:.92em}
 
   <!-- ===== Planche 4 : typographie ===== -->
   <section class="wrap grid planche" aria-labelledby="t-typo">
-    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">4 / 9</span></div>
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">4 / 10</span></div>
     <header class="planche__tete">
       <p class="label">Planche 4</p>
       <h2 class="planche__titre" id="t-typo">Typographie</h2>
@@ -638,7 +643,7 @@ code{font-family:var(--mono);font-size:.92em}
             <p class="label">Édition Studio · programme 8 semaines</p>
             <p class="mono">Plateau bois · rails acier · roues PU<br>SKU APL-ESS · APL-STU</p>
           </div>
-          <p class="paire__corps">Aplomb est né à Paris d'un constat simple : le reformer a changé notre façon de bouger, mais il ne tient ni dans un budget ni dans un deux-pièces. Nous avons gardé l'essentiel, un chariot qui glisse sur des rails, et retiré le reste. Pour pratiquer avec justesse, chez soi, avec aplomb.</p>
+          <p class="paire__corps">L'Aplomb est né à Paris d'un constat simple : le reformer a changé notre façon de bouger, mais il ne tient ni dans un budget ni dans un deux-pièces. Nous avons gardé l'essentiel, un chariot qui glisse sur des rails, et retiré le reste. Pour pratiquer avec justesse, chez soi, avec aplomb.</p>
         </div>
         <p class="paire__pourquoi">Un Didone à axe vertical, l'esthétique typographique de l'époque du Palais Garnier (1875). Contrastes vifs, l'italique sert d'accent. La version variable ajuste l'œil au corps : les déliés s'affinent en grand titre.</p>
         <div class="t-scroll">
@@ -670,7 +675,7 @@ code{font-family:var(--mono);font-size:.92em}
             <p class="label">Édition Essentiel · programme 28 jours</p>
             <p class="mono">Plateau bois · rails acier · roues PU<br>SKU APL-ESS · APL-STU</p>
           </div>
-          <p class="paire__corps">Aplomb est né à Paris d'un constat simple : le reformer a changé notre façon de bouger, mais il ne tient ni dans un budget ni dans un deux-pièces. Nous avons gardé l'essentiel, un chariot qui glisse sur des rails, et retiré le reste. Pour pratiquer avec justesse, chez soi, avec aplomb.</p>
+          <p class="paire__corps">L'Aplomb est né à Paris d'un constat simple : le reformer a changé notre façon de bouger, mais il ne tient ni dans un budget ni dans un deux-pièces. Nous avons gardé l'essentiel, un chariot qui glisse sur des rails, et retiré le reste. Pour pratiquer avec justesse, chez soi, avec aplomb.</p>
         </div>
         <p class="paire__pourquoi">La lettre la plus proche du logotype de vos planches, dessiné en Canela (licence payante). Cormorant Garamond est libre (OFL) : capitales larges, italique calligraphique, œil plus petit, d'où +10 % en titre. Playfair et Inter, proposés par les planches, restent exclus par le brief ; Hanken Grotesk tient le rôle d'Inter.</p>
       </article>
@@ -679,7 +684,7 @@ code{font-family:var(--mono);font-size:.92em}
 
   <!-- ===== Planche 5 : boutons, champs, sélecteur ===== -->
   <section class="wrap grid planche" aria-labelledby="t-boutons">
-    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">5 / 9</span></div>
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">5 / 10</span></div>
     <header class="planche__tete">
       <p class="label">Planche 5</p>
       <h2 class="planche__titre" id="t-boutons">Boutons, champs, <em>sélecteur</em></h2>
@@ -748,7 +753,7 @@ code{font-family:var(--mono);font-size:.92em}
 
   <!-- ===== Planche 6 : filets, folios, ornements ===== -->
   <section class="wrap grid planche" aria-labelledby="t-filets">
-    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">6 / 9</span></div>
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">6 / 10</span></div>
     <header class="planche__tete">
       <p class="label">Planche 6</p>
       <h2 class="planche__titre" id="t-filets">Filets, ornements, <em>icônes</em></h2>
@@ -798,7 +803,7 @@ code{font-family:var(--mono);font-size:.92em}
         <p class="sous__titre">Entracte · bandeau forest</p>
         <div class="entracte on-dark">
           <p class="label">Entracte</p>
-          <h3 class="entracte__titre">Quel Aplomb pour vous ?</h3>
+          <h3 class="entracte__titre">Quelle édition pour vous ?</h3>
           <p class="entracte__texte">Cinq questions, deux minutes. Le résultat présélectionne l'édition ; l'e-mail reste facultatif.</p>
           <fieldset class="question">
             <legend><span class="mono">1 / 5</span>Votre pratique aujourd'hui</legend>
@@ -813,16 +818,16 @@ code{font-family:var(--mono);font-size:.92em}
       </div>
 
       <div class="sous" id="chariot">
-        <p class="sous__titre">I. Le chariot · comparatif, Aplomb assumé au milieu</p>
+        <p class="sous__titre">I. Le chariot · comparatif, L'Aplomb assumé au milieu</p>
         <table class="comparatif">
-          <caption class="sr-only">Comparaison entre un board plastique 5-en-1, Aplomb et un reformer de studio</caption>
-          <thead><tr><th scope="col"><span class="sr-only">Critère</span></th><th scope="col">Board plastique 5-en-1</th><th scope="col" class="is-aplomb">Aplomb</th><th scope="col">Reformer de studio</th></tr></thead>
+          <caption class="sr-only">Comparaison entre un board plastique 5-en-1, L'Aplomb et un reformer de studio</caption>
+          <thead><tr><th scope="col"><span class="sr-only">Critère</span></th><th scope="col">Board plastique 5-en-1</th><th scope="col" class="is-aplomb">L'Aplomb</th><th scope="col">Reformer de studio</th></tr></thead>
           <tbody>
-            <tr><th scope="row">Mouvement</th><td data-col="Board 5-en-1">Plateau fixe, sans chariot</td><td class="is-aplomb" data-col="Aplomb">Chariot sur rails acier, roues PU</td><td data-col="Studio">Chariot sur rails</td></tr>
-            <tr><th scope="row">Résistance</th><td data-col="Board 5-en-1">Élastiques</td><td class="is-aplomb" data-col="Aplomb">Élastiques</td><td data-col="Studio">Ressorts</td></tr>
-            <tr><th scope="row">Matière</th><td data-col="Board 5-en-1">Plastique</td><td class="is-aplomb" data-col="Aplomb">Plateau bois, rails acier</td><td data-col="Studio">Cadre bois ou métal</td></tr>
-            <tr><th scope="row">Rangement</th><td data-col="Board 5-en-1">À plat</td><td class="is-aplomb" data-col="Aplomb">Plié, debout derrière une porte</td><td data-col="Studio">Une pièce dédiée</td></tr>
-            <tr><th scope="row">Coût</th><td data-col="Board 5-en-1">—</td><td class="is-aplomb" data-col="Aplomb">139 € ou 149 €, une fois</td><td data-col="Studio">25 à 45 € la séance</td></tr>
+            <tr><th scope="row">Mouvement</th><td data-col="Board 5-en-1">Plateau fixe, sans chariot</td><td class="is-aplomb" data-col="L’Aplomb">Chariot sur rails acier, roues PU</td><td data-col="Studio">Chariot sur rails</td></tr>
+            <tr><th scope="row">Résistance</th><td data-col="Board 5-en-1">Élastiques</td><td class="is-aplomb" data-col="L’Aplomb">Élastiques</td><td data-col="Studio">Ressorts</td></tr>
+            <tr><th scope="row">Matière</th><td data-col="Board 5-en-1">Plastique</td><td class="is-aplomb" data-col="L’Aplomb">Plateau bois, rails acier</td><td data-col="Studio">Cadre bois ou métal</td></tr>
+            <tr><th scope="row">Rangement</th><td data-col="Board 5-en-1">À plat</td><td class="is-aplomb" data-col="L’Aplomb">Plié, debout derrière une porte</td><td data-col="Studio">Une pièce dédiée</td></tr>
+            <tr><th scope="row">Coût</th><td data-col="Board 5-en-1">—</td><td class="is-aplomb" data-col="L’Aplomb">139 € ou 149 €, une fois</td><td data-col="Studio">25 à 45 € la séance</td></tr>
           </tbody>
         </table>
       </div>
@@ -831,11 +836,11 @@ code{font-family:var(--mono);font-size:.92em}
 
   <!-- ===== Planche 7 : cadres photo ===== -->
   <section class="wrap grid planche" aria-labelledby="t-cadres">
-    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">7 / 9</span></div>
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">7 / 10</span></div>
     <header class="planche__tete">
       <p class="label">Planche 7</p>
       <h2 class="planche__titre" id="t-cadres">Cadres <em>photo</em></h2>
-      <p class="planche__note">Sur le site, aucune image générée ni de banque d'images. Chaque cadre attend sa photo : ratio fixe, fond pierre, didascalie du plan, réglage image_picker. Ici, vos images de référence montrent un cadre rempli ; elles ne seront pas publiées.</p>
+      <p class="planche__note">Au lancement, les cadres reçoivent des images générées, étalonnées et créditées. Les plans où le produit apparaît attendent une image faite d'après le produit réel ; d'ici là, le cadre garde sa didascalie. Chaque cadre se remplace par un réglage image_picker.</p>
     </header>
     <div class="planche__corps">
       <div class="cadres">
@@ -863,58 +868,100 @@ code{font-family:var(--mono);font-size:.92em}
         </figure>
       </div>
       <div class="sous">
-        <p class="sous__titre">Cadres remplis · vos références, à titre d'exemple</p>
+        <p class="sous__titre">Images générées · étalonnage maison, crédit en légende</p>
         <div class="soir on-dark">
           <p class="label">IV. La maison · moment fort</p>
           <p class="soir__titre">L'élégance publique. <span>La discipline privée.</span></p>
           <div class="soir__cadres">
             <figure class="cadre">
-              <div class="cadre__zone cadre__zone--image" style="--ratio:3/2"><img src="references/ref-soiree.jpg" alt="Référence : une femme en robe de satin bordeaux, de dos, lors d'une soirée parisienne aux chandelles." width="1400" height="933" loading="lazy" decoding="async"><span class="ref">Référence · image générée · non publiée</span></div>
-              <figcaption class="cadre__legende"><b>Plan 09</b> <span>— l'élégance publique, une soirée, de dos</span></figcaption>
+              <div class="cadre__zone cadre__zone--image" style="--ratio:3/2"><img src="images-ia/plan-09-soiree.jpg" alt="Une femme en robe de satin bordeaux, de dos, se retourne en souriant lors d'une soirée parisienne aux chandelles." width="1536" height="1024" loading="lazy" decoding="async"></div>
+              <figcaption class="cadre__legende"><b>Plan 09</b> <span>— l'élégance publique, une soirée, de dos</span><span class="credit">Image générée</span></figcaption>
             </figure>
             <figure class="cadre">
-              <div class="cadre__zone cadre__zone--image" style="--ratio:4/5"><img src="references/ref-posture.jpg" alt="Référence : gainage latéral en justaucorps bordeaux, sur un tapis posé sur parquet, lumière rasante." width="1024" height="1280" loading="lazy" decoding="async"><span class="ref">Référence · image générée</span></div>
-              <figcaption class="cadre__legende"><b>Plan 06</b> <span>— la discipline privée, gainage latéral</span></figcaption>
+              <div class="cadre__zone cadre__zone--image" style="--ratio:4/5"><img src="images-ia/plan-06-posture-provisoire.jpg" alt="Gainage latéral en justaucorps bordeaux, un bras tendu au-dessus de la tête, sur un tapis posé sur un parquet, lumière rasante." width="1024" height="1280" loading="lazy" decoding="async"></div>
+              <figcaption class="cadre__legende"><b>Plan 06</b> <span>— la discipline privée, gainage latéral</span><span class="credit">Image générée · provisoire</span></figcaption>
             </figure>
           </div>
         </div>
       </div>
       <div class="cadres-refs">
         <figure class="cadre">
-          <div class="cadre__zone cadre__zone--image" style="--ratio:3/2"><img src="references/ref-coffret.jpg" alt="Référence : coffret en toile vert forêt, ruban de satin bordeaux et carte crème, sur un socle de travertin." width="1400" height="933" loading="lazy" decoding="async"><span class="ref">Référence · image générée</span></div>
-          <figcaption class="cadre__legende"><b>Plan 07</b> <span>— le coffret, toile forest et ruban bordeaux</span></figcaption>
+          <div class="cadre__zone cadre__zone--image" style="--ratio:3/2"><img src="images-ia/plan-07-coffret.jpg" alt="Coffret en toile vert forêt marqué L'APLOMB en dorure laiton, ruban de satin bordeaux et carte crème gaufrée du monogramme, sur un socle de travertin." width="1536" height="1024" loading="lazy" decoding="async"></div>
+          <figcaption class="cadre__legende"><b>Plan 07</b> <span>— le coffret, dorure laiton, carte gaufrée</span><span class="credit">Image générée · logo posé en dorure</span></figcaption>
         </figure>
         <figure class="cadre">
-          <div class="cadre__zone cadre__zone--image" style="--ratio:4/5"><img src="references/ref-sac.jpg" alt="Référence : sac en toile crème et gants de satin bordeaux suspendus à une patère en laiton, sur une porte laquée." width="1086" height="1357" loading="lazy" decoding="async"><span class="ref">Référence · image générée</span></div>
-          <figcaption class="cadre__legende"><b>Plan 10</b> <span>— la housse et le sac, une porte laquée</span></figcaption>
+          <div class="cadre__zone cadre__zone--image" style="--ratio:4/5"><img src="images-ia/ambiance-sac-porte-laquee.jpg" alt="Sac en toile crème et gants de satin bordeaux suspendus à une patère en laiton, sur une porte laquée bordeaux." width="1086" height="1357" loading="lazy" decoding="async"></div>
+          <figcaption class="cadre__legende"><b>Ambiance</b> <span>— la porte laquée, réseaux sociaux seulement</span><span class="credit">Image générée</span></figcaption>
         </figure>
       </div>
       <div class="sous">
         <p class="sous__titre">Liste des plans à photographier</p>
         <table class="plans">
-          <thead><tr><th scope="col">Plan</th><th scope="col">Sujet</th><th scope="col">Format</th><th scope="col">Emplacement</th></tr></thead>
+          <thead><tr><th scope="col">Plan</th><th scope="col">Sujet</th><th scope="col">Format</th><th scope="col">Source</th><th scope="col">Emplacement</th></tr></thead>
           <tbody>
-            <tr><td>01</td><td>Le board sur parquet, plongée à 45°</td><td class="n">3:2</td><td>Hero, galerie</td></tr>
-            <tr><td>02</td><td>Macro rails et roues</td><td class="n">1:1</td><td>I. Le chariot, galerie</td></tr>
-            <tr><td>03</td><td>Vidéo du chariot, son réel</td><td class="n">16:9</td><td>Galerie (vidéo)</td></tr>
-            <tr><td>04</td><td>Le pliage en trois temps</td><td class="n">3 × 4:5</td><td>II. L'appartement, « Comment ça marche »</td></tr>
-            <tr><td>05</td><td>Rangé debout contre une moulure</td><td class="n">4:5</td><td>II. L'appartement, galerie</td></tr>
-            <tr><td>06</td><td>Trois postures</td><td class="n">3 × 4:5</td><td>III. Le programme</td></tr>
-            <tr><td>07</td><td>Le coffret : toile forest, ruban bordeaux, carte</td><td class="n">3:2 · 4:5</td><td>Sélecteur d'édition, galerie</td></tr>
-            <tr><td>08</td><td>Les feutres sur parquet</td><td class="n">3:2</td><td>II. L'appartement, FAQ sol</td></tr>
-            <tr><td>09</td><td>L'élégance publique : soirée, robe bordeaux, de dos</td><td class="n">3:2</td><td>IV. La maison</td></tr>
-            <tr><td>10</td><td>La housse ou le sac sur une porte laquée, patère laiton</td><td class="n">4:5</td><td>Édition Studio, réseaux</td></tr>
+            <tr><td>01</td><td>Le mini-reformer sur parquet, plongée à 45°</td><td class="n">3:2</td><td>IA d'après photo du produit</td><td>Hero, galerie</td></tr>
+            <tr><td>02</td><td>Macro rails et roues</td><td class="n">1:1</td><td>IA d'après photo du produit</td><td>I. Le chariot, galerie</td></tr>
+            <tr><td>03</td><td>Vidéo du chariot, son réel</td><td class="n">16:9</td><td>Tournage réel</td><td>Galerie (vidéo)</td></tr>
+            <tr><td>04</td><td>Le pliage en trois temps</td><td class="n">3 × 4:5</td><td>IA d'après photo du produit</td><td>II. L'appartement, « Comment ça marche »</td></tr>
+            <tr><td>05</td><td>Rangé debout contre une moulure</td><td class="n">4:5</td><td>IA d'après photo du produit</td><td>II. L'appartement, galerie</td></tr>
+            <tr><td>06</td><td>Trois postures</td><td class="n">3 × 4:5</td><td>IA d'après photo + muse</td><td>III. Le programme</td></tr>
+            <tr><td>07</td><td>Le coffret : toile forest, ruban bordeaux, carte</td><td class="n">3:2 · 4:5</td><td>IA, logo en dorure</td><td>Sélecteur d'édition, galerie</td></tr>
+            <tr><td>08</td><td>Les feutres sur parquet</td><td class="n">3:2</td><td>IA d'après photo du produit</td><td>II. L'appartement, FAQ sol</td></tr>
+            <tr><td>09</td><td>L'élégance publique : soirée, robe bordeaux, de dos</td><td class="n">3:2</td><td>IA libre</td><td>IV. La maison</td></tr>
+            <tr><td>10</td><td>La housse du Studio sur une porte laquée, patère laiton</td><td class="n">4:5</td><td>IA d'après photo de la housse</td><td>Édition Studio, réseaux</td></tr>
+            <tr><td>11</td><td>Lumière d'hiver sur le parquet, pièce vide</td><td class="n">16:9 · 4:5</td><td>IA libre</td><td>Ouvertures d'acte</td></tr>
+            <tr><td>12</td><td>Velours forest et embrasse laiton</td><td class="n">4:5</td><td>IA libre</td><td>II. L'appartement, réseaux</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <!-- ===== Planche 8 : dessin technique ===== -->
-  <section class="wrap grid planche" aria-labelledby="t-dessin">
-    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">8 / 9</span></div>
+  <!-- ===== Planche 8 : images générées ===== -->
+  <section class="wrap grid planche" aria-labelledby="t-ia">
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">8 / 10</span></div>
     <header class="planche__tete">
       <p class="label">Planche 8</p>
+      <h2 class="planche__titre" id="t-ia">Images <em>générées</em></h2>
+      <p class="planche__note">Une seule muse, un seul appartement, une seule lumière. La bible complète, avec les prompts plan par plan et la liste de contrôle, est dans design/bible-images-ia.md.</p>
+    </header>
+    <div class="planche__corps">
+      <div class="sous">
+        <p class="sous__titre">Étalonnage maison · même lumière partout</p>
+        <div class="avant-apres">
+          <figure class="cadre"><div class="cadre__zone cadre__zone--image" style="--ratio:3/2"><img src="images-ia/avant-soiree.jpg" alt="La soirée telle que fournie." width="900" height="600" loading="lazy" decoding="async"></div><figcaption class="cadre__legende"><b>Avant</b> <span>— image fournie</span></figcaption></figure>
+          <figure class="cadre"><div class="cadre__zone cadre__zone--image" style="--ratio:3/2"><img src="images-ia/apres-soiree.jpg" alt="La même soirée après l'étalonnage maison." width="900" height="600" loading="lazy" decoding="async"></div><figcaption class="cadre__legende"><b>Après</b> <span>— noirs vers ink, blancs plafonnés à chalk, grain fixe</span></figcaption></figure>
+        </div>
+      </div>
+      <ul class="regles">
+        <li><p class="regles__ex">Le produit n'est jamais inventé.</p><p class="regles__dit">Dès que le mini-reformer apparaît, l'image part d'une photo du produit réel. Jamais de barre de pieds, de cordes, de poulies ni de ressorts.</p></li>
+        <li><p class="regles__ex">Le son réel est tourné.</p><p class="regles__dit">Le plan 03 est une vraie vidéo : une vidéo générée ne peut pas porter la mention « son réel ».</p></li>
+        <li><p class="regles__ex">Une muse, un appartement.</p><p class="regles__dit">Référence de personnage sur chaque image ; parquet en point de Hongrie, moulures ivoire, soleil d'hiver rasant.</p></li>
+        <li><p class="regles__ex">Le logo n'est jamais généré.</p><p class="regles__dit">Il est posé ensuite, en dorure laiton ou en gaufrage à sec.</p></li>
+        <li><p class="regles__ex">3 000 px au moins.</p><p class="regles__dit">Les images fournies font 1 536 px : à régénérer en haute définition avant la mise en ligne.</p></li>
+        <li><p class="regles__ex">« Image générée » en légende.</p><p class="regles__dit">Règlement européen sur l'IA, article 50, en vigueur depuis le 2 août 2026. Jamais de visage généré présenté comme cliente.</p></li>
+      </ul>
+      <div class="sous">
+        <p class="sous__titre">Verdict sur les images fournies</p>
+        <table class="plans verdict">
+          <thead><tr><th scope="col">Image</th><th scope="col">Verdict</th><th scope="col">À faire</th></tr></thead>
+          <tbody>
+            <tr><td>Soirée</td><td>IV. La maison</td><td>Régénérer à 3 000 px ; version sans coupe ; reprendre le drapé à gauche.</td></tr>
+            <tr><td>Coffret</td><td>Utilisable</td><td>Seulement si le coffret réel ressemble à celui-ci.</td></tr>
+            <tr><td>Gainage</td><td>Provisoire</td><td>À refaire sur le produit, parquet en point de Hongrie, mur net.</td></tr>
+            <tr><td>Sac, gants</td><td>Réseaux sociaux</td><td>Le sac ne fait pas partie de l'offre.</td></tr>
+            <tr><td>Reformer des planches</td><td>Exclu</td><td>Barre de pieds, cordes et poulies : ce n'est pas le produit vendu.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Planche 9 : dessin technique ===== -->
+  <section class="wrap grid planche" aria-labelledby="t-dessin">
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">9 / 10</span></div>
+    <header class="planche__tete">
+      <p class="label">Planche 9</p>
       <h2 class="planche__titre" id="t-dessin">Dessin <em>technique</em></h2>
       <p class="planche__note">Trait encre, cotes oxblood en Plex Mono. Le chariot parcourt la course C au défilement ; c'est la seule animation forte du site.</p>
     </header>
@@ -961,11 +1008,11 @@ code{font-family:var(--mono);font-size:.92em}
     </div>
   </section>
 
-  <!-- ===== Planche 9 : ton ===== -->
+  <!-- ===== Planche 10 : ton ===== -->
   <section class="wrap grid planche" id="ton" aria-labelledby="t-ton">
-    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">9 / 9</span></div>
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">10 / 10</span></div>
     <header class="planche__tete">
-      <p class="label">Planche 9</p>
+      <p class="label">Planche 10</p>
       <h2 class="planche__titre" id="t-ton">Ton, <em>microtypographie</em></h2>
       <p class="planche__note">Vouvoiement, phrases courtes, pas de point d'exclamation. La retenue fait le luxe ; la vérité du produit fait la vente.</p>
     </header>
@@ -985,13 +1032,13 @@ code{font-family:var(--mono);font-size:.92em}
             <li>réservation prioritaire, remboursable à tout moment</li>
             <li>conçu à Paris, fabriqué par un atelier partenaire</li>
             <li>bêta-testeuse, produit prêté</li>
-            <li>L'APLOMB dans le logo, Aplomb dans les phrases</li>
+            <li>L'Aplomb, partout : « chez L'Aplomb », « de L'Aplomb »</li>
           </ul>
         </div>
         <div class="sous">
           <p class="sous__titre">Nous ne disons jamais</p>
           <ul class="non">
-            <li>reformer de studio, reformer professionnel (pour Aplomb)</li>
+            <li>reformer de studio, reformer professionnel (pour L'Aplomb)</li>
             <li>acompte, arrhes</li>
             <li>révolutionnaire, ultime, incroyable</li>
             <li>−50 %, prix barré, offre limitée</li>

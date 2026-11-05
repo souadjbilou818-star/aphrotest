@@ -50,7 +50,7 @@ def standalone(s, out):
         b64 = base64.b64encode(open(path, "rb").read()).decode()
         return f'src="data:image/jpeg;base64,{b64}"'
 
-    s = re.sub(r'src="(references/[^"]+\.jpg)"', img_uri, s)
+    s = re.sub(r'src="(images-ia/[^"]+\.jpg)"', img_uri, s)
     s = re.sub(r'<link rel="preload"[^>]*>\n?', "", s)
     js = open(os.path.join(ROOT, "assets", "aplomb-dessin.js"), encoding="utf-8").read()
     s = s.replace('<script src="../assets/aplomb-dessin.js"></script>', "<script>\n" + js + "\n</script>")
