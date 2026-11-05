@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aplomb Style Tile</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="robots" content="noindex">
+<link rel="preload" href="../assets/bodoni-moda.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Polices : OFL, auto-hébergées, sous-ensemble latin. Aucun CDN. */
+@font-face{font-family:"Bodoni Moda";src:url("../assets/bodoni-moda.woff2") format("woff2");font-weight:400 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Bodoni Moda";src:url("../assets/bodoni-moda-italic.woff2") format("woff2");font-weight:400 900;font-style:italic;font-display:swap}
+@font-face{font-family:"Hanken Grotesk";src:url("../assets/hanken-grotesk.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Hanken Grotesk";src:url("../assets/hanken-grotesk-italic.woff2") format("woff2");font-weight:100 900;font-style:italic;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("../assets/ibm-plex-mono.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Baskervville";src:url("fonts/baskervville.woff2") format("woff2");font-weight:400 700;font-style:normal;font-display:swap}
+@font-face{font-family:"Baskervville";src:url("fonts/baskervville-italic.woff2") format("woff2");font-weight:400 700;font-style:italic;font-display:swap}
+@font-face{font-family:"Ysabeau Office";src:url("fonts/ysabeau-office.woff2") format("woff2");font-weight:1 1000;font-style:normal;font-display:swap}
+@font-face{font-family:"Ysabeau Office";src:url("fonts/ysabeau-office-italic.woff2") format("woff2");font-weight:1 1000;font-style:italic;font-display:swap}
+/* Espace fine insécable (U+202F) : absente des polices, fournie par une micro-police déclarée en dernier. */
+@font-face{font-family:"Bodoni Moda";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:400 900;font-style:normal}
+@font-face{font-family:"Bodoni Moda";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:400 900;font-style:italic}
+@font-face{font-family:"Hanken Grotesk";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:100 900;font-style:normal}
+@font-face{font-family:"Hanken Grotesk";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:100 900;font-style:italic}
+@font-face{font-family:"IBM Plex Mono";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:400;font-style:normal}
+@font-face{font-family:"Baskervville";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:400 700;font-style:normal}
+@font-face{font-family:"Baskervville";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:400 700;font-style:italic}
+@font-face{font-family:"Ysabeau Office";src:url("../assets/espace-fine.woff2") format("woff2");unicode-range:U+202F;font-weight:1 1000;font-style:normal}
+
+:root{
+  /* Grille : feuille de salle. 12 colonnes asymétriques — titres de planche en marge (col. 1-3), contenu décalé (col. 4-12), folios à droite. */
+  --ink:#1B1D22;
+  --forest:#1F3A2F;
+  --chalk:#F3EFE7;
+  --pierre:#DDD5C7;
+  --oxblood:#5B1A1E;
+  --parquet:#A9784F;
+  --ink-soft:#57534C;               /* dérivé chaud : 6,7:1 sur chalk, 5,3:1 sur pierre */
+  --line:rgb(27 29 34 / .2);        /* filet encre des tableaux */
+  --on-dark:#F3EFE7;
+  --on-dark-soft:rgb(243 239 231 / .78);
+  --serif:"Bodoni Moda","Bodoni 72",Didot,"Times New Roman",serif;
+  --sans:"Hanken Grotesk","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --fs-display:clamp(2.5rem,1.15rem + 5.4vw,5.75rem);
+  --fs-acte:clamp(2rem,1.25rem + 2.9vw,3.75rem);
+  --fs-planche:clamp(1.75rem,1.25rem + 1.5vw,2.625rem);
+  --fs-h3:clamp(1.375rem,1.1rem + .9vw,1.875rem);
+  --fs-lead:clamp(1.125rem,1.02rem + .45vw,1.375rem);
+  --fs-body:clamp(1rem,.96rem + .2vw,1.125rem);
+  --fs-label:.75rem;
+  --fs-mono:.8125rem;
+  --gutter:clamp(16px,4.5vw,72px);
+  --gap:clamp(16px,2vw,28px);
+  --maxw:1440px;
+  color-scheme:light;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:auto}
+body{margin:0;background:var(--chalk);color:var(--ink);font:400 var(--fs-body)/1.6 var(--sans);font-kerning:normal;-webkit-font-smoothing:antialiased;hanging-punctuation:first}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration-line:underline;text-decoration-color:var(--oxblood);text-decoration-thickness:1px;text-underline-offset:.24em}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.on-dark :focus-visible{outline-color:var(--on-dark)}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;text-wrap:balance}
+p,ul,ol,figure,fieldset{margin:0}
+ul,ol{padding:0}
+em{font-style:italic}
+code{font-family:var(--mono);font-size:.92em}
+.nowrap{white-space:nowrap}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.label{font:500 var(--fs-label)/1.4 var(--sans);letter-spacing:.16em;text-transform:uppercase}
+.mono{font-family:var(--mono);font-size:var(--fs-mono);line-height:1.5}
+.soft{color:var(--ink-soft)}
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-left:max(var(--gutter),env(safe-area-inset-left,0px));padding-right:max(var(--gutter),env(safe-area-inset-right,0px))}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap)}
+.grid>*{grid-column:1/-1;min-width:0}
+.skip{position:absolute;left:16px;top:-80px;background:var(--ink);color:var(--chalk);padding:10px 14px;z-index:5}
+.skip:focus{top:8px}
+
+/* ---------- Filets ---------- */
+.filet{border:0;border-top:1px solid var(--oxblood);margin:0;height:0}
+.filet--double{height:5px;border-top:1px solid var(--oxblood);border-bottom:1px solid var(--oxblood)}
+.filet--encre{border-top-color:var(--line)}
+
+/* ---------- Bandeau de document (hors site) ---------- */
+.doc{background:var(--pierre)}
+.doc .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 24px;padding-block:9px;font:400 .75rem/1.45 var(--mono)}
+
+/* ---------- En-tête ---------- */
+.masthead{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:20px 16px}
+.wordmark{display:inline-flex;align-items:flex-end;gap:12px;text-decoration:none;font:500 1.1875rem/1 var(--serif);letter-spacing:.34em;padding-right:.1em}
+.wordmark svg{width:12px;height:30px;flex:none}
+.masthead__nav{display:none;gap:clamp(20px,2.6vw,40px)}
+.masthead__nav a{text-decoration:none}
+.masthead__nav a:hover{text-decoration:underline;text-decoration-color:var(--oxblood)}
+@media (min-width:900px){.masthead__nav{display:flex}}
+
+/* ---------- Boutons ---------- */
+.btn{--bg:var(--oxblood);--fg:var(--chalk);--bd:var(--oxblood);display:inline-flex;align-items:center;justify-content:center;gap:.7em;min-height:52px;padding:0 1.45em;border:1px solid var(--bd);border-radius:0;background:var(--bg);color:var(--fg);font:500 .8125rem/1.2 var(--sans);letter-spacing:.13em;text-transform:uppercase;text-decoration:none;text-align:center;cursor:pointer;transition:background-color .18s ease,color .18s ease,border-color .18s ease}
+.btn:hover,.btn.is-hover{--bg:var(--ink);--bd:var(--ink)}
+.btn.is-focus{outline:2px solid var(--ink);outline-offset:3px}
+.btn--line{--bg:transparent;--fg:var(--ink);--bd:var(--ink)}
+.btn--line:hover,.btn--line.is-hover{--bg:var(--ink);--fg:var(--chalk)}
+.btn--sm{min-height:42px;padding:0 1.05em;font-size:.6875rem}
+.btn[disabled],.btn.is-off{--bg:var(--pierre);--fg:var(--ink-soft);--bd:var(--pierre);cursor:not-allowed}
+.on-dark .btn--line{--fg:var(--on-dark);--bd:var(--on-dark)}
+.lien{font-weight:500}
+
+/* ---------- Champ e-mail ---------- */
+.waitlist{display:grid;gap:12px}
+.field{display:flex;flex-wrap:wrap;gap:12px}
+.input{flex:1 1 15rem;min-width:0;height:52px;padding:0 2px;border:0;border-bottom:1px solid var(--ink);border-radius:0;background:transparent;color:var(--ink);font:400 1.0625rem/1 var(--sans)}
+.input::placeholder{color:var(--ink-soft);opacity:1}
+.input:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.input[aria-invalid="true"]{border-bottom:2px solid var(--oxblood)}
+.field .btn{flex:1 1 auto}
+.consent{font-size:.8125rem;line-height:1.55;color:var(--ink-soft);max-width:46ch}
+.erreur{font-size:.8125rem;color:var(--oxblood);font-weight:500}
+
+/* ---------- Hero ---------- */
+.hero{row-gap:clamp(18px,2.2vw,30px);padding-bottom:clamp(8px,2vw,24px)}
+.hero__meta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 24px;padding-top:12px;color:var(--ink-soft)}
+.hero__devise{font:italic 400 1.0625rem/1.2 var(--serif);color:var(--ink);letter-spacing:0;text-transform:none}
+@media (max-width:699px){.hero__lieu{display:none}}
+.hero__titre{font-size:var(--fs-display);line-height:1.02;letter-spacing:-.014em;margin-top:clamp(4px,1vw,12px)}
+.hero__titre em{letter-spacing:-.006em}
+.hero__lead{font-size:var(--fs-lead);line-height:1.5;max-width:30ch}
+.hero__dessin{display:grid;gap:12px}
+.hero__dessin .legende{padding-left:8.333%}
+.legende{font:400 .75rem/1.55 var(--mono);color:var(--ink-soft);max-width:68ch}
+.legende b{font-weight:400;color:var(--oxblood)}
+.preuves{list-style:none;display:grid}
+.preuves li{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-top:1px solid var(--line);font-size:.9375rem;line-height:1.4}
+.preuves li:last-child{border-bottom:1px solid var(--line)}
+.preuves li::before{content:"";flex:none;width:16px;height:1px;background:var(--oxblood);transform:translateY(-.3em)}
+.sommaire{padding-top:clamp(8px,2vw,20px)}
+.sommaire ol{list-style:none;display:grid}
+.sommaire a{display:grid;grid-template-columns:2.6em minmax(0,1fr) auto;align-items:baseline;gap:10px;padding:13px 0;border-top:1px solid var(--line);text-decoration:none}
+.sommaire a:hover .sommaire__titre{text-decoration:underline;text-decoration-color:var(--oxblood)}
+.sommaire__num{font:italic 400 1.25rem/1 var(--serif)}
+.sommaire__titre{display:flex;align-items:baseline;gap:8px;min-width:0}
+.sommaire__titre::after{content:"";flex:1;border-bottom:1px dotted var(--ink-soft);transform:translateY(-.25em);min-width:12px}
+.sommaire__folio{font:400 .75rem/1 var(--mono);color:var(--ink-soft)}
+@media (min-width:1000px){
+  .hero__meta,.hero__titre{grid-column:1/-1}
+  .hero__titre .hero__accent{display:block}
+  .hero__lead{grid-column:1/span 4;grid-row:3}
+  .hero__form{grid-column:1/span 4;grid-row:4;align-self:start}
+  .hero__preuves{grid-column:1/span 4;grid-row:5;align-self:start}
+  .hero__dessin{grid-column:5/-1;grid-row:3/span 3;align-self:start;padding-left:clamp(0px,2vw,32px)}
+  .sommaire{grid-row:6}
+  .sommaire ol{grid-template-columns:repeat(5,minmax(0,1fr));column-gap:var(--gap)}
+  .sommaire a{border-top-color:var(--ink);grid-template-columns:auto minmax(0,1fr) auto}
+  .sommaire__titre::after{display:none}
+}
+
+/* ---------- Dessin technique ---------- */
+@property --p{syntax:"<number>";inherits:true;initial-value:0}
+@keyframes aplomb-course{from{--p:0}to{--p:1}}
+.dessin{display:block;--p:0;--dessin-fond:var(--chalk)}
+.dessin__plan{position:relative;container-type:inline-size}
+.dessin__svg{width:100%;height:auto;overflow:visible}
+.dessin__svg *{vector-effect:non-scaling-stroke}
+.d-o{fill:none;stroke:var(--ink);stroke-width:1.35}
+.d-t{fill:none;stroke:var(--ink);stroke-width:.85}
+.d-f{stroke:var(--ink);stroke-width:.6;opacity:.3}
+.d-f2{fill:none;stroke:var(--ink);stroke-width:.6;opacity:.45}
+.d-h{fill:none;stroke:var(--ink);stroke-width:.8;stroke-dasharray:3 2.5}
+.d-ax{stroke:var(--ink);stroke-width:.6;stroke-dasharray:14 3 2 3;opacity:.5}
+.d-c{stroke:var(--oxblood);stroke-width:.85}
+.d-c--tick{stroke-width:1.25}
+.d-l{stroke:var(--ink);stroke-width:.6}
+.d-dot{fill:var(--ink)}
+.d-e{stroke:var(--ink);stroke-width:1.1}
+.d-fill{fill:var(--dessin-fond)}
+.d-chariot{transform:translateX(calc(var(--p) * 420px))}
+.d-elastiques line{transform-box:view-box;transform-origin:136px 0;transform:scaleX(calc(1 + var(--p) * 6.5625))}
+.dessin__calques{position:absolute;inset:0;pointer-events:none;font-family:var(--mono)}
+.dessin__calques .cote,.dessin__calques .bulle{position:absolute;transform:translate(-50%,-50%)}
+.cote{font-size:clamp(10px,1.15cqw,13px);line-height:1.3;color:var(--oxblood);background:var(--dessin-fond);padding:0 .35em}
+.bulle{display:grid;place-items:center;width:clamp(17px,2.1cqw,24px);aspect-ratio:1;border:1px solid var(--ink);border-radius:50%;background:var(--dessin-fond);font-size:clamp(9.5px,1cqw,12px);line-height:1;color:var(--ink)}
+.dessin__mobile{position:absolute;inset:0;transform:translateX(calc(var(--p) * 35cqw))}
+@supports (animation-timeline: scroll()){
+  @media (prefers-reduced-motion:no-preference){
+    .dessin[data-timeline="root"]{animation:aplomb-course linear both;animation-timeline:scroll(root block);animation-range:0px 70vh}
+    .dessin[data-timeline="view"]{animation:aplomb-course linear both;animation-timeline:view(block);animation-range:cover 25% cover 75%}
+  }
+}
+@media (prefers-reduced-motion:reduce){.dessin{--p:.45}}
+
+/* ---------- Planches ---------- */
+.planche{position:relative;row-gap:clamp(20px,2.4vw,32px);padding-top:clamp(56px,7vw,112px)}
+.planche__filet{position:relative}
+.planche__folio{position:absolute;right:0;top:12px;font:400 .75rem/1 var(--mono);color:var(--ink-soft)}
+.planche__tete{display:grid;gap:12px;align-content:start;padding-right:56px}
+.planche__titre{font-size:var(--fs-planche);line-height:1.04}
+.planche__titre em{display:block}
+.planche__note{color:var(--ink-soft);font-size:.9375rem;line-height:1.55;max-width:34ch}
+.planche__corps{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(28px,3.5vw,48px);min-width:0}
+.planche__corps>*,.paire>*,.sous>*{min-width:0}
+.sous{display:grid;gap:14px;min-width:0}
+.sous__titre{font:500 var(--fs-label)/1.4 var(--sans);letter-spacing:.16em;text-transform:uppercase;display:flex;gap:12px;align-items:center}
+.sous__titre::after{content:"";flex:1;height:1px;background:var(--line)}
+@media (min-width:1000px){
+  .planche__tete{grid-column:1/span 3;padding-right:0}
+  .planche__corps{grid-column:4/-1}
+}
+
+/* Couleurs */
+.bande{display:flex;height:clamp(120px,13vw,168px);border:1px solid var(--line)}
+.bande>div{display:flex;align-items:flex-end;padding:10px;min-width:0;font:400 .75rem/1.2 var(--mono)}
+.bande span{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap}
+@media (min-width:700px){.bande span{writing-mode:horizontal-tb;transform:none}}
+.parts{display:flex;font:400 .75rem/1.3 var(--mono)}
+.parts>div{border-top:1px solid var(--ink);padding-top:6px;position:relative;min-width:0}
+.parts>div::before,.parts>div::after{content:"";position:absolute;top:-5px;height:9px;width:1px;background:var(--ink)}
+.parts>div::before{left:0}.parts>div::after{right:0}
+.parts>div+div{margin-left:4px}
+.nuancier{list-style:none;display:grid}
+.nuancier>li{display:grid;grid-template-columns:44px minmax(0,1fr) auto;column-gap:16px;row-gap:2px;align-items:baseline;padding:14px 0;border-top:1px solid var(--line)}
+.nuancier>li:last-child{border-bottom:1px solid var(--line)}
+.puce{grid-row:1/span 3;align-self:start;width:44px;height:44px;background:var(--c);border:1px solid var(--line)}
+.nuancier__nom{font:italic 400 1.25rem/1.2 var(--serif)}
+.nuancier__hex{font:400 .8125rem/1.2 var(--mono);text-align:right}
+.nuancier__role{grid-column:2/-1;font-size:.9375rem;line-height:1.45}
+.nuancier__ratio{grid-column:2/-1;font:400 .75rem/1.45 var(--mono);color:var(--ink-soft)}
+@media (min-width:860px){
+  .nuancier>li{grid-template-columns:44px minmax(0,.8fr) 6.5rem minmax(0,1.6fr) minmax(0,1.1fr);align-items:center}
+  .puce{grid-row:auto}
+  .nuancier__hex{text-align:left}
+  .nuancier__role,.nuancier__ratio{grid-column:auto}
+}
+
+/* Typographie */
+.paire{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;padding-bottom:clamp(28px,3vw,40px);border-bottom:1px solid var(--line)}
+.paire--b{--serif:"Baskervville","Baskerville","Libre Baskerville",Georgia,serif;--sans:"Ysabeau Office","Gill Sans","Helvetica Neue",Arial,sans-serif}
+.paire--b,.paire--b .paire__corps,.paire--b .paire__pourquoi{font-family:var(--sans)}
+.paire__specimen{text-wrap:balance}
+.paire__entete{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 20px}
+.paire__nom{font:400 var(--fs-h3)/1.2 var(--serif)}
+.paire__nom em{color:var(--ink-soft)}
+.paire__specimen,.paire__acte,.acte__titre{font-family:var(--serif);font-weight:400}
+.paire__specimen{font-size:clamp(2.125rem,1.2rem + 3.6vw,4.75rem);line-height:1.04;letter-spacing:-.012em;max-width:16ch}
+.paire__cols{display:grid;gap:22px}
+.paire__acte{display:flex;flex-wrap:wrap;align-items:baseline;gap:.35em;font-size:clamp(2rem,1.4rem + 1.6vw,3rem);line-height:1}
+.paire__acte span{font-style:italic}
+.paire__corps{font-size:var(--fs-body);line-height:1.62;max-width:60ch}
+.paire__specs{display:grid;gap:10px;align-content:start}
+.paire__pourquoi{font-size:.9375rem;color:var(--ink-soft);max-width:60ch}
+@media (min-width:860px){.paire__cols{grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);column-gap:clamp(24px,3vw,48px)}}
+.t-scroll{overflow-x:auto}
+.echelle{width:100%;border-collapse:collapse;font-size:.875rem;min-width:520px}
+.echelle caption{text-align:left;padding-bottom:10px}
+.echelle th,.echelle td{text-align:left;padding:9px 12px 9px 0;border-top:1px solid var(--line);vertical-align:baseline}
+.echelle thead th{font:500 .6875rem/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);border-top:0}
+.echelle td.n{font-family:var(--mono);font-size:.8125rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* Boutons, champs, sélecteur */
+.etats{display:flex;flex-wrap:wrap;gap:22px 18px;align-items:flex-start}
+.etat{display:grid;gap:8px;justify-items:start}
+.etat figcaption{font:400 .6875rem/1.3 var(--mono);color:var(--ink-soft)}
+.modes{list-style:none;display:grid}
+.modes>li{display:grid;gap:10px;padding:16px 0;border-top:1px solid var(--line);align-items:center}
+.modes>li:last-child{border-bottom:1px solid var(--line)}
+.modes__cle{font:400 .75rem/1.3 var(--mono)}
+.modes__cle b{font-weight:400;color:var(--oxblood)}
+.modes__mention{font-size:.875rem;color:var(--ink-soft)}
+@media (min-width:860px){.modes>li{grid-template-columns:11rem auto minmax(0,1fr);column-gap:24px}}
+.editions{border:0;padding:0;display:grid;gap:12px}
+.editions legend{padding:0;margin-bottom:12px}
+.edition{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 14px;padding:18px 18px 20px;border:1px solid var(--line);background:var(--chalk);cursor:pointer;transition:border-color .18s ease}
+.edition:hover{border-color:var(--ink)}
+.edition:has(input:checked){border-color:var(--ink);box-shadow:inset 0 3px 0 var(--oxblood)}
+.edition:has(input:focus-visible){outline:2px solid var(--ink);outline-offset:3px}
+.edition input{appearance:none;-webkit-appearance:none;margin:0;width:18px;height:18px;border:1px solid var(--ink);border-radius:50%;display:grid;place-items:center;transform:translateY(3px)}
+.edition input::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--oxblood);transform:scale(0);transition:transform .15s ease}
+.edition input:checked::after{transform:scale(1)}
+.edition input:focus-visible{outline:none}
+.edition__nom{font:400 1.5rem/1.15 var(--serif)}
+.edition__prix{font:400 1.125rem/1.3 var(--serif);white-space:nowrap}
+.edition__prix small{display:block;font:400 .6875rem/1.3 var(--mono);color:var(--ink-soft);text-align:right}
+.edition__contenu{grid-column:2/-1;font-size:.9375rem;line-height:1.5;color:var(--ink)}
+@media (min-width:640px){.editions{grid-template-columns:1fr 1fr}.editions legend{grid-column:1/-1}}
+.collant{max-width:390px;border:1px solid var(--line);background:var(--chalk)}
+.collant__ecran{height:150px;background:var(--pierre);display:grid;place-items:center;font:400 .75rem/1.4 var(--mono);color:var(--ink-soft);text-align:center;padding:16px}
+.collant__barre{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--ink);background:var(--chalk)}
+.collant__produit{display:grid;line-height:1.25}
+.collant__produit b{font:400 1.0625rem/1.2 var(--serif)}
+.collant__produit span{font:400 .75rem/1.3 var(--mono);color:var(--ink-soft)}
+
+/* Filets & ornements */
+.specimens{list-style:none;display:grid}
+.specimens>li{display:grid;gap:12px;padding:20px 0;border-top:1px solid var(--line);align-items:center}
+.specimens>li:last-child{border-bottom:1px solid var(--line)}
+.specimens__desc{font:400 .75rem/1.5 var(--mono);color:var(--ink-soft)}
+@media (min-width:860px){.specimens>li{grid-template-columns:minmax(0,1fr) 15rem;column-gap:32px}}
+.acte{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:baseline;gap:6px 18px;padding-top:14px}
+.acte__num{font:italic 400 var(--fs-acte)/1 var(--serif)}
+.acte__titre{font-size:var(--fs-acte);line-height:1}
+.acte__folio{font:400 .75rem/1 var(--mono);color:var(--ink-soft)}
+.titre-courant{display:flex;justify-content:space-between;gap:16px;padding-bottom:8px;border-bottom:1px solid var(--line);font:400 .75rem/1.3 var(--mono);color:var(--ink-soft)}
+.distribution{list-style:none;display:grid;gap:8px;max-width:30rem}
+.distribution li{display:flex;align-items:baseline;gap:10px}
+.distribution li::after{content:"";order:1;flex:1;border-bottom:1px dotted var(--ink-soft);transform:translateY(-.25em)}
+.distribution__role{order:0;font:500 var(--fs-label)/1.4 var(--sans);letter-spacing:.16em;text-transform:uppercase}
+.distribution__nom{order:2;font:italic 400 1.125rem/1.3 var(--serif)}
+.frise{width:100%;height:40px}
+.frise .lame{stroke:var(--parquet);stroke-width:.75}
+.frise .lame--a{fill:rgb(169 120 79 / .34)}
+.frise .lame--b{fill:rgb(169 120 79 / .16)}
+.frise .joint{stroke:var(--parquet);stroke-width:.75}
+.on-dark .frise .lame--a{fill:rgb(169 120 79 / .42)}
+.on-dark .frise .lame--b{fill:rgb(169 120 79 / .2)}
+.plomb-grand{width:20px;height:52px}
+.entracte{background:var(--forest);color:var(--on-dark);padding:clamp(28px,4vw,56px) clamp(20px,4vw,56px);display:grid;gap:18px}
+.entracte .label{color:var(--on-dark-soft)}
+.entracte__titre{font:italic 400 var(--fs-acte)/1.02 var(--serif)}
+.entracte__texte{color:var(--on-dark-soft);max-width:44ch}
+.question{border:0;padding:0;display:grid;gap:12px;margin-top:8px}
+.question legend{padding:0;margin-bottom:12px;font:400 1.125rem/1.35 var(--serif)}
+.question legend .mono{color:var(--on-dark-soft);margin-right:.6em}
+.choix{display:flex;flex-wrap:wrap;gap:10px}
+.choix label{position:relative;display:inline-flex;align-items:center;min-height:46px;padding:0 1.1em;border:1px solid var(--on-dark-soft);cursor:pointer;font-size:.9375rem}
+.choix input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+.choix label:has(input:checked){background:var(--on-dark);color:var(--forest);border-color:var(--on-dark)}
+.choix label:has(input:focus-visible){outline:2px solid var(--on-dark);outline-offset:3px}
+.entracte__note{font-size:.8125rem;color:var(--on-dark-soft);border-top:1px solid rgb(243 239 231 / .3);padding-top:14px}
+.comparatif{width:100%;border-collapse:collapse;font-size:.9375rem;line-height:1.45}
+.comparatif th,.comparatif td{text-align:left;vertical-align:top;padding:12px 14px;border-top:1px solid var(--line)}
+.comparatif thead th{font:400 1.125rem/1.25 var(--serif);border-top:0;padding-bottom:14px;vertical-align:bottom}
+.comparatif tbody th{font:500 var(--fs-label)/1.5 var(--sans);letter-spacing:.16em;text-transform:uppercase;padding-left:0;width:8.5rem}
+.comparatif .is-aplomb{background:var(--pierre)}
+.comparatif thead .is-aplomb{box-shadow:inset 0 3px 0 var(--oxblood);font-style:italic;font-size:1.375rem}
+.comparatif td:not(.is-aplomb){color:var(--ink-soft)}
+@media (max-width:699px){
+  .comparatif thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .comparatif,.comparatif tbody,.comparatif tr,.comparatif th,.comparatif td{display:block;width:auto}
+  .comparatif tr{padding:14px 0;border-top:1px solid var(--line)}
+  .comparatif tbody th{border:0;padding:0 0 8px}
+  .comparatif td{border:0;padding:6px 10px;display:grid;grid-template-columns:7.5rem minmax(0,1fr);gap:10px}
+  .comparatif td::before{content:attr(data-col);font:400 .6875rem/1.5 var(--mono);color:var(--ink-soft)}
+  .comparatif td.is-aplomb{box-shadow:inset 3px 0 0 var(--oxblood)}
+}
+
+/* Cadres photo */
+.cadres{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(24px,3vw,36px)}
+.cadre,.cadre__zone{min-width:0}
+@media (min-width:860px){.cadres{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}.cadre--large{grid-column:1/-1}}
+.cadre{display:grid;gap:10px;align-content:start}
+.cadre__zone{position:relative;aspect-ratio:var(--ratio);max-width:100%;background:var(--pierre);display:grid;align-content:center;justify-items:start;padding:clamp(20px,6%,64px)}
+.cadre__zone::before{content:"";position:absolute;inset:12px;pointer-events:none;
+  background:
+    linear-gradient(var(--ink),var(--ink)) left top/16px 1px no-repeat,
+    linear-gradient(var(--ink),var(--ink)) left top/1px 16px no-repeat,
+    linear-gradient(var(--ink),var(--ink)) right top/16px 1px no-repeat,
+    linear-gradient(var(--ink),var(--ink)) right top/1px 16px no-repeat,
+    linear-gradient(var(--ink),var(--ink)) left bottom/16px 1px no-repeat,
+    linear-gradient(var(--ink),var(--ink)) left bottom/1px 16px no-repeat,
+    linear-gradient(var(--ink),var(--ink)) right bottom/16px 1px no-repeat,
+    linear-gradient(var(--ink),var(--ink)) right bottom/1px 16px no-repeat;opacity:.55}
+.cadre__didascalie{font:italic 400 clamp(1rem,.9rem + .5vw,1.375rem)/1.4 var(--serif);max-width:32ch;color:var(--ink)}
+.cadre__tech{position:absolute;right:24px;bottom:20px;font:400 .6875rem/1 var(--mono);color:var(--ink-soft)}
+.cadre__son{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px;font:400 .75rem/1 var(--mono);color:var(--ink)}
+.cadre__son svg{width:28px;height:28px}
+.cadre__legende{font:500 var(--fs-label)/1.5 var(--sans);letter-spacing:.14em;text-transform:uppercase}
+.cadre__legende b{font-weight:500;color:var(--ink)}
+.cadre__legende span{color:var(--ink-soft)}
+.plans{width:100%;border-collapse:collapse;font-size:.875rem;line-height:1.45}
+.plans th,.plans td{text-align:left;vertical-align:baseline;padding:10px 14px 10px 0;border-top:1px solid var(--line)}
+.plans thead th{font:500 .6875rem/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);border-top:0}
+.plans td:first-child{font:italic 400 1.0625rem/1.3 var(--serif);white-space:nowrap}
+.plans td.n{font-family:var(--mono);font-size:.8125rem;white-space:nowrap}
+@media (max-width:699px){
+  .plans thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .plans,.plans tbody,.plans tr,.plans td{display:block}
+  .plans tr{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;padding:12px 0;border-top:1px solid var(--line)}
+  .plans td{border:0;padding:2px 0}
+  .plans td:first-child{grid-row:1/span 3}
+}
+
+/* Planche dessin */
+.planche-dessin{display:grid;gap:28px}
+.planche-dessin .dessin{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding-block:clamp(16px,2.4vw,32px)}
+.annexes{display:grid;gap:28px}
+@media (min-width:860px){.annexes{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.15fr);column-gap:clamp(20px,2.5vw,36px)}}
+.nomenclature,.cotes{list-style:none;display:grid;gap:9px;font-size:.9375rem;line-height:1.4}
+.nomenclature li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:12px;align-items:center}
+.nomenclature .bulle{position:static;transform:none;width:22px;font:400 .6875rem/1 var(--mono)}
+.cotes li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:12px;align-items:baseline}
+.cotes b{font:400 .875rem/1 var(--mono);color:var(--oxblood)}
+.cartouche{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--ink);font:400 .6875rem/1.35 var(--mono);align-self:start}
+.cartouche>div{padding:8px 10px;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);min-width:0}
+.cartouche>div:nth-child(2n){border-right:0}
+.cartouche>div:nth-last-child(-n+2){border-bottom:0}
+.cartouche .k{display:block;color:var(--ink-soft);font-size:.625rem;letter-spacing:.08em;text-transform:uppercase}
+.cartouche .titre{grid-column:1/-1;border-right:0;font:500 1rem/1.2 var(--serif);letter-spacing:.3em}
+.note{font-size:.875rem;line-height:1.55;color:var(--ink-soft);max-width:62ch}
+
+/* Ton */
+.regles{list-style:none;display:grid}
+.regles>li{display:grid;gap:6px;padding:14px 0;border-top:1px solid var(--line)}
+.regles>li:last-child{border-bottom:1px solid var(--line)}
+.regles__ex{font:400 1.25rem/1.4 var(--serif)}
+.regles__ex mark{background:none;color:inherit;box-shadow:inset 0 -2px 0 var(--parquet)}
+.regles__dit{font:400 .75rem/1.45 var(--mono);color:var(--ink-soft)}
+@media (min-width:860px){.regles>li{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:32px;align-items:baseline}}
+.vocab{display:grid;gap:24px}
+@media (min-width:700px){.vocab{grid-template-columns:1fr 1fr;column-gap:32px}}
+.vocab ul{list-style:none;display:grid;gap:8px;font-size:.9375rem}
+.vocab .non li{color:var(--ink-soft);text-decoration:line-through;text-decoration-color:var(--oxblood);text-decoration-thickness:1px}
+
+/* Pied de page */
+.pied{background:var(--ink);color:var(--on-dark);margin-top:clamp(72px,9vw,140px)}
+.pied .frise{display:block}
+.pied__grille{row-gap:28px;padding-block:clamp(36px,5vw,64px) 28px}
+.pied .wordmark{color:var(--on-dark)}
+.pied__devise{font:italic 400 1.25rem/1.3 var(--serif);color:var(--on-dark);margin-top:14px}
+.pied__maison{color:var(--on-dark-soft);max-width:34ch}
+.pied nav ul{list-style:none;display:grid;gap:10px}
+.pied nav a{text-decoration-color:rgb(243 239 231 / .45)}
+.pied__colophon{border-top:1px solid rgb(243 239 231 / .25);padding-top:16px;font:400 .75rem/1.5 var(--mono);color:var(--on-dark-soft);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px}
+@media (min-width:1000px){
+  .pied__marque{grid-column:1/span 4}
+  .pied__maison{grid-column:5/span 3}
+  .pied nav{grid-column:9/span 4}
+}
+.fin{font:400 .75rem/1.5 var(--mono);color:var(--on-dark-soft)}
+</style>
+</head>
+<body>
+<a class="skip" href="#planches">Aller aux planches</a>
+
+<div class="doc" role="note">
+  <div class="wrap">
+    <span>APLOMB — style tile — checkpoint I</span>
+    <span>5 novembre 2026 · document de travail, non publié</span>
+  </div>
+</div>
+
+<!-- ===== Spécimen : en-tête + hero de l'accueil (launch_mode = waitlist) ===== -->
+<div class="wrap">
+  <header class="masthead">
+    <a class="wordmark" href="#top" aria-label="Aplomb, accueil">
+      <svg viewBox="0 0 12 30" aria-hidden="true"><line x1="6" y1="0" x2="6" y2="18" stroke="#5B1A1E" stroke-width="1"/><path d="M2.4 18.5h7.2l-.6 2.2L6 29.5l-3-8.8z" fill="#1B1D22"/></svg>
+      <span>APLOMB</span>
+    </a>
+    <nav class="masthead__nav" aria-label="Principale">
+      <a class="label" href="#chariot">Le mini-reformer</a>
+      <a class="label" href="#programme">Le programme</a>
+      <a class="label" href="#maison">La maison</a>
+    </nav>
+    <a class="btn btn--line btn--sm" href="#liste">Liste d'attente</a>
+  </header>
+  <hr class="filet filet--double">
+</div>
+
+<main id="top">
+  <section class="wrap grid hero" aria-labelledby="hero-titre">
+    <div class="hero__meta">
+      <span class="label">Feuille de salle n° 1</span>
+      <span class="hero__devise">Pilates, avec aplomb.</span>
+      <span class="label hero__lieu">Pré-lancement · Paris</span>
+    </div>
+    <h1 class="hero__titre" id="hero-titre">Le <span class="nowrap">mini-reformer</span> à chariot, <em class="hero__accent">pensé pour l'appartement.</em></h1>
+    <p class="hero__lead">Plateau bois, rails acier, chariot sur roues silencieuses. Se range debout derrière une porte.</p>
+    <figure class="hero__dessin">
+      <!--@DESSIN hero-->
+      <figcaption class="legende">Planche 01 — vue de dessus et élévation. Faites défiler : le chariot glisse sur ses rails.</figcaption>
+    </figure>
+    <form class="waitlist hero__form" id="liste" action="#" method="post" novalidate>
+      <label class="label" for="email-hero">Votre adresse e-mail</label>
+      <div class="field">
+        <input class="input" id="email-hero" type="email" name="contact[email]" autocomplete="email" inputmode="email" placeholder="prenom@exemple.fr" required>
+        <input type="hidden" name="contact[tags]" value="waitlist,aplomb">
+        <button class="btn" type="submit">Rejoindre la liste d'attente</button>
+      </div>
+      <p class="consent">En cliquant sur « Rejoindre la liste d'attente », vous acceptez de recevoir les e-mails d'Aplomb sur le lancement. Désinscription en un clic, à tout moment. <a href="#confidentialite">Politique de confidentialité</a></p>
+    </form>
+    <ul class="preuves hero__preuves" aria-label="En bref">
+      <li>Un vrai chariot sur rails acier</li>
+      <li>Élastiques plutôt que ressorts</li>
+      <li>Le prix de quatre séances en studio</li>
+    </ul>
+    <nav class="sommaire" aria-label="Au programme">
+      <p class="label soft" style="margin-bottom:10px">Au programme</p>
+      <ol>
+        <li><a href="#chariot"><span class="sommaire__num">I.</span><span class="sommaire__titre">Le chariot</span><span class="sommaire__folio">2</span></a></li>
+        <li><a href="#appartement"><span class="sommaire__num">II.</span><span class="sommaire__titre">L'appartement</span><span class="sommaire__folio">3</span></a></li>
+        <li><a href="#programme"><span class="sommaire__num">III.</span><span class="sommaire__titre">Le programme</span><span class="sommaire__folio">4</span></a></li>
+        <li><a href="#entracte"><span class="sommaire__num">—</span><span class="sommaire__titre">Entracte : le quiz</span><span class="sommaire__folio">5</span></a></li>
+        <li><a href="#maison"><span class="sommaire__num">IV.</span><span class="sommaire__titre">La maison</span><span class="sommaire__folio">6</span></a></li>
+      </ol>
+    </nav>
+  </section>
+
+  <div id="planches">
+
+  <!-- ===== Planche 2 : couleurs ===== -->
+  <section class="wrap grid planche" aria-labelledby="t-couleurs">
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">2 / 8</span></div>
+    <header class="planche__tete">
+      <p class="label">Planche 2</p>
+      <h2 class="planche__titre" id="t-couleurs">Couleurs</h2>
+      <p class="planche__note">Six teintes, une seule voix. La craie domine, l'encre écrit, le sang-de-bœuf ne sert qu'aux appels à l'action et aux filets.</p>
+    </header>
+    <div class="planche__corps">
+      <div class="sous">
+        <p class="sous__titre">Proportions d'une page</p>
+        <div class="bande" role="img" aria-label="Répartition : chalk et pierre environ 70 %, ink et forest environ 20 %, oxblood environ 10 %.">
+          <div style="flex:52;background:var(--chalk)"><span>chalk</span></div>
+          <div style="flex:18;background:var(--pierre)"><span>pierre</span></div>
+          <div style="flex:12;background:var(--ink);color:var(--chalk)"><span>ink</span></div>
+          <div style="flex:8;background:var(--forest);color:var(--chalk)"><span>forest</span></div>
+          <div style="flex:10;background:var(--oxblood);color:var(--chalk)"><span>oxblood</span></div>
+        </div>
+        <div class="parts" aria-hidden="true">
+          <div style="flex:70">≈ 70 %</div>
+          <div style="flex:20">≈ 20 %</div>
+          <div style="flex:10">10 %</div>
+        </div>
+      </div>
+      <div class="sous">
+        <p class="sous__titre">Nuancier et contrastes (WCAG)</p>
+        <ul class="nuancier">
+          <li><span class="puce" style="--c:var(--chalk)"></span><span class="nuancier__nom">Chalk</span><code class="nuancier__hex">#F3EFE7</code><span class="nuancier__role">Fond principal. Le papier du programme.</span><span class="nuancier__ratio">ink sur chalk 14,7 : 1 · AAA</span></li>
+          <li><span class="puce" style="--c:var(--pierre)"></span><span class="nuancier__nom">Pierre</span><code class="nuancier__hex">#DDD5C7</code><span class="nuancier__role">Cadres photo, colonne Aplomb, aplats secondaires.</span><span class="nuancier__ratio">ink sur pierre 11,6 : 1 · AAA</span></li>
+          <li><span class="puce" style="--c:var(--ink)"></span><span class="nuancier__nom">Ink</span><code class="nuancier__hex">#1B1D22</code><span class="nuancier__role">Texte, trait du dessin, pied de page.</span><span class="nuancier__ratio">chalk sur ink 14,7 : 1 · AAA</span></li>
+          <li><span class="puce" style="--c:var(--forest)"></span><span class="nuancier__nom">Forest</span><code class="nuancier__hex">#1F3A2F</code><span class="nuancier__role">Entracte (quiz), velours sombre.</span><span class="nuancier__ratio">chalk sur forest 10,7 : 1 · AAA</span></li>
+          <li><span class="puce" style="--c:var(--oxblood)"></span><span class="nuancier__nom">Oxblood</span><code class="nuancier__hex">#5B1A1E</code><span class="nuancier__role">Appels à l'action, filets, lignes de cote. Rien d'autre.</span><span class="nuancier__ratio">chalk sur oxblood 11,4 : 1 · AAA</span></li>
+          <li><span class="puce" style="--c:var(--parquet)"></span><span class="nuancier__nom">Parquet</span><code class="nuancier__hex">#A9784F</code><span class="nuancier__role">Décor uniquement : frise point de Hongrie. Jamais de texte.</span><span class="nuancier__ratio">sur chalk 3,3 : 1 · ornement seulement</span></li>
+          <li><span class="puce" style="--c:var(--ink-soft)"></span><span class="nuancier__nom">Ink adouci <span class="soft">(dérivé)</span></span><code class="nuancier__hex">#57534C</code><span class="nuancier__role">Légendes, mentions, texte secondaire.</span><span class="nuancier__ratio">sur chalk 6,7 : 1 · sur pierre 5,3 : 1 · AA</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Planche 3 : typographie ===== -->
+  <section class="wrap grid planche" aria-labelledby="t-typo">
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">3 / 8</span></div>
+    <header class="planche__tete">
+      <p class="label">Planche 3</p>
+      <h2 class="planche__titre" id="t-typo">Typographie</h2>
+      <p class="planche__note">Deux distributions possibles. Fichiers woff2 servis depuis le thème, sous-ensemble latin, licence OFL. Le mono ne sert qu'aux cotes et aux specs.</p>
+    </header>
+    <div class="planche__corps">
+      <article class="paire" aria-labelledby="paire-a">
+        <div class="paire__entete">
+          <h3 class="paire__nom" id="paire-a">A. <em>Piste par défaut</em></h3>
+          <p class="mono soft">Bodoni Moda · Hanken Grotesk · IBM Plex Mono — ≈ 150 Ko au premier affichage</p>
+        </div>
+        <p class="paire__specimen">Le <span class="nowrap">mini-reformer</span> à chariot, <em>pensé pour l'appartement.</em></p>
+        <div class="paire__cols">
+          <div class="paire__specs">
+            <p class="paire__acte">I. <span>Le chariot</span></p>
+            <p class="label">Édition Studio · programme 8 semaines</p>
+            <p class="mono">Plateau bois · rails acier · roues PU<br>SKU APL-ESS · APL-STU</p>
+          </div>
+          <p class="paire__corps">Aplomb est né à Paris d'un constat simple : le reformer a changé notre façon de bouger, mais il ne tient ni dans un budget ni dans un deux-pièces. Nous avons gardé l'essentiel, un chariot qui glisse sur des rails, et retiré le reste. Pour pratiquer avec justesse, chez soi, avec aplomb.</p>
+        </div>
+        <p class="paire__pourquoi">Un Didone à axe vertical, l'esthétique typographique de l'époque du Palais Garnier (1875). Contrastes vifs, l'italique sert d'accent. La version variable ajuste l'œil au corps : les déliés s'affinent en grand titre.</p>
+        <div class="t-scroll">
+          <table class="echelle">
+            <caption class="label soft">Échelle — piste A</caption>
+            <thead><tr><th scope="col">Rôle</th><th scope="col">Réglage</th><th scope="col">390 px</th><th scope="col">1 440 px</th></tr></thead>
+            <tbody>
+              <tr><td>Titre (H1)</td><td>Bodoni Moda 400, italique en accent</td><td class="n">40 px / 1,02</td><td class="n">92 px / 1,02</td></tr>
+              <tr><td>Acte (H2)</td><td>Bodoni Moda 400, chiffre romain en italique</td><td class="n">32 px</td><td class="n">60 px</td></tr>
+              <tr><td>Intertitre (H3)</td><td>Bodoni Moda 400</td><td class="n">22 px</td><td class="n">30 px</td></tr>
+              <tr><td>Chapeau</td><td>Hanken Grotesk 400</td><td class="n">18 px / 1,5</td><td class="n">22 px / 1,5</td></tr>
+              <tr><td>Texte</td><td>Hanken Grotesk 400</td><td class="n">16 px / 1,6</td><td class="n">18 px / 1,6</td></tr>
+              <tr><td>Label</td><td>Hanken Grotesk 500, capitales, +0,16 em</td><td class="n">12 px</td><td class="n">12 px</td></tr>
+              <tr><td>Cote, spec</td><td>IBM Plex Mono 400</td><td class="n">12 px</td><td class="n">13 px</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="paire paire--b" aria-labelledby="paire-b">
+        <div class="paire__entete">
+          <h3 class="paire__nom" id="paire-b">B. <em>Variante</em></h3>
+          <p class="mono soft">Baskervville · Ysabeau Office · IBM Plex Mono — ≈ 145 Ko</p>
+        </div>
+        <p class="paire__specimen">Le <span class="nowrap">mini-reformer</span> à chariot, <em>pensé pour l'appartement.</em></p>
+        <div class="paire__cols">
+          <div class="paire__specs">
+            <p class="paire__acte">II. <span>L'appartement</span></p>
+            <p class="label">Édition Essentiel · programme 28 jours</p>
+            <p class="mono">Plateau bois · rails acier · roues PU<br>SKU APL-ESS · APL-STU</p>
+          </div>
+          <p class="paire__corps">Aplomb est né à Paris d'un constat simple : le reformer a changé notre façon de bouger, mais il ne tient ni dans un budget ni dans un deux-pièces. Nous avons gardé l'essentiel, un chariot qui glisse sur des rails, et retiré le reste. Pour pratiquer avec justesse, chez soi, avec aplomb.</p>
+        </div>
+        <p class="paire__pourquoi">Baskerville redessiné par l'Atelier national de recherche typographique (Nancy). Plus littéraire, plus doux, moins « Opéra » ; Ysabeau Office garde des proportions de Garalde dans un texte sans empattement. Une maison d'édition plutôt qu'un théâtre.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== Planche 4 : boutons, champs, sélecteur ===== -->
+  <section class="wrap grid planche" aria-labelledby="t-boutons">
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">4 / 8</span></div>
+    <header class="planche__tete">
+      <p class="label">Planche 4</p>
+      <h2 class="planche__titre" id="t-boutons">Boutons, champs, <em>sélecteur</em></h2>
+      <p class="planche__note">Angles droits, aucun dégradé, aucune ombre. Le focus clavier est toujours visible : contour encre de 2 px, décalé de 3 px.</p>
+    </header>
+    <div class="planche__corps">
+      <div class="sous">
+        <p class="sous__titre">États</p>
+        <div class="etats">
+          <figure class="etat"><button class="btn" type="button">Rejoindre la liste d'attente</button><figcaption>Principal · repos</figcaption></figure>
+          <figure class="etat"><button class="btn is-hover" type="button" tabindex="-1">Rejoindre la liste d'attente</button><figcaption>Survol</figcaption></figure>
+          <figure class="etat"><button class="btn is-focus" type="button" tabindex="-1">Rejoindre la liste d'attente</button><figcaption>Focus clavier</figcaption></figure>
+          <figure class="etat"><button class="btn btn--line" type="button">Voir le programme</button><figcaption>Secondaire</figcaption></figure>
+          <figure class="etat"><a class="lien" href="#ton">Lire la FAQ</a><figcaption>Lien · filet oxblood</figcaption></figure>
+          <figure class="etat"><button class="btn" type="button" disabled>Bientôt disponible</button><figcaption>Indisponible</figcaption></figure>
+        </div>
+      </div>
+      <div class="sous">
+        <p class="sous__titre">L'appel à l'action suit <code>launch_mode</code></p>
+        <ul class="modes">
+          <li><span class="modes__cle">launch_mode = <b>waitlist</b><br>(par défaut)</span><span><button class="btn" type="button">Rejoindre la liste d'attente</button></span><span class="modes__mention">Formulaire e-mail natif, tags « waitlist, aplomb ». Aucun prix à payer.</span></li>
+          <li><span class="modes__cle">launch_mode = <b>reservation</b></span><span><button class="btn" type="button">Réserver en priorité — 19 €</button></span><span class="modes__mention">Remboursable à tout moment, déduit du prix final.</span></li>
+          <li><span class="modes__cle">launch_mode = <b>vente</b></span><span><button class="btn" type="button">Ajouter au panier — 149 €</button></span><span class="modes__mention">Expédié depuis la France : mention visible dans ce mode seulement.</span></li>
+        </ul>
+      </div>
+      <div class="sous">
+        <p class="sous__titre">Champ e-mail · erreur</p>
+        <div class="waitlist" style="max-width:34rem">
+          <label class="label" for="email-erreur">Votre adresse e-mail</label>
+          <div class="field">
+            <input class="input" id="email-erreur" type="email" value="camille.exemple.fr" aria-invalid="true" aria-describedby="email-erreur-msg">
+            <button class="btn" type="button">Rejoindre la liste d'attente</button>
+          </div>
+          <p class="erreur" id="email-erreur-msg">Adresse incomplète : il manque « @ ».</p>
+        </div>
+      </div>
+      <div class="sous">
+        <fieldset class="editions">
+          <legend class="sous__titre" style="width:100%">Sélecteur d'édition · fiche produit</legend>
+          <label class="edition">
+            <input type="radio" name="edition-demo" value="essentiel">
+            <span class="edition__nom">Essentiel</span>
+            <span class="edition__prix">139 €<small>TTC</small></span>
+            <span class="edition__contenu">Le board, 4 élastiques, les poignées, le programme « 28 jours d'aplomb ».</span>
+          </label>
+          <label class="edition">
+            <input type="radio" name="edition-demo" value="studio" checked>
+            <span class="edition__nom">Studio</span>
+            <span class="edition__prix">149 €<small>TTC</small></span>
+            <span class="edition__contenu">L'Essentiel, plus chaussettes grip, housse en toile avec sangle de rangement, 4 patins feutre, 1 bande forte, programme 8 semaines.</span>
+          </label>
+        </fieldset>
+      </div>
+      <div class="sous">
+        <p class="sous__titre">Appel collant · mobile, après le premier écran</p>
+        <div class="collant" aria-label="Aperçu de la barre collante mobile" role="group">
+          <div class="collant__ecran">Fiche produit, au défilement.<br>La barre apparaît quand le bouton principal sort de l'écran.</div>
+          <div class="collant__barre">
+            <span class="collant__produit"><b>Studio</b><span>149 € TTC</span></span>
+            <button class="btn btn--sm" type="button">Liste d'attente</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Planche 5 : filets, folios, ornements ===== -->
+  <section class="wrap grid planche" aria-labelledby="t-filets">
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">5 / 8</span></div>
+    <header class="planche__tete">
+      <p class="label">Planche 5</p>
+      <h2 class="planche__titre" id="t-filets">Filets, folios, <em>ornements</em></h2>
+      <p class="planche__note">Le vocabulaire de la feuille de salle : actes numérotés, titres courants, points de conduite. La frise de parquet reste rare.</p>
+    </header>
+    <div class="planche__corps">
+      <ul class="specimens">
+        <li><hr class="filet"><span class="specimens__desc">Filet simple · 1 px oxblood · sépare</span></li>
+        <li><hr class="filet filet--double"><span class="specimens__desc">Filet double · 1 + 3 + 1 px · ouvre un acte</span></li>
+        <li><hr class="filet filet--encre"><span class="specimens__desc">Filet encre · 1 px ink 20 % · lignes de tableau</span></li>
+        <li>
+          <div class="acte"><span class="acte__num">II.</span><span class="acte__titre">L'appartement</span><span class="acte__folio">p. 3</span></div>
+          <span class="specimens__desc">Tête d'acte · chiffre romain italique, titre romain, folio mono</span>
+        </li>
+        <li>
+          <div class="titre-courant"><span>APLOMB — feuille de salle</span><span>III. Le programme · 4</span></div>
+          <span class="specimens__desc">Titre courant · en tête des sections longues</span>
+        </li>
+        <li>
+          <ul class="distribution">
+            <li><span class="distribution__role">Plateau</span><span class="distribution__nom">bois</span></li>
+            <li><span class="distribution__role">Rails</span><span class="distribution__nom">acier</span></li>
+            <li><span class="distribution__role">Chariot</span><span class="distribution__nom">roues PU silencieuses</span></li>
+            <li><span class="distribution__role">Résistance</span><span class="distribution__nom">élastiques</span></li>
+          </ul>
+          <span class="specimens__desc">Distribution · points de conduite, comme la liste des rôles d'un programme</span>
+        </li>
+        <li>
+          <svg class="frise" aria-hidden="true"><defs><pattern id="hongrie" width="32" height="40" patternUnits="userSpaceOnUse"><polygon class="lame lame--a" points="-32,20 -16,20 4,0 -12,0"/><polygon class="lame lame--a" points="-32,20 -16,20 4,40 -12,40"/><polygon class="lame lame--b" points="-16,20 0,20 20,0 4,0"/><polygon class="lame lame--b" points="-16,20 0,20 20,40 4,40"/><polygon class="lame lame--a" points="0,20 16,20 36,0 20,0"/><polygon class="lame lame--a" points="0,20 16,20 36,40 20,40"/><polygon class="lame lame--b" points="16,20 32,20 52,0 36,0"/><polygon class="lame lame--b" points="16,20 32,20 52,40 36,40"/></pattern></defs><rect x="-1" y="0" width="102%" height="40" style="fill:url(#hongrie)"/><line class="joint" x1="0" y1=".5" x2="100%" y2=".5"/><line class="joint" x1="0" y1="39.5" x2="100%" y2="39.5"/></svg>
+          <span class="specimens__desc">Frise point de Hongrie · parquet · ornement, jamais de texte</span>
+        </li>
+        <li>
+          <svg class="plomb-grand" viewBox="0 0 12 30" aria-hidden="true"><line x1="6" y1="0" x2="6" y2="18" stroke="#5B1A1E" stroke-width="1"/><path d="M2.4 18.5h7.2l-.6 2.2L6 29.5l-3-8.8z" fill="#1B1D22"/></svg>
+          <span class="specimens__desc">Fil à plomb · marque de la maison · l'aplomb, la verticale juste</span>
+        </li>
+      </ul>
+
+      <div class="sous" id="entracte">
+        <p class="sous__titre">Entracte · bandeau forest</p>
+        <div class="entracte on-dark">
+          <p class="label">Entracte</p>
+          <h3 class="entracte__titre">Quel Aplomb pour vous ?</h3>
+          <p class="entracte__texte">Cinq questions, deux minutes. Le résultat présélectionne l'édition ; l'e-mail reste facultatif.</p>
+          <fieldset class="question">
+            <legend><span class="mono">1 / 5</span>Votre pratique aujourd'hui</legend>
+            <div class="choix">
+              <label><input type="radio" name="q1-demo" value="jamais">Jamais</label>
+              <label><input type="radio" name="q1-demo" value="tapis" checked>Sur tapis</label>
+              <label><input type="radio" name="q1-demo" value="studio">Reformer en studio</label>
+            </div>
+          </fieldset>
+          <p class="entracte__note">Douleurs, grossesse ou post-partum : demandez l'avis de votre médecin ou kiné.</p>
+        </div>
+      </div>
+
+      <div class="sous" id="chariot">
+        <p class="sous__titre">I. Le chariot · comparatif, Aplomb assumé au milieu</p>
+        <table class="comparatif">
+          <caption class="sr-only">Comparaison entre un board plastique 5-en-1, Aplomb et un reformer de studio</caption>
+          <thead><tr><th scope="col"><span class="sr-only">Critère</span></th><th scope="col">Board plastique 5-en-1</th><th scope="col" class="is-aplomb">Aplomb</th><th scope="col">Reformer de studio</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Mouvement</th><td data-col="Board 5-en-1">Plateau fixe, sans chariot</td><td class="is-aplomb" data-col="Aplomb">Chariot sur rails acier, roues PU</td><td data-col="Studio">Chariot sur rails</td></tr>
+            <tr><th scope="row">Résistance</th><td data-col="Board 5-en-1">Élastiques</td><td class="is-aplomb" data-col="Aplomb">Élastiques</td><td data-col="Studio">Ressorts</td></tr>
+            <tr><th scope="row">Matière</th><td data-col="Board 5-en-1">Plastique</td><td class="is-aplomb" data-col="Aplomb">Plateau bois, rails acier</td><td data-col="Studio">Cadre bois ou métal</td></tr>
+            <tr><th scope="row">Rangement</th><td data-col="Board 5-en-1">À plat</td><td class="is-aplomb" data-col="Aplomb">Plié, debout derrière une porte</td><td data-col="Studio">Une pièce dédiée</td></tr>
+            <tr><th scope="row">Coût</th><td data-col="Board 5-en-1">—</td><td class="is-aplomb" data-col="Aplomb">139 € ou 149 €, une fois</td><td data-col="Studio">25 à 45 € la séance</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Planche 6 : cadres photo ===== -->
+  <section class="wrap grid planche" aria-labelledby="t-cadres">
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">6 / 8</span></div>
+    <header class="planche__tete">
+      <p class="label">Planche 6</p>
+      <h2 class="planche__titre" id="t-cadres">Cadres <em>photo</em></h2>
+      <p class="planche__note">Aucune image de synthèse ni de banque d'images. Chaque cadre attend sa photo : ratio fixe, fond pierre, didascalie du plan. Remplaçable par un réglage image_picker.</p>
+    </header>
+    <div class="planche__corps">
+      <div class="cadres">
+        <figure class="cadre cadre--large">
+          <div class="cadre__zone" style="--ratio:3/2">
+            <p class="cadre__didascalie">Lumière d'hiver rasante, fenêtre à gauche. Le board posé sur le point de Hongrie, vu en plongée à 45°. Personne dans le champ.</p>
+            <span class="cadre__tech">3:2 · image_picker</span>
+          </div>
+          <figcaption class="cadre__legende"><b>Plan 01</b> <span>— le board sur parquet, plongée à 45°</span></figcaption>
+        </figure>
+        <figure class="cadre">
+          <div class="cadre__zone" style="--ratio:16/9">
+            <span class="cadre__son"><svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="13.5" fill="none" stroke="#1B1D22"/><path d="M11 9l8 5-8 5z" fill="#1B1D22"/></svg>Vidéo · son réel, sans musique</span>
+            <p class="cadre__didascalie">Le chariot fait un aller-retour sur toute sa course. Micro près des rails.</p>
+            <span class="cadre__tech">16:9 · vidéo</span>
+          </div>
+          <figcaption class="cadre__legende"><b>Plan 03</b> <span>— le chariot en mouvement, son réel</span></figcaption>
+        </figure>
+        <figure class="cadre">
+          <div class="cadre__zone" style="--ratio:1/1">
+            <p class="cadre__didascalie">Macro. Mise au point sur une roue, le rail fuit en diagonale.</p>
+            <span class="cadre__tech">1:1 · image_picker</span>
+          </div>
+          <figcaption class="cadre__legende"><b>Plan 02</b> <span>— rails et roues, en macro</span></figcaption>
+        </figure>
+      </div>
+      <div class="sous">
+        <p class="sous__titre">Liste des plans à photographier</p>
+        <table class="plans">
+          <thead><tr><th scope="col">Plan</th><th scope="col">Sujet</th><th scope="col">Format</th><th scope="col">Emplacement</th></tr></thead>
+          <tbody>
+            <tr><td>01</td><td>Le board sur parquet, plongée à 45°</td><td class="n">3:2</td><td>Hero, galerie</td></tr>
+            <tr><td>02</td><td>Macro rails et roues</td><td class="n">1:1</td><td>I. Le chariot, galerie</td></tr>
+            <tr><td>03</td><td>Vidéo du chariot, son réel</td><td class="n">16:9</td><td>Galerie (vidéo)</td></tr>
+            <tr><td>04</td><td>Le pliage en trois temps</td><td class="n">3 × 4:5</td><td>II. L'appartement, « Comment ça marche »</td></tr>
+            <tr><td>05</td><td>Rangé debout contre une moulure</td><td class="n">4:5</td><td>II. L'appartement, galerie</td></tr>
+            <tr><td>06</td><td>Trois postures</td><td class="n">3 × 4:5</td><td>III. Le programme</td></tr>
+            <tr><td>07</td><td>Flat-lay du coffret</td><td class="n">4:5</td><td>Sélecteur d'édition, galerie</td></tr>
+            <tr><td>08</td><td>Les feutres sur parquet</td><td class="n">3:2</td><td>II. L'appartement, FAQ sol</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Planche 7 : dessin technique ===== -->
+  <section class="wrap grid planche" aria-labelledby="t-dessin">
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">7 / 8</span></div>
+    <header class="planche__tete">
+      <p class="label">Planche 7</p>
+      <h2 class="planche__titre" id="t-dessin">Dessin <em>technique</em></h2>
+      <p class="planche__note">Trait encre, cotes oxblood en Plex Mono. Le chariot parcourt la course C au défilement ; c'est la seule animation forte du site.</p>
+    </header>
+    <div class="planche__corps planche-dessin">
+      <!--@DESSIN planche-->
+      <div class="annexes">
+        <div class="sous">
+          <p class="sous__titre">Nomenclature</p>
+          <ol class="nomenclature">
+            <li><span class="bulle">1</span>Plateau bois</li>
+            <li><span class="bulle">2</span>Rails acier</li>
+            <li><span class="bulle">3</span>Chariot</li>
+            <li><span class="bulle">4</span>Roues PU silencieuses</li>
+            <li><span class="bulle">5</span>Élastiques</li>
+            <li><span class="bulle">6</span>Barre d'ancrage</li>
+            <li><span class="bulle">7</span>Charnière de pliage</li>
+            <li><span class="bulle">8</span>Patins feutre (édition Studio)</li>
+          </ol>
+        </div>
+        <div class="sous">
+          <p class="sous__titre">Cotes</p>
+          <ul class="cotes">
+            <li><b>A</b>Longueur dépliée</li>
+            <li><b>B</b>Largeur</li>
+            <li><b>C</b>Course du chariot</li>
+            <li><b>D</b>Hauteur hors tout</li>
+          </ul>
+          <p class="note">Les valeurs en millimètres s'afficheront à côté des lettres dès que la fiche technique sera remplie. Champ vide, rien d'affiché : aucune cote n'est inventée.</p>
+        </div>
+        <div class="sous">
+          <p class="sous__titre">Cartouche</p>
+          <div class="cartouche">
+            <div class="titre">APLOMB</div>
+            <div><span class="k">Objet</span>Mini-reformer à chariot</div>
+            <div><span class="k">Planche</span>01</div>
+            <div><span class="k">Vues</span>Dessus, élévation</div>
+            <div><span class="k">Échelle</span>Libre</div>
+            <div><span class="k">Lieu</span>Paris</div>
+            <div><span class="k">Date</span>Novembre 2026</div>
+          </div>
+          <p class="note">Animation : CSS liée au défilement, repli JavaScript léger pour les navigateurs qui ne la gèrent pas. Immobile si « réduire les animations » est activé.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Planche 8 : ton ===== -->
+  <section class="wrap grid planche" id="ton" aria-labelledby="t-ton">
+    <div class="planche__filet"><hr class="filet filet--double"><span class="planche__folio">8 / 8</span></div>
+    <header class="planche__tete">
+      <p class="label">Planche 8</p>
+      <h2 class="planche__titre" id="t-ton">Ton, <em>microtypographie</em></h2>
+      <p class="planche__note">Vouvoiement, phrases courtes, pas de point d'exclamation. La retenue fait le luxe ; la vérité du produit fait la vente.</p>
+    </header>
+    <div class="planche__corps">
+      <ul class="regles">
+        <li><p class="regles__ex">Le chariot glisse<mark> ;</mark> il ne grince pas.</p><p class="regles__dit">Espace fine insécable (U+202F) avant ; ! ? — fournie par une micro-police de 328 octets.</p></li>
+        <li><p class="regles__ex">Le programme <mark>« 28 jours d'aplomb »</mark></p><p class="regles__dit">Guillemets français, espaces fines à l'intérieur.</p></li>
+        <li><p class="regles__ex">Pensé pour l<mark>’</mark>appartement</p><p class="regles__dit">Apostrophe typographique, jamais droite.</p></li>
+        <li><p class="regles__ex">139<mark>&nbsp;</mark>€ · 20<mark>&nbsp;</mark>minutes · 4<mark>&nbsp;</mark>élastiques</p><p class="regles__dit">Chiffre et unité insécables : jamais de retour à la ligne entre les deux.</p></li>
+      </ul>
+      <div class="vocab">
+        <div class="sous">
+          <p class="sous__titre">Nous disons</p>
+          <ul>
+            <li>mini-reformer à chariot</li>
+            <li>des élastiques plutôt que des ressorts</li>
+            <li>réservation prioritaire, remboursable à tout moment</li>
+            <li>conçu à Paris, fabriqué par un atelier partenaire</li>
+            <li>bêta-testeuse, produit prêté</li>
+          </ul>
+        </div>
+        <div class="sous">
+          <p class="sous__titre">Nous ne disons jamais</p>
+          <ul class="non">
+            <li>reformer de studio, reformer professionnel (pour Aplomb)</li>
+            <li>acompte, arrhes</li>
+            <li>révolutionnaire, ultime, incroyable</li>
+            <li>−50 %, prix barré, offre limitée</li>
+            <li>marquage CE, charge max ou dB non mesurés</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </div>
+</main>
+
+<footer class="pied on-dark">
+  <svg class="frise" aria-hidden="true"><defs><pattern id="hongrie-pied" width="32" height="40" patternUnits="userSpaceOnUse"><polygon class="lame lame--a" points="-32,20 -16,20 4,0 -12,0"/><polygon class="lame lame--a" points="-32,20 -16,20 4,40 -12,40"/><polygon class="lame lame--b" points="-16,20 0,20 20,0 4,0"/><polygon class="lame lame--b" points="-16,20 0,20 20,40 4,40"/><polygon class="lame lame--a" points="0,20 16,20 36,0 20,0"/><polygon class="lame lame--a" points="0,20 16,20 36,40 20,40"/><polygon class="lame lame--b" points="16,20 32,20 52,0 36,0"/><polygon class="lame lame--b" points="16,20 32,20 52,40 36,40"/></pattern></defs><rect x="-1" y="0" width="102%" height="40" style="fill:url(#hongrie-pied)"/><line class="joint" x1="0" y1=".5" x2="100%" y2=".5"/><line class="joint" x1="0" y1="39.5" x2="100%" y2="39.5"/></svg>
+  <div class="wrap grid pied__grille">
+    <div class="pied__marque" id="maison">
+      <a class="wordmark" href="#top" aria-label="Aplomb, retour en haut">
+        <svg viewBox="0 0 12 30" aria-hidden="true"><line x1="6" y1="0" x2="6" y2="18" stroke="#A9784F" stroke-width="1"/><path d="M2.4 18.5h7.2l-.6 2.2L6 29.5l-3-8.8z" fill="#F3EFE7"/></svg>
+        <span>APLOMB</span>
+      </a>
+      <p class="pied__devise">Pilates, avec aplomb.</p>
+    </div>
+    <p class="pied__maison">Conçu à Paris, fabriqué par un atelier partenaire.</p>
+    <nav aria-label="Informations légales">
+      <ul>
+        <li><a href="#confidentialite" id="confidentialite">Politique de confidentialité</a></li>
+        <li><a href="#ton">Mentions légales</a></li>
+        <li><a href="#ton">Livraison &amp; retours</a></li>
+        <li><a href="#ton">Sécurité produit (GPSR)</a></li>
+        <li><a href="#ton">Gérer les cookies</a></li>
+      </ul>
+    </nav>
+    <div class="pied__colophon">
+      <span>© 2026 Aplomb · [SIREN] · [ADRESSE]</span>
+      <span class="fin">Fin de la feuille de style · checkpoint I</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/aplomb-dessin.js"></script>
+<script>
+  document.querySelectorAll('form').forEach(function (f) {
+    f.addEventListener('submit', function (e) { e.preventDefault(); });
+  });
+</script>
+</body>
+</html>
