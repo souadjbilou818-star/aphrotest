@@ -1,102 +1,102 @@
 {
-  "date": "2026-11-06T05:34:24.887Z",
+  "date": "2026-11-06T05:40:08.492Z",
   "total": 19,
   "ok": 19,
   "resultats": [
     {
       "test": "Quiz : validation, toucher, clavier, retour, résultat COULISSE, mesure",
       "statut": "ok",
-      "ms": 3096
+      "ms": 3164
     },
     {
       "test": "Quiz : « petit espace » écarte les Reformers Atelier et le dit",
       "statut": "ok",
-      "ms": 2558
+      "ms": 2580
     },
     {
       "test": "Quiz : kit simple → Les Essentiels",
       "statut": "ok",
-      "ms": 2440
+      "ms": 2458
     },
     {
       "test": "Quiz en page dédiée : le bouton Retour du navigateur revient d’une question",
       "statut": "ok",
-      "ms": 1114
+      "ms": 1139
     },
     {
       "test": "Quiz → ajout au panier depuis la recommandation, tiroir ouvert",
       "statut": "ok",
-      "ms": 2740
+      "ms": 2757
     },
     {
       "test": "Produit : variante Studio, prix, URL, compléments, panier",
       "statut": "ok",
-      "ms": 378
+      "ms": 358
     },
     {
       "test": "Panier : quantités, limite de stock (erreur lisible), retrait, paiement natif",
       "statut": "ok",
-      "ms": 1334
+      "ms": 1314
     },
     {
       "test": "Page panier : quantité sans rechargement, paiement",
       "statut": "ok",
-      "ms": 225
+      "ms": 229
     },
     {
       "test": "Barre collante mobile : apparaît après le bloc d’achat et ajoute au panier",
       "statut": "ok",
-      "ms": 611
+      "ms": 530
     },
     {
       "test": "Galerie : flèches, compteur, visionneuse (zoom, Échap, retour du focus)",
       "statut": "ok",
-      "ms": 669
+      "ms": 684
     },
     {
       "test": "Produit en liste d’attente en mode Vente (Atelier) : aucun bouton d’achat",
       "statut": "ok",
-      "ms": 150
+      "ms": 128
     },
     {
       "test": "Collection : prix réels, épuisé signalé, navigation des familles",
       "statut": "ok",
-      "ms": 187
+      "ms": 164
     },
     {
       "test": "Liste d’attente, produits absents : replis honnêtes, aucun bouton d’achat",
       "statut": "ok",
-      "ms": 2517
+      "ms": 2477
     },
     {
       "test": "Largeur 320 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 3494
+      "ms": 3480
     },
     {
       "test": "Largeur 375 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 3480
+      "ms": 3526
     },
     {
       "test": "Largeur 390 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 6407
+      "ms": 6314
     },
     {
       "test": "Largeur 768 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 3498
+      "ms": 3472
     },
     {
       "test": "Largeur 1024 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 3503
+      "ms": 3477
     },
     {
       "test": "Largeur 1440 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 7250
+      "ms": 7283
     }
   ]
 }

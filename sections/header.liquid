@@ -18,6 +18,13 @@
         <ul>
           {%- if liens.size > 0 -%}
             {%- for link in liens -%}
+            {%- liquid
+              if link.object == blank
+                if link.type == 'collection_link' or link.type == 'page_link' or link.type == 'product_link' or link.type == 'blog_link' or link.type == 'article_link'
+                  continue
+                endif
+              endif
+            -%}
               <li><a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a></li>
             {%- endfor -%}
           {%- else -%}
@@ -38,6 +45,13 @@
       <ul>
         {%- if liens.size > 0 -%}
           {%- for link in liens -%}
+            {%- liquid
+              if link.object == blank
+                if link.type == 'collection_link' or link.type == 'page_link' or link.type == 'product_link' or link.type == 'blog_link' or link.type == 'article_link'
+                  continue
+                endif
+              endif
+            -%}
             <li>
               <a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{- link.title -}}</a>
             </li>

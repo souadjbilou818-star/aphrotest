@@ -4,7 +4,9 @@
   "sections": {
     "footer": {
       "type": "footer",
-      "settings": {}
+      "settings": {
+        "menu": "aplomb-pied"
+      }
     }
   },
   "order": [

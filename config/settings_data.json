@@ -8,5 +8,17 @@
  * ------------------------------------------------------------
  */
 {
-  "current": {}
+  "current": {
+    "launch_mode": "waitlist",
+    "produit_principal": "coulisse-01",
+    "produit_reservation": "reservation-prioritaire",
+    "collection_essentiels": "les-essentiels",
+    "collection_coulisse": "coulisse",
+    "collection_atelier": "reformers-atelier",
+    "page_quiz": "trouver-mon-equipement",
+    "page_livraison": "livraison-et-retours",
+    "police_titres": "cormorant",
+    "credit_ia": true,
+    "panier_tiroir": true
+  }
 }

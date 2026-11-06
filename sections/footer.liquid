@@ -12,13 +12,21 @@
     {%- if section.settings.maison != blank -%}
       <p class="pied__maison">{{ section.settings.maison }}</p>
     {%- endif -%}
-    {%- if section.settings.menu.links.size > 0 -%}
+    {%- capture liens_pied -%}
+      {%- for link in section.settings.menu.links -%}
+        {%- liquid
+          if link.object == blank
+            if link.type == 'collection_link' or link.type == 'page_link' or link.type == 'product_link' or link.type == 'blog_link' or link.type == 'article_link'
+              continue
+            endif
+          endif
+        -%}
+        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- if liens_pied != blank -%}
       <nav aria-label="{{ section.settings.menu.title | escape }}">
-        <ul>
-          {%- for link in section.settings.menu.links -%}
-            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-          {%- endfor -%}
-        </ul>
+        <ul>{{ liens_pied }}</ul>
       </nav>
     {%- endif -%}
     <div class="pied__colophon">
