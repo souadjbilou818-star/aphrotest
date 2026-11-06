@@ -3,13 +3,23 @@
   <head>
     {% render 'meta-tags' %}
     {% render 'fonts' %}
-    {{ 'aplomb.css' | asset_url | stylesheet_tag }}
-    <script src="{{ 'aplomb.js' | asset_url }}" defer></script>
+    {{ 'aplomb-tokens.css' | asset_url | stylesheet_tag }}
+    {{ 'aplomb-components.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'aplomb-interactions.js' | asset_url }}" defer></script>
     <script src="{{ 'aplomb-dessin.js' | asset_url }}" defer></script>
+    {%- if settings.launch_mode != 'waitlist' or cart.item_count > 0 -%}
+      <script src="{{ 'aplomb-cart.js' | asset_url }}" defer></script>
+    {%- endif -%}
     {{ content_for_header }}
   </head>
 
-  <body class="gabarit-{{ template.name }}" data-mode="{{ settings.launch_mode }}">
+  <body
+    class="gabarit-{{ template.name }}"
+    data-mode="{{ settings.launch_mode }}"
+    data-panier-tiroir="{{ settings.panier_tiroir }}"
+    data-panier-erreur="{{ 'aplomb.panier.erreur' | t | escape }}"
+    data-ajout-erreur="{{ 'aplomb.vente.erreur' | t | escape }}"
+  >
     <a class="skip" href="#contenu">{{ 'aplomb.skip' | t }}</a>
     {% sections 'header-group' %}
 
@@ -18,5 +28,11 @@
     </main>
 
     {% sections 'footer-group' %}
+
+    {%- if settings.launch_mode != 'waitlist' or cart.item_count > 0 -%}
+      <dialog class="tiroir" aria-labelledby="tiroir-titre" data-tiroir>
+        {% section 'panier-tiroir' %}
+      </dialog>
+    {%- endif -%}
   </body>
 </html>

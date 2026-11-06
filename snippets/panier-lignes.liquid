@@ -1,0 +1,67 @@
+{% doc %}
+  Lignes du panier, partagées par le tiroir et la page panier.
+  Sans JavaScript : champs updates[] du formulaire /cart (bouton « Mettre à jour »).
+  Avec JavaScript : boutons − / + et champ, envoyés à /cart/change.js.
+
+  @param {string} uid - préfixe d’identifiant ('tiroir' ou 'page')
+{% enddoc %}
+<ul class="panier-lignes" role="list">
+  {%- for item in cart.items -%}
+    {%- liquid
+      capture prix_ligne
+        render 'prix', montant: item.final_line_price
+      endcapture
+      capture prix_unite
+        render 'prix', montant: item.final_price
+      endcapture
+      assign titre = item.product.title | escape
+      assign max = ''
+      if item.variant.inventory_management == 'shopify' and item.variant.inventory_policy == 'deny'
+        assign max = item.variant.inventory_quantity
+      endif
+    -%}
+    <li class="panier-ligne" data-ligne="{{ forloop.index }}" data-cle="{{ item.key }}">
+      <a class="panier-ligne__visuel" href="{{ item.url }}" tabindex="-1" aria-hidden="true">
+        {%- if item.image != blank -%}
+          {{ item.image | image_url: width: 240 | image_tag: widths: '120, 240', sizes: '96px', loading: 'lazy', alt: '' }}
+        {%- endif -%}
+      </a>
+      <div class="panier-ligne__texte">
+        <a class="panier-ligne__titre" href="{{ item.url }}">{{ item.product.title }}</a>
+        {%- unless item.product.has_only_default_variant -%}
+          <p class="panier-ligne__variante mono">{{ item.variant.title }}</p>
+        {%- endunless -%}
+        {%- for d in item.line_level_discount_allocations -%}
+          <p class="panier-ligne__remise mono">{{ d.discount_application.title }}</p>
+        {%- endfor -%}
+        <p class="panier-ligne__unite mono">{{ prix_unite }}</p>
+      </div>
+      <div class="panier-ligne__quantite">
+        <div class="quantite">
+          <button class="quantite__bouton" type="button" data-qte="-1" aria-label="{{ 'aplomb.panier.moins' | t: titre: titre }}">
+            {%- render 'icone', nom: 'moins' -%}
+          </button>
+          <input
+            class="quantite__champ"
+            id="qte-{{ uid }}-{{ forloop.index }}"
+            type="number"
+            name="updates[]"
+            value="{{ item.quantity }}"
+            min="0"
+            {% if max != '' %}
+              max="{{ max }}"
+            {% endif %}
+            inputmode="numeric"
+            aria-label="{{ 'aplomb.panier.quantite' | t: titre: titre }}"
+            data-qte-champ
+          >
+          <button class="quantite__bouton" type="button" data-qte="1" aria-label="{{ 'aplomb.panier.plus' | t: titre: titre }}" {% if max != '' and item.quantity >= max %}disabled{% endif %}>
+            {%- render 'icone', nom: 'plus' -%}
+          </button>
+        </div>
+        <a class="panier-ligne__retirer" href="{{ item.url_to_remove }}" data-retirer aria-label="{{ 'aplomb.panier.retirer' | t: titre: titre }}">{{ 'cart.remove' | t }}</a>
+      </div>
+      <p class="panier-ligne__prix">{{ prix_ligne }}</p>
+    </li>
+  {%- endfor -%}
+</ul>

@@ -1,0 +1,96 @@
+{% doc %}
+  Bloc d’achat d’un produit, selon son état (snippets/etat-produit.liquid) :
+  - vente : formulaire produit natif, envoyé en AJAX par assets/aplomb-cart.js
+    (sans JavaScript, il poste vers /cart/add comme d’habitude) ;
+  - reservation : ajoute le produit « Réservation prioritaire » ;
+  - attente : formulaire de liste d’attente, tagué avec le handle du produit.
+
+  @param {object} product - le produit
+  @param {string} contexte - identifiant unique sur la page ('produit', 'vedette', 'quiz'…)
+  @param {object} [variant] - variante présélectionnée
+  @param {object} [complements] - produits proposés en complément (cases à cocher)
+  @param {boolean} [compact] - masque les mentions sous le bouton
+{% enddoc %}
+{%- liquid
+  assign variant = variant | default: product.selected_or_first_available_variant
+  capture etat
+    render 'etat-produit', product: product
+  endcapture
+  assign etat = etat | strip
+  assign form_id = 'achat-' | append: contexte | append: '-' | append: product.id
+  capture prix_variant
+    render 'prix', montant: variant.price
+  endcapture
+  assign libelle_modele = 'aplomb.vente.cta' | t: prix: '{prix}'
+-%}
+{%- case etat -%}
+  {%- when 'vente' -%}
+    {%- form 'product', product, id: form_id, class: 'achat', data-panier: 'ajax', novalidate: 'novalidate' -%}
+      <input type="hidden" name="id" value="{{ variant.id }}" data-variant-input>
+      {%- if complements != blank -%}
+        <fieldset class="complements">
+          <legend class="label">{{ 'aplomb.produit.complements' | t }}</legend>
+          {%- for c in complements -%}
+            {%- liquid
+              capture etat_c
+                render 'etat-produit', product: c
+              endcapture
+              assign etat_c = etat_c | strip
+              assign vc = c.selected_or_first_available_variant
+            -%}
+            {%- if etat_c == 'vente' and vc.available and c.id != product.id -%}
+              {%- capture prix_c -%}{% render 'prix', montant: vc.price %}{%- endcapture -%}
+              <label class="complement">
+                <input type="checkbox" value="{{ vc.id }}" data-complement data-titre="{{ c.title | escape }}">
+                <span class="complement__texte">
+                  <span class="complement__titre">{{ c.title }}</span>
+                  <span class="complement__prix">+ {{ prix_c }}</span>
+                </span>
+              </label>
+            {%- endif -%}
+          {%- endfor -%}
+        </fieldset>
+      {%- endif -%}
+      <button
+        class="btn btn--plein"
+        type="submit"
+        name="add"
+        data-cta-vente
+        data-libelle="{{ libelle_modele | escape }}"
+        data-epuise="{{ 'aplomb.vente.epuise' | t | escape }}"
+        {% unless variant.available %}
+          disabled
+        {% endunless %}
+      >
+        {%- if variant.available -%}
+          {{ 'aplomb.vente.cta' | t: prix: prix_variant }}
+        {%- else -%}
+          {{ 'aplomb.vente.epuise' | t }}
+        {%- endif -%}
+      </button>
+      <p class="message achat__erreur" role="alert" data-achat-erreur hidden></p>
+      {%- unless compact -%}
+        <p class="mention">
+          {{- settings.mention_vente -}}
+          {%- unless settings.date_expedition contains '[' or settings.date_expedition == blank %} · {{ settings.date_expedition }}{% endunless -%}
+        </p>
+      {%- endunless -%}
+    {%- endform -%}
+  {%- when 'reservation' -%}
+    {%- assign resa = settings.produit_reservation -%}
+    {%- if resa != blank and resa.available -%}
+      {%- capture prix_resa -%}{% render 'prix', montant: resa.price %}{%- endcapture -%}
+      {%- form 'product', resa, id: form_id, class: 'achat', data-panier: 'ajax' -%}
+        <input type="hidden" name="id" value="{{ resa.selected_or_first_available_variant.id }}">
+        <button class="btn btn--plein" type="submit" name="add">{{ 'aplomb.reservation.cta' | t: prix: prix_resa }}</button>
+        <p class="message achat__erreur" role="alert" data-achat-erreur hidden></p>
+        {%- unless compact -%}
+          <p class="mention">{{ 'aplomb.reservation.mention' | t }}</p>
+        {%- endunless -%}
+      {%- endform -%}
+    {%- else -%}
+      <p class="mention">{{ 'aplomb.reservation.indisponible' | t }}</p>
+    {%- endif -%}
+  {%- else -%}
+    {% render 'waitlist-form', contexte: contexte, tags: product.handle, bouton_court: compact %}
+{%- endcase -%}

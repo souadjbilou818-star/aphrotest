@@ -1,5 +1,5 @@
 /**
- * <aplomb-dessin> : repli JavaScript de l'animation du chariot.
+ * <aplomb-dessin> : repli JavaScript de l’animation des plateaux de COULISSE 01.
  * L'animation principale est en CSS (animation-timeline). Ce composant ne
  * s'active que si le navigateur ne la gère pas, et jamais si l'utilisateur
  * a demandé de réduire les animations. Il écrit --p (0 -> 1) sur l'élément.

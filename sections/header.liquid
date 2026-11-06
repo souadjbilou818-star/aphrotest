@@ -1,69 +1,70 @@
 {%- liquid
   assign mode = settings.launch_mode
-  assign produit = settings.produit_principal
-  if mode == 'waitlist'
-    if template.name == 'index'
-      assign cta_url = '#liste-hero-email'
-    elsif template.name == 'product'
-      assign cta_url = '#liste-produit-email'
-    else
-      assign cta_url = routes.root_url | append: '#liste-hero-email'
-    endif
-    assign cta_label = 'aplomb.waitlist.cta_court' | t
-  else
-    assign cta_url = produit.url | default: routes.all_products_collection_url
-    assign cta_label = 'aplomb.produit.choisir' | t
+  assign liens = section.settings.menu.links
+  assign quiz_url = settings.page_quiz.url
+  assign montre_panier = false
+  if mode != 'waitlist' or cart.item_count > 0
+    assign montre_panier = true
   endif
 -%}
 <header class="masthead">
-  <div class="wrap">
-    <div class="masthead__barre">
-      <a class="marque" href="{{ routes.root_url }}" aria-label="{{ 'aplomb.accueil' | t }}">
-        {% render 'logo', variante: 'compact', decoratif: true %}
-      </a>
-
-      {%- if section.settings.menu.links.size > 0 -%}
-        <nav class="masthead__nav" aria-label="{{ 'aplomb.menu' | t }}">
-          <ul>
-            {%- for link in section.settings.menu.links -%}
-              <li>
-                <a class="label" href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>
-                  {{- link.title -}}
-                </a>
-              </li>
+  <div class="wrap masthead__barre">
+    <details class="menu-mobile" data-menu-mobile>
+      <summary class="menu-mobile__bouton" aria-label="{{ 'aplomb.menu' | t }}">
+        {%- render 'icone', nom: 'menu' -%}
+        <span class="label">{{ 'aplomb.menu' | t }}</span>
+      </summary>
+      <nav class="menu-mobile__panneau" aria-label="{{ 'aplomb.menu' | t }}">
+        <ul>
+          {%- if liens.size > 0 -%}
+            {%- for link in liens -%}
+              <li><a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a></li>
             {%- endfor -%}
-          </ul>
-        </nav>
-      {%- endif -%}
+          {%- else -%}
+            {%- render 'liens-familles', forme: 'mobile' -%}
+          {%- endif -%}
+          {%- if quiz_url != blank -%}
+            <li><a class="menu-mobile__quiz" href="{{ quiz_url }}">{{ section.settings.libelle_quiz }}</a></li>
+          {%- endif -%}
+        </ul>
+      </nav>
+    </details>
 
-      <div class="masthead__actions">
-        {%- unless template.name == 'product' and mode != 'waitlist' -%}
-          <a class="btn btn--line btn--sm" href="{{ cta_url }}">{{ cta_label }}</a>
-        {%- endunless -%}
-        {%- if mode != 'waitlist' -%}
-          <a class="panier-lien" href="{{ routes.cart_url }}">
-            {{- 'cart.title' | t -}}
-            <span>({{ cart.item_count }})</span>
-          </a>
+    <a class="marque" href="{{ routes.root_url }}" aria-label="{{ 'aplomb.accueil' | t }}">
+      {% render 'logo', variante: 'compact', decoratif: true %}
+    </a>
+
+    <nav class="masthead__nav" aria-label="{{ 'aplomb.menu' | t }}">
+      <ul>
+        {%- if liens.size > 0 -%}
+          {%- for link in liens -%}
+            <li>
+              <a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{- link.title -}}</a>
+            </li>
+          {%- endfor -%}
+        {%- else -%}
+          {%- render 'liens-familles', forme: 'barre' -%}
         {%- endif -%}
-        {%- if section.settings.menu.links.size > 0 -%}
-          <details class="menu-mobile">
-            <summary class="label">{{ 'aplomb.menu' | t }}</summary>
-            <nav class="menu-mobile__panneau" aria-label="{{ 'aplomb.menu' | t }}">
-              <ul>
-                {%- for link in section.settings.menu.links -%}
-                  <li>
-                    <a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>
-                  </li>
-                {%- endfor -%}
-              </ul>
-            </nav>
-          </details>
-        {%- endif -%}
-      </div>
+      </ul>
+    </nav>
+
+    <div class="masthead__actions">
+      {%- if quiz_url != blank -%}
+        <a class="btn btn--line btn--sm masthead__quiz" href="{{ quiz_url }}">{{ section.settings.libelle_quiz }}</a>
+      {%- elsif mode == 'waitlist' -%}
+        <a class="btn btn--line btn--sm" href="{{ routes.root_url }}#liste-cloture-email">{{ 'aplomb.waitlist.cta_court' | t }}</a>
+      {%- endif -%}
+      {%- if montre_panier -%}
+        <a class="panier-lien" href="{{ routes.cart_url }}" data-panier-ouvrir>
+          {%- render 'icone', nom: 'panier' -%}
+          <span class="visually-hidden">{{ 'aplomb.panier.ouvrir' | t }},</span>
+          <span class="panier-lien__compte" data-panier-compte>{{ cart.item_count }}</span>
+          <span class="visually-hidden">{{ 'aplomb.panier.articles' | t: count: cart.item_count }}</span>
+        </a>
+      {%- endif -%}
     </div>
-    <hr class="filet filet--double">
   </div>
+  <div class="wrap"><hr class="filet filet--double"></div>
 </header>
 
 {% schema %}
@@ -74,7 +75,14 @@
       "type": "link_list",
       "id": "menu",
       "label": "Menu",
-      "default": "main-menu"
+      "default": "main-menu",
+      "info": "Vide : l’en-tête affiche les trois familles choisies dans Réglages du thème > Boutique."
+    },
+    {
+      "type": "text",
+      "id": "libelle_quiz",
+      "label": "Libellé du lien vers le quiz",
+      "default": "Trouver mon équipement"
     }
   ]
 }

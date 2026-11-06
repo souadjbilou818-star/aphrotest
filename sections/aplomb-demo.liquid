@@ -1,0 +1,189 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign mouvements = section.blocks | where: 'type', 'mouvement'
+  assign produit = section.settings.produit | default: settings.produit_principal
+-%}
+<section class="wrap grid acte demo" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+  {% render 'acte-tete',
+    num: section.settings.num,
+    titre: section.settings.titre,
+    intro: section.settings.intro,
+    folio: section.settings.folio,
+    id: titre_id
+  %}
+  <div class="acte__corps demo__corps">
+    <div class="demo__media">
+      {%- if section.settings.video != blank -%}
+        {% render 'cadre',
+          video: section.settings.video,
+          ratio: section.settings.ratio,
+          legende: section.settings.legende
+        %}
+      {%- elsif section.settings.image != blank -%}
+        {% render 'cadre',
+          image: section.settings.image,
+          ratio: section.settings.ratio,
+          legende: section.settings.legende,
+          generee: section.settings.image_generee,
+          sizes: '(min-width: 1200px) 60vw, 100vw'
+        %}
+      {%- else -%}
+        {% render 'dessin-coulisse', detail: 'simple', timeline: 'view', product: produit, uid: section.id %}
+        {%- if section.settings.legende_dessin != blank -%}
+          <p class="legende">{{ section.settings.legende_dessin }}</p>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+
+    {%- if mouvements.size > 0 -%}
+      <ol class="mouvements">
+        {%- for block in mouvements -%}
+          <li class="mouvement" {{ block.shopify_attributes }}>
+            <span class="mouvement__num mono">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <h3 class="mouvement__titre">{{ block.settings.titre }}</h3>
+            <p class="mouvement__texte">{{ block.settings.texte }}</p>
+            {%- if block.settings.travail != blank -%}
+              <p class="mouvement__travail mono">{{ block.settings.travail }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Démonstration",
+  "tag": "div",
+  "class": "section-demo",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "demonstration"
+    },
+    {
+      "type": "text",
+      "id": "num",
+      "label": "Numéro d’acte",
+      "default": "I."
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "Comment ça coulisse"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "Un plateau sous chaque pied, ou sous chaque main. L’un glisse, l’autre tient : c’est tout le travail."
+    },
+    {
+      "type": "text",
+      "id": "folio",
+      "label": "Folio"
+    },
+    {
+      "type": "product",
+      "id": "produit",
+      "label": "Produit du dessin",
+      "info": "Vide : le produit principal."
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Vidéo de démonstration",
+      "info": "16:9 ou 4:5, 20 à 40 s, sous-titrée si elle parle."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image (si pas de vidéo)"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_generee",
+      "label": "Image générée par IA (affiche la mention)",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "ratio",
+      "label": "Format",
+      "options": [
+        {
+          "value": "16/9",
+          "label": "16:9"
+        },
+        {
+          "value": "4/5",
+          "label": "4:5"
+        },
+        {
+          "value": "3/2",
+          "label": "3:2"
+        }
+      ],
+      "default": "16/9"
+    },
+    {
+      "type": "text",
+      "id": "legende",
+      "label": "Légende"
+    },
+    {
+      "type": "text",
+      "id": "legende_dessin",
+      "label": "Légende du dessin",
+      "default": "Faites défiler : le plateau gauche s’écarte d’abord, puis le droit."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mouvement",
+      "name": "Mouvement",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "titre",
+          "label": "Nom",
+          "default": "L’écart"
+        },
+        {
+          "type": "textarea",
+          "id": "texte",
+          "label": "Description",
+          "default": "Un pied sur chaque plateau. Vous écartez, puis vous ramenez sans à-coup."
+        },
+        {
+          "type": "text",
+          "id": "travail",
+          "label": "Ce qui travaille",
+          "default": "Adducteurs · gainage"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Démonstration",
+      "blocks": [
+        {
+          "type": "mouvement"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  }
+}
+{% endschema %}

@@ -1,0 +1,254 @@
+{%- liquid
+  assign produit = section.settings.produit | default: settings.produit_principal
+  assign titre_id = 'titre-' | append: section.id
+  assign faits = section.blocks | where: 'type', 'fait'
+  assign quiz_url = settings.page_quiz.url | default: '#quiz'
+  if produit != blank
+    assign produit_url = produit.url
+  else
+    assign produit_url = '#' | append: section.settings.ancre_produit
+  endif
+  if section.settings.titre_accent != blank
+    capture accent
+      echo '<em>' | append: section.settings.titre_accent | append: '</em>'
+    endcapture
+    assign titre = section.settings.titre | replace: section.settings.titre_accent, accent
+  else
+    assign titre = section.settings.titre
+  endif
+-%}
+<section class="wrap hero" aria-labelledby="{{ titre_id }}">
+  <div class="hero__texte">
+    {%- if section.settings.surtitre != blank -%}
+      <p class="label hero__surtitre">{{ section.settings.surtitre }}</p>
+    {%- endif -%}
+    <h1 class="hero__titre" id="{{ titre_id }}">{{ titre }}</h1>
+    {%- if section.settings.texte != blank -%}
+      <p class="hero__lead">{{ section.settings.texte }}</p>
+    {%- endif -%}
+
+    <div class="hero__ctas">
+      {%- if section.settings.ordre_cta == 'quiz' -%}
+        <a class="btn" href="{{ quiz_url }}" data-suivi="hero_quiz">{{ section.settings.cta_quiz }}</a>
+        <a class="btn btn--line" href="{{ produit_url }}" data-suivi="hero_produit">{{ section.settings.cta_produit }}</a>
+      {%- else -%}
+        <a class="btn" href="{{ produit_url }}" data-suivi="hero_produit">{{ section.settings.cta_produit }}</a>
+        <a class="btn btn--line" href="{{ quiz_url }}" data-suivi="hero_quiz">{{ section.settings.cta_quiz }}</a>
+      {%- endif -%}
+    </div>
+    {%- if section.settings.lien_boutique != blank -%}
+      <a class="lien petit hero__boutique" href="{{ section.settings.lien_boutique }}">{{ 'aplomb.boutique' | t }}</a>
+    {%- endif -%}
+
+    {%- if faits.size > 0 -%}
+      <ul class="preuves hero__faits">
+        {%- for block in faits -%}
+          <li {{ block.shopify_attributes }}>{{ block.settings.texte }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+
+  <div class="hero__visuel">
+    {%- case section.settings.visuel -%}
+      {%- when 'video' -%}
+        {%- if section.settings.video != blank -%}
+          <div class="hero__media" style="--ratio: 4 / 5">
+            {{ section.settings.video | video_tag: autoplay: true, muted: true, loop: true, playsinline: true, controls: false, preload: 'metadata', image_size: '1200x', class: 'hero__video' }}
+          </div>
+        {%- else -%}
+          {% render 'dessin-coulisse', detail: 'simple', timeline: 'root', product: produit, uid: section.id %}
+        {%- endif -%}
+      {%- when 'image' -%}
+        {% render 'cadre',
+          image: section.settings.image,
+          ratio: '4/5',
+          legende: section.settings.legende,
+          generee: section.settings.image_generee,
+          prioritaire: true,
+          sizes: '(min-width: 1000px) 46vw, 100vw'
+        %}
+      {%- else -%}
+        {% render 'dessin-coulisse', detail: 'simple', timeline: 'root', product: produit, uid: section.id %}
+        {%- if section.settings.legende_dessin != blank -%}
+          <p class="legende">{{ section.settings.legende_dessin }}</p>
+        {%- endif -%}
+    {%- endcase -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "div",
+  "class": "section-hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "surtitre",
+      "label": "Surtitre",
+      "default": "Pilates à domicile · Paris"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "info": "Variante à tester : « Le Pilates chez soi, sans studio ni compromis. »",
+      "default": "Le Pilates chez soi, avec aplomb."
+    },
+    {
+      "type": "text",
+      "id": "titre_accent",
+      "label": "Mot du titre en italique",
+      "default": "avec aplomb"
+    },
+    {
+      "type": "textarea",
+      "id": "texte",
+      "label": "Texte",
+      "default": "Trois familles d’équipement, du kit d’accessoires au reformer à chariot. En tête : COULISSE 01, une planche pliable dont les deux plateaux coulissent l’un sans l’autre."
+    },
+    {
+      "type": "product",
+      "id": "produit",
+      "label": "Produit mis en avant",
+      "info": "Vide : le produit principal des réglages du thème."
+    },
+    {
+      "type": "text",
+      "id": "cta_produit",
+      "label": "Bouton produit",
+      "default": "Découvrir COULISSE 01"
+    },
+    {
+      "type": "text",
+      "id": "cta_quiz",
+      "label": "Bouton quiz",
+      "default": "Trouver mon équipement"
+    },
+    {
+      "type": "select",
+      "id": "ordre_cta",
+      "label": "Bouton principal",
+      "info": "À tester : accès direct au produit ou entrée par le quiz.",
+      "options": [
+        {
+          "value": "produit",
+          "label": "Produit"
+        },
+        {
+          "value": "quiz",
+          "label": "Quiz"
+        }
+      ],
+      "default": "produit"
+    },
+    {
+      "type": "text",
+      "id": "ancre_produit",
+      "label": "Ancre de repli du bouton produit",
+      "info": "Utilisée tant que le produit n’est pas en ligne.",
+      "default": "coulisse"
+    },
+    {
+      "type": "url",
+      "id": "lien_boutique",
+      "label": "Lien « Voir la boutique »"
+    },
+    {
+      "type": "select",
+      "id": "visuel",
+      "label": "Visuel",
+      "info": "À tester : dessin animé, photo du produit ou vidéo de démonstration.",
+      "options": [
+        {
+          "value": "dessin",
+          "label": "Dessin technique animé"
+        },
+        {
+          "value": "image",
+          "label": "Photo"
+        },
+        {
+          "value": "video",
+          "label": "Vidéo"
+        }
+      ],
+      "default": "dessin"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Photo (4:5, 1600 × 2000 px minimum)"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_generee",
+      "label": "Photo générée par IA (affiche la mention)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "legende",
+      "label": "Légende de la photo"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Vidéo (4:5, sans son, 10 s maximum)"
+    },
+    {
+      "type": "text",
+      "id": "legende_dessin",
+      "label": "Légende du dessin",
+      "default": "COULISSE 01, vue de dessus et élévation. Faites défiler : les plateaux coulissent l’un après l’autre."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "fait",
+      "name": "Fait vérifiable",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "texte",
+          "label": "Texte",
+          "default": "Deux plateaux rembourrés, indépendants"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "blocks": [
+        {
+          "type": "fait",
+          "settings": {
+            "texte": "Deux plateaux rembourrés, indépendants"
+          }
+        },
+        {
+          "type": "fait",
+          "settings": {
+            "texte": "Se plie en deux pour le rangement"
+          }
+        },
+        {
+          "type": "fait",
+          "settings": {
+            "texte": "Cordons de résistance et poignées"
+          }
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  }
+}
+{% endschema %}

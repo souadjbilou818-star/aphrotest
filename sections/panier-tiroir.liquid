@@ -1,0 +1,51 @@
+{%- comment -%}
+  Tiroir du panier. Rendu dans layout/theme.liquid, puis rafraîchi par
+  l’API Section Rendering (?sections=panier-tiroir) après chaque ajout ou
+  changement de quantité (assets/aplomb-cart.js).
+{%- endcomment -%}
+{%- capture sous_total -%}{% render 'prix', montant: cart.total_price %}{%- endcapture -%}
+<div class="tiroir__contenu" data-panier-contenu data-compte="{{ cart.item_count }}">
+  <div class="tiroir__tete">
+    <h2 class="tiroir__titre" id="tiroir-titre">
+      {{- 'aplomb.panier.titre' | t }}
+      <span class="mono">{{ 'aplomb.panier.articles' | t: count: cart.item_count }}</span>
+    </h2>
+    <button class="tiroir__fermer" type="button" data-tiroir-fermer aria-label="{{ 'aplomb.fermer' | t }}">
+      {%- render 'icone', nom: 'fermer' -%}
+    </button>
+  </div>
+  <p class="message tiroir__erreur" role="alert" data-panier-erreur hidden></p>
+  {%- if cart.item_count > 0 -%}
+    <form class="tiroir__form" action="{{ routes.cart_url }}" method="post" id="panier-tiroir-form" novalidate>
+      <div class="tiroir__lignes">
+        {% render 'panier-lignes', uid: 'tiroir' %}
+      </div>
+      <div class="tiroir__pied">
+        {%- for d in cart.cart_level_discount_applications -%}
+          <p class="tiroir__ligne mono"><span>{{ d.title }}</span><span>−{% render 'prix', montant: d.total_allocated_amount %}</span></p>
+        {%- endfor -%}
+        <p class="tiroir__total">
+          <span>{{ 'aplomb.panier.sous_total' | t }}</span>
+          <span data-panier-total>{{ sous_total }}</span>
+        </p>
+        <p class="mention">{{ 'aplomb.panier.taxes' | t }}</p>
+        <button class="btn btn--plein" type="submit" name="checkout" data-panier-paiement>{{ 'aplomb.panier.paiement' | t }}</button>
+        <noscript>
+          <button class="btn btn--line btn--plein" type="submit" name="update">{{ 'cart.update' | t }}</button>
+        </noscript>
+      </div>
+    </form>
+  {%- else -%}
+    <div class="tiroir__vide">
+      <p>{{ 'aplomb.panier.vide' | t }}</p>
+      <a class="btn btn--line" href="{{ routes.all_products_collection_url }}" data-tiroir-fermer>{{ 'aplomb.panier.continuer' | t }}</a>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Tiroir du panier",
+  "settings": []
+}
+{% endschema %}

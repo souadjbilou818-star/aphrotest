@@ -1,0 +1,289 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "produit-principal",
+      "settings": {
+        "accroche": "Un kit d’accessoires pour installer une routine sur le tapis, sans appareil à ranger.",
+        "titre_description": "Description"
+      },
+      "blocks": {
+        "p_1": {
+          "type": "preuve",
+          "settings": {
+            "texte": "Tout tient dans une pochette"
+          }
+        },
+        "p_2": {
+          "type": "preuve",
+          "settings": {
+            "texte": "Pour débuter ou compléter une pratique"
+          }
+        }
+      },
+      "block_order": [
+        "p_1",
+        "p_2"
+      ]
+    },
+    "benefices": {
+      "type": "benefices",
+      "settings": {
+        "ancre": "benefices",
+        "num": "I.",
+        "titre": "Ce qu’il change"
+      },
+      "blocks": {
+        "b_1": {
+          "type": "benefice",
+          "settings": {
+            "titre": "Rien à installer",
+            "texte": "Vous sortez la pochette, vous déroulez le tapis, vous commencez."
+          }
+        },
+        "b_2": {
+          "type": "benefice",
+          "settings": {
+            "titre": "De quoi varier",
+            "texte": "Chaque accessoire change l’appui ou la résistance d’un même mouvement."
+          }
+        },
+        "b_3": {
+          "type": "benefice",
+          "settings": {
+            "titre": "Le complément d’un appareil",
+            "texte": "Les Essentiels accompagnent aussi COULISSE 01 et les Reformers Atelier."
+          }
+        }
+      },
+      "block_order": [
+        "b_1",
+        "b_2",
+        "b_3"
+      ]
+    },
+    "specs": {
+      "type": "specs",
+      "settings": {
+        "ancre": "fiche-technique",
+        "num": "II.",
+        "titre": "Fiche technique",
+        "intro": "Les mesures s’affichent dès qu’elles sont vérifiées. Aucun chiffre n’est publié avant."
+      }
+    },
+    "comparatif": {
+      "type": "aplomb-comparatif",
+      "settings": {
+        "ancre": "comparatif",
+        "num": "III.",
+        "titre": "Les trois familles, côte à côte",
+        "nom_essentiels": "Les Essentiels",
+        "nom_coulisse": "COULISSE 01",
+        "nom_atelier": "Reformers Atelier",
+        "colonne_avant": "coulisse",
+        "ligne_prix": true,
+        "libelle_prix": "Prix",
+        "prix_attente": "Bientôt",
+        "honnete": "COULISSE 01 n’est pas un reformer : ni chariot, ni ressorts."
+      },
+      "blocks": {
+        "l_1": {
+          "type": "ligne",
+          "settings": {
+            "libelle": "Ce que c’est",
+            "essentiels": "Un kit d’accessoires pour le tapis",
+            "coulisse": "Une planche pliable à deux plateaux coulissants",
+            "atelier": "Un reformer complet, à chariot"
+          }
+        },
+        "l_2": {
+          "type": "ligne",
+          "settings": {
+            "libelle": "Ce qui bouge",
+            "essentiels": "Vous, sur le tapis",
+            "coulisse": "Deux plateaux, chacun sur ses rails",
+            "atelier": "Un chariot sur rails"
+          }
+        },
+        "l_3": {
+          "type": "ligne",
+          "settings": {
+            "libelle": "Résistance",
+            "essentiels": "Bandes élastiques",
+            "coulisse": "Cordons à poignées et glissé des plateaux",
+            "atelier": "Résistance réglable du reformer"
+          }
+        },
+        "l_4": {
+          "type": "ligne",
+          "settings": {
+            "libelle": "Pendant la séance",
+            "essentiels": "La place d’un tapis",
+            "coulisse": "La planche dépliée",
+            "atelier": "La place d’un reformer"
+          }
+        },
+        "l_5": {
+          "type": "ligne",
+          "settings": {
+            "libelle": "Rangement",
+            "essentiels": "Une pochette",
+            "coulisse": "Pliée en deux",
+            "atelier": "Selon le modèle"
+          }
+        },
+        "l_6": {
+          "type": "ligne",
+          "settings": {
+            "libelle": "Pour qui",
+            "essentiels": "Débuter, compléter une pratique",
+            "coulisse": "Une pratique régulière, dans peu de place",
+            "atelier": "Une pratique proche du studio, avec un espace dédié"
+          }
+        }
+      },
+      "block_order": [
+        "l_1",
+        "l_2",
+        "l_3",
+        "l_4",
+        "l_5",
+        "l_6"
+      ]
+    },
+    "temoignages": {
+      "type": "temoignages",
+      "settings": {
+        "ancre": "avis",
+        "titre": "Avis",
+        "intro": "Uniquement des avis réels, publiés avec l’accord de leurs auteurs."
+      }
+    },
+    "garanties": {
+      "type": "garanties",
+      "settings": {
+        "ancre": "garanties",
+        "num": "IV.",
+        "titre": "Ce qui vous protège",
+        "intro": "Vos droits, écrits simplement. Rien de plus, rien de moins."
+      },
+      "blocks": {
+        "g_1": {
+          "type": "garantie",
+          "settings": {
+            "titre": "14 jours pour changer d’avis",
+            "texte": "À compter de la réception. Les conditions de retour sont sur la page Livraison et retours.",
+            "mode": "tous"
+          }
+        },
+        "g_2": {
+          "type": "garantie",
+          "settings": {
+            "titre": "Garantie légale de conformité, 2 ans",
+            "texte": "Réparation ou remplacement sans frais si le produit présente un défaut.",
+            "mode": "tous"
+          }
+        },
+        "g_3": {
+          "type": "garantie",
+          "settings": {
+            "titre": "Sécurité du produit",
+            "texte": "Fabricant identifié, avertissements et notice : tout est sur la page Sécurité produit.",
+            "mode": "tous"
+          }
+        },
+        "g_4": {
+          "type": "garantie",
+          "settings": {
+            "titre": "Paiement natif Shopify",
+            "texte": "Vous payez sur la page de paiement Shopify ; nous ne voyons jamais votre carte.",
+            "mode": "vente"
+          }
+        }
+      },
+      "block_order": [
+        "g_1",
+        "g_2",
+        "g_3",
+        "g_4"
+      ]
+    },
+    "gpsr": {
+      "type": "gpsr",
+      "settings": {
+        "ancre": "securite",
+        "titre": "Sécurité du produit",
+        "intro": "Informations exigées par le règlement européen sur la sécurité générale des produits."
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "ancre": "faq",
+        "titre": "Vos questions"
+      },
+      "blocks": {
+        "q_1": {
+          "type": "question",
+          "settings": {
+            "question": "Est-ce adapté si je débute ?",
+            "reponse": "<p>Oui. Commencez lentement, plateaux proches, amplitude courte. En cas de douleur, de blessure, de grossesse ou après un accouchement, demandez l’avis d’un professionnel de santé avant de commencer.</p>"
+          }
+        },
+        "q_2": {
+          "type": "question",
+          "settings": {
+            "question": "Qu’est-ce qui est inclus ?",
+            "reponse": "<p>Le contenu exact de chaque édition est écrit sur la fiche du produit, sous le choix de l’édition, et dans sa fiche technique.</p>"
+          }
+        },
+        "q_3": {
+          "type": "question",
+          "settings": {
+            "question": "Comment se passe la livraison ?",
+            "reponse": "<p>Les délais et les frais s’affichent avant le paiement, selon votre adresse. Vous recevez un e-mail à l’expédition.</p>"
+          }
+        },
+        "q_4": {
+          "type": "question",
+          "settings": {
+            "question": "Et si quelque chose casse ?",
+            "reponse": "<p>Vous bénéficiez de la garantie légale de conformité pendant 2 ans à compter de la livraison : réparation ou remplacement, sans frais. Écrivez-nous, avec une photo si possible.</p>"
+          }
+        },
+        "q_5": {
+          "type": "question",
+          "settings": {
+            "question": "Puis-je retourner mon achat ?",
+            "reponse": "<p>Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. Les conditions et les frais de retour figurent sur la page Livraison et retours.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q_1",
+        "q_2",
+        "q_3",
+        "q_4",
+        "q_5"
+      ]
+    }
+  },
+  "order": [
+    "main",
+    "benefices",
+    "specs",
+    "comparatif",
+    "temoignages",
+    "garanties",
+    "gpsr",
+    "faq"
+  ]
+}

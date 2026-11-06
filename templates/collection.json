@@ -11,7 +11,12 @@
   "sections": {
     "main": {
       "type": "collection",
-      "settings": {}
+      "settings": {
+        "par_page": 12,
+        "libelle_familles": "Les familles",
+        "texte_vide": "Cette famille arrive bientôt. Inscrivez-vous à la liste d’attente depuis l’accueil.",
+        "texte_quiz": "Vous hésitez ? Quatre questions pour choisir"
+      }
     }
   },
   "order": [

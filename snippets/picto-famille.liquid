@@ -1,0 +1,34 @@
+{% doc %}
+  Pictogramme au trait d’une famille, schématique (pas une photo du produit).
+
+  @param {string} famille - 'essentiels', 'coulisse' ou 'atelier'
+{% enddoc %}
+{%- case famille -%}
+  {%- when 'essentiels' -%}
+    <svg class="picto" viewBox="0 0 240 120" aria-hidden="true" focusable="false">
+      <circle cx="60" cy="62" r="34"/><circle cx="60" cy="62" r="28"/>
+      <rect x="22" y="56" width="10" height="12" rx="2"/><rect x="88" y="56" width="10" height="12" rx="2"/>
+      <circle cx="140" cy="76" r="20"/><path d="M126 70c8 4 20 4 28 0"/>
+      <path d="M176 30c10 24 10 56 0 80M192 30c10 24 10 56 0 80M208 30c10 24 10 56 0 80"/>
+    </svg>
+  {%- when 'coulisse' -%}
+    <svg class="picto" viewBox="0 0 240 120" aria-hidden="true" focusable="false">
+      <rect x="14" y="40" width="212" height="44" rx="6"/>
+      <path d="M120 32v60" stroke-dasharray="6 4"/>
+      <path d="M26 54h88M26 70h88M126 54h88M126 70h88"/>
+      <rect x="64" y="44" width="40" height="36" rx="5" class="picto__plein"/>
+      <rect x="136" y="44" width="40" height="36" rx="5" class="picto__plein"/>
+      <path d="M58 62h-18M182 62h18" class="picto__fleche"/>
+      <path d="M44 57l-5 5 5 5M196 57l5 5-5 5" class="picto__fleche"/>
+    </svg>
+  {%- else -%}
+    <svg class="picto" viewBox="0 0 240 120" aria-hidden="true" focusable="false">
+      <path d="M14 96h212"/>
+      <rect x="24" y="70" width="192" height="10" rx="2"/>
+      <path d="M34 80v16M206 80v16"/>
+      <rect x="92" y="58" width="56" height="12" rx="3" class="picto__plein"/>
+      <rect x="150" y="46" width="22" height="12" rx="3"/>
+      <path d="M24 70V36h8v34M54 64h38" />
+      <path d="M44 62c4-2 6-2 10 0" />
+    </svg>
+{%- endcase -%}

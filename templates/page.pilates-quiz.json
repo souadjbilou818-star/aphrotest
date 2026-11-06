@@ -1,0 +1,130 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "quiz": {
+      "type": "aplomb-quiz",
+      "settings": {
+        "mode": "page",
+        "ancre": "quiz",
+        "quiz_id": "choix-equipement",
+        "surtitre": "Quatre questions · une minute",
+        "titre": "Trouvez votre équipement",
+        "intro": "Aucune donnée personnelle demandée. Vos réponses restent dans ce navigateur, le temps de la visite.",
+        "produit_essentiels": "la-trousse",
+        "produit_coulisse": "coulisse-01",
+        "produit_atelier": "atelier-chene",
+        "raison_essentiels": "Un kit d’accessoires pour installer une routine sur le tapis, sans appareil à ranger.",
+        "raison_coulisse": "Deux plateaux qui coulissent l’un sans l’autre : le travail en glissé d’un appareil, dans le format d’une planche qui se plie.",
+        "raison_atelier": "Un vrai chariot sur rails, avec une résistance réglable : la pratique la plus proche du studio, pour qui a la place.",
+        "note": "Ce quiz oriente un achat ; il ne remplace pas un avis médical. En cas de douleur, de blessure ou de grossesse, demandez conseil avant de commencer."
+      },
+      "blocks": {
+        "q_1": {
+          "type": "question",
+          "settings": {
+            "cle": "objectif",
+            "question": "Qu’aimeriez-vous améliorer dans votre pratique ?",
+            "poids": 1,
+            "aide": "",
+            "option_1": "Renforcement et tonicité",
+            "oriente_1": "coulisse atelier",
+            "argument_1": "Vous cherchez du renforcement : le travail en glissé et en résistance s’y prête.",
+            "exclut_1": "aucune",
+            "option_2": "Mobilité et souplesse",
+            "oriente_2": "essentiels coulisse",
+            "argument_2": "Pour la mobilité, des mouvements amples et contrôlés suffisent.",
+            "exclut_2": "aucune",
+            "option_3": "Reprendre une activité régulière",
+            "oriente_3": "essentiels coulisse",
+            "argument_3": "Pour reprendre, mieux vaut un équipement simple à sortir chaque jour.",
+            "exclut_3": "aucune",
+            "option_4": "Installer une routine Pilates chez soi",
+            "oriente_4": "coulisse",
+            "argument_4": "Pour une routine, un appareil toujours prêt, qui ne prend pas la pièce.",
+            "exclut_4": "aucune"
+          }
+        },
+        "q_2": {
+          "type": "question",
+          "settings": {
+            "cle": "niveau",
+            "question": "Quel est votre niveau actuel ?",
+            "poids": 1,
+            "aide": "",
+            "option_1": "Je débute",
+            "oriente_1": "essentiels coulisse",
+            "argument_1": "Vous débutez : on commence simple, sans réglage compliqué.",
+            "exclut_1": "aucune",
+            "option_2": "J’ai déjà pratiqué",
+            "oriente_2": "coulisse",
+            "argument_2": "Vous avez déjà pratiqué : vous retrouverez le travail en glissé.",
+            "exclut_2": "aucune",
+            "option_3": "Je pratique régulièrement",
+            "oriente_3": "coulisse atelier",
+            "argument_3": "Vous pratiquez régulièrement : il vous faut de quoi progresser.",
+            "exclut_3": "aucune"
+          }
+        },
+        "q_3": {
+          "type": "question",
+          "settings": {
+            "cle": "equipement",
+            "question": "Quel type d’équipement vous correspond ?",
+            "poids": 3,
+            "aide": "",
+            "option_1": "Un kit simple et accessible",
+            "oriente_1": "essentiels",
+            "argument_1": "Vous voulez un kit simple : rien à installer, rien à régler.",
+            "exclut_1": "aucune",
+            "option_2": "Un appareil compact et polyvalent",
+            "oriente_2": "coulisse",
+            "argument_2": "Vous voulez un appareil compact : deux plateaux, des cordons, une planche qui se plie.",
+            "exclut_2": "aucune",
+            "option_3": "Une expérience proche d’un studio",
+            "oriente_3": "atelier",
+            "argument_3": "Vous voulez retrouver le studio : un chariot sur rails, une résistance réglable.",
+            "exclut_3": "aucune"
+          }
+        },
+        "q_4": {
+          "type": "question",
+          "settings": {
+            "cle": "espace",
+            "question": "De quel espace disposez-vous ?",
+            "poids": 2,
+            "aide": "",
+            "option_1": "Un petit espace",
+            "oriente_1": "essentiels coulisse",
+            "argument_1": "Peu de place : un kit tient dans une pochette, la planche se plie en deux.",
+            "exclut_1": "atelier",
+            "option_2": "Une pièce polyvalente",
+            "oriente_2": "coulisse atelier",
+            "argument_2": "Une pièce polyvalente : un appareil qui se range après la séance.",
+            "exclut_2": "aucune",
+            "option_3": "Un espace dédié",
+            "oriente_3": "atelier",
+            "argument_3": "Un espace dédié : la place d’un reformer complet.",
+            "exclut_3": "aucune"
+          }
+        }
+      },
+      "block_order": [
+        "q_1",
+        "q_2",
+        "q_3",
+        "q_4"
+      ]
+    }
+  },
+  "order": [
+    "quiz"
+  ]
+}

@@ -1,47 +1,87 @@
-{% comment %}
-  This section is used in the collection template to render collection page
-  listing all products within a collection.
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign num = collection.metafields.aplomb.numero
+  assign quiz_url = settings.page_quiz.url
+-%}
+<section class="wrap collection" aria-labelledby="{{ titre_id }}">
+  <header class="collection__tete">
+    {%- if num != blank -%}
+      <p class="famille__num mono">{{ num }}</p>
+    {%- endif -%}
+    <h1 class="collection__titre" id="{{ titre_id }}">{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <div class="collection__intro rte">{{ collection.description }}</div>
+    {%- endif -%}
+    <nav class="collection__familles" aria-label="{{ section.settings.libelle_familles }}">
+      <ul>
+        {%- render 'liens-familles', forme: 'onglets' -%}
+      </ul>
+    </nav>
+  </header>
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
-{% endcomment %}
+  {%- paginate collection.products by section.settings.par_page -%}
+    {%- if collection.products.size > 0 -%}
+      <ul class="grille-produits" role="list">
+        {%- for product in collection.products -%}
+          <li>
+            {%- if forloop.index <= 2 -%}
+              {% render 'carte-produit', product: product, titre_balise: 'h2', prioritaire: true %}
+            {%- else -%}
+              {% render 'carte-produit', product: product, titre_balise: 'h2' %}
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination" aria-label="Pagination">
+          {%- if paginate.previous -%}<a class="lien" href="{{ paginate.previous.url }}">← {{ paginate.previous.title }}</a>{%- endif -%}
+          <span class="mono">{{ paginate.current_page }} / {{ paginate.pages }}</span>
+          {%- if paginate.next -%}<a class="lien" href="{{ paginate.next.url }}">{{ paginate.next.title }} →</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- else -%}
+      <p class="collection__vide">{{ section.settings.texte_vide }}</p>
+    {%- endif -%}
+  {%- endpaginate -%}
 
-<h1>{{ collection.title }}</h1>
-
-<div class="collection-products">
-  {% paginate collection.products by 20 %}
-    {% for product in collection.products %}
-      <div class="collection-product">
-        {% if product.featured_image %}
-          {% render 'image',
-            class: 'collection-product__image',
-            image: product.featured_image,
-            url: product.url,
-            width: 400,
-            height: 400,
-            crop: 'center'
-          %}
-        {% endif %}
-        <div class="collection-product__content">
-          <p>{{ product.title | escape | link_to: product.url }}</p>
-          <p>{{ product.price | money }}</p>
-        </div>
-      </div>
-    {% endfor %}
-
-    {{ paginate | default_pagination }}
-  {% endpaginate %}
-</div>
-
-{% stylesheet %}
-  .collection-products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-  }
-{% endstylesheet %}
+  {%- if quiz_url != blank and section.settings.texte_quiz != blank -%}
+    <p class="collection__quiz">
+      <a class="btn btn--line" href="{{ quiz_url }}">{{ section.settings.texte_quiz }}</a>
+    </p>
+  {%- endif -%}
+</section>
 
 {% schema %}
 {
-  "name": "t:general.collection",
-  "settings": []
+  "name": "Collection",
+  "settings": [
+    {
+      "type": "range",
+      "id": "par_page",
+      "label": "Produits par page",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    },
+    {
+      "type": "text",
+      "id": "libelle_familles",
+      "label": "Nom de la navigation des familles",
+      "default": "Les familles"
+    },
+    {
+      "type": "text",
+      "id": "texte_vide",
+      "label": "Collection vide",
+      "default": "Cette famille arrive bientôt. Inscrivez-vous à la liste d’attente depuis l’accueil."
+    },
+    {
+      "type": "text",
+      "id": "texte_quiz",
+      "label": "Lien vers le quiz",
+      "default": "Vous hésitez ? Quatre questions pour choisir"
+    }
+  ]
 }
 {% endschema %}

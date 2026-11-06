@@ -1,6 +1,6 @@
 {% doc %}
   Cadre photo à ratio fixe. Sans image, il affiche la didascalie du plan sur
-  fond pierre (photo à venir). Avec image : srcset, chargement différé,
+  fond sable (photo à venir). Avec image : srcset, chargement différé,
   légende en petites capitales et crédit « Image générée » si coché.
 
   @param {image} [image] - image choisie (image_picker)
@@ -19,6 +19,10 @@
   assign ratio = ratio | default: '3/2'
   assign sizes = sizes | default: '(min-width: 1000px) 50vw, 100vw'
   assign ratio_txt = ratio | replace: '/', ':'
+  assign montre_credit = false
+  if generee and settings.credit_ia and image != blank
+    assign montre_credit = true
+  endif
 -%}
 <figure class="cadre {{ class }}">
   {%- if video != blank -%}
@@ -44,11 +48,11 @@
       <span class="cadre__tech">{{ ratio_txt }} · {{ 'aplomb.cadre.attente' | t }}</span>
     </div>
   {%- endif -%}
-  {%- if plan != blank or legende != blank -%}
+  {%- if plan != blank or legende != blank or montre_credit -%}
     <figcaption class="cadre__legende">
       {%- if plan != blank %}<b>Plan {{ plan }}</b> {% endif -%}
       {%- if legende != blank %}<span>— {{ legende }}</span>{% endif -%}
-      {%- if generee and settings.credit_ia and image != blank -%}
+      {%- if montre_credit -%}
         <span class="credit">{{ 'aplomb.credit_ia' | t }}</span>
       {%- endif -%}
     </figcaption>

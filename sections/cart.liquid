@@ -1,37 +1,39 @@
-{% comment %}
-  This section is used in the cart template to render /cart page with an
-  overview of the items in customer’s cart.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/cart
-{% endcomment %}
-
-<h1>{{ 'cart.title' | t }}</h1>
-
-<form action="{{ routes.cart_url }}" method="post">
-  <table>
-    {% for item in cart.items %}
-      <tr>
-        <td>
-          {% render 'image', image: item.image, url: item.url %}
-        </td>
-        <td>
-          <p>{{ item.product.title }}</p>
-          {{ 'cart.remove' | t | link_to: item.url_to_remove }}
-        </td>
-        <td>
-          <input type="text" name="updates[]" value="{{ item.quantity }}">
-          <input type="submit" value="{{ 'cart.update' | t }}">
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
-
-  <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
-</form>
+{%- capture sous_total -%}{% render 'prix', montant: cart.total_price %}{%- endcapture -%}
+<section class="wrap grid page-simple panier-page" aria-labelledby="titre-panier" data-panier-page data-section-id="{{ section.id }}">
+  <header class="page-simple__tete">
+    <h1 class="page-simple__titre" id="titre-panier">{{ 'aplomb.panier.titre' | t }}</h1>
+    <p class="mono soft">{{ 'aplomb.panier.articles' | t: count: cart.item_count }}</p>
+  </header>
+  <div class="page-simple__contenu" data-panier-contenu data-compte="{{ cart.item_count }}">
+    <p class="message" role="alert" data-panier-erreur hidden></p>
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" id="panier-page-form" novalidate>
+        {% render 'panier-lignes', uid: 'page' %}
+        <div class="panier-page__pied">
+          {%- for d in cart.cart_level_discount_applications -%}
+            <p class="tiroir__ligne mono"><span>{{ d.title }}</span><span>−{% render 'prix', montant: d.total_allocated_amount %}</span></p>
+          {%- endfor -%}
+          <p class="tiroir__total">
+            <span>{{ 'aplomb.panier.sous_total' | t }}</span>
+            <span>{{ sous_total }}</span>
+          </p>
+          <p class="mention">{{ 'aplomb.panier.taxes' | t }}</p>
+          <div class="panier-page__boutons">
+            <button class="btn btn--line" type="submit" name="update" data-sans-js>{{ 'cart.update' | t }}</button>
+            <button class="btn" type="submit" name="checkout">{{ 'aplomb.panier.paiement' | t }}</button>
+          </div>
+        </div>
+      </form>
+    {%- else -%}
+      <p>{{ 'aplomb.panier.vide' | t }}</p>
+      <p><a class="btn btn--line" href="{{ routes.all_products_collection_url }}">{{ 'aplomb.panier.continuer' | t }}</a></p>
+    {%- endif -%}
+  </div>
+</section>
 
 {% schema %}
 {
-  "name": "t:general.cart",
+  "name": "Panier",
   "settings": []
 }
 {% endschema %}

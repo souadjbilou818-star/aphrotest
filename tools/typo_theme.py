@@ -18,7 +18,10 @@ from typo_fr import fix_html, fix_text  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CLES_TEXTE = {"default", "label", "info", "content", "name", "placeholder"}
-NE_PAS_TOUCHER = {"type", "id", "value", "unit", "ancre", "ratio", "taille", "mode", "image", "video", "menu"}
+NE_PAS_TOUCHER = {"type", "id", "value", "unit", "ancre", "ratio", "taille", "mode", "image", "video", "menu",
+                  "produit", "produit_essentiels", "produit_coulisse", "produit_atelier", "famille", "famille_avant",
+                  "colonne_avant", "visuel", "ordre_cta", "cle", "quiz_id", "collection", "tag_attente", "lien_boutique",
+                  "complements", "ancre_produit", "numero"}
 
 
 def propre(s):

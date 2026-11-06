@@ -1,0 +1,232 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign familles = section.blocks | where: 'type', 'famille'
+-%}
+<section class="wrap familles" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+  <div class="familles__tete">
+    <h2 class="familles__titre" id="{{ titre_id }}">{{ section.settings.titre }}</h2>
+    {%- if section.settings.intro != blank -%}
+      <p class="familles__intro">{{ section.settings.intro }}</p>
+    {%- endif -%}
+  </div>
+  <ol class="familles__liste">
+    {%- for block in familles -%}
+      {%- liquid
+        assign c = block.settings.collection
+        if c == blank
+          case block.settings.famille
+            when 'essentiels'
+              assign c = settings.collection_essentiels
+            when 'coulisse'
+              assign c = settings.collection_coulisse
+            when 'atelier'
+              assign c = settings.collection_atelier
+          endcase
+        endif
+        assign prix_min = nil
+        if c != blank and c.products_count > 0
+          assign prix_min = c.products | map: 'price_min' | sort | first
+        endif
+        assign mis_en_avant = false
+        if block.settings.famille == section.settings.famille_avant
+          assign mis_en_avant = true
+        endif
+      -%}
+      <li class="famille{% if mis_en_avant %} famille--avant{% endif %}" {{ block.shopify_attributes }}>
+        <div class="famille__visuel">
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 960 | image_tag: widths: '360, 540, 720, 960', sizes: '(min-width: 900px) 30vw, 88vw', loading: 'lazy', alt: block.settings.image.alt }}
+            {%- if block.settings.image_generee and settings.credit_ia -%}
+              <span class="credit famille__credit">{{ 'aplomb.credit_ia' | t }}</span>
+            {%- endif -%}
+          {%- else -%}
+            {% render 'picto-famille', famille: block.settings.famille %}
+          {%- endif -%}
+        </div>
+        <div class="famille__texte">
+          <p class="famille__num mono">{{ block.settings.numero }}</p>
+          <h3 class="famille__nom">
+            {%- if c != blank -%}
+              <a class="famille__lien" href="{{ c.url }}">{{ block.settings.nom }}</a>
+            {%- else -%}
+              {{ block.settings.nom }}
+            {%- endif -%}
+          </h3>
+          <p class="famille__desc">{{ block.settings.texte }}</p>
+          <p class="famille__pied">
+            {%- if prix_min != blank -%}
+              {%- capture prix -%}{% render 'prix', montant: prix_min %}{%- endcapture -%}
+              <span class="famille__prix">{{ 'aplomb.produit.des' | t: prix: prix }}</span>
+            {%- else -%}
+              <span class="famille__prix famille__prix--attente">{{ section.settings.texte_attente }}</span>
+            {%- endif -%}
+            {%- if c != blank -%}
+              <span class="famille__voir" aria-hidden="true">{{ section.settings.texte_voir }} →</span>
+            {%- endif -%}
+          </p>
+        </div>
+      </li>
+    {%- endfor -%}
+  </ol>
+</section>
+
+{% schema %}
+{
+  "name": "Les trois familles",
+  "tag": "div",
+  "class": "section-familles",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "familles"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "Trois familles, une même exigence"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Texte",
+      "default": "Choisissez selon votre pratique et votre place, pas selon la mode."
+    },
+    {
+      "type": "select",
+      "id": "famille_avant",
+      "label": "Famille mise en avant",
+      "options": [
+        {
+          "value": "essentiels",
+          "label": "Les Essentiels"
+        },
+        {
+          "value": "coulisse",
+          "label": "Coulisse"
+        },
+        {
+          "value": "atelier",
+          "label": "Reformers Atelier"
+        }
+      ],
+      "default": "coulisse"
+    },
+    {
+      "type": "text",
+      "id": "texte_voir",
+      "label": "Lien vers la famille",
+      "default": "Voir"
+    },
+    {
+      "type": "text",
+      "id": "texte_attente",
+      "label": "Mention quand la famille n’est pas encore en ligne",
+      "default": "En préparation"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "famille",
+      "name": "Famille",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "select",
+          "id": "famille",
+          "label": "Famille",
+          "options": [
+            {
+              "value": "essentiels",
+              "label": "Les Essentiels"
+            },
+            {
+              "value": "coulisse",
+              "label": "Coulisse"
+            },
+            {
+              "value": "atelier",
+              "label": "Reformers Atelier"
+            }
+          ],
+          "default": "coulisse"
+        },
+        {
+          "type": "text",
+          "id": "numero",
+          "label": "Numéro",
+          "default": "02"
+        },
+        {
+          "type": "text",
+          "id": "nom",
+          "label": "Nom",
+          "default": "Coulisse"
+        },
+        {
+          "type": "textarea",
+          "id": "texte",
+          "label": "Description"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection",
+          "info": "Vide : la collection de la famille dans Réglages du thème > Boutique."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (4:3, 1200 × 900 px minimum)",
+          "info": "Vide : pictogramme de la famille."
+        },
+        {
+          "type": "checkbox",
+          "id": "image_generee",
+          "label": "Image générée par IA (affiche la mention)",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Les trois familles",
+      "blocks": [
+        {
+          "type": "famille",
+          "settings": {
+            "famille": "essentiels",
+            "numero": "01",
+            "nom": "Les Essentiels"
+          }
+        },
+        {
+          "type": "famille",
+          "settings": {
+            "famille": "coulisse",
+            "numero": "02",
+            "nom": "Coulisse"
+          }
+        },
+        {
+          "type": "famille",
+          "settings": {
+            "famille": "atelier",
+            "numero": "03",
+            "nom": "Reformers Atelier"
+          }
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  }
+}
+{% endschema %}

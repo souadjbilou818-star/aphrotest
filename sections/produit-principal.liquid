@@ -1,71 +1,82 @@
 {%- liquid
   assign variant = product.selected_or_first_available_variant
   assign titre_id = 'titre-' | append: section.id
-  assign plans = section.blocks | where: 'type', 'plan'
   assign preuves = section.blocks | where: 'type', 'preuve'
+  capture etat
+    render 'etat-produit', product: product
+  endcapture
+  assign etat = etat | strip
   capture prix_variant
     render 'prix', montant: variant.price
   endcapture
-  assign libelle_vente = 'aplomb.vente.cta' | t: prix: '{prix}'
+  assign famille = product.metafields.aplomb.famille.value | default: product.type
+  assign complements = product.metafields.aplomb.complements.value | default: section.settings.complements
+  assign accroche = product.metafields.aplomb.accroche | default: section.settings.accroche
 -%}
-<section class="wrap grid produit" aria-labelledby="{{ titre_id }}">
+<section class="wrap produit" aria-labelledby="{{ titre_id }}" data-produit-id="{{ product.id }}">
+  <div class="produit__medias">
+    {% render 'galerie-produit', product: product, uid: section.id %}
+  </div>
+
   <div class="produit__achat" id="achat">
-    {%- if section.settings.surtitre != blank -%}
-      <p class="label soft">{{ section.settings.surtitre }}</p>
+    {%- if famille != blank -%}
+      <p class="label soft">{{ famille }}</p>
     {%- endif -%}
-    <h1 class="produit__titre" id="{{ titre_id }}">{{ product.title | escape | replace: 'mini-reformer', '<span class="nowrap">mini-reformer</span>' }}</h1>
-    {%- if section.settings.sous_titre != blank -%}
-      <p class="produit__sous-titre">{{ section.settings.sous_titre }}</p>
-    {%- endif -%}
-
-    {%- if product.has_only_default_variant -%}
-      <p class="edition__prix">{{ prix_variant }} <small>{{ 'aplomb.produit.ttc' | t }}</small></p>
-    {%- else -%}
-      <aplomb-editions data-libelle-vente="{{ libelle_vente | escape }}">
-        <fieldset class="editions">
-          <legend class="label">{{ 'aplomb.produit.edition' | t }}</legend>
-          {%- for v in product.variants -%}
-            {%- liquid
-              assign nom = v.title | downcase
-              if nom contains 'studio'
-                assign contenu = section.settings.contenu_studio
-              else
-                assign contenu = section.settings.contenu_essentiel
-              endif
-              capture prix_v
-                render 'prix', montant: v.price
-              endcapture
-            -%}
-            <label class="edition">
-              <input
-                type="radio"
-                name="edition-{{ section.id }}"
-                value="{{ v.id }}"
-                data-prix="{{ prix_v | escape }}"
-                data-nom="{{ v.title | escape }}"
-                data-disponible="{{ v.available }}"
-                {% if v.id == variant.id %}
-                  checked
-                {% endif %}
-              >
-              <span class="edition__nom">{{ v.title }}</span>
-              <span class="edition__prix">{{ prix_v }}<small>{{ 'aplomb.produit.ttc' | t }}</small></span>
-              {%- if contenu != blank -%}
-                <span class="edition__contenu">{{ contenu }}</span>
-              {%- endif -%}
-            </label>
-          {%- endfor -%}
-        </fieldset>
-      </aplomb-editions>
+    <h1 class="produit__titre" id="{{ titre_id }}">{{ product.title }}</h1>
+    {%- if accroche != blank -%}
+      <p class="produit__accroche">{{ accroche }}</p>
     {%- endif -%}
 
-    {%- if section.settings.prix_studio != blank -%}
-      <p class="mention">{{ section.settings.prix_studio }}</p>
+    <div class="produit__prix-ligne">
+      <p class="produit__prix"><span data-prix>{{ prix_variant }}</span> <small>{{ 'aplomb.produit.ttc' | t }}</small></p>
+      <p
+        class="dispo dispo--{{ etat }}"
+        data-dispo
+        data-stock="{{ 'aplomb.produit.dispo_stock' | t | escape }}"
+        data-epuise="{{ 'aplomb.produit.dispo_epuise' | t | escape }}"
+      >
+        {%- case etat -%}
+          {%- when 'vente' -%}
+            {%- if variant.available -%}
+              {{ 'aplomb.produit.dispo_stock' | t }}
+            {%- else -%}
+              {{ 'aplomb.produit.dispo_epuise' | t }}
+            {%- endif -%}
+          {%- when 'reservation' -%}
+            {{ 'aplomb.produit.dispo_reservation' | t }}
+          {%- else -%}
+            {{ 'aplomb.produit.dispo_attente' | t }}
+        {%- endcase -%}
+      </p>
+    </div>
+
+    {% render 'selecteur-variantes', product: product, uid: section.id %}
+
+    {%- if section.settings.mention_prix != blank -%}
+      <p class="mention">{{ section.settings.mention_prix }}</p>
     {%- endif -%}
 
     <div data-cta-principal>
-      {% render 'cta', contexte: 'produit', product: product, variant: variant %}
+      {% render 'achat', product: product, contexte: 'produit', variant: variant, complements: complements %}
     </div>
+
+    <ul class="infos-achat">
+      {%- if settings.info_livraison != blank -%}
+        <li><b class="label">Livraison</b> <span>{{ settings.info_livraison }}</span></li>
+      {%- endif -%}
+      {%- if settings.info_retours != blank -%}
+        <li><b class="label">Retours</b> <span>{{ settings.info_retours }}</span></li>
+      {%- endif -%}
+      {%- if settings.info_garantie != blank -%}
+        <li><b class="label">Garantie</b> <span>{{ settings.info_garantie }}</span></li>
+      {%- endif -%}
+      {%- if etat == 'vente' and settings.info_paiement != blank -%}
+        <li><b class="label">Paiement</b> <span>{{ settings.info_paiement }}</span></li>
+      {%- endif -%}
+    </ul>
+    {%- if settings.page_livraison != blank -%}
+      <a class="lien petit" href="{{ settings.page_livraison.url }}">{{ settings.page_livraison.title }}</a>
+    {%- endif -%}
 
     {%- if preuves.size > 0 -%}
       <ul class="preuves">
@@ -74,228 +85,81 @@
         {%- endfor -%}
       </ul>
     {%- endif -%}
-  </div>
 
-  <div class="produit__visuel">
-    {%- if section.settings.image != blank -%}
-      {% render 'cadre',
-        image: section.settings.image,
-        ratio: '3/2',
-        plan: '01',
-        legende: section.settings.legende_image,
-        generee: section.settings.image_generee,
-        prioritaire: true,
-        sizes: '(min-width: 1000px) 58vw, 100vw'
-      %}
-    {%- else -%}
-      {% render 'dessin-reformer', detail: 'full', timeline: 'root', product: product, uid: section.id %}
-      {%- if section.settings.legende_dessin != blank -%}
-        <p class="legende">{{ section.settings.legende_dessin }}</p>
-      {%- endif -%}
+    {%- if product.description != blank -%}
+      <details class="produit__description">
+        <summary class="label">{{ section.settings.titre_description }}</summary>
+        <div class="rte">{{ product.description }}</div>
+      </details>
     {%- endif -%}
   </div>
-
-  {%- if plans.size > 0 -%}
-    <div class="sous produit__galerie">
-      <p class="sous__titre">{{ 'aplomb.produit.galerie' | t }}</p>
-      <div class="galerie" role="region" aria-label="{{ 'aplomb.produit.galerie' | t }}" tabindex="0">
-        {%- for block in plans -%}
-          {%- liquid
-            assign classe = ''
-            if block.settings.taille == 'large'
-              assign classe = 'cadre--large'
-            elsif block.settings.taille == 'tiers'
-              assign classe = 'cadre--tiers'
-            endif
-          -%}
-          <div class="cadre {{ classe }}" {{ block.shopify_attributes }}>
-            {% render 'cadre',
-              image: block.settings.image,
-              video: block.settings.video,
-              son: block.settings.son,
-              ratio: block.settings.ratio,
-              plan: block.settings.plan,
-              legende: block.settings.legende,
-              didascalie: block.settings.didascalie,
-              generee: block.settings.generee,
-              sizes: '(min-width: 1000px) 50vw, 100vw'
-            %}
-          </div>
-        {%- endfor -%}
-      </div>
-    </div>
-  {%- endif -%}
 </section>
 
 <aplomb-collant class="collant" data-cible="[data-cta-principal]" aria-hidden="true" inert>
   <span class="collant__produit">
-    <b data-collant-nom>{% if product.has_only_default_variant %}{{ product.title }}{% else %}{{ variant.title }}{% endif %}</b>
-    <span data-collant-prix>{{ prix_variant }} {{ 'aplomb.produit.ttc' | t }}</span>
+    <b>{{ product.title }}</b>
+    <span><span data-prix>{{ prix_variant }}</span> {{ 'aplomb.produit.ttc' | t }}</span>
   </span>
-  {% render 'cta', contexte: 'collant', product: product, variant: variant %}
+  {%- case etat -%}
+    {%- when 'vente' -%}
+      <button class="btn btn--sm" type="submit" form="achat-produit-{{ product.id }}" data-collant-bouton {% unless variant.available %}disabled{% endunless %}>
+        {%- if variant.available -%}
+          {{ 'aplomb.vente.cta_court' | t }}
+        {%- else -%}
+          {{ 'aplomb.vente.epuise' | t }}
+        {%- endif -%}
+      </button>
+    {%- when 'reservation' -%}
+      <button class="btn btn--sm" type="submit" form="achat-produit-{{ product.id }}">{{ 'aplomb.reservation.cta' | t: prix: '' | remove: ' — ' }}</button>
+    {%- else -%}
+      <a class="btn btn--sm" href="#liste-produit-email">{{ 'aplomb.waitlist.cta_court' | t }}</a>
+  {%- endcase -%}
 </aplomb-collant>
 
 {% schema %}
 {
   "name": "Fiche produit",
   "tag": "div",
+  "class": "section-produit",
   "settings": [
     {
-      "type": "text",
-      "id": "surtitre",
-      "label": "Surtitre",
-      "default": "Pré-lancement · Paris"
+      "type": "textarea",
+      "id": "accroche",
+      "label": "Accroche par défaut",
+      "info": "Remplacée par le metafield du produit aplomb.accroche quand il est rempli."
     },
     {
       "type": "textarea",
-      "id": "sous_titre",
-      "label": "Sous-titre",
-      "default": "Plateau bois, rails acier, chariot sur roues silencieuses. Se range debout derrière une porte."
+      "id": "mention_prix",
+      "label": "Mention sous le prix",
+      "info": "Une phrase vérifiable seulement. Pas de prix barré, pas de compte à rebours."
     },
     {
-      "type": "textarea",
-      "id": "contenu_essentiel",
-      "label": "Contenu de l’édition Essentiel",
-      "default": "Le board, 4 élastiques, les poignées, le programme « 28 jours d’aplomb »."
-    },
-    {
-      "type": "textarea",
-      "id": "contenu_studio",
-      "label": "Contenu de l’édition Studio",
-      "default": "L’Essentiel, plus chaussettes grip, housse en toile avec sangle de rangement, 4 patins feutre, 1 bande forte, programme 8 semaines."
-    },
-    {
-      "type": "textarea",
-      "id": "prix_studio",
-      "label": "Comparaison avec le studio",
-      "default": "Une séance de reformer à Paris coûte 25 à 45 €. L’Aplomb, c’est le prix de quatre séances."
-    },
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Photo principale (remplace le dessin)",
-      "info": "Plan 01 : le mini-reformer sur parquet, plongée à 45°."
-    },
-    {
-      "type": "checkbox",
-      "id": "image_generee",
-      "label": "Photo générée par IA (affiche le crédit)",
-      "default": true
+      "type": "product_list",
+      "id": "complements",
+      "label": "Produits en complément",
+      "info": "Proposés en cases à cocher sous le bouton d’achat. Remplacés par le metafield aplomb.complements du produit.",
+      "limit": 3
     },
     {
       "type": "text",
-      "id": "legende_image",
-      "label": "Légende de la photo",
-      "default": "le mini-reformer sur parquet, plongée à 45°"
-    },
-    {
-      "type": "text",
-      "id": "legende_dessin",
-      "label": "Légende du dessin",
-      "default": "Planche 01 — vue de dessus et élévation. Les cotes s’affichent quand la fiche technique est remplie."
+      "id": "titre_description",
+      "label": "Titre de la description",
+      "default": "Description"
     }
   ],
   "blocks": [
     {
       "type": "preuve",
-      "name": "Micro-preuve",
-      "limit": 3,
+      "name": "Fait vérifiable",
+      "limit": 4,
       "settings": [
         {
           "type": "text",
           "id": "texte",
           "label": "Texte",
-          "default": "Un vrai chariot sur rails acier"
-        }
-      ]
-    },
-    {
-      "type": "plan",
-      "name": "Plan de la galerie",
-      "limit": 10,
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        },
-        {
-          "type": "video",
-          "id": "video",
-          "label": "Vidéo (prioritaire sur l’image)"
-        },
-        {
-          "type": "checkbox",
-          "id": "son",
-          "label": "Vidéo avec son réel",
-          "default": false
-        },
-        {
-          "type": "checkbox",
-          "id": "generee",
-          "label": "Image générée par IA (affiche le crédit)",
-          "default": true
-        },
-        {
-          "type": "select",
-          "id": "ratio",
-          "label": "Format",
-          "options": [
-            {
-              "value": "3/2",
-              "label": "3:2"
-            },
-            {
-              "value": "4/5",
-              "label": "4:5"
-            },
-            {
-              "value": "1/1",
-              "label": "1:1"
-            },
-            {
-              "value": "16/9",
-              "label": "16:9"
-            }
-          ],
-          "default": "3/2"
-        },
-        {
-          "type": "select",
-          "id": "taille",
-          "label": "Largeur (ordinateur)",
-          "options": [
-            {
-              "value": "large",
-              "label": "Pleine largeur"
-            },
-            {
-              "value": "moitie",
-              "label": "Moitié"
-            },
-            {
-              "value": "tiers",
-              "label": "Tiers"
-            }
-          ],
-          "default": "moitie"
-        },
-        {
-          "type": "text",
-          "id": "plan",
-          "label": "Numéro du plan",
-          "default": "02"
-        },
-        {
-          "type": "text",
-          "id": "legende",
-          "label": "Légende",
-          "default": "rails et roues, en macro"
-        },
-        {
-          "type": "textarea",
-          "id": "didascalie",
-          "label": "Didascalie (sans image)"
+          "info": "Un fait que vous pouvez prouver (matière, contenu, dimension). Pas d’avis inventé.",
+          "default": "Deux plateaux qui coulissent indépendamment"
         }
       ]
     }

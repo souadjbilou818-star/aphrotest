@@ -1,0 +1,107 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign produit = settings.produit_principal
+  assign quiz_url = settings.page_quiz.url | default: '#quiz'
+  if settings.launch_mode == 'waitlist'
+    assign titre = section.settings.titre_attente
+    assign texte = section.settings.texte_attente
+  else
+    assign titre = section.settings.titre
+    assign texte = section.settings.texte
+  endif
+-%}
+<section class="wrap cloture" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+  <hr class="filet filet--double">
+  <div class="cloture__corps">
+    <div class="cloture__tete">
+      <h2 class="cloture__titre" id="{{ titre_id }}">{{ titre }}</h2>
+      {%- if texte != blank -%}
+        <p class="cloture__texte">{{ texte }}</p>
+      {%- endif -%}
+    </div>
+    <div class="cloture__action">
+      {%- if settings.launch_mode == 'waitlist' -%}
+        {% render 'waitlist-form', contexte: 'cloture' %}
+        <p class="cloture__quiz"><a class="lien" href="{{ quiz_url }}">{{ section.settings.cta_quiz }}</a></p>
+      {%- else -%}
+        <div class="cloture__ctas">
+          {%- if produit != blank -%}
+            <a class="btn" href="{{ produit.url }}">{{ section.settings.cta_produit }}</a>
+          {%- endif -%}
+          <a class="btn btn--line" href="{{ quiz_url }}">{{ section.settings.cta_quiz }}</a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Clôture",
+  "tag": "div",
+  "class": "section-cloture",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "cloture"
+    },
+    {
+      "type": "header",
+      "content": "En mode Liste d’attente"
+    },
+    {
+      "type": "text",
+      "id": "titre_attente",
+      "label": "Titre",
+      "default": "La liste d’attente est ouverte."
+    },
+    {
+      "type": "textarea",
+      "id": "texte_attente",
+      "label": "Texte",
+      "default": "Nous vous écrivons à l’ouverture, avec les prix définitifs et les dates de livraison. Pas avant."
+    },
+    {
+      "type": "header",
+      "content": "En mode Réservation ou Vente"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "Votre pratique, chez vous, dès cette semaine."
+    },
+    {
+      "type": "textarea",
+      "id": "texte",
+      "label": "Texte",
+      "default": "COULISSE 01 pour commencer, ou trois questions pour choisir."
+    },
+    {
+      "type": "text",
+      "id": "cta_produit",
+      "label": "Bouton produit",
+      "default": "Voir COULISSE 01"
+    },
+    {
+      "type": "text",
+      "id": "cta_quiz",
+      "label": "Lien quiz",
+      "default": "Vous hésitez ? Trouvez votre équipement en 4 questions"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Clôture"
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  }
+}
+{% endschema %}

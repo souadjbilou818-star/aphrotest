@@ -14,7 +14,7 @@
     "comment_form_title": "Laisser un commentaire"
   },
   "cart": {
-    "checkout": "Paiement",
+    "checkout": "Passer au paiement",
     "title": "Panier",
     "update": "Mettre à jour",
     "remove": "Retirer",
@@ -56,6 +56,12 @@
     "fermer": "Fermer",
     "au_programme": "Au programme",
     "accueil": "L’Aplomb, accueil",
+    "boutique": "Voir la boutique",
+    "familles": {
+      "essentiels": "Les Essentiels",
+      "coulisse": "Coulisse",
+      "atelier": "Reformers Atelier"
+    },
     "waitlist": {
       "label": "Votre adresse e-mail",
       "placeholder": "prenom@exemple.fr",
@@ -63,7 +69,8 @@
       "cta_court": "Liste d’attente",
       "consentement_html": "En cliquant sur « {{ bouton }} », vous acceptez de recevoir les e-mails de L’Aplomb sur le lancement. Désinscription en un clic, à tout moment. <a href=\"{{ url }}\">Politique de confidentialité</a>",
       "succes": "C’est noté. Nous vous écrivons à l’ouverture, et pas avant.",
-      "erreur": "Vérifiez l’adresse e-mail : elle semble incomplète."
+      "erreur": "Vérifiez l’adresse e-mail : elle semble incomplète.",
+      "produit": "Être prévenu de l’ouverture"
     },
     "reservation": {
       "cta": "Réserver en priorité — {{ prix }}",
@@ -72,32 +79,76 @@
     },
     "vente": {
       "cta": "Ajouter au panier — {{ prix }}",
-      "epuise": "Épuisé pour le moment"
+      "cta_court": "Ajouter au panier",
+      "epuise": "Épuisé pour le moment",
+      "ajoute": "Ajouté au panier",
+      "erreur": "L’ajout n’a pas abouti. Réessayez dans un instant."
     },
     "produit": {
       "edition": "Édition",
       "ttc": "TTC",
-      "dans_le_coffret": "Dans le coffret",
-      "collant_label": "Commander le mini-reformer",
-      "video": "Vidéo · son réel",
       "galerie": "Galerie",
-      "choisir": "Choisir mon édition"
+      "video": "Vidéo · son réel",
+      "choisir": "Choisir mon édition",
+      "voir": "Voir {{ titre }}",
+      "des": "dès {{ prix }}",
+      "quantite": "Quantité",
+      "dispo_stock": "Disponible",
+      "dispo_epuise": "Épuisé pour le moment",
+      "dispo_attente": "Pas encore en vente · liste d’attente ouverte",
+      "dispo_reservation": "Réservation prioritaire ouverte",
+      "image": "Image {{ n }} sur {{ total }}",
+      "agrandir": "Agrandir l’image {{ n }}",
+      "precedente": "Image précédente",
+      "suivante": "Image suivante",
+      "complements": "À ajouter si vous le souhaitez",
+      "complement": "Ajouter {{ titre }} ({{ prix }})",
+      "dessin": "Dessin technique, en attendant les photos du produit"
     },
     "credit_ia": "Image générée",
     "cadre": {
       "attente": "Photo à venir"
     },
     "quiz": {
-      "commencer": "Commencer",
-      "suivant": "Question suivante",
-      "precedent": "Question précédente",
-      "resultat": "Votre édition",
-      "voir": "Voir l’édition {{ edition }}",
-      "recommencer": "Recommencer",
-      "email_label": "Recevoir ce résultat par e-mail (facultatif)",
-      "email_cta": "Envoyer",
       "question": "Question {{ n }} sur {{ total }}",
-      "voir_resultat": "Voir mon résultat"
+      "precedent": "Retour",
+      "suivant": "Continuer",
+      "voir_resultat": "Voir ma recommandation",
+      "recommencer": "Refaire le quiz",
+      "resultat": "Notre recommandation",
+      "pourquoi": "Pourquoi ce choix",
+      "vos_reponses": "Vos réponses",
+      "voir_produit": "Voir {{ titre }}",
+      "voir_famille": "Voir la famille",
+      "autres": "Les autres familles",
+      "boutique": "Passer et voir la boutique",
+      "choisir": "Choisissez une réponse pour continuer.",
+      "prix": "Prix actuel : {{ prix }}",
+      "attente": "Être prévenu de l’ouverture",
+      "commencer": "Commencer"
+    },
+    "panier": {
+      "titre": "Panier",
+      "vide": "Votre panier est vide.",
+      "continuer": "Continuer mes achats",
+      "sous_total": "Sous-total",
+      "taxes": "TTC. Livraison calculée à l’étape suivante.",
+      "paiement": "Passer au paiement",
+      "retirer": "Retirer {{ titre }}",
+      "quantite": "Quantité pour {{ titre }}",
+      "plus": "Ajouter un {{ titre }}",
+      "moins": "Retirer un {{ titre }}",
+      "erreur": "La mise à jour n’a pas abouti. Réessayez.",
+      "ouvrir": "Panier",
+      "articles": {
+        "one": "{{ count }} article",
+        "other": "{{ count }} articles"
+      },
+      "remise": "Remise"
+    },
+    "visionneuse": {
+      "titre": "Agrandissement",
+      "zoom": "Zoomer ou dézoomer"
     }
   }
 }

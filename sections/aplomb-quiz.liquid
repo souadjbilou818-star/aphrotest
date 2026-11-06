@@ -1,0 +1,663 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign questions = section.blocks | where: 'type', 'question'
+  assign total = questions.size
+  assign familles = 'essentiels,coulisse,atelier' | split: ','
+  assign lien_boutique = section.settings.lien_boutique | default: routes.all_products_collection_url
+  if section.settings.mode == 'page'
+    assign balise_titre = 'h1'
+    assign balise_resultat = 'h2'
+    assign balise_sous = 'h3'
+  else
+    assign balise_titre = 'h2'
+    assign balise_resultat = 'h3'
+    assign balise_sous = 'h4'
+  endif
+-%}
+<script src="{{ 'aplomb-quiz.js' | asset_url }}" defer></script>
+
+<section class="wrap quiz-section quiz-section--{{ section.settings.mode }}" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+  <aplomb-quiz
+    class="quiz"
+    data-quiz-id="{{ section.settings.quiz_id | default: section.id }}"
+    data-mode="{{ section.settings.mode }}"
+    data-total="{{ total }}"
+    data-libelle-question="{{ 'aplomb.quiz.question' | t: n: '{n}', total: '{total}' | escape }}"
+  >
+    <div class="quiz__tete">
+      {%- if section.settings.surtitre != blank -%}
+        <p class="label soft">{{ section.settings.surtitre }}</p>
+      {%- endif -%}
+      <{{ balise_titre }} class="quiz__titre" id="{{ titre_id }}">{{ section.settings.titre }}</{{ balise_titre }}>
+      {%- if section.settings.intro != blank -%}
+        <p class="quiz__intro">{{ section.settings.intro }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="quiz__barre" data-quiz-barre hidden>
+      <button class="quiz__retour" type="button" data-quiz-retour>
+        {%- render 'icone', nom: 'gauche' -%}
+        <span>{{ 'aplomb.quiz.precedent' | t }}</span>
+      </button>
+      <ol class="quiz__progression" aria-hidden="true">
+        {%- for q in questions -%}
+          <li data-quiz-segment></li>
+        {%- endfor -%}
+      </ol>
+      <p class="quiz__compte mono" data-quiz-compte aria-live="polite"></p>
+    </div>
+
+    <noscript>
+      <p class="message">{{ section.settings.sans_js }} <a href="{{ lien_boutique }}">{{ 'aplomb.boutique' | t }}</a></p>
+    </noscript>
+
+    <form class="quiz__form" data-quiz-form novalidate hidden>
+      {%- for block in questions -%}
+        {%- assign q = forloop.index -%}
+        <fieldset
+          class="quiz__etape"
+          data-quiz-etape="{{ q }}"
+          data-cle="{{ block.settings.cle | default: block.id | escape }}"
+          data-poids="{{ block.settings.poids }}"
+          data-question="{{ block.settings.question | escape }}"
+          {% unless forloop.first %}
+            hidden
+          {% endunless %}
+          {{ block.shopify_attributes }}
+        >
+          <legend class="quiz__question" tabindex="-1">
+            <span class="visually-hidden">{{ 'aplomb.quiz.question' | t: n: q, total: total }}. </span>
+            {{- block.settings.question -}}
+          </legend>
+          {%- if block.settings.aide != blank -%}
+            <p class="quiz__aide" id="aide-{{ block.id }}">{{ block.settings.aide }}</p>
+          {%- endif -%}
+          <div class="quiz__options">
+            {%- for n in (1..4) -%}
+              {%- liquid
+                assign cle_libelle = 'option_' | append: n
+                assign cle_oriente = 'oriente_' | append: n
+                assign cle_argument = 'argument_' | append: n
+                assign cle_exclut = 'exclut_' | append: n
+                assign libelle = block.settings[cle_libelle]
+              -%}
+              {%- if libelle != blank -%}
+                <label class="quiz__option">
+                  <input
+                    type="radio"
+                    name="q-{{ block.id }}"
+                    value="{{ n }}"
+                    data-libelle="{{ libelle | escape }}"
+                    data-oriente="{{ block.settings[cle_oriente] }}"
+                    data-argument="{{ block.settings[cle_argument] | escape }}"
+                    data-exclut="{{ block.settings[cle_exclut] }}"
+                    {% if block.settings.aide != blank %}
+                      aria-describedby="aide-{{ block.id }}"
+                    {% endif %}
+                  >
+                  <span class="quiz__option-texte">{{ libelle }}</span>
+                  <span class="quiz__option-marque" aria-hidden="true"></span>
+                </label>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          <p class="message quiz__erreur" role="alert" data-quiz-erreur hidden>{{ 'aplomb.quiz.choisir' | t }}</p>
+          <div class="quiz__nav">
+            <button class="btn" type="submit" data-quiz-suivant>
+              {%- if forloop.last -%}
+                {{ 'aplomb.quiz.voir_resultat' | t }}
+              {%- else -%}
+                {{ 'aplomb.quiz.suivant' | t }}
+              {%- endif -%}
+            </button>
+            <a class="lien petit quiz__boutique" href="{{ lien_boutique }}" data-quiz-sortie>{{ 'aplomb.quiz.boutique' | t }}</a>
+          </div>
+        </fieldset>
+      {%- endfor -%}
+    </form>
+
+    <div class="quiz__resultats" data-quiz-resultats hidden>
+      {%- for f in familles -%}
+        {%- liquid
+          assign cle_produit = 'produit_' | append: f
+          assign cle_raison = 'raison_' | append: f
+          assign cle_nom = 'aplomb.familles.' | append: f
+          assign p = section.settings[cle_produit]
+          case f
+            when 'essentiels'
+              assign c = settings.collection_essentiels
+            when 'coulisse'
+              assign c = settings.collection_coulisse
+            else
+              assign c = settings.collection_atelier
+          endcase
+          assign resultat_titre_id = 'resultat-' | append: section.id | append: '-' | append: f
+          assign contexte_achat = 'quiz-' | append: f
+        -%}
+        <article
+          class="resultat"
+          data-quiz-resultat="{{ f }}"
+          data-produit-id="{{ p.id }}"
+          data-produit-titre="{{ p.title | escape }}"
+          aria-labelledby="{{ resultat_titre_id }}"
+          tabindex="-1"
+          hidden
+        >
+          <p class="label soft">{{ 'aplomb.quiz.resultat' | t }}</p>
+          <{{ balise_resultat }} class="resultat__titre" id="{{ resultat_titre_id }}">
+            {%- if p != blank -%}
+              {{ p.title }}
+            {%- else -%}
+              {{ cle_nom | t }}
+            {%- endif -%}
+          </{{ balise_resultat }}>
+          <p class="resultat__famille mono">{{ cle_nom | t }}</p>
+
+          <div class="resultat__grille">
+            <div class="resultat__visuel">
+              {%- if p.featured_media != blank -%}
+                {%- assign alt_p = p.featured_media.alt | default: p.title -%}
+                {{ p.featured_media.preview_image | image_url: width: 900 | image_tag: widths: '360, 540, 720, 900', sizes: '(min-width: 900px) 360px, 88vw', loading: 'lazy', alt: alt_p }}
+              {%- else -%}
+                {% render 'picto-famille', famille: f %}
+              {%- endif -%}
+            </div>
+            <div class="resultat__texte">
+              <{{ balise_sous }} class="label">{{ 'aplomb.quiz.pourquoi' | t }}</{{ balise_sous }}>
+              <p class="resultat__raison">{{ section.settings[cle_raison] }}</p>
+              <ul class="resultat__arguments" data-quiz-arguments></ul>
+              <p class="resultat__ecarte" data-quiz-ecarte hidden></p>
+
+              {%- assign mf = p.metafields.aplomb -%}
+              {%- if mf.dimensions_deplie != blank or mf.dimensions_plie != blank or mf.poids != blank -%}
+                <dl class="resultat__faits">
+                  {%- if mf.dimensions_deplie != blank -%}<div><dt>Dimensions</dt><dd>{{ mf.dimensions_deplie }}</dd></div>{%- endif -%}
+                  {%- if mf.dimensions_plie != blank -%}<div><dt>Plié</dt><dd>{{ mf.dimensions_plie }}</dd></div>{%- endif -%}
+                  {%- if mf.poids != blank -%}<div><dt>Poids</dt><dd>{{ mf.poids }}</dd></div>{%- endif -%}
+                </dl>
+              {%- endif -%}
+
+              <div class="resultat__achat">
+                {%- if p != blank -%}
+                  {%- capture prix_p -%}{% render 'prix', montant: p.price_min %}{%- endcapture -%}
+                  <p class="resultat__prix">
+                    {%- if p.price_varies -%}
+                      {{ 'aplomb.produit.des' | t: prix: prix_p }}
+                    {%- else -%}
+                      {{ prix_p }}
+                    {%- endif %}
+                    <small>{{ 'aplomb.produit.ttc' | t }}</small>
+                  </p>
+                  {% render 'achat', product: p, contexte: contexte_achat, compact: true %}
+                  <a class="lien" href="{{ p.url }}" data-quiz-cta="produit">{{ 'aplomb.quiz.voir_produit' | t: titre: p.title }}</a>
+                {%- else -%}
+                  {%- assign tags_quiz = 'quiz,' | append: f -%}
+                  {% render 'waitlist-form', contexte: contexte_achat, tags: tags_quiz, bouton_court: true %}
+                {%- endif -%}
+                {%- if c != blank -%}
+                  <a class="lien petit" href="{{ c.url }}" data-quiz-cta="famille">{{ 'aplomb.quiz.voir_famille' | t }} {{ cle_nom | t }}</a>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        </article>
+      {%- endfor -%}
+
+      <div class="resultat__suite">
+        <div>
+          <{{ balise_resultat }} class="label">{{ 'aplomb.quiz.vos_reponses' | t }}</{{ balise_resultat }}>
+          <dl class="resultat__reponses" data-quiz-recap></dl>
+        </div>
+        <div class="resultat__actions">
+          <button class="lien-discret" type="button" data-quiz-recommencer>{{ 'aplomb.quiz.recommencer' | t }}</button>
+          <a class="lien petit" href="{{ lien_boutique }}" data-quiz-sortie>{{ 'aplomb.boutique' | t }}</a>
+        </div>
+        {%- if section.settings.note != blank -%}
+          <p class="quiz__note">{{ section.settings.note }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </aplomb-quiz>
+</section>
+
+{% schema %}
+{
+  "name": "Quiz",
+  "tag": "div",
+  "class": "section-quiz",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "quiz"
+    },
+    {
+      "type": "select",
+      "id": "mode",
+      "label": "Disposition",
+      "options": [
+        {
+          "value": "integre",
+          "label": "Intégré à une page"
+        },
+        {
+          "value": "page",
+          "label": "Page dédiée (titre principal)"
+        }
+      ],
+      "default": "integre"
+    },
+    {
+      "type": "text",
+      "id": "quiz_id",
+      "label": "Identifiant pour les statistiques",
+      "default": "choix-equipement"
+    },
+    {
+      "type": "text",
+      "id": "surtitre",
+      "label": "Surtitre",
+      "default": "Quatre questions · une minute"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "Trouvez votre équipement"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "Aucune donnée personnelle demandée. Vos réponses restent dans ce navigateur, le temps de la visite."
+    },
+    {
+      "type": "url",
+      "id": "lien_boutique",
+      "label": "Lien « voir la boutique »",
+      "info": "Vide : tous les produits."
+    },
+    {
+      "type": "text",
+      "id": "sans_js",
+      "label": "Message sans JavaScript",
+      "default": "Le quiz a besoin de JavaScript."
+    },
+    {
+      "type": "header",
+      "content": "Recommandations"
+    },
+    {
+      "type": "product",
+      "id": "produit_essentiels",
+      "label": "Les Essentiels : produit recommandé"
+    },
+    {
+      "type": "textarea",
+      "id": "raison_essentiels",
+      "label": "Les Essentiels : pourquoi",
+      "default": "Un kit d’accessoires pour installer une routine sur le tapis, sans appareil à ranger."
+    },
+    {
+      "type": "product",
+      "id": "produit_coulisse",
+      "label": "Coulisse : produit recommandé"
+    },
+    {
+      "type": "textarea",
+      "id": "raison_coulisse",
+      "label": "Coulisse : pourquoi",
+      "default": "Deux plateaux qui coulissent l’un sans l’autre : le travail en glissé d’un appareil, dans le format d’une planche qui se plie."
+    },
+    {
+      "type": "product",
+      "id": "produit_atelier",
+      "label": "Reformers Atelier : produit recommandé"
+    },
+    {
+      "type": "textarea",
+      "id": "raison_atelier",
+      "label": "Reformers Atelier : pourquoi",
+      "default": "Un vrai chariot sur rails, avec une résistance réglable : la pratique la plus proche du studio, pour qui a la place."
+    },
+    {
+      "type": "textarea",
+      "id": "note",
+      "label": "Note",
+      "default": "Ce quiz oriente un achat ; il ne remplace pas un avis médical. En cas de grossesse, de douleur ou de blessure, demandez conseil avant de commencer."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "cle",
+          "label": "Identifiant (statistiques)",
+          "default": "question"
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Votre question ?"
+        },
+        {
+          "type": "text",
+          "id": "aide",
+          "label": "Aide sous la question"
+        },
+        {
+          "type": "range",
+          "id": "poids",
+          "label": "Poids dans la recommandation",
+          "min": 1,
+          "max": 3,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "header",
+          "content": "Réponse 1"
+        },
+        {
+          "type": "text",
+          "id": "option_1",
+          "label": "Libellé"
+        },
+        {
+          "type": "select",
+          "id": "oriente_1",
+          "label": "Oriente vers",
+          "options": [
+            {
+              "value": "essentiels",
+              "label": "Les Essentiels"
+            },
+            {
+              "value": "coulisse",
+              "label": "Coulisse"
+            },
+            {
+              "value": "atelier",
+              "label": "Reformers Atelier"
+            },
+            {
+              "value": "essentiels coulisse",
+              "label": "Les Essentiels et Coulisse"
+            },
+            {
+              "value": "coulisse atelier",
+              "label": "Coulisse et Reformers Atelier"
+            },
+            {
+              "value": "aucune",
+              "label": "Aucune famille"
+            }
+          ],
+          "default": "coulisse"
+        },
+        {
+          "type": "text",
+          "id": "argument_1",
+          "label": "Argument affiché dans le résultat"
+        },
+        {
+          "type": "select",
+          "id": "exclut_1",
+          "label": "Écarte",
+          "options": [
+            {
+              "value": "aucune",
+              "label": "Rien"
+            },
+            {
+              "value": "essentiels",
+              "label": "Les Essentiels"
+            },
+            {
+              "value": "coulisse",
+              "label": "Coulisse"
+            },
+            {
+              "value": "atelier",
+              "label": "Reformers Atelier"
+            }
+          ],
+          "default": "aucune"
+        },
+        {
+          "type": "header",
+          "content": "Réponse 2"
+        },
+        {
+          "type": "text",
+          "id": "option_2",
+          "label": "Libellé"
+        },
+        {
+          "type": "select",
+          "id": "oriente_2",
+          "label": "Oriente vers",
+          "options": [
+            {
+              "value": "essentiels",
+              "label": "Les Essentiels"
+            },
+            {
+              "value": "coulisse",
+              "label": "Coulisse"
+            },
+            {
+              "value": "atelier",
+              "label": "Reformers Atelier"
+            },
+            {
+              "value": "essentiels coulisse",
+              "label": "Les Essentiels et Coulisse"
+            },
+            {
+              "value": "coulisse atelier",
+              "label": "Coulisse et Reformers Atelier"
+            },
+            {
+              "value": "aucune",
+              "label": "Aucune famille"
+            }
+          ],
+          "default": "coulisse"
+        },
+        {
+          "type": "text",
+          "id": "argument_2",
+          "label": "Argument affiché dans le résultat"
+        },
+        {
+          "type": "select",
+          "id": "exclut_2",
+          "label": "Écarte",
+          "options": [
+            {
+              "value": "aucune",
+              "label": "Rien"
+            },
+            {
+              "value": "essentiels",
+              "label": "Les Essentiels"
+            },
+            {
+              "value": "coulisse",
+              "label": "Coulisse"
+            },
+            {
+              "value": "atelier",
+              "label": "Reformers Atelier"
+            }
+          ],
+          "default": "aucune"
+        },
+        {
+          "type": "header",
+          "content": "Réponse 3"
+        },
+        {
+          "type": "text",
+          "id": "option_3",
+          "label": "Libellé"
+        },
+        {
+          "type": "select",
+          "id": "oriente_3",
+          "label": "Oriente vers",
+          "options": [
+            {
+              "value": "essentiels",
+              "label": "Les Essentiels"
+            },
+            {
+              "value": "coulisse",
+              "label": "Coulisse"
+            },
+            {
+              "value": "atelier",
+              "label": "Reformers Atelier"
+            },
+            {
+              "value": "essentiels coulisse",
+              "label": "Les Essentiels et Coulisse"
+            },
+            {
+              "value": "coulisse atelier",
+              "label": "Coulisse et Reformers Atelier"
+            },
+            {
+              "value": "aucune",
+              "label": "Aucune famille"
+            }
+          ],
+          "default": "coulisse"
+        },
+        {
+          "type": "text",
+          "id": "argument_3",
+          "label": "Argument affiché dans le résultat"
+        },
+        {
+          "type": "select",
+          "id": "exclut_3",
+          "label": "Écarte",
+          "options": [
+            {
+              "value": "aucune",
+              "label": "Rien"
+            },
+            {
+              "value": "essentiels",
+              "label": "Les Essentiels"
+            },
+            {
+              "value": "coulisse",
+              "label": "Coulisse"
+            },
+            {
+              "value": "atelier",
+              "label": "Reformers Atelier"
+            }
+          ],
+          "default": "aucune"
+        },
+        {
+          "type": "header",
+          "content": "Réponse 4"
+        },
+        {
+          "type": "text",
+          "id": "option_4",
+          "label": "Libellé"
+        },
+        {
+          "type": "select",
+          "id": "oriente_4",
+          "label": "Oriente vers",
+          "options": [
+            {
+              "value": "essentiels",
+              "label": "Les Essentiels"
+            },
+            {
+              "value": "coulisse",
+              "label": "Coulisse"
+            },
+            {
+              "value": "atelier",
+              "label": "Reformers Atelier"
+            },
+            {
+              "value": "essentiels coulisse",
+              "label": "Les Essentiels et Coulisse"
+            },
+            {
+              "value": "coulisse atelier",
+              "label": "Coulisse et Reformers Atelier"
+            },
+            {
+              "value": "aucune",
+              "label": "Aucune famille"
+            }
+          ],
+          "default": "coulisse"
+        },
+        {
+          "type": "text",
+          "id": "argument_4",
+          "label": "Argument affiché dans le résultat"
+        },
+        {
+          "type": "select",
+          "id": "exclut_4",
+          "label": "Écarte",
+          "options": [
+            {
+              "value": "aucune",
+              "label": "Rien"
+            },
+            {
+              "value": "essentiels",
+              "label": "Les Essentiels"
+            },
+            {
+              "value": "coulisse",
+              "label": "Coulisse"
+            },
+            {
+              "value": "atelier",
+              "label": "Reformers Atelier"
+            }
+          ],
+          "default": "aucune"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quiz",
+      "blocks": [
+        {
+          "type": "question"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  }
+}
+{% endschema %}

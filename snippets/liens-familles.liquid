@@ -1,0 +1,30 @@
+{% doc %}
+  Liens vers les trois familles (Réglages du thème > Boutique), en éléments de liste.
+  Une famille sans collection choisie n’apparaît pas.
+
+  @param {string} [forme] - 'barre' ou 'mobile' (réservé au style)
+{% enddoc %}
+{%- liquid
+  assign familles = 'essentiels,coulisse,atelier' | split: ','
+-%}
+{%- for f in familles -%}
+  {%- liquid
+    case f
+      when 'essentiels'
+        assign c = settings.collection_essentiels
+      when 'coulisse'
+        assign c = settings.collection_coulisse
+      else
+        assign c = settings.collection_atelier
+    endcase
+    assign cle = 'aplomb.familles.' | append: f
+  -%}
+  {%- if c != blank -%}
+    <li class="lien-famille lien-famille--{{ forme }}">
+      <a href="{{ c.url }}" {% if collection.id == c.id %}aria-current="page"{% endif %}>
+        <span class="lien-famille__num mono">0{{ forloop.index }}</span>
+        {{ cle | t }}
+      </a>
+    </li>
+  {%- endif -%}
+{%- endfor -%}

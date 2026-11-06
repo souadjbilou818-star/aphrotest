@@ -1,0 +1,106 @@
+{% doc %}
+  Galerie de la fiche produit, à partir des médias Shopify du produit.
+  Mobile : défilement horizontal, un média à la fois, compteur et flèches.
+  Ordinateur : grille, la première image en grand.
+  Un clic sur une image ouvre la visionneuse (zoom, clavier, glisser).
+  Image générée par IA : écrire « image générée » dans le texte alternatif du
+  média ; la mention visible s’affiche alors sous l’image.
+  Sans média : dessin technique (COULISSE) ou cadre « Photo à venir ».
+
+  @param {object} product - le produit
+  @param {string} uid - identifiant unique (section.id)
+{% enddoc %}
+{%- liquid
+  assign total = product.media.size
+  assign famille = product.metafields.aplomb.famille.value | default: product.type | downcase
+-%}
+<aplomb-galerie class="galerie-produit" data-uid="{{ uid }}">
+  {%- if total > 0 -%}
+    <ul class="galerie-produit__liste" role="list" data-galerie-liste tabindex="-1">
+      {%- for media in product.media -%}
+        {%- liquid
+          assign alt = media.alt | default: product.title
+          assign alt_bas = alt | downcase
+          assign generee = false
+          if alt_bas contains 'image générée' or alt_bas contains 'image generee'
+            assign generee = true
+          endif
+          if forloop.first
+            assign chargement = 'eager'
+            assign priorite = 'high'
+          else
+            assign chargement = 'lazy'
+            assign priorite = 'auto'
+          endif
+        -%}
+        <li class="galerie-produit__media galerie-produit__media--{{ media.media_type }}" id="media-{{ uid }}-{{ media.id }}" data-media-index="{{ forloop.index0 }}">
+          {%- case media.media_type -%}
+            {%- when 'image' -%}
+              <button class="galerie-produit__zoom" type="button" data-zoom="{{ forloop.index0 }}" aria-label="{{ 'aplomb.produit.agrandir' | t: n: forloop.index }}">
+                {{-
+                  media.preview_image
+                  | image_url: width: 1600
+                  | image_tag:
+                    widths: '480, 720, 960, 1200, 1600',
+                    sizes: '(min-width: 1000px) 56vw, 92vw',
+                    loading: chargement,
+                    fetchpriority: priorite,
+                    alt: alt
+                -}}
+                <span class="galerie-produit__loupe">{% render 'icone', nom: 'loupe' %}</span>
+              </button>
+            {%- when 'video' -%}
+              {{ media | video_tag: controls: true, playsinline: true, preload: 'none', image_size: '1200x' }}
+            {%- when 'external_video' -%}
+              {{ media | external_video_tag: loading: 'lazy' }}
+            {%- else -%}
+              {{ media | media_tag }}
+          {%- endcase -%}
+          {%- if generee and settings.credit_ia -%}
+            <span class="credit">{{ 'aplomb.credit_ia' | t }}</span>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+    {%- if total > 1 -%}
+      <div class="galerie-produit__nav">
+        <button class="galerie-produit__fleche" type="button" data-precedent aria-label="{{ 'aplomb.produit.precedente' | t }}">
+          {%- render 'icone', nom: 'gauche' -%}
+        </button>
+        <p class="galerie-produit__compteur mono" aria-live="polite" data-compteur>1 / {{ total }}</p>
+        <button class="galerie-produit__fleche" type="button" data-suivant aria-label="{{ 'aplomb.produit.suivante' | t }}">
+          {%- render 'icone', nom: 'droite' -%}
+        </button>
+      </div>
+    {%- endif -%}
+    <dialog class="visionneuse" aria-label="{{ 'aplomb.visionneuse.titre' | t }}" data-visionneuse>
+      <div class="visionneuse__barre">
+        <p class="visionneuse__compteur mono" data-v-compteur></p>
+        <button class="visionneuse__bouton" type="button" data-v-fermer aria-label="{{ 'aplomb.fermer' | t }}">
+          {%- render 'icone', nom: 'fermer' -%}
+        </button>
+      </div>
+      <div class="visionneuse__scene" data-v-scene>
+        <img class="visionneuse__image" alt="" width="1600" height="1600" data-v-image>
+      </div>
+      <div class="visionneuse__nav">
+        <button class="visionneuse__bouton" type="button" data-v-precedent aria-label="{{ 'aplomb.produit.precedente' | t }}">
+          {%- render 'icone', nom: 'gauche' -%}
+        </button>
+        <button class="visionneuse__bouton" type="button" data-v-zoom aria-pressed="false" aria-label="{{ 'aplomb.visionneuse.zoom' | t }}">
+          {%- render 'icone', nom: 'loupe' -%}
+        </button>
+        <button class="visionneuse__bouton" type="button" data-v-suivant aria-label="{{ 'aplomb.produit.suivante' | t }}">
+          {%- render 'icone', nom: 'droite' -%}
+        </button>
+      </div>
+    </dialog>
+  {%- elsif famille contains 'coulisse' -%}
+    <figure class="galerie-produit__dessin">
+      {% render 'dessin-coulisse', detail: 'full', timeline: 'root', product: product, uid: uid %}
+      <figcaption class="legende">{{ 'aplomb.produit.dessin' | t }}</figcaption>
+    </figure>
+  {%- else -%}
+    {% render 'cadre', ratio: '4/5', didascalie: product.title, class: 'galerie-produit__attente' %}
+  {%- endif -%}
+</aplomb-galerie>

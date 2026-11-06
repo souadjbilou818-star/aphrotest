@@ -1,8 +1,9 @@
 """Génère les snippets Liquid du thème à partir des sources Python :
 
-- snippets/dessin-reformer.liquid  (tools/dessin.py) : deux variantes,
-  « simple » (hero) et « full » (fiche technique), cotes alimentées par les
-  metafields aplomb.longueur_mm, largeur_mm, course_mm, hauteur_mm ;
+- snippets/dessin-coulisse.liquid  (tools/dessin.py) : COULISSE 01, deux
+  variantes, « simple » (hero) et « full » (fiche technique), cotes alimentées
+  par les metafields aplomb.longueur_mm, largeur_mm, course_mm,
+  longueur_plie_mm, hauteur_mm ;
 - snippets/logo.liquid             (design/logo/*.svg) : principal,
   horizontal, compact, monogramme ;
 - snippets/frise.liquid            : frise point de Hongrie.
@@ -20,7 +21,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SNIP = os.path.join(ROOT, "snippets")
 GEN = "{% comment %} Fichier généré par tools/build_snippets.py : ne pas modifier à la main. {% endcomment %}\n"
 
-COTES = {"A": "cote_a", "B": "cote_b", "C": "cote_c", "D": "cote_d"}
+COTES = {"A": "cote_a", "B": "cote_b", "C": "cote_c", "D": "cote_d", "E": "cote_e"}
 
 
 def variante(detail):
@@ -32,7 +33,7 @@ def variante(detail):
             f'data-cote="{lettre}" style=',
         )
         html = re.sub(
-            rf'(<span class="cote" data-cote="{lettre}" style="[^"]*">){lettre}(</span>)',
+            rf'(<span class="cote[^"]*" data-cote="{lettre}" style="[^"]*">){lettre}(</span>)',
             rf'\g<1>{lettre}{{% if {var} != blank %}} · {{{{ {var} }}}} mm{{% endif %}}\g<2>',
             html,
         )
@@ -41,9 +42,10 @@ def variante(detail):
 
 def dessin_snippet():
     doc = """{% doc %}
-  Dessin technique du mini-reformer : vue de dessus et élévation.
-  Le chariot glisse au défilement (CSS scroll-driven, repli assets/aplomb-dessin.js).
-  Les cotes A à D affichent leur valeur seulement si le metafield est rempli.
+  Dessin technique de COULISSE 01 : vue de dessus, élévation, vue pliée (full).
+  Les deux plateaux coulissent l'un après l'autre au défilement
+  (CSS scroll-driven, repli assets/aplomb-dessin.js).
+  Les cotes A à E affichent leur valeur seulement si le metafield est rempli.
 
   @param {string} [detail] - 'simple' (hero) ou 'full' (repères et nomenclature)
   @param {string} [timeline] - 'root' (défilement de la page) ou 'view' (passage du dessin à l'écran)
@@ -58,7 +60,8 @@ def dessin_snippet():
   assign cote_a = product.metafields.aplomb.longueur_mm.value
   assign cote_b = product.metafields.aplomb.largeur_mm.value
   assign cote_c = product.metafields.aplomb.course_mm.value
-  assign cote_d = product.metafields.aplomb.hauteur_mm.value
+  assign cote_d = product.metafields.aplomb.longueur_plie_mm.value
+  assign cote_e = product.metafields.aplomb.hauteur_mm.value
 -%}
 """
     body = "{%- if detail == 'full' -%}\n" + variante("full") + "\n{%- else -%}\n" + variante("simple") + "\n{%- endif -%}\n"
@@ -115,7 +118,7 @@ def frise_snippet():
 
 
 if __name__ == "__main__":
-    for name, content in [("dessin-reformer", dessin_snippet()), ("logo", logo_snippet()), ("frise", frise_snippet())]:
+    for name, content in [("dessin-coulisse", dessin_snippet()), ("logo", logo_snippet()), ("frise", frise_snippet())]:
         with open(os.path.join(SNIP, f"{name}.liquid"), "w", encoding="utf-8") as fh:
             fh.write(content)
         print("snippets/%s.liquid" % name, len(content))

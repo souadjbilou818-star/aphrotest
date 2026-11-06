@@ -1,0 +1,24 @@
+{% doc %}
+  Icônes fonctionnelles (trait 1,5 px, couleur du texte). Décoratives :
+  le bouton ou le lien qui les porte doit avoir un nom accessible.
+
+  @param {string} nom - 'panier', 'fermer', 'gauche', 'droite', 'plus', 'moins', 'loupe', 'menu'
+{% enddoc %}
+{%- case nom -%}
+  {%- when 'panier' -%}
+    <svg class="icone" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+  {%- when 'fermer' -%}
+    <svg class="icone" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg>
+  {%- when 'gauche' -%}
+    <svg class="icone" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5 8 12l7 7"/></svg>
+  {%- when 'droite' -%}
+    <svg class="icone" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 5 7 7-7 7"/></svg>
+  {%- when 'plus' -%}
+    <svg class="icone" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg>
+  {%- when 'moins' -%}
+    <svg class="icone" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg>
+  {%- when 'loupe' -%}
+    <svg class="icone" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5M10.5 8v5M8 10.5h5"/></svg>
+  {%- when 'menu' -%}
+    <svg class="icone" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 8h16M4 16h16"/></svg>
+{%- endcase -%}

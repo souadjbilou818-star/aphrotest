@@ -10,222 +10,363 @@
 {
   "sections": {
     "hero": {
-      "type": "hero-feuille",
+      "type": "aplomb-hero",
       "settings": {
-        "label_gauche": "Feuille de salle n° 1",
-        "label_droite": "Pré-lancement · Paris",
-        "titre": "Le mini-reformer à chariot,",
-        "titre_italique": "pensé pour l’appartement.",
-        "sous_titre": "Plateau bois, rails acier, chariot sur roues silencieuses. Se range debout derrière une porte.",
-        "afficher_dessin": true,
-        "legende_dessin": "Planche 01 — vue de dessus et élévation. Faites défiler : le chariot glisse sur ses rails."
+        "surtitre": "Pilates à domicile · Paris",
+        "titre": "Le Pilates chez soi, avec aplomb.",
+        "titre_accent": "avec aplomb",
+        "texte": "Trois familles d’équipement, du kit d’accessoires au reformer à chariot. En tête : COULISSE 01, une planche pliable dont les deux plateaux coulissent l’un sans l’autre.",
+        "cta_produit": "Découvrir COULISSE 01",
+        "cta_quiz": "Trouver mon équipement",
+        "ordre_cta": "produit",
+        "ancre_produit": "coulisse",
+        "visuel": "dessin",
+        "legende_dessin": "COULISSE 01, vue de dessus et élévation. Faites défiler : les plateaux coulissent l’un après l’autre."
       },
       "blocks": {
-        "hero_1": {
-          "type": "preuve",
+        "f_1": {
+          "type": "fait",
           "settings": {
-            "texte": "Un vrai chariot sur rails acier"
+            "texte": "Deux plateaux rembourrés, indépendants"
           }
         },
-        "hero_2": {
-          "type": "preuve",
+        "f_2": {
+          "type": "fait",
           "settings": {
-            "texte": "Élastiques plutôt que ressorts"
+            "texte": "Se plie en deux pour le rangement"
           }
         },
-        "hero_3": {
-          "type": "preuve",
+        "f_3": {
+          "type": "fait",
           "settings": {
-            "texte": "Le prix de quatre séances en studio"
-          }
-        },
-        "hero_4": {
-          "type": "sommaire",
-          "settings": {
-            "num": "I.",
-            "titre": "Le chariot",
-            "ancre": "#chariot",
-            "folio": "2"
-          }
-        },
-        "hero_5": {
-          "type": "sommaire",
-          "settings": {
-            "num": "II.",
-            "titre": "L’appartement",
-            "ancre": "#appartement",
-            "folio": "3"
-          }
-        },
-        "hero_6": {
-          "type": "sommaire",
-          "settings": {
-            "num": "III.",
-            "titre": "Le programme",
-            "ancre": "#programme",
-            "folio": "4"
-          }
-        },
-        "hero_7": {
-          "type": "sommaire",
-          "settings": {
-            "num": "—",
-            "titre": "Entracte : le quiz",
-            "ancre": "#entracte",
-            "folio": "5"
-          }
-        },
-        "hero_8": {
-          "type": "sommaire",
-          "settings": {
-            "num": "IV.",
-            "titre": "La maison",
-            "ancre": "#maison",
-            "folio": "6"
+            "texte": "Cordons de résistance et poignées"
           }
         }
       },
       "block_order": [
-        "hero_1",
-        "hero_2",
-        "hero_3",
-        "hero_4",
-        "hero_5",
-        "hero_6",
-        "hero_7",
-        "hero_8"
+        "f_1",
+        "f_2",
+        "f_3"
       ]
     },
-    "chariot": {
-      "type": "acte-chariot",
+    "familles": {
+      "type": "aplomb-familles",
       "settings": {
-        "ancre": "chariot",
+        "ancre": "familles",
+        "titre": "Trois familles, une même exigence",
+        "intro": "Choisissez selon votre pratique et votre place.",
+        "famille_avant": "coulisse",
+        "texte_voir": "Voir",
+        "texte_attente": "En préparation"
+      },
+      "blocks": {
+        "fa_1": {
+          "type": "famille",
+          "settings": {
+            "famille": "essentiels",
+            "numero": "01",
+            "nom": "Les Essentiels",
+            "texte": "Des kits d’accessoires pour pratiquer sur le tapis, sans appareil à ranger."
+          }
+        },
+        "fa_2": {
+          "type": "famille",
+          "settings": {
+            "famille": "coulisse",
+            "numero": "02",
+            "nom": "Coulisse",
+            "texte": "Une planche pliable à deux plateaux coulissants : le travail en glissé, dans peu de place."
+          }
+        },
+        "fa_3": {
+          "type": "famille",
+          "settings": {
+            "famille": "atelier",
+            "numero": "03",
+            "nom": "Reformers Atelier",
+            "texte": "De vrais reformers à chariot, pour une pratique proche du studio, avec un espace dédié."
+          }
+        }
+      },
+      "block_order": [
+        "fa_1",
+        "fa_2",
+        "fa_3"
+      ]
+    },
+    "vedette": {
+      "type": "aplomb-vedette",
+      "settings": {
+        "ancre": "coulisse",
+        "produit": "coulisse-01",
+        "surtitre": "02 — Coulisse · le produit phare",
+        "titre": "COULISSE 01",
+        "texte": "<p>Une planche compacte, pliable en son milieu. Sur chaque moitié, un plateau rembourré coulisse sur ses rails, indépendamment de l’autre : écarts, fentes, gainage en glissé. Des cordons à poignées s’accrochent aux extrémités pour le haut du corps.</p>",
+        "nomenclature": "Plateau coulissant gauche\nPlateau coulissant droit\nRails intégrés\nCharnière de pliage\nCordons de résistance\nPoignées\nPatins antidérapants",
+        "tag_attente": "coulisse-01"
+      },
+      "blocks": {
+        "p_1": {
+          "type": "point",
+          "settings": {
+            "texte": "Deux plateaux rembourrés, chacun sur ses rails"
+          }
+        },
+        "p_2": {
+          "type": "point",
+          "settings": {
+            "texte": "Se plie en deux, en son milieu"
+          }
+        },
+        "p_3": {
+          "type": "point",
+          "settings": {
+            "texte": "Cordons de résistance et poignées"
+          }
+        }
+      },
+      "block_order": [
+        "p_1",
+        "p_2",
+        "p_3"
+      ]
+    },
+    "demo": {
+      "type": "aplomb-demo",
+      "settings": {
+        "ancre": "demonstration",
         "num": "I.",
-        "titre": "Le chariot",
-        "folio": "2",
-        "intro": "Le cœur de L’Aplomb : un chariot qui roule sur deux rails d’acier, comme au studio.",
-        "honnete": "Un vrai chariot sur rails, avec des élastiques plutôt que des ressorts de studio.",
-        "afficher_dessin": true,
-        "titre_dessin": "Planche 02 · nomenclature",
-        "titre_comparatif": "Trois façons de faire du reformer",
-        "col_board": "Board plastique 5-en-1",
-        "col_aplomb": "L’Aplomb",
-        "col_studio": "Reformer de studio"
+        "titre": "Comment ça coulisse",
+        "intro": "Un plateau sous chaque pied, ou sous chaque main. L’un glisse, l’autre tient : c’est tout le travail.",
+        "produit": "coulisse-01",
+        "ratio": "16/9",
+        "legende_dessin": "Faites défiler : le plateau gauche s’écarte d’abord, puis le droit."
       },
       "blocks": {
-        "ligne_1": {
-          "type": "ligne",
+        "m_1": {
+          "type": "mouvement",
           "settings": {
-            "critere": "Mouvement",
-            "board": "Plateau fixe, sans chariot",
-            "aplomb": "Chariot sur rails acier, roues PU",
-            "studio": "Chariot sur rails"
+            "titre": "L’écart",
+            "texte": "Un pied sur chaque plateau. Vous écartez, puis vous ramenez, lentement.",
+            "travail": "Adducteurs · gainage"
           }
         },
-        "ligne_2": {
-          "type": "ligne",
+        "m_2": {
+          "type": "mouvement",
           "settings": {
-            "critere": "Résistance",
-            "board": "Élastiques",
-            "aplomb": "Élastiques",
-            "studio": "Ressorts"
+            "titre": "La fente glissée",
+            "texte": "Un pied sur un plateau qui recule, puis revient, pendant que l’autre tient.",
+            "travail": "Fessiers · cuisses · équilibre"
           }
         },
-        "ligne_3": {
-          "type": "ligne",
+        "m_3": {
+          "type": "mouvement",
           "settings": {
-            "critere": "Matière",
-            "board": "Plastique",
-            "aplomb": "Plateau bois, rails acier",
-            "studio": "Cadre bois ou métal"
-          }
-        },
-        "ligne_4": {
-          "type": "ligne",
-          "settings": {
-            "critere": "Rangement",
-            "board": "À plat",
-            "aplomb": "Plié, debout derrière une porte",
-            "studio": "Une pièce dédiée"
-          }
-        },
-        "ligne_5": {
-          "type": "ligne",
-          "settings": {
-            "critere": "Coût",
-            "board": "—",
-            "aplomb": "179 € ou 229 €, une fois",
-            "studio": "25 à 45 € la séance"
+            "titre": "La planche glissée",
+            "texte": "Mains au sol, pieds sur les plateaux : vous ramenez les genoux vers la poitrine.",
+            "travail": "Abdominaux · épaules"
           }
         }
       },
       "block_order": [
-        "ligne_1",
-        "ligne_2",
-        "ligne_3",
-        "ligne_4",
-        "ligne_5"
+        "m_1",
+        "m_2",
+        "m_3"
       ]
     },
-    "appartement": {
-      "type": "acte-faits",
+    "comparatif": {
+      "type": "aplomb-comparatif",
       "settings": {
-        "ancre": "appartement",
+        "ancre": "comparatif",
         "num": "II.",
-        "titre": "L’appartement",
-        "folio": "3",
-        "intro": "Pensé pour un deux-pièces, pas pour une salle de sport.",
-        "frise": true
+        "titre": "Laquelle vous correspond",
+        "intro": "Trois familles, trois façons de pratiquer. Aucune n’est meilleure dans l’absolu.",
+        "nom_essentiels": "Les Essentiels",
+        "nom_coulisse": "COULISSE 01",
+        "nom_atelier": "Reformers Atelier",
+        "colonne_avant": "coulisse",
+        "ligne_prix": true,
+        "libelle_prix": "Prix",
+        "prix_attente": "Bientôt",
+        "honnete": "COULISSE 01 n’est pas un reformer : ni chariot, ni ressorts. Pour un reformer complet, voyez les Reformers Atelier."
       },
       "blocks": {
-        "fait_1": {
-          "type": "fait",
+        "l_1": {
+          "type": "ligne",
           "settings": {
-            "titre": "Rangé debout",
-            "texte": "<p>Plié en deux sur sa charnière, il tient debout derrière une porte ou dans un placard. Pas besoin d’une pièce en plus.</p>"
+            "libelle": "Ce que c’est",
+            "essentiels": "Un kit d’accessoires pour le tapis",
+            "coulisse": "Une planche pliable à deux plateaux coulissants",
+            "atelier": "Un reformer complet, à chariot"
           }
         },
-        "fait_2": {
-          "type": "fait",
+        "l_2": {
+          "type": "ligne",
           "settings": {
-            "titre": "Le bruit",
-            "texte": "<p>Des roues en polyuréthane roulent sur des rails en acier. La vidéo du plan 03 est tournée avec le son réel : vous jugerez sur pièce.</p>"
+            "libelle": "Ce qui bouge",
+            "essentiels": "Vous, sur le tapis",
+            "coulisse": "Deux plateaux, chacun sur ses rails",
+            "atelier": "Un chariot sur rails"
           }
         },
-        "fait_3": {
-          "type": "fait",
+        "l_3": {
+          "type": "ligne",
           "settings": {
-            "titre": "Le parquet",
-            "texte": "<p>Quatre patins en feutre isolent le plateau du sol. Ils sont livrés avec l’édition Studio.</p>"
+            "libelle": "Résistance",
+            "essentiels": "Bandes élastiques",
+            "coulisse": "Cordons à poignées et glissé des plateaux",
+            "atelier": "Résistance réglable du reformer"
           }
         },
-        "fait_4": {
-          "type": "cadre",
+        "l_4": {
+          "type": "ligne",
           "settings": {
-            "ratio": "4/5",
-            "plan": "05",
-            "legende": "rangé debout contre une moulure",
-            "generee": true,
-            "didascalie": "Le mini-reformer plié, debout contre une porte à moulures. Un pan de rideau en velours forest dans le champ."
+            "libelle": "Pendant la séance",
+            "essentiels": "La place d’un tapis",
+            "coulisse": "La planche dépliée",
+            "atelier": "La place d’un reformer"
           }
         },
-        "fait_5": {
-          "type": "cadre",
+        "l_5": {
+          "type": "ligne",
           "settings": {
-            "ratio": "3/2",
-            "plan": "08",
-            "legende": "les feutres sur le parquet",
-            "generee": true,
-            "didascalie": "Au ras du sol : les patins feutre sous le plateau, sur le point de Hongrie. Lumière rasante."
+            "libelle": "Rangement",
+            "essentiels": "Une pochette",
+            "coulisse": "Pliée en deux",
+            "atelier": "Selon le modèle"
+          }
+        },
+        "l_6": {
+          "type": "ligne",
+          "settings": {
+            "libelle": "Pour qui",
+            "essentiels": "Débuter, compléter une pratique",
+            "coulisse": "Une pratique régulière, dans peu de place",
+            "atelier": "Une pratique proche du studio, avec un espace dédié"
           }
         }
       },
       "block_order": [
-        "fait_1",
-        "fait_2",
-        "fait_3",
-        "fait_4",
-        "fait_5"
+        "l_1",
+        "l_2",
+        "l_3",
+        "l_4",
+        "l_5",
+        "l_6"
+      ]
+    },
+    "quiz": {
+      "type": "aplomb-quiz",
+      "settings": {
+        "mode": "integre",
+        "ancre": "quiz",
+        "quiz_id": "choix-equipement",
+        "surtitre": "Quatre questions · une minute",
+        "titre": "Trouvez votre équipement",
+        "intro": "Aucune donnée personnelle demandée. Vos réponses restent dans ce navigateur, le temps de la visite.",
+        "produit_essentiels": "la-trousse",
+        "produit_coulisse": "coulisse-01",
+        "produit_atelier": "atelier-chene",
+        "raison_essentiels": "Un kit d’accessoires pour installer une routine sur le tapis, sans appareil à ranger.",
+        "raison_coulisse": "Deux plateaux qui coulissent l’un sans l’autre : le travail en glissé d’un appareil, dans le format d’une planche qui se plie.",
+        "raison_atelier": "Un vrai chariot sur rails, avec une résistance réglable : la pratique la plus proche du studio, pour qui a la place.",
+        "note": "Ce quiz oriente un achat ; il ne remplace pas un avis médical. En cas de douleur, de blessure ou de grossesse, demandez conseil avant de commencer."
+      },
+      "blocks": {
+        "q_1": {
+          "type": "question",
+          "settings": {
+            "cle": "objectif",
+            "question": "Qu’aimeriez-vous améliorer dans votre pratique ?",
+            "poids": 1,
+            "aide": "",
+            "option_1": "Renforcement et tonicité",
+            "oriente_1": "coulisse atelier",
+            "argument_1": "Vous cherchez du renforcement : le travail en glissé et en résistance s’y prête.",
+            "exclut_1": "aucune",
+            "option_2": "Mobilité et souplesse",
+            "oriente_2": "essentiels coulisse",
+            "argument_2": "Pour la mobilité, des mouvements amples et contrôlés suffisent.",
+            "exclut_2": "aucune",
+            "option_3": "Reprendre une activité régulière",
+            "oriente_3": "essentiels coulisse",
+            "argument_3": "Pour reprendre, mieux vaut un équipement simple à sortir chaque jour.",
+            "exclut_3": "aucune",
+            "option_4": "Installer une routine Pilates chez soi",
+            "oriente_4": "coulisse",
+            "argument_4": "Pour une routine, un appareil toujours prêt, qui ne prend pas la pièce.",
+            "exclut_4": "aucune"
+          }
+        },
+        "q_2": {
+          "type": "question",
+          "settings": {
+            "cle": "niveau",
+            "question": "Quel est votre niveau actuel ?",
+            "poids": 1,
+            "aide": "",
+            "option_1": "Je débute",
+            "oriente_1": "essentiels coulisse",
+            "argument_1": "Vous débutez : on commence simple, sans réglage compliqué.",
+            "exclut_1": "aucune",
+            "option_2": "J’ai déjà pratiqué",
+            "oriente_2": "coulisse",
+            "argument_2": "Vous avez déjà pratiqué : vous retrouverez le travail en glissé.",
+            "exclut_2": "aucune",
+            "option_3": "Je pratique régulièrement",
+            "oriente_3": "coulisse atelier",
+            "argument_3": "Vous pratiquez régulièrement : il vous faut de quoi progresser.",
+            "exclut_3": "aucune"
+          }
+        },
+        "q_3": {
+          "type": "question",
+          "settings": {
+            "cle": "equipement",
+            "question": "Quel type d’équipement vous correspond ?",
+            "poids": 3,
+            "aide": "",
+            "option_1": "Un kit simple et accessible",
+            "oriente_1": "essentiels",
+            "argument_1": "Vous voulez un kit simple : rien à installer, rien à régler.",
+            "exclut_1": "aucune",
+            "option_2": "Un appareil compact et polyvalent",
+            "oriente_2": "coulisse",
+            "argument_2": "Vous voulez un appareil compact : deux plateaux, des cordons, une planche qui se plie.",
+            "exclut_2": "aucune",
+            "option_3": "Une expérience proche d’un studio",
+            "oriente_3": "atelier",
+            "argument_3": "Vous voulez retrouver le studio : un chariot sur rails, une résistance réglable.",
+            "exclut_3": "aucune"
+          }
+        },
+        "q_4": {
+          "type": "question",
+          "settings": {
+            "cle": "espace",
+            "question": "De quel espace disposez-vous ?",
+            "poids": 2,
+            "aide": "",
+            "option_1": "Un petit espace",
+            "oriente_1": "essentiels coulisse",
+            "argument_1": "Peu de place : un kit tient dans une pochette, la planche se plie en deux.",
+            "exclut_1": "atelier",
+            "option_2": "Une pièce polyvalente",
+            "oriente_2": "coulisse atelier",
+            "argument_2": "Une pièce polyvalente : un appareil qui se range après la séance.",
+            "exclut_2": "aucune",
+            "option_3": "Un espace dédié",
+            "oriente_3": "atelier",
+            "argument_3": "Un espace dédié : la place d’un reformer complet.",
+            "exclut_3": "aucune"
+          }
+        }
+      },
+      "block_order": [
+        "q_1",
+        "q_2",
+        "q_3",
+        "q_4"
       ]
     },
     "programme": {
@@ -234,139 +375,202 @@
         "ancre": "programme",
         "num": "III.",
         "titre": "Le programme",
-        "folio": "4",
-        "intro": "« 28 jours d’aplomb » : 4 semaines, 4 séances de 20 minutes par semaine. Accès par QR code.",
-        "encart_titre": "Édition Studio",
-        "encart_texte": "Le programme se prolonge sur 8 semaines, avec une visio collective chaque mois.",
-        "plan": "06",
-        "legende": "la discipline privée, gainage latéral",
-        "generee": true,
-        "ratio": "4/5",
+        "intro": "Vingt minutes, quatre semaines, chez vous.",
+        "chapeau": "Quatre semaines pour installer la routine, sans brûler les étapes. Trois séances de vingt minutes par semaine.",
+        "encart_titre": "Le rythme",
+        "encart_texte": "Trois séances par semaine. Le reste du temps, l’appareil se range.",
         "image": "shopify://shop_images/plan-06-posture-provisoire.jpg",
-        "didascalie": "Trois postures, de profil, à hauteur de sol. Corps aligné, visage calme."
+        "ratio": "4/5",
+        "generee": true,
+        "legende": "posture de gainage latéral, sur tapis"
       },
       "blocks": {
-        "semaine_1": {
+        "s_1": {
           "type": "semaine",
           "settings": {
-            "numero": "S1",
-            "titre": "Alignement",
-            "texte": "Trouver l’axe : bassin, cage thoracique, épaules."
+            "numero": "Sem. 1",
+            "titre": "L’alignement",
+            "texte": "Placer le bassin, respirer, trouver l’axe."
           }
         },
-        "semaine_2": {
+        "s_2": {
           "type": "semaine",
           "settings": {
-            "numero": "S2",
-            "titre": "Centre",
-            "texte": "Le travail profond de la sangle abdominale, chariot lent."
+            "numero": "Sem. 2",
+            "titre": "Le centre",
+            "texte": "Gainage, mouvements lents, amplitude courte."
           }
         },
-        "semaine_3": {
+        "s_3": {
           "type": "semaine",
           "settings": {
-            "numero": "S3",
-            "titre": "Chaîne postérieure",
-            "texte": "Fessiers, ischio-jambiers, dos : pousser loin, revenir sans à-coup."
+            "numero": "Sem. 3",
+            "titre": "Le glissé",
+            "texte": "Plus d’amplitude, plus de contrôle."
           }
         },
-        "semaine_4": {
+        "s_4": {
           "type": "semaine",
           "settings": {
-            "numero": "S4",
-            "titre": "Flow complet",
-            "texte": "Les enchaînements des trois semaines, en une séance fluide."
+            "numero": "Sem. 4",
+            "titre": "L’aplomb",
+            "texte": "Enchaîner, tenir, recommencer."
           }
         }
       },
       "block_order": [
-        "semaine_1",
-        "semaine_2",
-        "semaine_3",
-        "semaine_4"
+        "s_1",
+        "s_2",
+        "s_3",
+        "s_4"
       ]
     },
-    "entracte": {
-      "type": "entracte-quiz",
+    "garanties": {
+      "type": "garanties",
       "settings": {
-        "ancre": "entracte",
-        "label": "Entracte",
-        "titre": "Quelle édition pour vous ?",
-        "texte": "Cinq questions, deux minutes. Le résultat présélectionne l’édition ; l’e-mail reste facultatif.",
-        "email": true,
-        "note": "Douleurs, grossesse ou post-partum : demandez l’avis de votre médecin ou kiné."
-      }
+        "ancre": "garanties",
+        "num": "IV.",
+        "titre": "Ce qui vous protège",
+        "intro": "Vos droits, écrits simplement. Rien de plus, rien de moins."
+      },
+      "blocks": {
+        "g_1": {
+          "type": "garantie",
+          "settings": {
+            "titre": "14 jours pour changer d’avis",
+            "texte": "À compter de la réception. Les conditions de retour sont sur la page Livraison et retours.",
+            "mode": "tous"
+          }
+        },
+        "g_2": {
+          "type": "garantie",
+          "settings": {
+            "titre": "Garantie légale de conformité, 2 ans",
+            "texte": "Réparation ou remplacement sans frais si le produit présente un défaut.",
+            "mode": "tous"
+          }
+        },
+        "g_3": {
+          "type": "garantie",
+          "settings": {
+            "titre": "Sécurité du produit",
+            "texte": "Fabricant identifié, avertissements et notice : tout est sur la page Sécurité produit.",
+            "mode": "tous"
+          }
+        },
+        "g_4": {
+          "type": "garantie",
+          "settings": {
+            "titre": "Paiement natif Shopify",
+            "texte": "Vous payez sur la page de paiement Shopify ; nous ne voyons jamais votre carte.",
+            "mode": "vente"
+          }
+        }
+      },
+      "block_order": [
+        "g_1",
+        "g_2",
+        "g_3",
+        "g_4"
+      ]
     },
     "maison": {
       "type": "acte-maison",
       "settings": {
         "ancre": "maison",
-        "num": "IV.",
+        "num": "V.",
         "titre": "La maison",
-        "folio": "6",
-        "texte": "<p>L’Aplomb est né à Paris d’un constat simple : le reformer a changé notre façon de bouger, mais il ne tient ni dans un budget ni dans un deux-pièces. Nous avons gardé l’essentiel, un chariot qui glisse sur des rails, et retiré le reste. Pour pratiquer avec justesse, chez soi, avec aplomb.</p>",
+        "texte": "<p>L’Aplomb est né à Paris d’un constat simple : le Pilates se pratique mieux avec un appareil, mais l’appareil doit tenir dans un appartement. Trois familles, du kit d’accessoires au reformer à chariot, choisies pour leur justesse plutôt que pour leur nombre.</p>",
         "transparence": "Sélectionné et contrôlé à Paris, fabriqué par une usine partenaire. Le nom et l’adresse du fabricant figurent sur la page Sécurité produit.",
         "soir_label": "La maison, le soir",
         "soir_titre": "L’élégance publique.",
         "soir_titre_2": "La discipline privée."
       },
       "blocks": {
-        "soir_1": {
+        "c_1": {
           "type": "cadre",
           "settings": {
             "image": "shopify://shop_images/plan-09-soiree.jpg",
             "generee": true,
             "ratio": "3/2",
-            "plan": "09",
-            "legende": "l’élégance publique, une soirée, de dos"
+            "legende": "l’élégance publique, une soirée à Paris"
           }
         }
       },
       "block_order": [
-        "soir_1"
+        "c_1"
       ]
     },
     "faq": {
       "type": "faq",
       "settings": {
         "ancre": "faq",
-        "titre": "Questions",
-        "folio": "7"
+        "num": "VI.",
+        "titre": "Vos questions",
+        "intro": "Les réponses courtes aux questions qu’on nous pose le plus."
       },
       "blocks": {
         "q_1": {
           "type": "question",
           "settings": {
-            "question": "Quelle différence entre Essentiel et Studio ?",
-            "reponse": "<p>L’Essentiel contient le mini-reformer, 4 élastiques, les poignées et le programme « 28 jours d’aplomb ». Le Studio ajoute des chaussettes grip, une housse en toile avec sangle de rangement, 4 patins feutre, une bande forte et un programme de 8 semaines avec une visio collective par mois.</p>"
+            "question": "COULISSE 01, est-ce un reformer ?",
+            "reponse": "<p>Non. C’est une planche compacte : deux plateaux rembourrés coulissent sur des rails intégrés, un sur chaque moitié. Il n’y a ni chariot, ni ressorts, ni barre de pieds. Pour un reformer complet, à chariot, voyez la famille Reformers Atelier.</p>"
           }
         },
         "q_2": {
           "type": "question",
           "settings": {
-            "question": "Quand sera-t-il expédié ?",
-            "reponse": "<p>[DATE D’EXPÉDITION]. Les personnes inscrites sur la liste d’attente sont prévenues en premier.</p>"
+            "question": "Comment fonctionne la planche ?",
+            "reponse": "<p>Vous posez les pieds, les genoux ou les mains sur les plateaux. L’un glisse pendant que l’autre tient, ou les deux s’écartent ensemble : c’est le travail en glissé. Les cordons à poignées, accrochés aux extrémités, ajoutent une résistance pour les bras et le dos.</p>"
           }
         },
         "q_3": {
           "type": "question",
           "settings": {
-            "question": "La réservation prioritaire, c’est quoi ?",
-            "reponse": "<p>19 € pour réserver votre mini-reformer avant l’ouverture des ventes. Ils sont déduits du prix final et remboursables à tout moment, sur simple demande.</p>"
+            "question": "Est-ce adapté si je débute ?",
+            "reponse": "<p>Oui. Commencez lentement, plateaux proches, amplitude courte. En cas de douleur, de blessure, de grossesse ou après un accouchement, demandez l’avis d’un professionnel de santé avant de commencer.</p>"
           }
         },
         "q_4": {
           "type": "question",
           "settings": {
-            "question": "Puis-je le renvoyer ?",
-            "reponse": "<p>Oui. Vous disposez de 14 jours après réception pour changer d’avis. Les conditions figurent sur la page Livraison & retours.</p>"
+            "question": "Quelle place faut-il ?",
+            "reponse": "<p>Pendant la séance : la planche dépliée, et de quoi allonger les bras et les jambes autour. Les dimensions exactes de chaque produit figurent dans sa fiche technique dès qu’elles sont vérifiées ; nous ne publions aucune mesure avant.</p>"
           }
         },
         "q_5": {
           "type": "question",
           "settings": {
-            "question": "Est-ce adapté si je débute ?",
-            "reponse": "<p>Oui. La première semaine du programme est consacrée à l’alignement, sans enchaînement difficile. Douleurs, grossesse ou post-partum : demandez l’avis de votre médecin ou kiné.</p>"
+            "question": "Se range-t-elle facilement ?",
+            "reponse": "<p>Elle se plie en deux, en son milieu : pliée, elle fait la moitié de sa longueur. Ses dimensions pliées figurent dans la fiche technique.</p>"
+          }
+        },
+        "q_6": {
+          "type": "question",
+          "settings": {
+            "question": "Qu’est-ce qui est inclus ?",
+            "reponse": "<p>Le contenu exact de chaque édition est écrit sur la fiche du produit, sous le choix de l’édition, et dans sa fiche technique.</p>"
+          }
+        },
+        "q_7": {
+          "type": "question",
+          "settings": {
+            "question": "Comment se passe la livraison ?",
+            "reponse": "<p>Les délais et les frais s’affichent avant le paiement, selon votre adresse. Vous recevez un e-mail à l’expédition.</p>"
+          }
+        },
+        "q_8": {
+          "type": "question",
+          "settings": {
+            "question": "Et si quelque chose casse ?",
+            "reponse": "<p>Vous bénéficiez de la garantie légale de conformité pendant 2 ans à compter de la livraison : réparation ou remplacement, sans frais. Écrivez-nous, avec une photo si possible.</p>"
+          }
+        },
+        "q_9": {
+          "type": "question",
+          "settings": {
+            "question": "Puis-je retourner mon achat ?",
+            "reponse": "<p>Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. Les conditions et les frais de retour figurent sur la page Livraison et retours.</p>"
           }
         }
       },
@@ -375,26 +579,37 @@
         "q_2",
         "q_3",
         "q_4",
-        "q_5"
+        "q_5",
+        "q_6",
+        "q_7",
+        "q_8",
+        "q_9"
       ]
     },
-    "rappel": {
-      "type": "rappel-liste",
+    "cloture": {
+      "type": "aplomb-cloture",
       "settings": {
-        "ancre": "rappel",
-        "titre": "La liste d’attente est ouverte.",
-        "intro": "Nous vous écrivons à l’ouverture des réservations, et pas avant."
+        "ancre": "cloture",
+        "titre_attente": "La liste d’attente est ouverte.",
+        "texte_attente": "Nous vous écrivons à l’ouverture, avec les prix définitifs et les délais de livraison. Pas avant.",
+        "titre": "Votre pratique, chez vous, dès cette semaine.",
+        "texte": "COULISSE 01 pour commencer, ou quatre questions pour choisir.",
+        "cta_produit": "Voir COULISSE 01",
+        "cta_quiz": "Vous hésitez ? Trouvez votre équipement en 4 questions"
       }
     }
   },
   "order": [
     "hero",
-    "chariot",
-    "appartement",
+    "familles",
+    "vedette",
+    "demo",
+    "comparatif",
+    "quiz",
     "programme",
-    "entracte",
+    "garanties",
     "maison",
     "faq",
-    "rappel"
+    "cloture"
   ]
 }

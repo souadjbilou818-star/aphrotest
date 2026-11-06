@@ -1,0 +1,70 @@
+{% doc %}
+  Carte produit (collections, familles, recommandations).
+  Prix réel du produit (« dès » quand les variantes ont des prix différents),
+  état commercial honnête : en vente, épuisé ou liste d’attente.
+
+  @param {object} product - le produit
+  @param {string} [sizes] - attribut sizes de l’image
+  @param {boolean} [prioritaire] - première rangée : chargement immédiat
+  @param {string} [titre_balise] - 'h2' ou 'h3' (défaut)
+{% enddoc %}
+{%- liquid
+  assign titre_balise = titre_balise | default: 'h3'
+  assign sizes = sizes | default: '(min-width: 1000px) 30vw, (min-width: 640px) 46vw, 92vw'
+  capture etat
+    render 'etat-produit', product: product
+  endcapture
+  assign etat = etat | strip
+  capture prix
+    render 'prix', montant: product.price_min
+  endcapture
+  assign famille = product.metafields.aplomb.famille.value | default: product.type
+  assign image = product.featured_media.preview_image
+  assign alt = product.featured_media.alt | default: product.title
+-%}
+<article class="carte-produit">
+  <a class="carte-produit__lien" href="{{ product.url }}">
+    <div class="carte-produit__visuel">
+      {%- if image != blank -%}
+        {%- if prioritaire -%}
+          {{ image | image_url: width: 1200 | image_tag: widths: '360, 540, 720, 960, 1200', sizes: sizes, loading: 'eager', alt: alt }}
+        {%- else -%}
+          {{ image | image_url: width: 1200 | image_tag: widths: '360, 540, 720, 960, 1200', sizes: sizes, loading: 'lazy', alt: alt }}
+        {%- endif -%}
+      {%- else -%}
+        <span class="carte-produit__attente">{{ 'aplomb.cadre.attente' | t }}</span>
+      {%- endif -%}
+    </div>
+    <div class="carte-produit__texte">
+      {%- if famille != blank -%}
+        <p class="label soft">{{ famille }}</p>
+      {%- endif -%}
+      <{{ titre_balise }} class="carte-produit__titre">{{ product.title }}</{{ titre_balise }}>
+      {%- if product.metafields.aplomb.accroche != blank -%}
+        <p class="carte-produit__accroche">{{ product.metafields.aplomb.accroche }}</p>
+      {%- endif -%}
+      <p class="carte-produit__prix">
+        {%- if product.price_varies -%}
+          {{ 'aplomb.produit.des' | t: prix: prix }}
+        {%- else -%}
+          {{ prix }}
+        {%- endif %}
+        <small>{{ 'aplomb.produit.ttc' | t }}</small>
+      </p>
+      <p class="carte-produit__etat carte-produit__etat--{{ etat }}">
+        {%- case etat -%}
+          {%- when 'vente' -%}
+            {%- if product.available -%}
+              {{ 'aplomb.produit.dispo_stock' | t }}
+            {%- else -%}
+              {{ 'aplomb.produit.dispo_epuise' | t }}
+            {%- endif -%}
+          {%- when 'reservation' -%}
+            {{ 'aplomb.produit.dispo_reservation' | t }}
+          {%- else -%}
+            {{ 'aplomb.produit.dispo_attente' | t }}
+        {%- endcase -%}
+      </p>
+    </div>
+  </a>
+</article>

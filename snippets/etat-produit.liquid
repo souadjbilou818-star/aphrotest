@@ -1,0 +1,20 @@
+{% doc %}
+  Écrit l’état commercial d’un produit : 'vente', 'reservation' ou 'attente'.
+  - vente : mode Vente, et le metafield aplomb.liste_attente n’est pas coché ;
+  - reservation : mode Réservation, pour le produit principal seulement ;
+  - attente : tous les autres cas (aucun bouton d’achat trompeur).
+  À utiliser dans un capture : {% capture etat %}{% render 'etat-produit', product: p %}{% endcapture %}
+
+  @param {object} product - le produit
+{% enddoc %}
+{%- liquid
+  assign etat = 'attente'
+  if product != blank
+    if settings.launch_mode == 'vente' and product.metafields.aplomb.liste_attente.value != true
+      assign etat = 'vente'
+    elsif settings.launch_mode == 'reservation' and product.id == settings.produit_principal.id
+      assign etat = 'reservation'
+    endif
+  endif
+  echo etat
+-%}

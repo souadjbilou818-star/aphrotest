@@ -5,11 +5,16 @@
 
   @param {string} contexte - identifiant unique du formulaire sur la page
   @param {string} [tags] - tags supplémentaires, séparés par des virgules
+  @param {boolean} [bouton_court] - libellé court sur le bouton
 {% enddoc %}
 {%- liquid
   assign form_id = 'liste-' | append: contexte
   assign tous_tags = 'waitlist,aplomb'
-  assign bouton = 'aplomb.waitlist.cta' | t
+  if bouton_court
+    assign bouton = 'aplomb.waitlist.produit' | t
+  else
+    assign bouton = 'aplomb.waitlist.cta' | t
+  endif
   if tags != blank
     assign tous_tags = tous_tags | append: ',' | append: tags
   endif
@@ -34,7 +39,7 @@
           aria-invalid="true" aria-describedby="{{ form_id }}-erreur"
         {% endif %}
       >
-      <button class="btn" type="submit">{{ 'aplomb.waitlist.cta' | t }}</button>
+      <button class="btn" type="submit">{{ bouton }}</button>
     </div>
     {%- if form.errors -%}
       <p class="message" id="{{ form_id }}-erreur" role="alert">{{ 'aplomb.waitlist.erreur' | t }}</p>

@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "L’Aplomb",
-    "theme_version": "0.2.0",
+    "theme_version": "0.3.0",
     "theme_author": "L’Aplomb, d’après Skeleton (Shopify)",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://support.shopify.com/"
@@ -14,7 +14,7 @@
         "type": "select",
         "id": "launch_mode",
         "label": "Mode de lancement",
-        "info": "Change tous les appels à l’action du site.",
+        "info": "Liste d’attente : aucun achat possible. Réservation : seul le produit principal se réserve. Vente : les produits actifs s’ajoutent au panier, sauf ceux marqués « liste d’attente » (metafield aplomb.liste_attente).",
         "options": [
           {
             "value": "waitlist",
@@ -35,7 +35,7 @@
         "type": "product",
         "id": "produit_principal",
         "label": "Produit principal",
-        "info": "Le mini-reformer. Utilisé par les boutons de l’accueil et par le quiz."
+        "info": "COULISSE 01. Utilisé par l’en-tête, l’accueil, le quiz et le mode Réservation."
       },
       {
         "type": "product",
@@ -54,6 +54,79 @@
         "id": "mention_vente",
         "label": "Mention en mode Vente",
         "default": "Expédié depuis la France"
+      }
+    ]
+  },
+  {
+    "name": "Boutique",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Les trois familles"
+      },
+      {
+        "type": "collection",
+        "id": "collection_essentiels",
+        "label": "01 — Les Essentiels"
+      },
+      {
+        "type": "collection",
+        "id": "collection_coulisse",
+        "label": "02 — Coulisse"
+      },
+      {
+        "type": "collection",
+        "id": "collection_atelier",
+        "label": "03 — Reformers Atelier"
+      },
+      {
+        "type": "page",
+        "id": "page_quiz",
+        "label": "Page du quiz",
+        "info": "Page qui utilise le modèle « page.pilates-quiz »."
+      },
+      {
+        "type": "header",
+        "content": "Livraison, retours, garantie"
+      },
+      {
+        "type": "text",
+        "id": "info_livraison",
+        "label": "Livraison",
+        "default": "Délais et frais affichés avant le paiement, selon votre adresse."
+      },
+      {
+        "type": "text",
+        "id": "info_retours",
+        "label": "Retours",
+        "default": "14 jours pour changer d’avis, à compter de la réception."
+      },
+      {
+        "type": "text",
+        "id": "info_garantie",
+        "label": "Garantie",
+        "default": "Garantie légale de conformité : 2 ans."
+      },
+      {
+        "type": "text",
+        "id": "info_paiement",
+        "label": "Paiement",
+        "default": "Paiement sécurisé sur la page de paiement Shopify."
+      },
+      {
+        "type": "page",
+        "id": "page_livraison",
+        "label": "Page « Livraison et retours »"
+      },
+      {
+        "type": "header",
+        "content": "Panier"
+      },
+      {
+        "type": "checkbox",
+        "id": "panier_tiroir",
+        "label": "Ouvrir le panier en tiroir après un ajout",
+        "default": true
       }
     ]
   },

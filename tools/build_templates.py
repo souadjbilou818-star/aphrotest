@@ -1,9 +1,16 @@
-"""Écrit templates/index.json et templates/product.json (textes de la marque).
+"""Écrit les modèles JSON du thème (textes de la marque).
+
+templates/index.json                accueil
+templates/product.json              COULISSE 01 (modèle par défaut des produits)
+templates/product.essentiels.json   famille 01, Les Essentiels
+templates/product.atelier.json      famille 03, Reformers Atelier
+templates/page.pilates-quiz.json    page du quiz
+templates/collection.json           pages de famille
 
 Le texte est saisi ici en français courant ; tools/typo_theme.py applique
 ensuite la microtypographie (espaces fines, apostrophes, guillemets).
-Les images générées sont référencées dans Shopify > Contenu > Fichiers
-(shopify://shop_images/…) ; un cadre sans image affiche sa didascalie.
+Aucune donnée inventée : pas d'avis, pas de chiffre de vente, pas de mesure.
+Les mesures viennent des metafields du produit, quand elles sont vérifiées.
 """
 import json
 import os
@@ -20,9 +27,13 @@ ENTETE = """/*
  */
 """
 
+# Handles des produits à créer dans Shopify (docs/product-mapping.md)
+H_COULISSE = "coulisse-01"
+H_ESSENTIELS = "la-trousse"
+H_ATELIER = "atelier-chene"
+
 
 def blocs(prefixe, items):
-    """items : liste de (type, settings) -> (blocks, block_order)."""
     blocks, order = {}, []
     for i, (t, s) in enumerate(items, 1):
         bid = f"{prefixe}_{i}"
@@ -42,230 +53,381 @@ def img(nom):
     return f"shopify://shop_images/{nom}"
 
 
-FAQ_COMMUNE = [
-    ("question", {"question": "Quelle différence entre Essentiel et Studio ?",
-                  "reponse": "<p>L'Essentiel contient le mini-reformer, 4 élastiques, les poignées et le programme « 28 jours d'aplomb ». Le Studio ajoute des chaussettes grip, une housse en toile avec sangle de rangement, 4 patins feutre, une bande forte et un programme de 8 semaines avec une visio collective par mois.</p>"}),
-    ("question", {"question": "Quand sera-t-il expédié ?",
-                  "reponse": "<p>[DATE D'EXPÉDITION]. Les personnes inscrites sur la liste d'attente sont prévenues en premier.</p>"}),
-    ("question", {"question": "La réservation prioritaire, c'est quoi ?",
-                  "reponse": "<p>19 € pour réserver votre mini-reformer avant l'ouverture des ventes. Ils sont déduits du prix final et remboursables à tout moment, sur simple demande.</p>"}),
-    ("question", {"question": "Puis-je le renvoyer ?",
-                  "reponse": "<p>Oui. Vous disposez de 14 jours après réception pour changer d'avis. Les conditions figurent sur la page Livraison & retours.</p>"}),
-    ("question", {"question": "Est-ce adapté si je débute ?",
-                  "reponse": "<p>Oui. La première semaine du programme est consacrée à l'alignement, sans enchaînement difficile. Douleurs, grossesse ou post-partum : demandez l'avis de votre médecin ou kiné.</p>"}),
+def q(question, reponse):
+    return ("question", {"question": question, "reponse": f"<p>{reponse}</p>"})
+
+
+FAQ = {
+    "reformer": q("COULISSE 01, est-ce un reformer ?",
+                  "Non. C'est une planche compacte : deux plateaux rembourrés coulissent sur des rails intégrés, "
+                  "un sur chaque moitié. Il n'y a ni chariot, ni ressorts, ni barre de pieds. Pour un reformer "
+                  "complet, à chariot, voyez la famille Reformers Atelier."),
+    "fonctionne": q("Comment fonctionne la planche ?",
+                    "Vous posez les pieds, les genoux ou les mains sur les plateaux. L'un glisse pendant que l'autre "
+                    "tient, ou les deux s'écartent ensemble : c'est le travail en glissé. Les cordons à poignées, "
+                    "accrochés aux extrémités, ajoutent une résistance pour les bras et le dos."),
+    "debutant": q("Est-ce adapté si je débute ?",
+                  "Oui. Commencez lentement, plateaux proches, amplitude courte. En cas de douleur, de blessure, "
+                  "de grossesse ou après un accouchement, demandez l'avis d'un professionnel de santé avant de commencer."),
+    "place": q("Quelle place faut-il ?",
+               "Pendant la séance : la planche dépliée, et de quoi allonger les bras et les jambes autour. "
+               "Les dimensions exactes de chaque produit figurent dans sa fiche technique dès qu'elles sont vérifiées ; "
+               "nous ne publions aucune mesure avant."),
+    "rangement": q("Se range-t-elle facilement ?",
+                   "Elle se plie en deux, en son milieu : pliée, elle fait la moitié de sa longueur. "
+                   "Ses dimensions pliées figurent dans la fiche technique."),
+    "inclus": q("Qu'est-ce qui est inclus ?",
+                "Le contenu exact de chaque édition est écrit sur la fiche du produit, sous le choix de l'édition, "
+                "et dans sa fiche technique."),
+    "livraison": q("Comment se passe la livraison ?",
+                   "Les délais et les frais s'affichent avant le paiement, selon votre adresse. "
+                   "Vous recevez un e-mail à l'expédition."),
+    "casse": q("Et si quelque chose casse ?",
+               "Vous bénéficiez de la garantie légale de conformité pendant 2 ans à compter de la livraison : "
+               "réparation ou remplacement, sans frais. Écrivez-nous, avec une photo si possible."),
+    "retour": q("Puis-je retourner mon achat ?",
+                "Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. "
+                "Les conditions et les frais de retour figurent sur la page Livraison et retours."),
+}
+
+COMPARATIF_LIGNES = [
+    ("ligne", {"libelle": "Ce que c'est", "essentiels": "Un kit d'accessoires pour le tapis",
+               "coulisse": "Une planche pliable à deux plateaux coulissants",
+               "atelier": "Un reformer complet, à chariot"}),
+    ("ligne", {"libelle": "Ce qui bouge", "essentiels": "Vous, sur le tapis",
+               "coulisse": "Deux plateaux, chacun sur ses rails",
+               "atelier": "Un chariot sur rails"}),
+    ("ligne", {"libelle": "Résistance", "essentiels": "Bandes élastiques",
+               "coulisse": "Cordons à poignées et glissé des plateaux",
+               "atelier": "Résistance réglable du reformer"}),
+    ("ligne", {"libelle": "Pendant la séance", "essentiels": "La place d'un tapis",
+               "coulisse": "La planche dépliée",
+               "atelier": "La place d'un reformer"}),
+    ("ligne", {"libelle": "Rangement", "essentiels": "Une pochette",
+               "coulisse": "Pliée en deux",
+               "atelier": "Selon le modèle"}),
+    ("ligne", {"libelle": "Pour qui", "essentiels": "Débuter, compléter une pratique",
+               "coulisse": "Une pratique régulière, dans peu de place",
+               "atelier": "Une pratique proche du studio, avec un espace dédié"}),
 ]
+
+
+def quiz(mode):
+    def question(cle, texte, poids, options, aide=""):
+        s = {"cle": cle, "question": texte, "poids": poids, "aide": aide}
+        for i, (libelle, oriente, argument, exclut) in enumerate(options, 1):
+            s[f"option_{i}"] = libelle
+            s[f"oriente_{i}"] = oriente
+            s[f"argument_{i}"] = argument
+            s[f"exclut_{i}"] = exclut
+        return ("question", s)
+
+    questions = [
+        question("objectif", "Qu'aimeriez-vous améliorer dans votre pratique ?", 1, [
+            ("Renforcement et tonicité", "coulisse atelier", "Vous cherchez du renforcement : le travail en glissé et en résistance s'y prête.", "aucune"),
+            ("Mobilité et souplesse", "essentiels coulisse", "Pour la mobilité, des mouvements amples et contrôlés suffisent.", "aucune"),
+            ("Reprendre une activité régulière", "essentiels coulisse", "Pour reprendre, mieux vaut un équipement simple à sortir chaque jour.", "aucune"),
+            ("Installer une routine Pilates chez soi", "coulisse", "Pour une routine, un appareil toujours prêt, qui ne prend pas la pièce.", "aucune"),
+        ]),
+        question("niveau", "Quel est votre niveau actuel ?", 1, [
+            ("Je débute", "essentiels coulisse", "Vous débutez : on commence simple, sans réglage compliqué.", "aucune"),
+            ("J'ai déjà pratiqué", "coulisse", "Vous avez déjà pratiqué : vous retrouverez le travail en glissé.", "aucune"),
+            ("Je pratique régulièrement", "coulisse atelier", "Vous pratiquez régulièrement : il vous faut de quoi progresser.", "aucune"),
+        ]),
+        question("equipement", "Quel type d'équipement vous correspond ?", 3, [
+            ("Un kit simple et accessible", "essentiels", "Vous voulez un kit simple : rien à installer, rien à régler.", "aucune"),
+            ("Un appareil compact et polyvalent", "coulisse", "Vous voulez un appareil compact : deux plateaux, des cordons, une planche qui se plie.", "aucune"),
+            ("Une expérience proche d'un studio", "atelier", "Vous voulez retrouver le studio : un chariot sur rails, une résistance réglable.", "aucune"),
+        ]),
+        question("espace", "De quel espace disposez-vous ?", 2, [
+            ("Un petit espace", "essentiels coulisse", "Peu de place : un kit tient dans une pochette, la planche se plie en deux.", "atelier"),
+            ("Une pièce polyvalente", "coulisse atelier", "Une pièce polyvalente : un appareil qui se range après la séance.", "aucune"),
+            ("Un espace dédié", "atelier", "Un espace dédié : la place d'un reformer complet.", "aucune"),
+        ]),
+    ]
+    settings = {
+        "mode": mode,
+        "ancre": "quiz",
+        "quiz_id": "choix-equipement",
+        "surtitre": "Quatre questions · une minute",
+        "titre": "Trouvez votre équipement",
+        "intro": "Aucune donnée personnelle demandée. Vos réponses restent dans ce navigateur, le temps de la visite.",
+        "produit_essentiels": H_ESSENTIELS,
+        "produit_coulisse": H_COULISSE,
+        "produit_atelier": H_ATELIER,
+        "raison_essentiels": "Un kit d'accessoires pour installer une routine sur le tapis, sans appareil à ranger.",
+        "raison_coulisse": "Deux plateaux qui coulissent l'un sans l'autre : le travail en glissé d'un appareil, dans le format d'une planche qui se plie.",
+        "raison_atelier": "Un vrai chariot sur rails, avec une résistance réglable : la pratique la plus proche du studio, pour qui a la place.",
+        "note": "Ce quiz oriente un achat ; il ne remplace pas un avis médical. En cas de douleur, de blessure ou de grossesse, demandez conseil avant de commencer.",
+    }
+    return section("aplomb-quiz", settings, questions, "q")
+
+
+def garanties(num):
+    return section("garanties", {"ancre": "garanties", "num": num, "titre": "Ce qui vous protège",
+                                 "intro": "Vos droits, écrits simplement. Rien de plus, rien de moins."}, [
+        ("garantie", {"titre": "14 jours pour changer d'avis",
+                      "texte": "À compter de la réception. Les conditions de retour sont sur la page Livraison et retours.",
+                      "mode": "tous"}),
+        ("garantie", {"titre": "Garantie légale de conformité, 2 ans",
+                      "texte": "Réparation ou remplacement sans frais si le produit présente un défaut.",
+                      "mode": "tous"}),
+        ("garantie", {"titre": "Sécurité du produit",
+                      "texte": "Fabricant identifié, avertissements et notice : tout est sur la page Sécurité produit.",
+                      "mode": "tous"}),
+        ("garantie", {"titre": "Paiement natif Shopify",
+                      "texte": "Vous payez sur la page de paiement Shopify ; nous ne voyons jamais votre carte.",
+                      "mode": "vente"}),
+    ], "g")
 
 
 def index():
     sections = {
-        "hero": section("hero-feuille", {
-            "label_gauche": "Feuille de salle n° 1",
-            "label_droite": "Pré-lancement · Paris",
-            "titre": "Le mini-reformer à chariot,",
-            "titre_italique": "pensé pour l'appartement.",
-            "sous_titre": "Plateau bois, rails acier, chariot sur roues silencieuses. Se range debout derrière une porte.",
-            "afficher_dessin": True,
-            "legende_dessin": "Planche 01 — vue de dessus et élévation. Faites défiler : le chariot glisse sur ses rails.",
+        "hero": section("aplomb-hero", {
+            "surtitre": "Pilates à domicile · Paris",
+            "titre": "Le Pilates chez soi, avec aplomb.",
+            "titre_accent": "avec aplomb",
+            "texte": "Trois familles d'équipement, du kit d'accessoires au reformer à chariot. En tête : COULISSE 01, "
+                     "une planche pliable dont les deux plateaux coulissent l'un sans l'autre.",
+            "cta_produit": "Découvrir COULISSE 01",
+            "cta_quiz": "Trouver mon équipement",
+            "ordre_cta": "produit",
+            "ancre_produit": "coulisse",
+            "visuel": "dessin",
+            "legende_dessin": "COULISSE 01, vue de dessus et élévation. Faites défiler : les plateaux coulissent l'un après l'autre.",
         }, [
-            ("preuve", {"texte": "Un vrai chariot sur rails acier"}),
-            ("preuve", {"texte": "Élastiques plutôt que ressorts"}),
-            ("preuve", {"texte": "Le prix de quatre séances en studio"}),
-            ("sommaire", {"num": "I.", "titre": "Le chariot", "ancre": "#chariot", "folio": "2"}),
-            ("sommaire", {"num": "II.", "titre": "L'appartement", "ancre": "#appartement", "folio": "3"}),
-            ("sommaire", {"num": "III.", "titre": "Le programme", "ancre": "#programme", "folio": "4"}),
-            ("sommaire", {"num": "—", "titre": "Entracte : le quiz", "ancre": "#entracte", "folio": "5"}),
-            ("sommaire", {"num": "IV.", "titre": "La maison", "ancre": "#maison", "folio": "6"}),
-        ], "hero"),
-        "chariot": section("acte-chariot", {
-            "ancre": "chariot", "num": "I.", "titre": "Le chariot", "folio": "2",
-            "intro": "Le cœur de L'Aplomb : un chariot qui roule sur deux rails d'acier, comme au studio.",
-            "honnete": "Un vrai chariot sur rails, avec des élastiques plutôt que des ressorts de studio.",
-            "afficher_dessin": True,
-            "titre_dessin": "Planche 02 · nomenclature",
-            "titre_comparatif": "Trois façons de faire du reformer",
-            "col_board": "Board plastique 5-en-1", "col_aplomb": "L'Aplomb", "col_studio": "Reformer de studio",
+            ("fait", {"texte": "Deux plateaux rembourrés, indépendants"}),
+            ("fait", {"texte": "Se plie en deux pour le rangement"}),
+            ("fait", {"texte": "Cordons de résistance et poignées"}),
+        ], "f"),
+        "familles": section("aplomb-familles", {
+            "ancre": "familles",
+            "titre": "Trois familles, une même exigence",
+            "intro": "Choisissez selon votre pratique et votre place.",
+            "famille_avant": "coulisse",
+            "texte_voir": "Voir",
+            "texte_attente": "En préparation",
         }, [
-            ("ligne", {"critere": "Mouvement", "board": "Plateau fixe, sans chariot", "aplomb": "Chariot sur rails acier, roues PU", "studio": "Chariot sur rails"}),
-            ("ligne", {"critere": "Résistance", "board": "Élastiques", "aplomb": "Élastiques", "studio": "Ressorts"}),
-            ("ligne", {"critere": "Matière", "board": "Plastique", "aplomb": "Plateau bois, rails acier", "studio": "Cadre bois ou métal"}),
-            ("ligne", {"critere": "Rangement", "board": "À plat", "aplomb": "Plié, debout derrière une porte", "studio": "Une pièce dédiée"}),
-            ("ligne", {"critere": "Coût", "board": "—", "aplomb": "179 € ou 229 €, une fois", "studio": "25 à 45 € la séance"}),
-        ], "ligne"),
-        "appartement": section("acte-faits", {
-            "ancre": "appartement", "num": "II.", "titre": "L'appartement", "folio": "3",
-            "intro": "Pensé pour un deux-pièces, pas pour une salle de sport.",
-            "frise": True,
+            ("famille", {"famille": "essentiels", "numero": "01", "nom": "Les Essentiels",
+                         "texte": "Des kits d'accessoires pour pratiquer sur le tapis, sans appareil à ranger."}),
+            ("famille", {"famille": "coulisse", "numero": "02", "nom": "Coulisse",
+                         "texte": "Une planche pliable à deux plateaux coulissants : le travail en glissé, dans peu de place."}),
+            ("famille", {"famille": "atelier", "numero": "03", "nom": "Reformers Atelier",
+                         "texte": "De vrais reformers à chariot, pour une pratique proche du studio, avec un espace dédié."}),
+        ], "fa"),
+        "vedette": section("aplomb-vedette", {
+            "ancre": "coulisse",
+            "produit": H_COULISSE,
+            "surtitre": "02 — Coulisse · le produit phare",
+            "titre": "COULISSE 01",
+            "texte": "<p>Une planche compacte, pliable en son milieu. Sur chaque moitié, un plateau rembourré coulisse sur "
+                     "ses rails, indépendamment de l'autre : écarts, fentes, gainage en glissé. Des cordons à poignées "
+                     "s'accrochent aux extrémités pour le haut du corps.</p>",
+            "nomenclature": "Plateau coulissant gauche\nPlateau coulissant droit\nRails intégrés\nCharnière de pliage\n"
+                            "Cordons de résistance\nPoignées\nPatins antidérapants",
+            "tag_attente": "coulisse-01",
         }, [
-            ("fait", {"titre": "Rangé debout", "texte": "<p>Plié en deux sur sa charnière, il tient debout derrière une porte ou dans un placard. Pas besoin d'une pièce en plus.</p>"}),
-            ("fait", {"titre": "Le bruit", "texte": "<p>Des roues en polyuréthane roulent sur des rails en acier. La vidéo du plan 03 est tournée avec le son réel : vous jugerez sur pièce.</p>"}),
-            ("fait", {"titre": "Le parquet", "texte": "<p>Quatre patins en feutre isolent le plateau du sol. Ils sont livrés avec l'édition Studio.</p>"}),
-            ("cadre", {"ratio": "4/5", "plan": "05", "legende": "rangé debout contre une moulure", "generee": True,
-                       "didascalie": "Le mini-reformer plié, debout contre une porte à moulures. Un pan de rideau en velours forest dans le champ."}),
-            ("cadre", {"ratio": "3/2", "plan": "08", "legende": "les feutres sur le parquet", "generee": True,
-                       "didascalie": "Au ras du sol : les patins feutre sous le plateau, sur le point de Hongrie. Lumière rasante."}),
-        ], "fait"),
+            ("point", {"texte": "Deux plateaux rembourrés, chacun sur ses rails"}),
+            ("point", {"texte": "Se plie en deux, en son milieu"}),
+            ("point", {"texte": "Cordons de résistance et poignées"}),
+        ], "p"),
+        "demo": section("aplomb-demo", {
+            "ancre": "demonstration", "num": "I.", "titre": "Comment ça coulisse",
+            "intro": "Un plateau sous chaque pied, ou sous chaque main. L'un glisse, l'autre tient : c'est tout le travail.",
+            "produit": H_COULISSE, "ratio": "16/9",
+            "legende_dessin": "Faites défiler : le plateau gauche s'écarte d'abord, puis le droit.",
+        }, [
+            ("mouvement", {"titre": "L'écart", "texte": "Un pied sur chaque plateau. Vous écartez, puis vous ramenez, lentement.",
+                           "travail": "Adducteurs · gainage"}),
+            ("mouvement", {"titre": "La fente glissée", "texte": "Un pied sur un plateau qui recule, puis revient, pendant que l'autre tient.",
+                           "travail": "Fessiers · cuisses · équilibre"}),
+            ("mouvement", {"titre": "La planche glissée", "texte": "Mains au sol, pieds sur les plateaux : vous ramenez les genoux vers la poitrine.",
+                           "travail": "Abdominaux · épaules"}),
+        ], "m"),
+        "comparatif": section("aplomb-comparatif", {
+            "ancre": "comparatif", "num": "II.", "titre": "Laquelle vous correspond",
+            "intro": "Trois familles, trois façons de pratiquer. Aucune n'est meilleure dans l'absolu.",
+            "nom_essentiels": "Les Essentiels", "nom_coulisse": "COULISSE 01", "nom_atelier": "Reformers Atelier",
+            "colonne_avant": "coulisse", "ligne_prix": True, "libelle_prix": "Prix", "prix_attente": "Bientôt",
+            "honnete": "COULISSE 01 n'est pas un reformer : ni chariot, ni ressorts. Pour un reformer complet, voyez les Reformers Atelier.",
+        }, COMPARATIF_LIGNES, "l"),
+        "quiz": quiz("integre"),
         "programme": section("acte-programme", {
-            "ancre": "programme", "num": "III.", "titre": "Le programme", "folio": "4",
-            "intro": "« 28 jours d'aplomb » : 4 semaines, 4 séances de 20 minutes par semaine. Accès par QR code.",
-            "encart_titre": "Édition Studio",
-            "encart_texte": "Le programme se prolonge sur 8 semaines, avec une visio collective chaque mois.",
-            "plan": "06", "legende": "la discipline privée, gainage latéral", "generee": True, "ratio": "4/5",
-            "image": img("plan-06-posture-provisoire.jpg"),
-            "didascalie": "Trois postures, de profil, à hauteur de sol. Corps aligné, visage calme.",
+            "ancre": "programme", "num": "III.", "titre": "Le programme",
+            "intro": "Vingt minutes, quatre semaines, chez vous.",
+            "chapeau": "Quatre semaines pour installer la routine, sans brûler les étapes. Trois séances de vingt minutes par semaine.",
+            "encart_titre": "Le rythme",
+            "encart_texte": "Trois séances par semaine. Le reste du temps, l'appareil se range.",
+            "image": img("plan-06-posture-provisoire.jpg"), "ratio": "4/5", "generee": True,
+            "legende": "posture de gainage latéral, sur tapis",
         }, [
-            ("semaine", {"numero": "S1", "titre": "Alignement", "texte": "Trouver l'axe : bassin, cage thoracique, épaules."}),
-            ("semaine", {"numero": "S2", "titre": "Centre", "texte": "Le travail profond de la sangle abdominale, chariot lent."}),
-            ("semaine", {"numero": "S3", "titre": "Chaîne postérieure", "texte": "Fessiers, ischio-jambiers, dos : pousser loin, revenir sans à-coup."}),
-            ("semaine", {"numero": "S4", "titre": "Flow complet", "texte": "Les enchaînements des trois semaines, en une séance fluide."}),
-        ], "semaine"),
-        "entracte": section("entracte-quiz", {
-            "ancre": "entracte", "label": "Entracte", "titre": "Quelle édition pour vous ?",
-            "texte": "Cinq questions, deux minutes. Le résultat présélectionne l'édition ; l'e-mail reste facultatif.",
-            "email": True,
-            "note": "Douleurs, grossesse ou post-partum : demandez l'avis de votre médecin ou kiné.",
-        }),
+            ("semaine", {"numero": "Sem. 1", "titre": "L'alignement", "texte": "Placer le bassin, respirer, trouver l'axe."}),
+            ("semaine", {"numero": "Sem. 2", "titre": "Le centre", "texte": "Gainage, mouvements lents, amplitude courte."}),
+            ("semaine", {"numero": "Sem. 3", "titre": "Le glissé", "texte": "Plus d'amplitude, plus de contrôle."}),
+            ("semaine", {"numero": "Sem. 4", "titre": "L'aplomb", "texte": "Enchaîner, tenir, recommencer."}),
+        ], "s"),
+        "garanties": garanties("IV."),
         "maison": section("acte-maison", {
-            "ancre": "maison", "num": "IV.", "titre": "La maison", "folio": "6",
-            "texte": "<p>L'Aplomb est né à Paris d'un constat simple : le reformer a changé notre façon de bouger, mais il ne tient ni dans un budget ni dans un deux-pièces. Nous avons gardé l'essentiel, un chariot qui glisse sur des rails, et retiré le reste. Pour pratiquer avec justesse, chez soi, avec aplomb.</p>",
+            "ancre": "maison", "num": "V.", "titre": "La maison",
+            "texte": "<p>L'Aplomb est né à Paris d'un constat simple : le Pilates se pratique mieux avec un appareil, "
+                     "mais l'appareil doit tenir dans un appartement. Trois familles, du kit d'accessoires au reformer "
+                     "à chariot, choisies pour leur justesse plutôt que pour leur nombre.</p>",
             "transparence": "Sélectionné et contrôlé à Paris, fabriqué par une usine partenaire. Le nom et l'adresse du fabricant figurent sur la page Sécurité produit.",
             "soir_label": "La maison, le soir",
             "soir_titre": "L'élégance publique.",
             "soir_titre_2": "La discipline privée.",
         }, [
-            ("cadre", {"image": img("plan-09-soiree.jpg"), "generee": True, "ratio": "3/2", "plan": "09",
-                       "legende": "l'élégance publique, une soirée, de dos"}),
-        ], "soir"),
-        "faq": section("faq", {"ancre": "faq", "titre": "Questions", "folio": "7"}, FAQ_COMMUNE, "q"),
-        "rappel": section("rappel-liste", {
-            "ancre": "rappel", "titre": "La liste d'attente est ouverte.",
-            "intro": "Nous vous écrivons à l'ouverture des réservations, et pas avant.",
+            ("cadre", {"image": img("plan-09-soiree.jpg"), "generee": True, "ratio": "3/2",
+                       "legende": "l'élégance publique, une soirée à Paris"}),
+        ], "c"),
+        "faq": section("faq", {"ancre": "faq", "num": "VI.", "titre": "Vos questions",
+                               "intro": "Les réponses courtes aux questions qu'on nous pose le plus."},
+                       [FAQ[k] for k in ("reformer", "fonctionne", "debutant", "place", "rangement", "inclus", "livraison", "casse", "retour")], "q"),
+        "cloture": section("aplomb-cloture", {
+            "ancre": "cloture",
+            "titre_attente": "La liste d'attente est ouverte.",
+            "texte_attente": "Nous vous écrivons à l'ouverture, avec les prix définitifs et les délais de livraison. Pas avant.",
+            "titre": "Votre pratique, chez vous, dès cette semaine.",
+            "texte": "COULISSE 01 pour commencer, ou quatre questions pour choisir.",
+            "cta_produit": "Voir COULISSE 01",
+            "cta_quiz": "Vous hésitez ? Trouvez votre équipement en 4 questions",
         }),
     }
-    order = ["hero", "chariot", "appartement", "programme", "entracte", "maison", "faq", "rappel"]
+    order = ["hero", "familles", "vedette", "demo", "comparatif", "quiz", "programme", "garanties", "maison", "faq", "cloture"]
+    return {"sections": sections, "order": order}
+
+
+def produit_commun(accroche, preuves, benefices, faq_cles, num_debut=1, avec_demo=False, avec_negations=None, etapes=None):
+    romains = ["I.", "II.", "III.", "IV.", "V.", "VI.", "VII.", "VIII."]
+    n = iter(romains[num_debut - 1:])
+    sections = {
+        "main": section("produit-principal", {
+            "accroche": accroche,
+            "titre_description": "Description",
+        }, [("preuve", {"texte": t}) for t in preuves], "p"),
+    }
+    order = ["main"]
+    if avec_demo:
+        sections["demo"] = section("aplomb-demo", {
+            "ancre": "demonstration", "num": next(n), "titre": "Comment ça coulisse",
+            "intro": "Un plateau sous chaque pied, ou sous chaque main. L'un glisse, l'autre tient.",
+            "ratio": "16/9", "legende_dessin": "Faites défiler : le plateau gauche s'écarte d'abord, puis le droit.",
+        }, [
+            ("mouvement", {"titre": "L'écart", "texte": "Un pied sur chaque plateau. Vous écartez, puis vous ramenez, lentement.", "travail": "Adducteurs · gainage"}),
+            ("mouvement", {"titre": "La fente glissée", "texte": "Un pied sur un plateau qui recule, puis revient, pendant que l'autre tient.", "travail": "Fessiers · cuisses · équilibre"}),
+            ("mouvement", {"titre": "La planche glissée", "texte": "Mains au sol, pieds sur les plateaux : vous ramenez les genoux vers la poitrine.", "travail": "Abdominaux · épaules"}),
+        ], "m")
+        order.append("demo")
+    sections["benefices"] = section("benefices", {"ancre": "benefices", "num": next(n), "titre": "Ce qu'il change"},
+                                    [("benefice", {"titre": t, "texte": x}) for t, x in benefices], "b")
+    order.append("benefices")
+    if etapes:
+        sections["etapes"] = section("etapes", {"ancre": "comment", "num": next(n), "titre": "Comment ça marche"},
+                                     [("etape", {"titre": t, "texte": x, "didascalie": d, "generee": False}) for t, x, d in etapes], "e")
+        order.append("etapes")
+    if avec_negations:
+        sections["negations"] = section("negations", {"ancre": "honnetete", "num": next(n), "titre": "Ce que ce n'est pas",
+                                                      "honnete": avec_negations[0]},
+                                        [("negation", {"non": a, "explication": b}) for a, b in avec_negations[1]], "n")
+        order.append("negations")
+    sections["specs"] = section("specs", {"ancre": "fiche-technique", "num": next(n), "titre": "Fiche technique",
+                                          "intro": "Les mesures s'affichent dès qu'elles sont vérifiées. Aucun chiffre n'est publié avant."})
+    order.append("specs")
+    sections["comparatif"] = section("aplomb-comparatif", {
+        "ancre": "comparatif", "num": next(n), "titre": "Les trois familles, côte à côte",
+        "nom_essentiels": "Les Essentiels", "nom_coulisse": "COULISSE 01", "nom_atelier": "Reformers Atelier",
+        "colonne_avant": "coulisse", "ligne_prix": True, "libelle_prix": "Prix", "prix_attente": "Bientôt",
+        "honnete": "COULISSE 01 n'est pas un reformer : ni chariot, ni ressorts.",
+    }, COMPARATIF_LIGNES, "l")
+    order.append("comparatif")
+    sections["temoignages"] = section("temoignages", {"ancre": "avis", "titre": "Avis",
+                                                      "intro": "Uniquement des avis réels, publiés avec l'accord de leurs auteurs."})
+    order.append("temoignages")
+    sections["garanties"] = garanties(next(n))
+    order.append("garanties")
+    sections["gpsr"] = section("gpsr", {"ancre": "securite", "titre": "Sécurité du produit",
+                                        "intro": "Informations exigées par le règlement européen sur la sécurité générale des produits."})
+    order.append("gpsr")
+    sections["faq"] = section("faq", {"ancre": "faq", "titre": "Vos questions"}, [FAQ[k] for k in faq_cles], "q")
+    order.append("faq")
     return {"sections": sections, "order": order}
 
 
 def product():
-    plans = [
-        ("plan", {"ratio": "1/1", "taille": "moitie", "plan": "02", "legende": "rails et roues, en macro", "generee": True,
-                  "didascalie": "Macro. Mise au point sur une roue, le rail fuit en diagonale."}),
-        ("plan", {"ratio": "16/9", "taille": "moitie", "plan": "03", "son": True, "generee": False,
-                  "legende": "le chariot en mouvement, son réel",
-                  "didascalie": "Le chariot fait un aller-retour sur toute sa course. Micro près des rails, aucune musique."}),
-        ("plan", {"ratio": "4/5", "taille": "tiers", "plan": "04", "legende": "le pliage, premier temps", "generee": True,
-                  "didascalie": "Vu du dessus : le mini-reformer déplié, deux mains posées sur la charnière."}),
-        ("plan", {"ratio": "4/5", "taille": "tiers", "plan": "04", "legende": "le pliage, deuxième temps", "generee": True,
-                  "didascalie": "Même cadrage : le plateau à moitié replié sur sa charnière."}),
-        ("plan", {"ratio": "4/5", "taille": "tiers", "plan": "04", "legende": "le pliage, troisième temps", "generee": True,
-                  "didascalie": "Même cadrage : plié, prêt à être rangé debout."}),
-        ("plan", {"ratio": "4/5", "taille": "moitie", "plan": "05", "legende": "rangé debout contre une moulure", "generee": True,
-                  "didascalie": "Plié, debout contre une porte à moulures. Un pan de rideau en velours forest dans le champ."}),
-        ("plan", {"ratio": "4/5", "taille": "moitie", "plan": "06", "legende": "la discipline privée, gainage latéral", "generee": True,
-                  "image": img("plan-06-posture-provisoire.jpg")}),
-        ("plan", {"ratio": "3/2", "taille": "large", "plan": "07", "legende": "le coffret, dorure laiton, carte gaufrée", "generee": True,
-                  "image": img("plan-07-coffret.jpg")}),
-        ("plan", {"ratio": "3/2", "taille": "moitie", "plan": "08", "legende": "les feutres sur le parquet", "generee": True,
-                  "didascalie": "Au ras du sol : les patins feutre sous le plateau, sur le point de Hongrie. Lumière rasante."}),
-        ("plan", {"ratio": "3/2", "taille": "moitie", "plan": "10", "legende": "la housse de l'édition Studio", "generee": True,
-                  "didascalie": "La housse en toile et sa sangle, suspendues à une patère en laiton, sur une porte laquée."}),
-    ]
-    sections = {
-        "main": section("produit-principal", {
-            "surtitre": "Pré-lancement · Paris",
-            "sous_titre": "Plateau bois, rails acier, chariot sur roues silencieuses. Se range debout derrière une porte.",
-            "contenu_essentiel": "Le mini-reformer, 4 élastiques, les poignées, le programme « 28 jours d'aplomb ».",
-            "contenu_studio": "L'Essentiel, plus chaussettes grip, housse en toile avec sangle de rangement, 4 patins feutre, 1 bande forte, programme 8 semaines.",
-            "prix_studio": "Une séance de reformer à Paris coûte 25 à 45 €. L'Aplomb, c'est le prix de quatre séances.",
-            "legende_dessin": "Planche 01 — vue de dessus et élévation. Les cotes s'affichent quand la fiche technique est remplie.",
-        }, [
-            ("preuve", {"texte": "Un vrai chariot sur rails acier"}),
-            ("preuve", {"texte": "Se range debout derrière une porte"}),
-            ("preuve", {"texte": "Programme « 28 jours d'aplomb » inclus"}),
-        ] + plans, "p"),
-        "benefices": section("benefices", {"titre": "Ce qu'il change", "ancre": "benefices"}, [
-            ("benefice", {"titre": "Le travail du reformer, à la maison",
-                          "texte": "Le chariot glisse, le corps travaille contre les élastiques : le principe du reformer, sans le trajet ni le créneau."}),
-            ("benefice", {"titre": "20 minutes, sans sortir",
-                          "texte": "Chaque séance du programme dure 20 minutes. Vous la faites quand la journée le permet."}),
-            ("benefice", {"titre": "Rangé en 10 secondes",
-                          "texte": "Plié sur sa charnière, il se range debout derrière une porte. Le salon redevient un salon."}),
-        ], "ben"),
-        "etapes": section("etapes", {"titre": "Comment ça marche", "ancre": "comment"}, [
-            ("etape", {"titre": "Dépliez", "texte": "Posez le plateau au sol et ouvrez la charnière.", "plan": "04", "legende": "déplier",
-                       "didascalie": "Vu du dessus : deux mains ouvrent la charnière sur le parquet."}),
-            ("etape", {"titre": "Accrochez", "texte": "Choisissez vos élastiques et fixez-les à la barre d'ancrage.", "plan": "02", "legende": "accrocher",
-                       "didascalie": "Gros plan : un élastique accroché à la barre d'ancrage."}),
-            ("etape", {"titre": "Glissez", "texte": "Flashez le QR code et lancez la séance du jour.", "plan": "06", "legende": "glisser",
-                       "didascalie": "De profil : le chariot en fin de course, le corps aligné."}),
-        ], "et"),
-        "negations": section("negations", {
-            "titre": "Ce que ce n'est pas", "ancre": "honnetete",
-            "honnete": "Un vrai chariot sur rails, avec des élastiques plutôt que des ressorts de studio.",
-        }, [
-            ("negation", {"non": "Pas de ressorts", "explication": "La résistance vient d'élastiques interchangeables. Elle est plus douce en début de course, plus franche en fin de course."}),
-            ("negation", {"non": "Pas un appareil de deux mètres", "explication": "Un plateau qui se plie et se range debout, conçu pour un appartement."}),
-            ("negation", {"non": "Pas un board en plastique", "explication": "Un vrai chariot sur roues, qui roule sur des rails en acier."}),
-            ("negation", {"non": "Pas une promesse de silhouette", "explication": "Un travail juste et régulier, 20 minutes à la fois."}),
-        ], "neg"),
-        "specs": section("specs", {
-            "titre": "Fiche technique", "ancre": "fiche-technique",
-            "intro": "Les mesures s'affichent dès qu'elles sont vérifiées. Aucun chiffre n'est publié avant.",
-        }, [
-            ("role", {"role": "Plateau", "nom": "bois"}),
-            ("role", {"role": "Rails", "nom": "acier"}),
-            ("role", {"role": "Chariot", "nom": "roues PU silencieuses"}),
-            ("role", {"role": "Résistance", "nom": "élastiques"}),
-            ("role", {"role": "Pliage", "nom": "charnière centrale"}),
-        ], "spec"),
-        "programme": section("acte-programme", {
-            "ancre": "programme", "titre": "Le programme inclus",
-            "intro": "« 28 jours d'aplomb » : 4 semaines, 4 séances de 20 minutes par semaine. Accès par QR code.",
-            "encart_titre": "Édition Studio",
-            "encart_texte": "Le programme se prolonge sur 8 semaines, avec une visio collective chaque mois.",
-        }, [
-            ("semaine", {"numero": "S1", "titre": "Alignement", "texte": "Trouver l'axe : bassin, cage thoracique, épaules."}),
-            ("semaine", {"numero": "S2", "titre": "Centre", "texte": "Le travail profond de la sangle abdominale, chariot lent."}),
-            ("semaine", {"numero": "S3", "titre": "Chaîne postérieure", "texte": "Fessiers, ischio-jambiers, dos : pousser loin, revenir sans à-coup."}),
-            ("semaine", {"numero": "S4", "titre": "Flow complet", "texte": "Les enchaînements des trois semaines, en une séance fluide."}),
-        ], "sem"),
-        "quiz": section("entracte-quiz", {
-            "ancre": "entracte", "label": "Entracte", "titre": "Quelle édition pour vous ?",
-            "texte": "Cinq questions, deux minutes. Le résultat présélectionne l'édition ci-dessus ; l'e-mail reste facultatif.",
-            "email": True,
-            "note": "Douleurs, grossesse ou post-partum : demandez l'avis de votre médecin ou kiné.",
-        }),
-        "objections": section("faq", {"ancre": "objections", "titre": "Ce qui pourrait vous retenir"}, [
-            ("question", {"question": "Est-ce que ça remplace un cours en studio ?",
-                          "reponse": "<p>Non, et ce n'est pas le but. Le chariot glisse comme en studio, mais la résistance vient d'élastiques et non de ressorts. Il complète vos cours, ou vous permet de pratiquer entre deux.</p>"}),
-            ("question", {"question": "Et les voisins du dessous ?",
-                          "reponse": "<p>Les roues sont en polyuréthane et roulent sur des rails en acier. Nous publierons une mesure en décibels quand elle aura été faite par un laboratoire ; d'ici là, la vidéo du plan 03 est tournée avec le son réel.</p>"}),
-            ("question", {"question": "Mon parquet va-t-il souffrir ?",
-                          "reponse": "<p>Le plateau repose sur des patins en feutre (livrés avec l'édition Studio, vendus à part pour l'Essentiel).</p>"}),
-            ("question", {"question": "Quel poids peut-il supporter ?",
-                          "reponse": "<p>La charge maximale testée sera publiée dans la fiche technique dès réception du rapport d'essai. Nous n'annonçons aucun chiffre avant.</p>"}),
-        ], "obj"),
-        "temoignages": section("temoignages", {"ancre": "beta", "titre": "Les premières à l'avoir essayé",
-                                               "intro": "Des bêta-testeuses réelles, à qui nous avons prêté le produit. Leurs mots, sans retouche."}),
-        "faq": section("faq", {"ancre": "faq", "titre": "Questions"}, FAQ_COMMUNE, "q"),
-        "garanties": section("garanties", {
-            "ancre": "garanties", "titre": "Garanties",
-            "encadre": "<p>[ENCADRÉ GARANTIE LÉGALE — décret 2022-424]</p>",
-        }, [
-            ("garantie", {"titre": "Garantie légale de conformité, 2 ans", "texte": "Un défaut de conformité dans les deux ans suivant la livraison : réparation ou remplacement.", "mode": "tous"}),
-            ("garantie", {"titre": "14 jours pour changer d'avis", "texte": "Droit de rétractation à compter de la réception.", "mode": "tous"}),
-            ("garantie", {"titre": "Réservation remboursable", "texte": "Les 19 € de réservation sont remboursables à tout moment et déduits du prix final.", "mode": "reservation"}),
-            ("garantie", {"titre": "Paiement sécurisé", "texte": "Le paiement est traité par Shopify ; vos données bancaires ne transitent pas par L'Aplomb.", "mode": "tous"}),
-        ], "gar"),
-        "gpsr": section("gpsr", {"ancre": "securite", "titre": "Sécurité du produit",
-                                 "intro": "Informations du règlement européen sur la sécurité générale des produits (GPSR)."}),
-    }
-    order = ["main", "benefices", "etapes", "negations", "specs", "programme", "quiz", "objections",
-             "temoignages", "faq", "garanties", "gpsr"]
-    return {"sections": sections, "order": order}
+    return produit_commun(
+        accroche="Une planche pliable, deux plateaux qui coulissent l'un sans l'autre, des cordons à poignées.",
+        preuves=["Deux plateaux rembourrés, indépendants", "Rails intégrés à la planche", "Se plie en deux, en son milieu"],
+        benefices=[
+            ("Un travail en glissé, à la maison", "Le glissé demande du contrôle à chaque centimètre : c'est là que le centre travaille."),
+            ("Deux côtés, deux rythmes", "Chaque plateau bouge seul. Vous travaillez un côté pendant que l'autre tient."),
+            ("Rangée en un geste", "La planche se plie en son milieu. Pliée, elle fait la moitié de sa longueur."),
+        ],
+        etapes=[
+            ("Dépliez", "Posez la planche à plat, sur un sol dur ou un tapis fin.", "la planche se déplie sur un parquet"),
+            ("Placez-vous", "Pieds, genoux ou mains sur les plateaux, selon le mouvement.", "deux pieds sur les plateaux, vue de profil"),
+            ("Coulissez", "Un plateau glisse, l'autre tient. Lentement, puis plus loin.", "un plateau s'écarte, l'autre reste en place"),
+        ],
+        avec_negations=("Une planche à deux plateaux coulissants, pas un reformer.", [
+            ("Pas un reformer", "Ni chariot, ni ressorts, ni barre de pieds. Pour cela, voyez les Reformers Atelier."),
+            ("Pas un appareil médical", "Il ne soigne rien. En cas de douleur, demandez l'avis d'un professionnel de santé."),
+            ("Pas un abonnement", "Vous achetez l'appareil, une fois. Aucun paiement récurrent."),
+        ]),
+        faq_cles=("reformer", "fonctionne", "debutant", "place", "rangement", "inclus", "livraison", "casse", "retour"),
+        avec_demo=True,
+    )
+
+
+def product_essentiels():
+    return produit_commun(
+        accroche="Un kit d'accessoires pour installer une routine sur le tapis, sans appareil à ranger.",
+        preuves=["Tout tient dans une pochette", "Pour débuter ou compléter une pratique"],
+        benefices=[
+            ("Rien à installer", "Vous sortez la pochette, vous déroulez le tapis, vous commencez."),
+            ("De quoi varier", "Chaque accessoire change l'appui ou la résistance d'un même mouvement."),
+            ("Le complément d'un appareil", "Les Essentiels accompagnent aussi COULISSE 01 et les Reformers Atelier."),
+        ],
+        faq_cles=("debutant", "inclus", "livraison", "casse", "retour"),
+    )
+
+
+def product_atelier():
+    return produit_commun(
+        accroche="Un reformer complet, à chariot, pour une pratique proche du studio.",
+        preuves=["Un vrai chariot sur rails", "Pliable ou à poste fixe, selon le modèle"],
+        benefices=[
+            ("Le geste du studio", "Le chariot, la résistance réglable, l'amplitude complète des mouvements."),
+            ("Une pratique qui progresse", "Vous augmentez la résistance au fil des semaines."),
+            ("Un objet qui a sa place", "Choisi pour sa tenue et ses matières, il reste dans la pièce."),
+        ],
+        faq_cles=("debutant", "place", "inclus", "livraison", "casse", "retour"),
+    )
+
+
+def page_quiz():
+    return {"sections": {"quiz": quiz("page")}, "order": ["quiz"]}
+
+
+def collection():
+    return {"sections": {"main": section("collection", {
+        "par_page": 12, "libelle_familles": "Les familles",
+        "texte_vide": "Cette famille arrive bientôt. Inscrivez-vous à la liste d'attente depuis l'accueil.",
+        "texte_quiz": "Vous hésitez ? Quatre questions pour choisir",
+    })}, "order": ["main"]}
+
+
+def ecrire(nom, data):
+    chemin = os.path.join(ROOT, "templates", f"{nom}.json")
+    with open(chemin, "w", encoding="utf-8") as fh:
+        fh.write(ENTETE)
+        json.dump(data, fh, ensure_ascii=False, indent=2)
+        fh.write("\n")
+    print(f"templates/{nom}.json")
 
 
 if __name__ == "__main__":
-    for nom, data in [("index", index()), ("product", product())]:
-        with open(os.path.join(ROOT, "templates", f"{nom}.json"), "w", encoding="utf-8") as fh:
-            fh.write(ENTETE + json.dumps(data, ensure_ascii=False, indent=2) + "\n")
-        print("templates/%s.json" % nom)
+    ecrire("index", index())
+    ecrire("product", product())
+    ecrire("product.essentiels", product_essentiels())
+    ecrire("product.atelier", product_atelier())
+    ecrire("page.pilates-quiz", page_quiz())
+    ecrire("collection", collection())

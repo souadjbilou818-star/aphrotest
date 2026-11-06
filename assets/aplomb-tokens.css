@@ -1,0 +1,102 @@
+/* ==========================================================================
+   L’Aplomb — jetons de design
+   Palette : ivoire dominant, sable pour les surfaces, forêt pour l’action,
+   bordeaux en accent rare (filets, marques de sélection), encre pour le texte.
+   Contrastes vérifiés (WCAG 2.2) :
+     encre / ivoire 17,3:1 · encre-douce / ivoire 7,9:1 · encre-douce / sable 5,4:1
+     forêt / ivoire 11,0:1 · ivoire / forêt 11,0:1 · bordeaux / ivoire 11,2:1
+   Les familles de police et --serif-* sont définies dans snippets/fonts.liquid.
+   ========================================================================== */
+
+:root {
+  /* Couleurs de marque */
+  --ivory: #f6f2e9;
+  --paper: #fbf9f4;
+  --sand: #d9c8b2;
+  --sand-light: #ece3d5;
+  --forest: #1f3a34;
+  --oxblood: #5b1f2b;
+  --ink: #0b0f0e;
+  --ink-soft: #4d4a43;
+
+  /* Rôles */
+  --bg: var(--ivory);
+  --surface: var(--paper);
+  --surface-warm: var(--sand-light);
+  --text: var(--ink);
+  --text-soft: var(--ink-soft);
+  --action: var(--forest);
+  --action-hover: var(--ink);
+  --on-action: var(--ivory);
+  --accent: var(--oxblood);
+  --line: rgb(11 15 14 / 0.16);
+  --line-strong: var(--ink);
+  --ok: var(--forest);
+  --erreur: var(--oxblood);
+  --on-dark: #f6f2e9;
+  --on-dark-soft: rgb(246 242 233 / 0.8);
+
+  /* Typographie */
+  --sans: 'Hanken Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+  --fs-display: calc(clamp(2.375rem, 1.2rem + 4.6vw, 5rem) * var(--serif-k, 1));
+  --fs-acte: calc(clamp(1.875rem, 1.25rem + 2.4vw, 3.5rem) * var(--serif-k, 1));
+  --fs-h3: calc(clamp(1.375rem, 1.15rem + 0.8vw, 1.875rem) * var(--serif-k, 1));
+  --fs-h4: calc(clamp(1.1875rem, 1.1rem + 0.35vw, 1.375rem) * var(--serif-k, 1));
+  --fs-lead: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  --fs-body: clamp(1.0625rem, 1.04rem + 0.1vw, 1.125rem);
+  --fs-small: 0.9375rem;
+  --fs-label: 0.75rem;
+  --fs-mono: 0.8125rem;
+
+  /* Espacements */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --section: clamp(56px, 7vw, 112px);
+  --section-serre: clamp(40px, 5vw, 72px);
+  --gutter: clamp(16px, 4.5vw, 72px);
+  --gap: clamp(16px, 2vw, 28px);
+  --maxw: 1440px;
+  --quiz-w: 560px;
+  --header-h: 64px;
+
+  /* Géométrie */
+  --r-1: 2px;
+  --r-2: 4px;
+  --tap: 48px;
+  --btn-h: 52px;
+
+  /* Mouvement */
+  --t-court: 120ms;
+  --t: 200ms;
+  --t-long: 320ms;
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+
+  /* Plans */
+  --z-header: 20;
+  --z-collant: 30;
+  --z-tiroir: 60;
+  --z-visionneuse: 70;
+
+  color-scheme: light;
+}
+
+@media (min-width: 900px) {
+  :root {
+    --header-h: 76px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-court: 0ms;
+    --t: 0ms;
+    --t-long: 0ms;
+  }
+}

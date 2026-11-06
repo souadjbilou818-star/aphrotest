@@ -1,0 +1,235 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign lignes = section.blocks | where: 'type', 'ligne'
+  assign colonnes = 'essentiels,coulisse,atelier' | split: ','
+  assign avant = section.settings.colonne_avant
+-%}
+<section class="wrap grid acte" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+  {% render 'acte-tete',
+    num: section.settings.num,
+    titre: section.settings.titre,
+    intro: section.settings.intro,
+    folio: section.settings.folio,
+    id: titre_id
+  %}
+  <div class="acte__corps">
+    <table class="comparatif">
+      <caption class="visually-hidden">{{ section.settings.titre }}</caption>
+      <thead>
+        <tr>
+          <td></td>
+          {%- for col in colonnes -%}
+            {%- liquid
+              assign cle_nom = 'nom_' | append: col
+              case col
+                when 'essentiels'
+                  assign c = settings.collection_essentiels
+                when 'coulisse'
+                  assign c = settings.collection_coulisse
+                else
+                  assign c = settings.collection_atelier
+              endcase
+            -%}
+            <th scope="col" class="{% if col == avant %}is-aplomb{% endif %}">
+              {%- if c != blank -%}
+                <a href="{{ c.url }}">{{ section.settings[cle_nom] }}</a>
+              {%- else -%}
+                {{ section.settings[cle_nom] }}
+              {%- endif -%}
+            </th>
+          {%- endfor -%}
+        </tr>
+      </thead>
+      <tbody>
+        {%- for block in lignes -%}
+          <tr {{ block.shopify_attributes }}>
+            <th scope="row">{{ block.settings.libelle }}</th>
+            {%- for col in colonnes -%}
+              {%- assign cle_nom = 'nom_' | append: col -%}
+              <td class="{% if col == avant %}is-aplomb{% endif %}" data-col="{{ section.settings[cle_nom] | escape }}">{{ block.settings[col] }}</td>
+            {%- endfor -%}
+          </tr>
+        {%- endfor -%}
+        {%- if section.settings.ligne_prix -%}
+          <tr>
+            <th scope="row">{{ section.settings.libelle_prix }}</th>
+            {%- for col in colonnes -%}
+              {%- liquid
+                assign cle_nom = 'nom_' | append: col
+                case col
+                  when 'essentiels'
+                    assign c = settings.collection_essentiels
+                  when 'coulisse'
+                    assign c = settings.collection_coulisse
+                  else
+                    assign c = settings.collection_atelier
+                endcase
+                assign prix_min = nil
+                if c != blank and c.products_count > 0
+                  assign prix_min = c.products | map: 'price_min' | sort | first
+                endif
+              -%}
+              <td class="{% if col == avant %}is-aplomb{% endif %}" data-col="{{ section.settings[cle_nom] | escape }}">
+                {%- if prix_min != blank -%}
+                  {%- capture prix -%}{% render 'prix', montant: prix_min %}{%- endcapture -%}
+                  {{ 'aplomb.produit.des' | t: prix: prix }}
+                {%- else -%}
+                  {{ section.settings.prix_attente }}
+                {%- endif -%}
+              </td>
+            {%- endfor -%}
+          </tr>
+        {%- endif -%}
+      </tbody>
+    </table>
+    {%- if section.settings.honnete != blank -%}
+      <p class="honnete">{{ section.settings.honnete }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Comparatif des familles",
+  "tag": "div",
+  "class": "section-comparatif",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "comparatif"
+    },
+    {
+      "type": "text",
+      "id": "num",
+      "label": "Numéro d’acte",
+      "default": "II."
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "Laquelle vous correspond"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "Trois familles, trois façons de pratiquer. Aucune n’est meilleure dans l’absolu."
+    },
+    {
+      "type": "text",
+      "id": "folio",
+      "label": "Folio"
+    },
+    {
+      "type": "text",
+      "id": "nom_essentiels",
+      "label": "Colonne 1",
+      "default": "Les Essentiels"
+    },
+    {
+      "type": "text",
+      "id": "nom_coulisse",
+      "label": "Colonne 2",
+      "default": "COULISSE 01"
+    },
+    {
+      "type": "text",
+      "id": "nom_atelier",
+      "label": "Colonne 3",
+      "default": "Reformers Atelier"
+    },
+    {
+      "type": "select",
+      "id": "colonne_avant",
+      "label": "Colonne mise en avant",
+      "options": [
+        {
+          "value": "essentiels",
+          "label": "Colonne 1"
+        },
+        {
+          "value": "coulisse",
+          "label": "Colonne 2"
+        },
+        {
+          "value": "atelier",
+          "label": "Colonne 3"
+        }
+      ],
+      "default": "coulisse"
+    },
+    {
+      "type": "checkbox",
+      "id": "ligne_prix",
+      "label": "Ligne de prix (prix réels des collections)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "libelle_prix",
+      "label": "Libellé de la ligne de prix",
+      "default": "Prix"
+    },
+    {
+      "type": "text",
+      "id": "prix_attente",
+      "label": "Prix pas encore publié",
+      "default": "Bientôt"
+    },
+    {
+      "type": "textarea",
+      "id": "honnete",
+      "label": "Mise au point",
+      "default": "COULISSE 01 n’est pas un reformer : ni chariot, ni ressorts. Pour un reformer complet, voyez les Reformers Atelier."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ligne",
+      "name": "Ligne",
+      "settings": [
+        {
+          "type": "text",
+          "id": "libelle",
+          "label": "Critère",
+          "default": "Ce que c’est"
+        },
+        {
+          "type": "text",
+          "id": "essentiels",
+          "label": "Colonne 1"
+        },
+        {
+          "type": "text",
+          "id": "coulisse",
+          "label": "Colonne 2"
+        },
+        {
+          "type": "text",
+          "id": "atelier",
+          "label": "Colonne 3"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparatif des familles",
+      "blocks": [
+        {
+          "type": "ligne"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  }
+}
+{% endschema %}

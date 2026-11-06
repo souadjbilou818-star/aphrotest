@@ -1,0 +1,64 @@
+{% doc %}
+  Choix des variantes, une liste de boutons radio par option du produit.
+  Le composant <aplomb-variantes> retrouve la variante correspondante et met
+  à jour le prix, la disponibilité, les formulaires d’achat et l’adresse.
+  Pour un produit à une seule option, chaque choix affiche son prix et, s’il
+  est rempli, le metafield de variante aplomb.contenu (ce que contient l’édition).
+
+  @param {object} product - le produit
+  @param {string} uid - identifiant unique (section.id)
+{% enddoc %}
+{%- unless product.has_only_default_variant -%}
+  <aplomb-variantes class="variantes" data-uid="{{ uid }}">
+    {%- for option in product.options_with_values -%}
+      <fieldset class="options">
+        <legend class="label">{{ option.name }}</legend>
+        <div class="options__liste">
+          {%- for valeur in option.values -%}
+            {%- liquid
+              assign nom = valeur.name | default: valeur
+              assign v_seule = nil
+              if product.options.size == 1
+                for v in product.variants
+                  if v.option1 == nom
+                    assign v_seule = v
+                  endif
+                endfor
+              endif
+            -%}
+            <label class="option">
+              <input
+                type="radio"
+                name="option{{ option.position }}-{{ uid }}"
+                value="{{ nom | escape }}"
+                data-position="{{ option.position }}"
+                {% if option.selected_value == nom %}
+                  checked
+                {% endif %}
+              >
+              <span class="option__nom">{{ nom }}</span>
+              {%- if v_seule -%}
+                <span class="option__prix">{% render 'prix', montant: v_seule.price %}</span>
+                {%- if v_seule.metafields.aplomb.contenu != blank -%}
+                  <span class="option__contenu">{{ v_seule.metafields.aplomb.contenu }}</span>
+                {%- endif -%}
+                {%- unless v_seule.available -%}
+                  <span class="option__etat">{{ 'aplomb.produit.dispo_epuise' | t }}</span>
+                {%- endunless -%}
+              {%- endif -%}
+            </label>
+          {%- endfor -%}
+        </div>
+      </fieldset>
+    {%- endfor -%}
+    <script type="application/json" data-variantes>
+      [
+        {%- for v in product.variants -%}
+          {%- capture prix_v -%}{% render 'prix', montant: v.price %}{%- endcapture -%}
+          {"id":{{ v.id }},"titre":{{ v.title | json }},"options":{{ v.options | json }},"disponible":{{ v.available | json }},"prix":{{ prix_v | json }}}
+          {%- unless forloop.last %},{% endunless -%}
+        {%- endfor -%}
+      ]
+    </script>
+  </aplomb-variantes>
+{%- endunless -%}

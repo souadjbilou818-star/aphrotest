@@ -1,0 +1,178 @@
+{%- liquid
+  assign produit = section.settings.produit | default: settings.produit_principal
+  assign titre_id = 'titre-' | append: section.id
+  assign points = section.blocks | where: 'type', 'point'
+  assign mf = produit.metafields.aplomb
+  if produit != blank
+    assign titre = section.settings.titre | default: produit.title
+    capture prix
+      render 'prix', montant: produit.price_min
+    endcapture
+  else
+    assign titre = section.settings.titre | default: 'COULISSE 01'
+  endif
+-%}
+<section class="wrap vedette" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+  <div class="vedette__visuel">
+    {%- if section.settings.image != blank -%}
+      {% render 'cadre',
+        image: section.settings.image,
+        ratio: '4/3',
+        legende: section.settings.legende,
+        generee: section.settings.image_generee,
+        sizes: '(min-width: 1000px) 56vw, 100vw'
+      %}
+    {%- else -%}
+      {% render 'dessin-coulisse', detail: 'full', timeline: 'view', product: produit, uid: section.id %}
+      <ol class="nomenclature">
+        {%- assign noms = section.settings.nomenclature | newline_to_br | split: '<br />' -%}
+        {%- for nom in noms -%}
+          {%- assign nom_propre = nom | strip -%}
+          {%- if nom_propre != blank -%}
+            <li><span class="bulle">{{ forloop.index }}</span>{{ nom_propre }}</li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+  </div>
+
+  <div class="vedette__texte">
+    {%- if section.settings.surtitre != blank -%}
+      <p class="label soft">{{ section.settings.surtitre }}</p>
+    {%- endif -%}
+    <h2 class="vedette__titre" id="{{ titre_id }}">{{ titre }}</h2>
+    {%- if section.settings.texte != blank -%}
+      <div class="vedette__lead rte">{{ section.settings.texte }}</div>
+    {%- endif -%}
+
+    {%- if points.size > 0 -%}
+      <ul class="preuves">
+        {%- for block in points -%}
+          <li {{ block.shopify_attributes }}>{{ block.settings.texte }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if mf.longueur_mm != blank or mf.largeur_mm != blank or mf.longueur_plie_mm != blank -%}
+      <dl class="cotes-liste">
+        {%- if mf.longueur_mm != blank -%}<div><dt>A · longueur dépliée</dt><dd>{{ mf.longueur_mm }} mm</dd></div>{%- endif -%}
+        {%- if mf.largeur_mm != blank -%}<div><dt>B · largeur</dt><dd>{{ mf.largeur_mm }} mm</dd></div>{%- endif -%}
+        {%- if mf.course_mm != blank -%}<div><dt>C · course d’un plateau</dt><dd>{{ mf.course_mm }} mm</dd></div>{%- endif -%}
+        {%- if mf.longueur_plie_mm != blank -%}<div><dt>D · longueur pliée</dt><dd>{{ mf.longueur_plie_mm }} mm</dd></div>{%- endif -%}
+        {%- if mf.hauteur_mm != blank -%}<div><dt>E · hauteur</dt><dd>{{ mf.hauteur_mm }} mm</dd></div>{%- endif -%}
+      </dl>
+    {%- endif -%}
+
+    <div class="vedette__achat">
+      {%- if produit != blank -%}
+        <p class="vedette__prix">
+          {%- if produit.price_varies -%}
+            {{ 'aplomb.produit.des' | t: prix: prix }}
+          {%- else -%}
+            {{ prix }}
+          {%- endif %}
+          <small>{{ 'aplomb.produit.ttc' | t }}</small>
+        </p>
+        {% render 'achat', product: produit, contexte: 'vedette', compact: true %}
+        <a class="lien" href="{{ produit.url }}">{{ 'aplomb.produit.voir' | t: titre: produit.title }}</a>
+      {%- else -%}
+        {% render 'waitlist-form', contexte: 'vedette', tags: section.settings.tag_attente, bouton_court: true %}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Produit vedette",
+  "tag": "div",
+  "class": "section-vedette",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "coulisse"
+    },
+    {
+      "type": "product",
+      "id": "produit",
+      "label": "Produit",
+      "info": "Vide : le produit principal des réglages du thème."
+    },
+    {
+      "type": "text",
+      "id": "surtitre",
+      "label": "Surtitre",
+      "default": "02 — Coulisse · le produit phare"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "info": "Vide : le nom du produit."
+    },
+    {
+      "type": "richtext",
+      "id": "texte",
+      "label": "Texte",
+      "default": "<p>Une planche compacte, pliable en son milieu. Sur chaque moitié, un plateau rembourré coulisse sur ses rails, indépendamment de l’autre : écarts, fentes, gainage en glissé. Des cordons à poignées s’accrochent aux extrémités pour le haut du corps.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "nomenclature",
+      "label": "Nomenclature du dessin (une ligne par repère)",
+      "default": "Plateau coulissant gauche\nPlateau coulissant droit\nRails intégrés\nCharnière de pliage\nCordons de résistance\nPoignées\nPatins antidérapants"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Photo du produit (remplace le dessin)",
+      "info": "Uniquement une vraie photo de COULISSE 01, ou une image générée fidèle et signalée."
+    },
+    {
+      "type": "checkbox",
+      "id": "image_generee",
+      "label": "Photo générée par IA (affiche la mention)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "legende",
+      "label": "Légende de la photo"
+    },
+    {
+      "type": "text",
+      "id": "tag_attente",
+      "label": "Tag de liste d’attente (produit pas encore en ligne)",
+      "default": "coulisse-01"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Fait vérifiable",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "texte",
+          "label": "Texte",
+          "default": "Deux plateaux rembourrés, indépendants"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Produit vedette"
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  }
+}
+{% endschema %}
