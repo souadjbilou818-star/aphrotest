@@ -1,0 +1,41 @@
+{%- assign titre_id = 'titre-' | append: section.id -%}
+<section class="wrap grid acte acte--serre" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+  {% render 'acte-tete', titre: section.settings.titre, intro: section.settings.intro, id: titre_id %}
+  <div class="acte__corps">
+    <div class="rappel__cta">
+      {% render 'cta', contexte: 'rappel', product: settings.produit_principal %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rappel liste d’attente",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "rappel"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "La liste d’attente est ouverte."
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Texte",
+      "default": "Nous vous écrivons à l’ouverture des réservations, et pas avant."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rappel liste d’attente"
+    }
+  ]
+}
+{% endschema %}

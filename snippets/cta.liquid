@@ -1,0 +1,55 @@
+{% doc %}
+  Appel à l’action selon le réglage de thème launch_mode.
+  - waitlist : formulaire de liste d’attente (ou lien vers le formulaire)
+  - reservation : ajoute le produit « Réservation prioritaire » au panier
+  - vente : ajoute l’édition choisie au panier (fiche produit) ou mène à la fiche
+
+  @param {string} contexte - 'hero', 'produit', 'collant' ou 'rappel'
+  @param {object} [product] - produit principal
+  @param {object} [variant] - édition sélectionnée (fiche produit)
+{% enddoc %}
+{%- liquid
+  assign mode = settings.launch_mode
+  assign resa = settings.produit_reservation
+  assign form_id = 'achat-' | append: contexte
+-%}
+{%- case mode -%}
+  {%- when 'reservation' -%}
+    {%- if resa != blank and resa.available -%}
+      {%- capture prix_resa -%}{% render 'prix', montant: resa.price %}{%- endcapture -%}
+      {%- form 'product', resa, id: form_id, class: 'achat__cta' -%}
+        <input type="hidden" name="id" value="{{ resa.selected_or_first_available_variant.id }}">
+        <button class="btn btn--plein" type="submit" name="add">{{ 'aplomb.reservation.cta' | t: prix: prix_resa }}</button>
+        {%- unless contexte == 'collant' -%}
+          <p class="mention">{{ 'aplomb.reservation.mention' | t }}</p>
+        {%- endunless -%}
+      {%- endform -%}
+    {%- else -%}
+      <p class="mention">{{ 'aplomb.reservation.indisponible' | t }}</p>
+    {%- endif -%}
+  {%- when 'vente' -%}
+    {%- if contexte == 'produit' or contexte == 'collant' -%}
+      {%- capture prix_variant -%}{% render 'prix', montant: variant.price %}{%- endcapture -%}
+      {%- form 'product', product, id: form_id, class: 'achat__cta' -%}
+        <input type="hidden" name="id" value="{{ variant.id }}" data-variant-input>
+        <button class="btn btn--plein" type="submit" name="add" data-cta-vente {% unless variant.available %}disabled{% endunless %}>
+          {%- if variant.available -%}
+            {{ 'aplomb.vente.cta' | t: prix: prix_variant }}
+          {%- else -%}
+            {{ 'aplomb.vente.epuise' | t }}
+          {%- endif -%}
+        </button>
+        {%- unless contexte == 'collant' -%}
+          <p class="mention">{{ settings.mention_vente }} · {{ settings.date_expedition }}</p>
+        {%- endunless -%}
+      {%- endform -%}
+    {%- else -%}
+      <a class="btn btn--plein" href="{{ product.url | default: routes.all_products_collection_url }}">{{ 'aplomb.produit.choisir' | t }}</a>
+    {%- endif -%}
+  {%- else -%}
+    {%- if contexte == 'collant' -%}
+      <a class="btn btn--sm" href="#liste-produit-email">{{ 'aplomb.waitlist.cta_court' | t }}</a>
+    {%- else -%}
+      {% render 'waitlist-form', contexte: contexte %}
+    {%- endif -%}
+{%- endcase -%}

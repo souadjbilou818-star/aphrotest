@@ -1,0 +1,8 @@
+{
+  "name": "aplomb-apercu",
+  "private": true,
+  "description": "Rendu local approximatif du thème (LiquidJS + objets Shopify simulés), pour les captures de contrôle.",
+  "dependencies": {
+    "liquidjs": "10.16.7"
+  }
+}

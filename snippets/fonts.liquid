@@ -1,0 +1,41 @@
+{% doc %}
+  Polices auto-hébergées (assets/, sous-ensemble latin, OFL) et variables de
+  titre. Aucune police chargée depuis un CDN tiers.
+  U+202F (espace fine insécable) est fournie par espace-fine.woff2, déclarée en
+  dernier pour chaque famille.
+{% enddoc %}
+{%- liquid
+  if settings.police_titres == 'bodoni'
+    assign titres = 'Bodoni Moda'
+    assign titres_fichier = 'bodoni-moda'
+    assign titres_poids = '400 900'
+    assign titres_pile = '"Bodoni Moda", "Bodoni 72", Didot, "Times New Roman", serif'
+    assign titres_graisse = 400
+    assign titres_k = 1
+  else
+    assign titres = 'Cormorant Garamond'
+    assign titres_fichier = 'cormorant-garamond'
+    assign titres_poids = '300 700'
+    assign titres_pile = '"Cormorant Garamond", Garamond, "Times New Roman", serif'
+    assign titres_graisse = 500
+    assign titres_k = 1.1
+  endif
+  assign fichier_romain = titres_fichier | append: '.woff2'
+  assign fichier_italique = titres_fichier | append: '-italic.woff2'
+-%}
+{{ fichier_romain | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+{{ fichier_italique | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+{{ 'hanken-grotesk.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+<style>
+  @font-face { font-family: "{{ titres }}"; src: url({{ fichier_romain | asset_url }}) format("woff2"); font-weight: {{ titres_poids }}; font-style: normal; font-display: swap; }
+  @font-face { font-family: "{{ titres }}"; src: url({{ fichier_italique | asset_url }}) format("woff2"); font-weight: {{ titres_poids }}; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Hanken Grotesk"; src: url({{ 'hanken-grotesk.woff2' | asset_url }}) format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Hanken Grotesk"; src: url({{ 'hanken-grotesk-italic.woff2' | asset_url }}) format("woff2"); font-weight: 100 900; font-style: italic; font-display: swap; }
+  @font-face { font-family: "IBM Plex Mono"; src: url({{ 'ibm-plex-mono.woff2' | asset_url }}) format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: "{{ titres }}"; src: url({{ 'espace-fine.woff2' | asset_url }}) format("woff2"); unicode-range: U+202F; font-weight: {{ titres_poids }}; font-style: normal; }
+  @font-face { font-family: "{{ titres }}"; src: url({{ 'espace-fine.woff2' | asset_url }}) format("woff2"); unicode-range: U+202F; font-weight: {{ titres_poids }}; font-style: italic; }
+  @font-face { font-family: "Hanken Grotesk"; src: url({{ 'espace-fine.woff2' | asset_url }}) format("woff2"); unicode-range: U+202F; font-weight: 100 900; font-style: normal; }
+  @font-face { font-family: "Hanken Grotesk"; src: url({{ 'espace-fine.woff2' | asset_url }}) format("woff2"); unicode-range: U+202F; font-weight: 100 900; font-style: italic; }
+  @font-face { font-family: "IBM Plex Mono"; src: url({{ 'espace-fine.woff2' | asset_url }}) format("woff2"); unicode-range: U+202F; font-weight: 400; font-style: normal; }
+  :root { --serif: {{ titres_pile }}; --serif-w: {{ titres_graisse }}; --serif-k: {{ titres_k }}; }
+</style>

@@ -1,0 +1,182 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign cadres = section.blocks | where: 'type', 'cadre'
+-%}
+<section class="wrap grid acte" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+  {% render 'acte-tete',
+    num: section.settings.num,
+    titre: section.settings.titre,
+    intro: section.settings.intro,
+    folio: section.settings.folio,
+    id: titre_id
+  %}
+  <div class="acte__corps">
+    {%- if section.settings.texte != blank -%}
+      <div class="maison__texte rte">{{ section.settings.texte }}</div>
+    {%- endif -%}
+    {%- if section.settings.transparence != blank -%}
+      <p class="maison__transparence">{{ section.settings.transparence }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.soir_titre != blank or cadres.size > 0 -%}
+      <div class="soir on-dark">
+        {%- if section.settings.soir_label != blank -%}
+          <p class="label">{{ section.settings.soir_label }}</p>
+        {%- endif -%}
+        {%- if section.settings.soir_titre != blank -%}
+          <p class="soir__titre">
+            {{- section.settings.soir_titre -}}
+            {%- if section.settings.soir_titre_2 != blank %} <span>{{ section.settings.soir_titre_2 }}</span>{% endif -%}
+          </p>
+        {%- endif -%}
+        {%- if cadres.size > 0 -%}
+          <div class="cadres{% if cadres.size > 1 %} cadres--2{% endif %}">
+            {%- for block in cadres -%}
+              <div {{ block.shopify_attributes }}>
+                {% render 'cadre',
+                  image: block.settings.image,
+                  ratio: block.settings.ratio,
+                  plan: block.settings.plan,
+                  legende: block.settings.legende,
+                  didascalie: block.settings.didascalie,
+                  generee: block.settings.generee,
+                  sizes: '(min-width: 1000px) 45vw, 100vw'
+                %}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Acte : la maison",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "maison"
+    },
+    {
+      "type": "text",
+      "id": "num",
+      "label": "Numéro d’acte",
+      "default": "IV."
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "La maison"
+    },
+    {
+      "type": "text",
+      "id": "folio",
+      "label": "Folio",
+      "default": "6"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction"
+    },
+    {
+      "type": "richtext",
+      "id": "texte",
+      "label": "Histoire",
+      "default": "<p>L’Aplomb est né à Paris d’un constat simple : le reformer a changé notre façon de bouger, mais il ne tient ni dans un budget ni dans un deux-pièces. Nous avons gardé l’essentiel, un chariot qui glisse sur des rails, et retiré le reste. Pour pratiquer avec justesse, chez soi, avec aplomb.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "transparence",
+      "label": "Transparence",
+      "default": "Sélectionné et contrôlé à Paris, fabriqué par une usine partenaire. Le nom et l’adresse du fabricant figurent sur la page Sécurité produit."
+    },
+    {
+      "type": "text",
+      "id": "soir_label",
+      "label": "Bandeau du soir : mention",
+      "default": "La maison, le soir"
+    },
+    {
+      "type": "text",
+      "id": "soir_titre",
+      "label": "Bandeau du soir : ligne 1 (italique)",
+      "default": "L’élégance publique."
+    },
+    {
+      "type": "text",
+      "id": "soir_titre_2",
+      "label": "Bandeau du soir : ligne 2 (romain)",
+      "default": "La discipline privée."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "cadre",
+      "name": "Cadre photo",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "checkbox",
+          "id": "generee",
+          "label": "Image générée par IA (affiche le crédit)",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "ratio",
+          "label": "Format",
+          "options": [
+            {
+              "value": "3/2",
+              "label": "3:2"
+            },
+            {
+              "value": "4/5",
+              "label": "4:5"
+            },
+            {
+              "value": "1/1",
+              "label": "1:1"
+            }
+          ],
+          "default": "3/2"
+        },
+        {
+          "type": "text",
+          "id": "plan",
+          "label": "Numéro du plan",
+          "default": "09"
+        },
+        {
+          "type": "text",
+          "id": "legende",
+          "label": "Légende",
+          "default": "l’élégance publique, une soirée, de dos"
+        },
+        {
+          "type": "textarea",
+          "id": "didascalie",
+          "label": "Didascalie (sans image)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Acte : la maison"
+    }
+  ]
+}
+{% endschema %}

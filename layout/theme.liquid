@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    {% render 'meta-tags' %}
+    {% render 'fonts' %}
+    {{ 'aplomb.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'aplomb.js' | asset_url }}" defer></script>
+    <script src="{{ 'aplomb-dessin.js' | asset_url }}" defer></script>
+    {{ content_for_header }}
+  </head>
+
+  <body class="gabarit-{{ template.name }}" data-mode="{{ settings.launch_mode }}">
+    <a class="skip" href="#contenu">{{ 'aplomb.skip' | t }}</a>
+    {% sections 'header-group' %}
+
+    <main id="contenu" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+  </body>
+</html>

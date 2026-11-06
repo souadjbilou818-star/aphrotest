@@ -79,7 +79,11 @@ def fix_html(src: str) -> str:
             elif re.match(r"\{%-?\s*(schema|javascript|stylesheet|raw)\b", low):
                 skip = "raw"
             if tok.startswith("<") and not tok.startswith("<!--"):
-                tok = ATTR_RE.sub(lambda m: m.group(1) + fix_text(m.group(2)) + m.group(3), tok)
+                tok = ATTR_RE.sub(
+                    lambda m: m.group(0) if ("{{" in m.group(2) or "{%" in m.group(2))
+                    else m.group(1) + fix_text(m.group(2)) + m.group(3),
+                    tok,
+                )
             out.append(tok)
         else:
             out.append(tok if skip else fix_text(tok))

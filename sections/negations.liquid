@@ -1,0 +1,86 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign items = section.blocks | where: 'type', 'negation'
+-%}
+<section class="wrap grid acte acte--serre" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+  {% render 'acte-tete', num: section.settings.num, titre: section.settings.titre, intro: section.settings.intro, folio: section.settings.folio, id: titre_id %}
+  <div class="acte__corps">
+    {%- if section.settings.honnete != blank -%}
+      <p class="honnete">{{ section.settings.honnete }}</p>
+    {%- endif -%}
+    <ul class="negations">
+      {%- for block in items -%}
+        <li {{ block.shopify_attributes }}>
+          <p class="negations__non">{{ block.settings.non }}</p>
+          <p class="soft">{{ block.settings.explication }}</p>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ce que ce n’est pas",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "honnetete"
+    },
+    {
+      "type": "text",
+      "id": "num",
+      "label": "Numéro d’acte"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "Ce que ce n’est pas"
+    },
+    {
+      "type": "text",
+      "id": "folio",
+      "label": "Folio"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction"
+    },
+    {
+      "type": "textarea",
+      "id": "honnete",
+      "label": "Phrase d’honnêteté",
+      "default": "Un vrai chariot sur rails, avec des élastiques plutôt que des ressorts de studio."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "negation",
+      "name": "Ce n’est pas…",
+      "settings": [
+        {
+          "type": "text",
+          "id": "non",
+          "label": "Ce que ce n’est pas",
+          "default": "Pas de ressorts"
+        },
+        {
+          "type": "textarea",
+          "id": "explication",
+          "label": "Explication"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ce que ce n’est pas"
+    }
+  ]
+}
+{% endschema %}

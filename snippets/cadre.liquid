@@ -1,0 +1,56 @@
+{% doc %}
+  Cadre photo à ratio fixe. Sans image, il affiche la didascalie du plan sur
+  fond pierre (photo à venir). Avec image : srcset, chargement différé,
+  légende en petites capitales et crédit « Image générée » si coché.
+
+  @param {image} [image] - image choisie (image_picker)
+  @param {object} [video] - vidéo (réglage video) : prioritaire sur l’image
+  @param {string} [ratio] - ratio CSS, ex. '3/2', '4/5', '1/1', '16/9'
+  @param {string} [plan] - numéro du plan, ex. '01'
+  @param {string} [legende] - légende sous le cadre
+  @param {string} [didascalie] - indication de prise de vue, affichée sans image
+  @param {boolean} [generee] - image générée : ajoute le crédit
+  @param {boolean} [son] - vidéo avec son réel : pictogramme dans le cadre vide
+  @param {boolean} [prioritaire] - image du premier écran : chargement immédiat
+  @param {string} [sizes] - attribut sizes
+  @param {string} [class] - classe CSS de la figure
+{% enddoc %}
+{%- liquid
+  assign ratio = ratio | default: '3/2'
+  assign sizes = sizes | default: '(min-width: 1000px) 50vw, 100vw'
+  assign ratio_txt = ratio | replace: '/', ':'
+-%}
+<figure class="cadre {{ class }}">
+  {%- if video != blank -%}
+    <div class="cadre__zone cadre__zone--image" style="--ratio: {{ ratio }}">
+      {{ video | video_tag: controls: true, playsinline: true, preload: 'none', image_size: '1600x' }}
+    </div>
+  {%- elsif image != blank -%}
+    <div class="cadre__zone cadre__zone--image" style="--ratio: {{ ratio }}">
+      {%- if prioritaire -%}
+        {{ image | image_url: width: 2400 | image_tag: widths: '480, 720, 960, 1280, 1600, 2000, 2400', sizes: sizes, loading: 'eager', fetchpriority: 'high', alt: image.alt }}
+      {%- else -%}
+        {{ image | image_url: width: 2400 | image_tag: widths: '480, 720, 960, 1280, 1600, 2000, 2400', sizes: sizes, loading: 'lazy', alt: image.alt }}
+      {%- endif -%}
+    </div>
+  {%- else -%}
+    <div class="cadre__zone" style="--ratio: {{ ratio }}">
+      {%- if son -%}
+        <span class="cadre__son"><svg viewBox="0 0 28 28" aria-hidden="true" focusable="false"><circle cx="14" cy="14" r="13.5" fill="none" stroke="currentColor"/><path d="M11 9l8 5-8 5z" fill="currentColor"/></svg>{{ 'aplomb.produit.video' | t }}</span>
+      {%- endif -%}
+      {%- if didascalie != blank -%}
+        <p class="cadre__didascalie">{{ didascalie }}</p>
+      {%- endif -%}
+      <span class="cadre__tech">{{ ratio_txt }} · {{ 'aplomb.cadre.attente' | t }}</span>
+    </div>
+  {%- endif -%}
+  {%- if plan != blank or legende != blank -%}
+    <figcaption class="cadre__legende">
+      {%- if plan != blank %}<b>Plan {{ plan }}</b> {% endif -%}
+      {%- if legende != blank %}<span>— {{ legende }}</span>{% endif -%}
+      {%- if generee and settings.credit_ia and image != blank -%}
+        <span class="credit">{{ 'aplomb.credit_ia' | t }}</span>
+      {%- endif -%}
+    </figcaption>
+  {%- endif -%}
+</figure>

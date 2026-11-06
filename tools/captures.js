@@ -26,6 +26,8 @@ const path = require('path');
     page.on('pageerror', (e) => errors.push(String(e)));
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
+    // les fondus d'entrée dépendent du défilement : on capture l'état final
+    await page.addStyleTag({ content: '.cadre__zone--image img,.acte__filet .filet{animation:none!important}' });
     await page.screenshot({ path: path.join(out, `${prefix}-${s.name}-ecran.png`) });
     // défilement complet : déclenche les images en chargement différé, puis retour en haut
     await page.evaluate(async () => {

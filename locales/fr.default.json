@@ -1,0 +1,103 @@
+{
+  "404": {
+    "title": "Page introuvable",
+    "not_found": "Cette page n’existe pas ou plus.",
+    "back_to_shopping": "Revenir à l’accueil"
+  },
+  "blog": {
+    "article_comments": "Commentaires",
+    "article_metadata_html": "{{ date }}, par {{ author }}",
+    "comment_form_body": "Commentaire",
+    "comment_form_email": "E-mail",
+    "comment_form_name": "Nom",
+    "comment_form_submit": "Publier",
+    "comment_form_title": "Laisser un commentaire"
+  },
+  "cart": {
+    "checkout": "Paiement",
+    "title": "Panier",
+    "update": "Mettre à jour",
+    "remove": "Retirer",
+    "empty": "Votre panier est vide."
+  },
+  "customers": {
+    "login": {
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "submit": "Se connecter",
+      "title": "Connexion"
+    }
+  },
+  "collections": {
+    "title": "Collections"
+  },
+  "gift_card": {
+    "add_to_apple_wallet": "Ajouter à Apple Wallet",
+    "card": "Carte cadeau",
+    "expired": "Cette carte cadeau a expiré",
+    "expires_on": "Expire le {{ expires_on }}",
+    "use_at_checkout": "Utilisez cette carte cadeau au moment du paiement"
+  },
+  "password": {
+    "title": "Bientôt",
+    "password": "Mot de passe",
+    "enter": "Entrer"
+  },
+  "search": {
+    "title": "Recherche",
+    "placeholder": "Rechercher une page ou un produit",
+    "submit": "Rechercher",
+    "no_results_html": "Aucun résultat pour {{ terms }}",
+    "results_for_html": "{{ count }} résultats pour {{ terms }}"
+  },
+  "aplomb": {
+    "skip": "Aller au contenu",
+    "menu": "Menu",
+    "fermer": "Fermer",
+    "au_programme": "Au programme",
+    "accueil": "L’Aplomb, accueil",
+    "waitlist": {
+      "label": "Votre adresse e-mail",
+      "placeholder": "prenom@exemple.fr",
+      "cta": "Rejoindre la liste d’attente",
+      "cta_court": "Liste d’attente",
+      "consentement_html": "En cliquant sur « Rejoindre la liste d’attente », vous acceptez de recevoir les e-mails de L’Aplomb sur le lancement. Désinscription en un clic, à tout moment. <a href=\"{{ url }}\">Politique de confidentialité</a>",
+      "succes": "C’est noté. Nous vous écrivons à l’ouverture, et pas avant.",
+      "erreur": "Vérifiez l’adresse e-mail : elle semble incomplète."
+    },
+    "reservation": {
+      "cta": "Réserver en priorité — {{ prix }}",
+      "mention": "Remboursable à tout moment, déduit du prix final.",
+      "indisponible": "La réservation ouvre bientôt."
+    },
+    "vente": {
+      "cta": "Ajouter au panier — {{ prix }}",
+      "epuise": "Épuisé pour le moment"
+    },
+    "produit": {
+      "edition": "Édition",
+      "ttc": "TTC",
+      "dans_le_coffret": "Dans le coffret",
+      "collant_label": "Commander le mini-reformer",
+      "video": "Vidéo · son réel",
+      "galerie": "Galerie",
+      "choisir": "Choisir mon édition"
+    },
+    "credit_ia": "Image générée",
+    "cadre": {
+      "attente": "Photo à venir"
+    },
+    "quiz": {
+      "commencer": "Commencer",
+      "suivant": "Question suivante",
+      "precedent": "Question précédente",
+      "resultat": "Votre édition",
+      "voir": "Voir l’édition {{ edition }}",
+      "recommencer": "Recommencer",
+      "email_label": "Recevoir ce résultat par e-mail (facultatif)",
+      "email_cta": "Envoyer",
+      "question": "Question {{ n }} sur {{ total }}",
+      "voir_resultat": "Voir mon résultat"
+    }
+  }
+}

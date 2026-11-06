@@ -1,0 +1,115 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign items = section.blocks | where: 'type', 'etape'
+-%}
+<section class="wrap grid acte acte--serre" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+  {% render 'acte-tete', num: section.settings.num, titre: section.settings.titre, intro: section.settings.intro, folio: section.settings.folio, id: titre_id %}
+  <div class="acte__corps">
+    <ol class="etapes">
+      {%- for block in items -%}
+        <li {{ block.shopify_attributes }}>
+          {% render 'cadre',
+            image: block.settings.image,
+            ratio: '4/5',
+            plan: block.settings.plan,
+            legende: block.settings.legende,
+            didascalie: block.settings.didascalie,
+            generee: block.settings.generee,
+            sizes: '(min-width: 860px) 30vw, 100vw'
+          %}
+          <span class="benefices__num">{{ forloop.index }} / {{ forloop.length }}</span>
+          <h3 class="etapes__titre">{{ block.settings.titre }}</h3>
+          <p>{{ block.settings.texte }}</p>
+        </li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Comment ça marche",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "comment"
+    },
+    {
+      "type": "text",
+      "id": "num",
+      "label": "Numéro d’acte"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "Comment ça marche"
+    },
+    {
+      "type": "text",
+      "id": "folio",
+      "label": "Folio"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "etape",
+      "name": "Étape",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "titre",
+          "label": "Titre",
+          "default": "Dépliez"
+        },
+        {
+          "type": "textarea",
+          "id": "texte",
+          "label": "Texte"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "checkbox",
+          "id": "generee",
+          "label": "Image générée par IA (affiche le crédit)",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "plan",
+          "label": "Numéro du plan",
+          "default": "04"
+        },
+        {
+          "type": "text",
+          "id": "legende",
+          "label": "Légende"
+        },
+        {
+          "type": "textarea",
+          "id": "didascalie",
+          "label": "Didascalie (sans image)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comment ça marche"
+    }
+  ]
+}
+{% endschema %}

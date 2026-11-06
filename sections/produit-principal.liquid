@@ -1,0 +1,310 @@
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign titre_id = 'titre-' | append: section.id
+  assign plans = section.blocks | where: 'type', 'plan'
+  assign preuves = section.blocks | where: 'type', 'preuve'
+  capture prix_variant
+    render 'prix', montant: variant.price
+  endcapture
+  assign libelle_vente = 'aplomb.vente.cta' | t: prix: '{prix}'
+-%}
+<section class="wrap grid produit" aria-labelledby="{{ titre_id }}">
+  <div class="produit__achat" id="achat">
+    {%- if section.settings.surtitre != blank -%}
+      <p class="label soft">{{ section.settings.surtitre }}</p>
+    {%- endif -%}
+    <h1 class="produit__titre" id="{{ titre_id }}">{{ product.title | escape | replace: 'mini-reformer', '<span class="nowrap">mini-reformer</span>' }}</h1>
+    {%- if section.settings.sous_titre != blank -%}
+      <p class="produit__sous-titre">{{ section.settings.sous_titre }}</p>
+    {%- endif -%}
+
+    {%- if product.has_only_default_variant -%}
+      <p class="edition__prix">{{ prix_variant }} <small>{{ 'aplomb.produit.ttc' | t }}</small></p>
+    {%- else -%}
+      <aplomb-editions data-libelle-vente="{{ libelle_vente | escape }}">
+        <fieldset class="editions">
+          <legend class="label">{{ 'aplomb.produit.edition' | t }}</legend>
+          {%- for v in product.variants -%}
+            {%- liquid
+              assign nom = v.title | downcase
+              if nom contains 'studio'
+                assign contenu = section.settings.contenu_studio
+              else
+                assign contenu = section.settings.contenu_essentiel
+              endif
+              capture prix_v
+                render 'prix', montant: v.price
+              endcapture
+            -%}
+            <label class="edition">
+              <input
+                type="radio"
+                name="edition-{{ section.id }}"
+                value="{{ v.id }}"
+                data-prix="{{ prix_v | escape }}"
+                data-nom="{{ v.title | escape }}"
+                data-disponible="{{ v.available }}"
+                {% if v.id == variant.id %}
+                  checked
+                {% endif %}
+              >
+              <span class="edition__nom">{{ v.title }}</span>
+              <span class="edition__prix">{{ prix_v }}<small>{{ 'aplomb.produit.ttc' | t }}</small></span>
+              {%- if contenu != blank -%}
+                <span class="edition__contenu">{{ contenu }}</span>
+              {%- endif -%}
+            </label>
+          {%- endfor -%}
+        </fieldset>
+      </aplomb-editions>
+    {%- endif -%}
+
+    {%- if section.settings.prix_studio != blank -%}
+      <p class="mention">{{ section.settings.prix_studio }}</p>
+    {%- endif -%}
+
+    <div data-cta-principal>
+      {% render 'cta', contexte: 'produit', product: product, variant: variant %}
+    </div>
+
+    {%- if preuves.size > 0 -%}
+      <ul class="preuves">
+        {%- for block in preuves -%}
+          <li {{ block.shopify_attributes }}>{{ block.settings.texte }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+
+  <div class="produit__visuel">
+    {%- if section.settings.image != blank -%}
+      {% render 'cadre',
+        image: section.settings.image,
+        ratio: '3/2',
+        plan: '01',
+        legende: section.settings.legende_image,
+        generee: section.settings.image_generee,
+        prioritaire: true,
+        sizes: '(min-width: 1000px) 58vw, 100vw'
+      %}
+    {%- else -%}
+      {% render 'dessin-reformer', detail: 'full', timeline: 'root', product: product, uid: section.id %}
+      {%- if section.settings.legende_dessin != blank -%}
+        <p class="legende">{{ section.settings.legende_dessin }}</p>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+
+  {%- if plans.size > 0 -%}
+    <div class="sous produit__galerie">
+      <p class="sous__titre">{{ 'aplomb.produit.galerie' | t }}</p>
+      <div class="galerie">
+        {%- for block in plans -%}
+          {%- liquid
+            assign classe = ''
+            if block.settings.taille == 'large'
+              assign classe = 'cadre--large'
+            elsif block.settings.taille == 'tiers'
+              assign classe = 'cadre--tiers'
+            endif
+          -%}
+          <div class="cadre {{ classe }}" {{ block.shopify_attributes }}>
+            {% render 'cadre',
+              image: block.settings.image,
+              video: block.settings.video,
+              son: block.settings.son,
+              ratio: block.settings.ratio,
+              plan: block.settings.plan,
+              legende: block.settings.legende,
+              didascalie: block.settings.didascalie,
+              generee: block.settings.generee,
+              sizes: '(min-width: 1000px) 50vw, 100vw'
+            %}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+<aplomb-collant class="collant" data-cible="[data-cta-principal]" aria-hidden="true" inert>
+  <span class="collant__produit">
+    <b data-collant-nom>{{ product.title }}{% unless product.has_only_default_variant %} · {{ variant.title }}{% endunless %}</b>
+    <span data-collant-prix>{{ prix_variant }} {{ 'aplomb.produit.ttc' | t }}</span>
+  </span>
+  {% render 'cta', contexte: 'collant', product: product, variant: variant %}
+</aplomb-collant>
+
+{% schema %}
+{
+  "name": "Fiche produit",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "surtitre",
+      "label": "Surtitre",
+      "default": "Pré-lancement · Paris"
+    },
+    {
+      "type": "textarea",
+      "id": "sous_titre",
+      "label": "Sous-titre",
+      "default": "Plateau bois, rails acier, chariot sur roues silencieuses. Se range debout derrière une porte."
+    },
+    {
+      "type": "textarea",
+      "id": "contenu_essentiel",
+      "label": "Contenu de l’édition Essentiel",
+      "default": "Le board, 4 élastiques, les poignées, le programme « 28 jours d’aplomb »."
+    },
+    {
+      "type": "textarea",
+      "id": "contenu_studio",
+      "label": "Contenu de l’édition Studio",
+      "default": "L’Essentiel, plus chaussettes grip, housse en toile avec sangle de rangement, 4 patins feutre, 1 bande forte, programme 8 semaines."
+    },
+    {
+      "type": "textarea",
+      "id": "prix_studio",
+      "label": "Comparaison avec le studio",
+      "default": "Une séance de reformer à Paris coûte 25 à 45 €. L’Aplomb, c’est le prix de quatre séances."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Photo principale (remplace le dessin)",
+      "info": "Plan 01 : le mini-reformer sur parquet, plongée à 45°."
+    },
+    {
+      "type": "checkbox",
+      "id": "image_generee",
+      "label": "Photo générée par IA (affiche le crédit)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "legende_image",
+      "label": "Légende de la photo",
+      "default": "le mini-reformer sur parquet, plongée à 45°"
+    },
+    {
+      "type": "text",
+      "id": "legende_dessin",
+      "label": "Légende du dessin",
+      "default": "Planche 01 — vue de dessus et élévation. Les cotes s’affichent quand la fiche technique est remplie."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "preuve",
+      "name": "Micro-preuve",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "texte",
+          "label": "Texte",
+          "default": "Un vrai chariot sur rails acier"
+        }
+      ]
+    },
+    {
+      "type": "plan",
+      "name": "Plan de la galerie",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Vidéo (prioritaire sur l’image)"
+        },
+        {
+          "type": "checkbox",
+          "id": "son",
+          "label": "Vidéo avec son réel",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "generee",
+          "label": "Image générée par IA (affiche le crédit)",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "ratio",
+          "label": "Format",
+          "options": [
+            {
+              "value": "3/2",
+              "label": "3:2"
+            },
+            {
+              "value": "4/5",
+              "label": "4:5"
+            },
+            {
+              "value": "1/1",
+              "label": "1:1"
+            },
+            {
+              "value": "16/9",
+              "label": "16:9"
+            }
+          ],
+          "default": "3/2"
+        },
+        {
+          "type": "select",
+          "id": "taille",
+          "label": "Largeur (ordinateur)",
+          "options": [
+            {
+              "value": "large",
+              "label": "Pleine largeur"
+            },
+            {
+              "value": "moitie",
+              "label": "Moitié"
+            },
+            {
+              "value": "tiers",
+              "label": "Tiers"
+            }
+          ],
+          "default": "moitie"
+        },
+        {
+          "type": "text",
+          "id": "plan",
+          "label": "Numéro du plan",
+          "default": "02"
+        },
+        {
+          "type": "text",
+          "id": "legende",
+          "label": "Légende",
+          "default": "rails et roues, en macro"
+        },
+        {
+          "type": "textarea",
+          "id": "didascalie",
+          "label": "Didascalie (sans image)"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  }
+}
+{% endschema %}

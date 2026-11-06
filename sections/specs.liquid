@@ -1,0 +1,108 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign mf = product.metafields.aplomb
+  assign cles = 'dimensions_deplie,dimensions_plie,poids,charge_max,materiaux,resistance_elastiques,contenu_coffret' | split: ','
+  assign libelles = 'Dimensions déplié|Dimensions plié|Poids|Charge maximale testée|Matériaux|Résistance par élastique|Contenu du coffret' | split: '|'
+  assign remplis = 0
+  for cle in cles
+    if mf[cle] != blank
+      assign remplis = remplis | plus: 1
+    endif
+  endfor
+  assign distribution = section.blocks | where: 'type', 'role'
+-%}
+<section class="wrap grid acte acte--serre" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+  {% render 'acte-tete', num: section.settings.num, titre: section.settings.titre, intro: section.settings.intro, folio: section.settings.folio, id: titre_id %}
+  <div class="acte__corps">
+    {%- if distribution.size > 0 -%}
+      <ul class="distribution">
+        {%- for block in distribution -%}
+          <li {{ block.shopify_attributes }}>
+            <span class="distribution__role">{{ block.settings.role }}</span>
+            <span class="distribution__nom">{{ block.settings.nom }}</span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if remplis > 0 -%}
+      <table class="specs">
+        <caption class="visually-hidden">{{ section.settings.titre }}</caption>
+        <tbody>
+          {%- for cle in cles -%}
+            {%- if mf[cle] != blank -%}
+              <tr>
+                <th scope="row">{{ libelles[forloop.index0] }}</th>
+                <td>{{ mf[cle].value | escape | newline_to_br }}</td>
+              </tr>
+            {%- endif -%}
+          {%- endfor -%}
+        </tbody>
+      </table>
+    {%- elsif request.design_mode -%}
+      <p class="note-edition">Visible dans l’éditeur seulement : remplissez les metafields aplomb.* du produit (dimensions, poids, charge testée, matériaux, résistance, coffret). Une ligne vide ne s’affiche jamais.</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Fiche technique",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "fiche-technique"
+    },
+    {
+      "type": "text",
+      "id": "num",
+      "label": "Numéro d’acte"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "Fiche technique"
+    },
+    {
+      "type": "text",
+      "id": "folio",
+      "label": "Folio"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "Les mesures s’affichent dès qu’elles sont vérifiées. Aucun chiffre n’est publié avant."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "role",
+      "name": "Ligne de distribution",
+      "settings": [
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Pièce",
+          "default": "Plateau"
+        },
+        {
+          "type": "text",
+          "id": "nom",
+          "label": "Matière ou fait",
+          "default": "bois"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fiche technique"
+    }
+  ]
+}
+{% endschema %}

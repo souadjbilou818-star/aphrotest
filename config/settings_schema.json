@@ -1,0 +1,99 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "L’Aplomb",
+    "theme_version": "0.2.0",
+    "theme_author": "L’Aplomb, d’après Skeleton (Shopify)",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://support.shopify.com/"
+  },
+  {
+    "name": "Lancement",
+    "settings": [
+      {
+        "type": "select",
+        "id": "launch_mode",
+        "label": "Mode de lancement",
+        "info": "Change tous les appels à l’action du site.",
+        "options": [
+          {
+            "value": "waitlist",
+            "label": "Liste d’attente"
+          },
+          {
+            "value": "reservation",
+            "label": "Réservation prioritaire"
+          },
+          {
+            "value": "vente",
+            "label": "Vente"
+          }
+        ],
+        "default": "waitlist"
+      },
+      {
+        "type": "product",
+        "id": "produit_principal",
+        "label": "Produit principal",
+        "info": "Le mini-reformer. Utilisé par les boutons de l’accueil et par le quiz."
+      },
+      {
+        "type": "product",
+        "id": "produit_reservation",
+        "label": "Produit « Réservation prioritaire »",
+        "info": "Ajouté au panier en mode Réservation."
+      },
+      {
+        "type": "text",
+        "id": "date_expedition",
+        "label": "Date d’expédition annoncée",
+        "default": "[DATE D’EXPÉDITION]"
+      },
+      {
+        "type": "text",
+        "id": "mention_vente",
+        "label": "Mention en mode Vente",
+        "default": "Expédié depuis la France"
+      }
+    ]
+  },
+  {
+    "name": "Marque",
+    "settings": [
+      {
+        "type": "select",
+        "id": "police_titres",
+        "label": "Police des titres",
+        "options": [
+          {
+            "value": "cormorant",
+            "label": "Cormorant Garamond (garalde)"
+          },
+          {
+            "value": "bodoni",
+            "label": "Bodoni Moda (didone)"
+          }
+        ],
+        "default": "cormorant"
+      },
+      {
+        "type": "text",
+        "id": "devise",
+        "label": "Devise",
+        "default": "Pilates, avec aplomb."
+      },
+      {
+        "type": "text",
+        "id": "signature",
+        "label": "Signature du logo",
+        "default": "Pilates à domicile"
+      },
+      {
+        "type": "checkbox",
+        "id": "credit_ia",
+        "label": "Afficher « Image générée » sous les images marquées comme générées",
+        "default": true
+      }
+    ]
+  }
+]

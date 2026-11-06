@@ -1,0 +1,95 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign items = section.blocks | where: 'type', 'temoignage'
+-%}
+{%- comment -%} Section masquée tant qu’aucun témoignage réel n’est saisi. {%- endcomment -%}
+{%- if items.size > 0 -%}
+  <section class="wrap grid acte acte--serre" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+    {% render 'acte-tete', num: section.settings.num, titre: section.settings.titre, intro: section.settings.intro, folio: section.settings.folio, id: titre_id %}
+    <div class="acte__corps">
+      <ul class="temoignages">
+        {%- for block in items -%}
+          <li {{ block.shopify_attributes }}>
+            <figure class="temoignage">
+              <blockquote>{{ block.settings.citation }}</blockquote>
+              <figcaption>{{ block.settings.nom }}{% if block.settings.ville != blank %}, {{ block.settings.ville }}{% endif %} · {{ block.settings.mention }}</figcaption>
+            </figure>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </section>
+{%- elsif request.design_mode -%}
+  <div class="wrap"><p class="note-edition">Visible dans l’éditeur seulement : cette section reste masquée tant qu’aucun témoignage de bêta-testeuse réelle n’est ajouté.</p></div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Bêta-testeuses",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "beta"
+    },
+    {
+      "type": "text",
+      "id": "num",
+      "label": "Numéro d’acte"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "Les premières à l’avoir essayé"
+    },
+    {
+      "type": "text",
+      "id": "folio",
+      "label": "Folio"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "Des bêta-testeuses réelles, à qui nous avons prêté le produit. Leurs mots, sans retouche."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "temoignage",
+      "name": "Témoignage réel",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "citation",
+          "label": "Citation exacte"
+        },
+        {
+          "type": "text",
+          "id": "nom",
+          "label": "Prénom et initiale"
+        },
+        {
+          "type": "text",
+          "id": "ville",
+          "label": "Ville"
+        },
+        {
+          "type": "text",
+          "id": "mention",
+          "label": "Mention",
+          "default": "Bêta-testeuse · produit prêté"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bêta-testeuses"
+    }
+  ]
+}
+{% endschema %}

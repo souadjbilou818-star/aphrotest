@@ -1,0 +1,16 @@
+{% doc %}
+  Prix à la française, indépendant du format monétaire de la boutique :
+  « 179 € », « 19 € », « 12,50 € » (espace insécable avant l’euro).
+
+  @param {number} montant - montant en centimes
+{% enddoc %}
+{%- liquid
+  assign centimes = montant | modulo: 100
+  assign euros = montant | divided_by: 100
+  if centimes == 0
+    echo euros | append: ' €'
+  else
+    assign cts = centimes | prepend: '0' | slice: -2, 2
+    echo euros | append: ',' | append: cts | append: ' €'
+  endif
+-%}

@@ -1,0 +1,61 @@
+<footer class="pied on-dark">
+  {% render 'frise', id: 'pied' %}
+  <div class="wrap grid pied__grille">
+    <div class="pied__marque">
+      <a class="marque" href="{{ routes.root_url }}" aria-label="{{ 'aplomb.accueil' | t }}">
+        {% render 'logo', variante: 'principal', decoratif: true %}
+      </a>
+      {%- if settings.devise != blank -%}
+        <p class="pied__devise">{{ settings.devise }}</p>
+      {%- endif -%}
+    </div>
+    {%- if section.settings.maison != blank -%}
+      <p class="pied__maison">{{ section.settings.maison }}</p>
+    {%- endif -%}
+    {%- if section.settings.menu.links.size > 0 -%}
+      <nav aria-label="{{ section.settings.menu.title | escape }}">
+        <ul>
+          {%- for link in section.settings.menu.links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+    <div class="pied__colophon">
+      <span>© {{ 'now' | date: '%Y' }} {{ section.settings.colophon }}</span>
+      <span>{{ section.settings.mention }}</span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pied de page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "maison",
+      "label": "Phrase de la maison",
+      "default": "Sélectionné et contrôlé à Paris, fabriqué par une usine partenaire."
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu légal",
+      "default": "footer"
+    },
+    {
+      "type": "text",
+      "id": "colophon",
+      "label": "Colophon",
+      "default": "L’Aplomb · [SIREN] · [ADRESSE]"
+    },
+    {
+      "type": "text",
+      "id": "mention",
+      "label": "Mention à droite",
+      "default": "Paiement sécurisé par Shopify"
+    }
+  ]
+}
+{% endschema %}

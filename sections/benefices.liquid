@@ -1,0 +1,79 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign items = section.blocks | where: 'type', 'benefice'
+-%}
+<section class="wrap grid acte acte--serre" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+  {% render 'acte-tete', num: section.settings.num, titre: section.settings.titre, intro: section.settings.intro, folio: section.settings.folio, id: titre_id %}
+  <div class="acte__corps">
+    <ol class="benefices">
+      {%- for block in items -%}
+        <li {{ block.shopify_attributes }}>
+          <span class="benefices__num">0{{ forloop.index }}</span>
+          <h3 class="benefices__titre">{{ block.settings.titre }}</h3>
+          <p>{{ block.settings.texte }}</p>
+        </li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bénéfices",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "benefices"
+    },
+    {
+      "type": "text",
+      "id": "num",
+      "label": "Numéro d’acte"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "Ce qu’il change"
+    },
+    {
+      "type": "text",
+      "id": "folio",
+      "label": "Folio"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefice",
+      "name": "Bénéfice",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "titre",
+          "label": "Titre",
+          "default": "Le travail du reformer, à la maison"
+        },
+        {
+          "type": "textarea",
+          "id": "texte",
+          "label": "Texte"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bénéfices"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,78 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign g = product.metafields.gpsr
+  assign cles = 'fabricant,adresse,email,reference,avertissements' | split: ','
+  assign libelles = 'Fabricant|Adresse postale|Contact|Référence|Avertissements' | split: '|'
+  assign remplis = 0
+  for cle in cles
+    if g[cle] != blank
+      assign remplis = remplis | plus: 1
+    endif
+  endfor
+  if g.notice_url != blank
+    assign remplis = remplis | plus: 1
+  endif
+-%}
+{%- if remplis > 0 -%}
+  <section class="wrap grid acte acte--serre" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+    {% render 'acte-tete', num: section.settings.num, titre: section.settings.titre, intro: section.settings.intro, folio: section.settings.folio, id: titre_id %}
+    <div class="acte__corps">
+      <dl class="gpsr">
+        {%- for cle in cles -%}
+          {%- if g[cle] != blank -%}
+            <dt>{{ libelles[forloop.index0] }}</dt>
+            <dd>{{ g[cle].value | escape | newline_to_br }}</dd>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if g.notice_url != blank -%}
+          <dt>Notice</dt>
+          <dd><a href="{{ g.notice_url.value }}">Télécharger la notice (PDF)</a></dd>
+        {%- endif -%}
+      </dl>
+    </div>
+  </section>
+{%- elsif request.design_mode -%}
+  <div class="wrap"><p class="note-edition">Visible dans l’éditeur seulement : remplissez les metafields gpsr.* (fabricant, adresse, e-mail, référence, avertissements, notice). Ces informations sont obligatoires avant la vente.</p></div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Sécurité produit (GPSR)",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "securite"
+    },
+    {
+      "type": "text",
+      "id": "num",
+      "label": "Numéro d’acte"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "Sécurité du produit"
+    },
+    {
+      "type": "text",
+      "id": "folio",
+      "label": "Folio"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "Informations du règlement européen sur la sécurité générale des produits (GPSR)."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sécurité produit (GPSR)"
+    }
+  ]
+}
+{% endschema %}

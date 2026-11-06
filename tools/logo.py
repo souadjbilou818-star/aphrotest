@@ -122,13 +122,20 @@ def logo_svg(variant="horizontal", title="L’Aplomb, Pilates à domicile", css_
         mono_w = MONO_W * mono_h / MONO_H
         gap = 26
         x_mot = mono_w + gap * 2 + 1
-        base = cap
-        h = cap + (sig_cap + 26 if with_sig else 0)
-        mono_y = (h - mono_h) / 2 if with_sig else cap - mono_h * 0.9
-        if not with_sig:
-            h = max(h, mono_y + mono_h)
+        if with_sig:
+            base = cap
+            h = cap + sig_cap + 26
+            mono_y = (h - mono_h) / 2
+        else:
+            # compacte : le monogramme dépasse les capitales vers le haut ;
+            # tout est décalé pour que rien ne sorte du viewBox
+            mono_y = 0
+            base = mono_h * 0.9
+            h = max(base, mono_h)
         parts.append(_mono(0, mono_y, mono_h))
-        parts.append(f'<rect class="logo__filet" x="{_ntos(mono_w + gap)}" y="{_ntos(h * 0.08)}" width="1.2" height="{_ntos(h * 0.84)}"/>')
+        filet_y = h * 0.08 if with_sig else base - cap * 1.05
+        filet_h = h * 0.84 if with_sig else cap * 1.1
+        parts.append(f'<rect class="logo__filet" x="{_ntos(mono_w + gap)}" y="{_ntos(filet_y)}" width="1.2" height="{_ntos(filet_h)}"/>')
         parts.append(f'<path class="logo__mot" transform="translate({_ntos(x_mot)} {_ntos(base)})" d="{mot_d}"/>')
         w = x_mot + max(mot_w, sig_w if with_sig else 0)
         if with_sig:

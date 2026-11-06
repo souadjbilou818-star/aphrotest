@@ -1,0 +1,578 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "produit-principal",
+      "settings": {
+        "surtitre": "Pré-lancement · Paris",
+        "sous_titre": "Plateau bois, rails acier, chariot sur roues silencieuses. Se range debout derrière une porte.",
+        "contenu_essentiel": "Le mini-reformer, 4 élastiques, les poignées, le programme « 28 jours d’aplomb ».",
+        "contenu_studio": "L’Essentiel, plus chaussettes grip, housse en toile avec sangle de rangement, 4 patins feutre, 1 bande forte, programme 8 semaines.",
+        "prix_studio": "Une séance de reformer à Paris coûte 25 à 45 €. L’Aplomb, c’est le prix de quatre séances.",
+        "legende_dessin": "Planche 01 — vue de dessus et élévation. Les cotes s’affichent quand la fiche technique est remplie."
+      },
+      "blocks": {
+        "p_1": {
+          "type": "preuve",
+          "settings": {
+            "texte": "Un vrai chariot sur rails acier"
+          }
+        },
+        "p_2": {
+          "type": "preuve",
+          "settings": {
+            "texte": "Se range debout derrière une porte"
+          }
+        },
+        "p_3": {
+          "type": "preuve",
+          "settings": {
+            "texte": "Programme « 28 jours d’aplomb » inclus"
+          }
+        },
+        "p_4": {
+          "type": "plan",
+          "settings": {
+            "ratio": "1/1",
+            "taille": "moitie",
+            "plan": "02",
+            "legende": "rails et roues, en macro",
+            "generee": true,
+            "didascalie": "Macro. Mise au point sur une roue, le rail fuit en diagonale."
+          }
+        },
+        "p_5": {
+          "type": "plan",
+          "settings": {
+            "ratio": "16/9",
+            "taille": "moitie",
+            "plan": "03",
+            "son": true,
+            "generee": false,
+            "legende": "le chariot en mouvement, son réel",
+            "didascalie": "Le chariot fait un aller-retour sur toute sa course. Micro près des rails, aucune musique."
+          }
+        },
+        "p_6": {
+          "type": "plan",
+          "settings": {
+            "ratio": "4/5",
+            "taille": "tiers",
+            "plan": "04",
+            "legende": "le pliage, premier temps",
+            "generee": true,
+            "didascalie": "Vu du dessus : le mini-reformer déplié, deux mains posées sur la charnière."
+          }
+        },
+        "p_7": {
+          "type": "plan",
+          "settings": {
+            "ratio": "4/5",
+            "taille": "tiers",
+            "plan": "04",
+            "legende": "le pliage, deuxième temps",
+            "generee": true,
+            "didascalie": "Même cadrage : le plateau à moitié replié sur sa charnière."
+          }
+        },
+        "p_8": {
+          "type": "plan",
+          "settings": {
+            "ratio": "4/5",
+            "taille": "tiers",
+            "plan": "04",
+            "legende": "le pliage, troisième temps",
+            "generee": true,
+            "didascalie": "Même cadrage : plié, prêt à être rangé debout."
+          }
+        },
+        "p_9": {
+          "type": "plan",
+          "settings": {
+            "ratio": "4/5",
+            "taille": "moitie",
+            "plan": "05",
+            "legende": "rangé debout contre une moulure",
+            "generee": true,
+            "didascalie": "Plié, debout contre une porte à moulures. Un pan de rideau en velours forest dans le champ."
+          }
+        },
+        "p_10": {
+          "type": "plan",
+          "settings": {
+            "ratio": "4/5",
+            "taille": "moitie",
+            "plan": "06",
+            "legende": "la discipline privée, gainage latéral",
+            "generee": true,
+            "image": "shopify://shop_images/plan-06-posture-provisoire.jpg"
+          }
+        },
+        "p_11": {
+          "type": "plan",
+          "settings": {
+            "ratio": "3/2",
+            "taille": "large",
+            "plan": "07",
+            "legende": "le coffret, dorure laiton, carte gaufrée",
+            "generee": true,
+            "image": "shopify://shop_images/plan-07-coffret.jpg"
+          }
+        },
+        "p_12": {
+          "type": "plan",
+          "settings": {
+            "ratio": "3/2",
+            "taille": "moitie",
+            "plan": "08",
+            "legende": "les feutres sur le parquet",
+            "generee": true,
+            "didascalie": "Au ras du sol : les patins feutre sous le plateau, sur le point de Hongrie. Lumière rasante."
+          }
+        },
+        "p_13": {
+          "type": "plan",
+          "settings": {
+            "ratio": "3/2",
+            "taille": "moitie",
+            "plan": "10",
+            "legende": "la housse de l’édition Studio",
+            "generee": true,
+            "didascalie": "La housse en toile et sa sangle, suspendues à une patère en laiton, sur une porte laquée."
+          }
+        }
+      },
+      "block_order": [
+        "p_1",
+        "p_2",
+        "p_3",
+        "p_4",
+        "p_5",
+        "p_6",
+        "p_7",
+        "p_8",
+        "p_9",
+        "p_10",
+        "p_11",
+        "p_12",
+        "p_13"
+      ]
+    },
+    "benefices": {
+      "type": "benefices",
+      "settings": {
+        "titre": "Ce qu’il change",
+        "ancre": "benefices"
+      },
+      "blocks": {
+        "ben_1": {
+          "type": "benefice",
+          "settings": {
+            "titre": "Le travail du reformer, à la maison",
+            "texte": "Le chariot glisse, le corps travaille contre les élastiques : le principe du reformer, sans le trajet ni le créneau."
+          }
+        },
+        "ben_2": {
+          "type": "benefice",
+          "settings": {
+            "titre": "20 minutes, sans sortir",
+            "texte": "Chaque séance du programme dure 20 minutes. Vous la faites quand la journée le permet."
+          }
+        },
+        "ben_3": {
+          "type": "benefice",
+          "settings": {
+            "titre": "Rangé en 10 secondes",
+            "texte": "Plié sur sa charnière, il se range debout derrière une porte. Le salon redevient un salon."
+          }
+        }
+      },
+      "block_order": [
+        "ben_1",
+        "ben_2",
+        "ben_3"
+      ]
+    },
+    "etapes": {
+      "type": "etapes",
+      "settings": {
+        "titre": "Comment ça marche",
+        "ancre": "comment"
+      },
+      "blocks": {
+        "et_1": {
+          "type": "etape",
+          "settings": {
+            "titre": "Dépliez",
+            "texte": "Posez le plateau au sol et ouvrez la charnière.",
+            "plan": "04",
+            "legende": "déplier",
+            "didascalie": "Vu du dessus : deux mains ouvrent la charnière sur le parquet."
+          }
+        },
+        "et_2": {
+          "type": "etape",
+          "settings": {
+            "titre": "Accrochez",
+            "texte": "Choisissez vos élastiques et fixez-les à la barre d’ancrage.",
+            "plan": "02",
+            "legende": "accrocher",
+            "didascalie": "Gros plan : un élastique accroché à la barre d’ancrage."
+          }
+        },
+        "et_3": {
+          "type": "etape",
+          "settings": {
+            "titre": "Glissez",
+            "texte": "Flashez le QR code et lancez la séance du jour.",
+            "plan": "06",
+            "legende": "glisser",
+            "didascalie": "De profil : le chariot en fin de course, le corps aligné."
+          }
+        }
+      },
+      "block_order": [
+        "et_1",
+        "et_2",
+        "et_3"
+      ]
+    },
+    "negations": {
+      "type": "negations",
+      "settings": {
+        "titre": "Ce que ce n’est pas",
+        "ancre": "honnetete",
+        "honnete": "Un vrai chariot sur rails, avec des élastiques plutôt que des ressorts de studio."
+      },
+      "blocks": {
+        "neg_1": {
+          "type": "negation",
+          "settings": {
+            "non": "Pas de ressorts",
+            "explication": "La résistance vient d’élastiques interchangeables. Elle est plus douce en début de course, plus franche en fin de course."
+          }
+        },
+        "neg_2": {
+          "type": "negation",
+          "settings": {
+            "non": "Pas un appareil de deux mètres",
+            "explication": "Un plateau qui se plie et se range debout, conçu pour un appartement."
+          }
+        },
+        "neg_3": {
+          "type": "negation",
+          "settings": {
+            "non": "Pas un board en plastique",
+            "explication": "Un vrai chariot sur roues, qui roule sur des rails en acier."
+          }
+        },
+        "neg_4": {
+          "type": "negation",
+          "settings": {
+            "non": "Pas une promesse de silhouette",
+            "explication": "Un travail juste et régulier, 20 minutes à la fois."
+          }
+        }
+      },
+      "block_order": [
+        "neg_1",
+        "neg_2",
+        "neg_3",
+        "neg_4"
+      ]
+    },
+    "specs": {
+      "type": "specs",
+      "settings": {
+        "titre": "Fiche technique",
+        "ancre": "fiche-technique",
+        "intro": "Les mesures s’affichent dès qu’elles sont vérifiées. Aucun chiffre n’est publié avant."
+      },
+      "blocks": {
+        "spec_1": {
+          "type": "role",
+          "settings": {
+            "role": "Plateau",
+            "nom": "bois"
+          }
+        },
+        "spec_2": {
+          "type": "role",
+          "settings": {
+            "role": "Rails",
+            "nom": "acier"
+          }
+        },
+        "spec_3": {
+          "type": "role",
+          "settings": {
+            "role": "Chariot",
+            "nom": "roues PU silencieuses"
+          }
+        },
+        "spec_4": {
+          "type": "role",
+          "settings": {
+            "role": "Résistance",
+            "nom": "élastiques"
+          }
+        },
+        "spec_5": {
+          "type": "role",
+          "settings": {
+            "role": "Pliage",
+            "nom": "charnière centrale"
+          }
+        }
+      },
+      "block_order": [
+        "spec_1",
+        "spec_2",
+        "spec_3",
+        "spec_4",
+        "spec_5"
+      ]
+    },
+    "programme": {
+      "type": "acte-programme",
+      "settings": {
+        "ancre": "programme",
+        "titre": "Le programme inclus",
+        "intro": "« 28 jours d’aplomb » : 4 semaines, 4 séances de 20 minutes par semaine. Accès par QR code.",
+        "encart_titre": "Édition Studio",
+        "encart_texte": "Le programme se prolonge sur 8 semaines, avec une visio collective chaque mois."
+      },
+      "blocks": {
+        "sem_1": {
+          "type": "semaine",
+          "settings": {
+            "numero": "S1",
+            "titre": "Alignement",
+            "texte": "Trouver l’axe : bassin, cage thoracique, épaules."
+          }
+        },
+        "sem_2": {
+          "type": "semaine",
+          "settings": {
+            "numero": "S2",
+            "titre": "Centre",
+            "texte": "Le travail profond de la sangle abdominale, chariot lent."
+          }
+        },
+        "sem_3": {
+          "type": "semaine",
+          "settings": {
+            "numero": "S3",
+            "titre": "Chaîne postérieure",
+            "texte": "Fessiers, ischio-jambiers, dos : pousser loin, revenir sans à-coup."
+          }
+        },
+        "sem_4": {
+          "type": "semaine",
+          "settings": {
+            "numero": "S4",
+            "titre": "Flow complet",
+            "texte": "Les enchaînements des trois semaines, en une séance fluide."
+          }
+        }
+      },
+      "block_order": [
+        "sem_1",
+        "sem_2",
+        "sem_3",
+        "sem_4"
+      ]
+    },
+    "quiz": {
+      "type": "entracte-quiz",
+      "settings": {
+        "ancre": "entracte",
+        "label": "Entracte",
+        "titre": "Quelle édition pour vous ?",
+        "texte": "Cinq questions, deux minutes. Le résultat présélectionne l’édition ci-dessus ; l’e-mail reste facultatif.",
+        "email": true,
+        "note": "Douleurs, grossesse ou post-partum : demandez l’avis de votre médecin ou kiné."
+      }
+    },
+    "objections": {
+      "type": "faq",
+      "settings": {
+        "ancre": "objections",
+        "titre": "Ce qui pourrait vous retenir"
+      },
+      "blocks": {
+        "obj_1": {
+          "type": "question",
+          "settings": {
+            "question": "Est-ce que ça remplace un cours en studio ?",
+            "reponse": "<p>Non, et ce n’est pas le but. Le chariot glisse comme en studio, mais la résistance vient d’élastiques et non de ressorts. Il complète vos cours, ou vous permet de pratiquer entre deux.</p>"
+          }
+        },
+        "obj_2": {
+          "type": "question",
+          "settings": {
+            "question": "Et les voisins du dessous ?",
+            "reponse": "<p>Les roues sont en polyuréthane et roulent sur des rails en acier. Nous publierons une mesure en décibels quand elle aura été faite par un laboratoire ; d’ici là, la vidéo du plan 03 est tournée avec le son réel.</p>"
+          }
+        },
+        "obj_3": {
+          "type": "question",
+          "settings": {
+            "question": "Mon parquet va-t-il souffrir ?",
+            "reponse": "<p>Le plateau repose sur des patins en feutre (livrés avec l’édition Studio, vendus à part pour l’Essentiel).</p>"
+          }
+        },
+        "obj_4": {
+          "type": "question",
+          "settings": {
+            "question": "Quel poids peut-il supporter ?",
+            "reponse": "<p>La charge maximale testée sera publiée dans la fiche technique dès réception du rapport d’essai. Nous n’annonçons aucun chiffre avant.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "obj_1",
+        "obj_2",
+        "obj_3",
+        "obj_4"
+      ]
+    },
+    "temoignages": {
+      "type": "temoignages",
+      "settings": {
+        "ancre": "beta",
+        "titre": "Les premières à l’avoir essayé",
+        "intro": "Des bêta-testeuses réelles, à qui nous avons prêté le produit. Leurs mots, sans retouche."
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "ancre": "faq",
+        "titre": "Questions"
+      },
+      "blocks": {
+        "q_1": {
+          "type": "question",
+          "settings": {
+            "question": "Quelle différence entre Essentiel et Studio ?",
+            "reponse": "<p>L’Essentiel contient le mini-reformer, 4 élastiques, les poignées et le programme « 28 jours d’aplomb ». Le Studio ajoute des chaussettes grip, une housse en toile avec sangle de rangement, 4 patins feutre, une bande forte et un programme de 8 semaines avec une visio collective par mois.</p>"
+          }
+        },
+        "q_2": {
+          "type": "question",
+          "settings": {
+            "question": "Quand sera-t-il expédié ?",
+            "reponse": "<p>[DATE D’EXPÉDITION]. Les personnes inscrites sur la liste d’attente sont prévenues en premier.</p>"
+          }
+        },
+        "q_3": {
+          "type": "question",
+          "settings": {
+            "question": "La réservation prioritaire, c’est quoi ?",
+            "reponse": "<p>19 € pour réserver votre mini-reformer avant l’ouverture des ventes. Ils sont déduits du prix final et remboursables à tout moment, sur simple demande.</p>"
+          }
+        },
+        "q_4": {
+          "type": "question",
+          "settings": {
+            "question": "Puis-je le renvoyer ?",
+            "reponse": "<p>Oui. Vous disposez de 14 jours après réception pour changer d’avis. Les conditions figurent sur la page Livraison & retours.</p>"
+          }
+        },
+        "q_5": {
+          "type": "question",
+          "settings": {
+            "question": "Est-ce adapté si je débute ?",
+            "reponse": "<p>Oui. La première semaine du programme est consacrée à l’alignement, sans enchaînement difficile. Douleurs, grossesse ou post-partum : demandez l’avis de votre médecin ou kiné.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q_1",
+        "q_2",
+        "q_3",
+        "q_4",
+        "q_5"
+      ]
+    },
+    "garanties": {
+      "type": "garanties",
+      "settings": {
+        "ancre": "garanties",
+        "titre": "Garanties",
+        "encadre": "<p>[ENCADRÉ GARANTIE LÉGALE — décret 2022-424]</p>"
+      },
+      "blocks": {
+        "gar_1": {
+          "type": "garantie",
+          "settings": {
+            "titre": "Garantie légale de conformité, 2 ans",
+            "texte": "Un défaut de conformité dans les deux ans suivant la livraison : réparation ou remplacement.",
+            "mode": "tous"
+          }
+        },
+        "gar_2": {
+          "type": "garantie",
+          "settings": {
+            "titre": "14 jours pour changer d’avis",
+            "texte": "Droit de rétractation à compter de la réception.",
+            "mode": "tous"
+          }
+        },
+        "gar_3": {
+          "type": "garantie",
+          "settings": {
+            "titre": "Réservation remboursable",
+            "texte": "Les 19 € de réservation sont remboursables à tout moment et déduits du prix final.",
+            "mode": "reservation"
+          }
+        },
+        "gar_4": {
+          "type": "garantie",
+          "settings": {
+            "titre": "Paiement sécurisé",
+            "texte": "Le paiement est traité par Shopify ; vos données bancaires ne transitent pas par L’Aplomb.",
+            "mode": "tous"
+          }
+        }
+      },
+      "block_order": [
+        "gar_1",
+        "gar_2",
+        "gar_3",
+        "gar_4"
+      ]
+    },
+    "gpsr": {
+      "type": "gpsr",
+      "settings": {
+        "ancre": "securite",
+        "titre": "Sécurité du produit",
+        "intro": "Informations du règlement européen sur la sécurité générale des produits (GPSR)."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "benefices",
+    "etapes",
+    "negations",
+    "specs",
+    "programme",
+    "quiz",
+    "objections",
+    "temoignages",
+    "faq",
+    "garanties",
+    "gpsr"
+  ]
+}

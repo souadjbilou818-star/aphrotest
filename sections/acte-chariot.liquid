@@ -1,0 +1,181 @@
+{%- liquid
+  assign produit = settings.produit_principal
+  assign lignes = section.blocks | where: 'type', 'ligne'
+  assign titre_id = 'titre-' | append: section.id
+-%}
+<section class="wrap grid acte" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+  {% render 'acte-tete',
+    num: section.settings.num,
+    titre: section.settings.titre,
+    intro: section.settings.intro,
+    folio: section.settings.folio,
+    id: titre_id
+  %}
+  <div class="acte__corps">
+    {%- if section.settings.honnete != blank -%}
+      <p class="honnete">{{ section.settings.honnete }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.afficher_dessin -%}
+      <div class="sous">
+        <p class="sous__titre">{{ section.settings.titre_dessin }}</p>
+        {% render 'dessin-reformer', detail: 'full', timeline: 'view', product: produit, uid: section.id %}
+        <ol class="nomenclature" aria-label="{{ section.settings.titre_dessin | escape }}">
+          <li><span class="bulle">1</span>Plateau bois</li>
+          <li><span class="bulle">2</span>Rails acier</li>
+          <li><span class="bulle">3</span>Chariot</li>
+          <li><span class="bulle">4</span>Roues PU silencieuses</li>
+          <li><span class="bulle">5</span>Élastiques</li>
+          <li><span class="bulle">6</span>Barre d’ancrage</li>
+          <li><span class="bulle">7</span>Charnière de pliage</li>
+          <li><span class="bulle">8</span>Patins feutre (édition Studio)</li>
+        </ol>
+      </div>
+    {%- endif -%}
+
+    {%- if lignes.size > 0 -%}
+      <div class="sous">
+        <p class="sous__titre">{{ section.settings.titre_comparatif }}</p>
+        <table class="comparatif">
+          <caption class="visually-hidden">{{ section.settings.titre_comparatif }}</caption>
+          <thead>
+            <tr>
+              <th scope="col"><span class="visually-hidden">Critère</span></th>
+              <th scope="col">{{ section.settings.col_board }}</th>
+              <th scope="col" class="is-aplomb">{{ section.settings.col_aplomb }}</th>
+              <th scope="col">{{ section.settings.col_studio }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for block in lignes -%}
+              <tr {{ block.shopify_attributes }}>
+                <th scope="row">{{ block.settings.critere }}</th>
+                <td data-col="{{ section.settings.col_board | escape }}">{{ block.settings.board }}</td>
+                <td class="is-aplomb" data-col="{{ section.settings.col_aplomb | escape }}">{{ block.settings.aplomb }}</td>
+                <td data-col="{{ section.settings.col_studio | escape }}">{{ block.settings.studio }}</td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Acte : le chariot",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "chariot"
+    },
+    {
+      "type": "text",
+      "id": "num",
+      "label": "Numéro d’acte",
+      "default": "I."
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "Le chariot"
+    },
+    {
+      "type": "text",
+      "id": "folio",
+      "label": "Folio",
+      "default": "2"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "Le cœur de L’Aplomb : un chariot qui roule sur deux rails d’acier, comme au studio."
+    },
+    {
+      "type": "textarea",
+      "id": "honnete",
+      "label": "Phrase d’honnêteté",
+      "default": "Un vrai chariot sur rails, avec des élastiques plutôt que des ressorts de studio."
+    },
+    {
+      "type": "checkbox",
+      "id": "afficher_dessin",
+      "label": "Afficher le dessin technique",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "titre_dessin",
+      "label": "Titre du dessin",
+      "default": "Planche 02 · nomenclature"
+    },
+    {
+      "type": "text",
+      "id": "titre_comparatif",
+      "label": "Titre du comparatif",
+      "default": "Trois façons de faire du reformer"
+    },
+    {
+      "type": "text",
+      "id": "col_board",
+      "label": "Colonne 1",
+      "default": "Board plastique 5-en-1"
+    },
+    {
+      "type": "text",
+      "id": "col_aplomb",
+      "label": "Colonne 2 (L’Aplomb)",
+      "default": "L’Aplomb"
+    },
+    {
+      "type": "text",
+      "id": "col_studio",
+      "label": "Colonne 3",
+      "default": "Reformer de studio"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ligne",
+      "name": "Ligne du comparatif",
+      "settings": [
+        {
+          "type": "text",
+          "id": "critere",
+          "label": "Critère",
+          "default": "Mouvement"
+        },
+        {
+          "type": "text",
+          "id": "board",
+          "label": "Board plastique",
+          "default": "Plateau fixe, sans chariot"
+        },
+        {
+          "type": "text",
+          "id": "aplomb",
+          "label": "L’Aplomb",
+          "default": "Chariot sur rails acier, roues PU"
+        },
+        {
+          "type": "text",
+          "id": "studio",
+          "label": "Studio",
+          "default": "Chariot sur rails"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Acte : le chariot"
+    }
+  ]
+}
+{% endschema %}

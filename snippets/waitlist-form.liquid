@@ -1,0 +1,43 @@
+{% doc %}
+  Formulaire natif de liste d’attente : crée un client abonné aux e-mails,
+  avec les tags « waitlist » et « aplomb ». Activez le double opt-in dans
+  Réglages > Notifications clients.
+
+  @param {string} contexte - identifiant unique du formulaire sur la page
+  @param {string} [tags] - tags supplémentaires, séparés par des virgules
+{% enddoc %}
+{%- liquid
+  assign form_id = 'liste-' | append: contexte
+  assign tous_tags = 'waitlist,aplomb'
+  if tags != blank
+    assign tous_tags = tous_tags | append: ',' | append: tags
+  endif
+-%}
+{%- form 'customer', id: form_id, class: 'waitlist' -%}
+  {%- if form.posted_successfully? -%}
+    <p class="message message--ok" role="status">{{ 'aplomb.waitlist.succes' | t }}</p>
+  {%- else -%}
+    <input type="hidden" name="contact[tags]" value="{{ tous_tags }}">
+    <label class="label" for="{{ form_id }}-email">{{ 'aplomb.waitlist.label' | t }}</label>
+    <div class="field">
+      <input
+        class="input"
+        id="{{ form_id }}-email"
+        type="email"
+        name="contact[email]"
+        autocomplete="email"
+        inputmode="email"
+        placeholder="{{ 'aplomb.waitlist.placeholder' | t }}"
+        required
+        {% if form.errors %}
+          aria-invalid="true" aria-describedby="{{ form_id }}-erreur"
+        {% endif %}
+      >
+      <button class="btn" type="submit">{{ 'aplomb.waitlist.cta' | t }}</button>
+    </div>
+    {%- if form.errors -%}
+      <p class="message" id="{{ form_id }}-erreur" role="alert">{{ 'aplomb.waitlist.erreur' | t }}</p>
+    {%- endif -%}
+    <p class="consent">{{ 'aplomb.waitlist.consentement_html' | t: url: shop.privacy_policy.url }}</p>
+  {%- endif -%}
+{%- endform -%}

@@ -1,0 +1,112 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign items = section.blocks | where: 'type', 'garantie'
+-%}
+<section class="wrap grid acte acte--serre" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+  {% render 'acte-tete', num: section.settings.num, titre: section.settings.titre, intro: section.settings.intro, folio: section.settings.folio, id: titre_id %}
+  <div class="acte__corps">
+    <ul class="garanties">
+      {%- for block in items -%}
+        {%- unless block.settings.mode != 'tous' and block.settings.mode != settings.launch_mode -%}
+          <li {{ block.shopify_attributes }}>
+            <h3 class="garanties__titre">{{ block.settings.titre }}</h3>
+            <p class="soft">{{ block.settings.texte }}</p>
+          </li>
+        {%- endunless -%}
+      {%- endfor -%}
+    </ul>
+    {%- if section.settings.encadre != blank -%}
+      <div class="encadre-legal">{{ section.settings.encadre }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Garanties",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "garanties"
+    },
+    {
+      "type": "text",
+      "id": "num",
+      "label": "Numéro d’acte"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "Garanties"
+    },
+    {
+      "type": "text",
+      "id": "folio",
+      "label": "Folio"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction"
+    },
+    {
+      "type": "richtext",
+      "id": "encadre",
+      "label": "Encadré légal",
+      "default": "<p>[ENCADRÉ GARANTIE LÉGALE — décret 2022-424]</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "garantie",
+      "name": "Garantie",
+      "settings": [
+        {
+          "type": "text",
+          "id": "titre",
+          "label": "Titre",
+          "default": "Garantie légale de conformité, 2 ans"
+        },
+        {
+          "type": "textarea",
+          "id": "texte",
+          "label": "Texte"
+        },
+        {
+          "type": "select",
+          "id": "mode",
+          "label": "Afficher en mode",
+          "options": [
+            {
+              "value": "tous",
+              "label": "Tous les modes"
+            },
+            {
+              "value": "waitlist",
+              "label": "Liste d’attente"
+            },
+            {
+              "value": "reservation",
+              "label": "Réservation"
+            },
+            {
+              "value": "vente",
+              "label": "Vente"
+            }
+          ],
+          "default": "tous"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Garanties"
+    }
+  ]
+}
+{% endschema %}

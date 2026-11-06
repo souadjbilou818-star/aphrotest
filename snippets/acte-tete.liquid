@@ -1,0 +1,26 @@
+{% doc %}
+  Ouverture d’acte : filet double, folio, chiffre romain et titre.
+
+  @param {string} [num] - chiffre romain, ex. 'I.'
+  @param {string} titre - titre de l’acte
+  @param {string} [intro] - texte court sous le titre
+  @param {string} [folio] - numéro de page de la feuille de salle
+  @param {string} [id] - id du titre, pour aria-labelledby
+{% enddoc %}
+<div class="acte__filet">
+  <hr class="filet filet--double">
+  {%- if folio != blank -%}
+    <span class="acte__folio">p. {{ folio }}</span>
+  {%- endif -%}
+</div>
+<header class="acte__tete">
+  <h2 class="acte__titre" id="{{ id }}">
+    {%- if num != blank -%}
+      <span class="acte__num">{{ num }}</span>
+    {%- endif -%}
+    <span>{{ titre }}</span>
+  </h2>
+  {%- if intro != blank -%}
+    <p class="acte__intro">{{ intro }}</p>
+  {%- endif -%}
+</header>
