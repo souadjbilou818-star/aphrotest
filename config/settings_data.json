@@ -10,15 +10,23 @@
 {
   "current": {
     "launch_mode": "waitlist",
+    "date_expedition": "[DATE D’EXPÉDITION]",
+    "mention_vente": "Expédié depuis la France",
+    "info_livraison": "Délais et frais affichés avant le paiement, selon votre adresse.",
+    "info_retours": "14 jours pour changer d’avis, à compter de la réception.",
+    "info_garantie": "Garantie légale de conformité : 2 ans.",
+    "info_paiement": "Paiement sécurisé sur la page de paiement Shopify.",
+    "panier_tiroir": true,
+    "police_titres": "cormorant",
+    "devise": "Pilates, avec aplomb.",
+    "signature": "Pilates à domicile",
+    "credit_ia": true,
     "produit_principal": "coulisse-01",
     "produit_reservation": "reservation-prioritaire",
     "collection_essentiels": "les-essentiels",
     "collection_coulisse": "coulisse",
     "collection_atelier": "reformers-atelier",
     "page_quiz": "trouver-mon-equipement",
-    "page_livraison": "livraison-et-retours",
-    "police_titres": "cormorant",
-    "credit_ia": true,
-    "panier_tiroir": true
+    "page_livraison": "livraison-et-retours"
   }
 }
