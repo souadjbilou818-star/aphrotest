@@ -18,8 +18,7 @@ function appliquerEdition(detail) {
     if (modele) bouton.textContent = modele.replace('{prix}', detail.prix);
   });
   document.querySelectorAll('[data-collant-nom]').forEach((el) => {
-    const base = el.textContent.split(' · ')[0];
-    el.textContent = `${base} · ${detail.nom}`;
+    el.textContent = detail.nom;
   });
   document.querySelectorAll('[data-collant-prix]').forEach((el) => {
     const suffixe = el.textContent.trim().split(' ').pop();

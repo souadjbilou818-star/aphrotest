@@ -27,12 +27,14 @@ const path = require('path');
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
     // les fondus d'entrée dépendent du défilement : on capture l'état final
-    await page.addStyleTag({ content: '.cadre__zone--image img,.acte__filet .filet{animation:none!important}' });
+    await page.addStyleTag({ content: '.cadre__zone--image img,.acte__filet .filet{animation:none!important}.collant{display:none!important}' });
     await page.screenshot({ path: path.join(out, `${prefix}-${s.name}-ecran.png`) });
     // défilement complet : déclenche les images en chargement différé, puis retour en haut
     await page.evaluate(async () => {
       for (let y = 0; y < document.documentElement.scrollHeight; y += 600) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 60)); }
-      await Promise.all([...document.images].map((i) => (i.complete ? null : new Promise((r) => { i.onload = i.onerror = r; }))));
+      document.querySelectorAll('img[loading="lazy"]').forEach((i) => { i.loading = 'eager'; });
+      const attente = Promise.all([...document.images].map((i) => (i.complete ? null : new Promise((r) => { i.onload = i.onerror = r; }))));
+      await Promise.race([attente, new Promise((r) => setTimeout(r, 8000))]);
       window.scrollTo(0, 0);
     });
     await page.waitForTimeout(300);

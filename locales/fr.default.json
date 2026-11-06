@@ -61,7 +61,7 @@
       "placeholder": "prenom@exemple.fr",
       "cta": "Rejoindre la liste d’attente",
       "cta_court": "Liste d’attente",
-      "consentement_html": "En cliquant sur « Rejoindre la liste d’attente », vous acceptez de recevoir les e-mails de L’Aplomb sur le lancement. Désinscription en un clic, à tout moment. <a href=\"{{ url }}\">Politique de confidentialité</a>",
+      "consentement_html": "En cliquant sur « {{ bouton }} », vous acceptez de recevoir les e-mails de L’Aplomb sur le lancement. Désinscription en un clic, à tout moment. <a href=\"{{ url }}\">Politique de confidentialité</a>",
       "succes": "C’est noté. Nous vous écrivons à l’ouverture, et pas avant.",
       "erreur": "Vérifiez l’adresse e-mail : elle semble incomplète."
     },

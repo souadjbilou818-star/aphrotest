@@ -1884,3 +1884,25 @@ textarea {
     transform: scaleX(1);
   }
 }
+
+/* Galerie mobile : défilement horizontal, un plan après l'autre */
+@media (max-width: 699px) {
+  .galerie {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    margin-inline: calc(-1 * max(var(--gutter), env(safe-area-inset-left, 0px)));
+    padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px));
+    scroll-padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px));
+    padding-bottom: 6px;
+  }
+  .galerie > .cadre {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+  }
+  .galerie .cadre__didascalie {
+    font-size: 1rem;
+  }
+}

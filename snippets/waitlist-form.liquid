@@ -9,6 +9,7 @@
 {%- liquid
   assign form_id = 'liste-' | append: contexte
   assign tous_tags = 'waitlist,aplomb'
+  assign bouton = 'aplomb.waitlist.cta' | t
   if tags != blank
     assign tous_tags = tous_tags | append: ',' | append: tags
   endif
@@ -38,6 +39,6 @@
     {%- if form.errors -%}
       <p class="message" id="{{ form_id }}-erreur" role="alert">{{ 'aplomb.waitlist.erreur' | t }}</p>
     {%- endif -%}
-    <p class="consent">{{ 'aplomb.waitlist.consentement_html' | t: url: shop.privacy_policy.url }}</p>
+    <p class="consent">{{ 'aplomb.waitlist.consentement_html' | t: url: shop.privacy_policy.url, bouton: bouton }}</p>
   {%- endif -%}
 {%- endform -%}

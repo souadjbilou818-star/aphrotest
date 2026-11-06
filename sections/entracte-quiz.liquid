@@ -5,6 +5,7 @@
     assign produit = settings.produit_principal
   endif
   assign titre_id = 'titre-' | append: section.id
+  assign bouton_quiz = 'aplomb.quiz.email_cta' | t
   assign url_essentiel = produit.url | default: routes.all_products_collection_url
   assign url_studio = url_essentiel
   assign id_essentiel = ''
@@ -102,7 +103,7 @@
                     <input class="input" id="quiz-email-champ" type="email" name="contact[email]" autocomplete="email" inputmode="email" placeholder="{{ 'aplomb.waitlist.placeholder' | t }}" required>
                     <button class="btn btn--line" type="submit">{{ 'aplomb.quiz.email_cta' | t }}</button>
                   </div>
-                  <p class="consent">{{ 'aplomb.waitlist.consentement_html' | t: url: shop.privacy_policy.url }}</p>
+                  <p class="consent">{{ 'aplomb.waitlist.consentement_html' | t: url: shop.privacy_policy.url, bouton: bouton_quiz }}</p>
                 {%- endif -%}
               {%- endform -%}
             {%- endif -%}

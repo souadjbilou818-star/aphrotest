@@ -98,7 +98,7 @@
   {%- if plans.size > 0 -%}
     <div class="sous produit__galerie">
       <p class="sous__titre">{{ 'aplomb.produit.galerie' | t }}</p>
-      <div class="galerie">
+      <div class="galerie" role="region" aria-label="{{ 'aplomb.produit.galerie' | t }}" tabindex="0">
         {%- for block in plans -%}
           {%- liquid
             assign classe = ''
@@ -129,7 +129,7 @@
 
 <aplomb-collant class="collant" data-cible="[data-cta-principal]" aria-hidden="true" inert>
   <span class="collant__produit">
-    <b data-collant-nom>{{ product.title }}{% unless product.has_only_default_variant %} · {{ variant.title }}{% endunless %}</b>
+    <b data-collant-nom>{% if product.has_only_default_variant %}{{ product.title }}{% else %}{{ variant.title }}{% endif %}</b>
     <span data-collant-prix>{{ prix_variant }} {{ 'aplomb.produit.ttc' | t }}</span>
   </span>
   {% render 'cta', contexte: 'collant', product: product, variant: variant %}
