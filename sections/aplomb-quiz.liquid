@@ -4,6 +4,7 @@
   assign total = questions.size
   assign familles = 'essentiels,coulisse,atelier' | split: ','
   assign lien_boutique = section.settings.lien_boutique | default: routes.all_products_collection_url
+  assign libelle_question = 'aplomb.quiz.question' | t: n: '{n}', total: '{total}'
   if section.settings.mode == 'page'
     assign balise_titre = 'h1'
     assign balise_resultat = 'h2'
@@ -22,7 +23,7 @@
     data-quiz-id="{{ section.settings.quiz_id | default: section.id }}"
     data-mode="{{ section.settings.mode }}"
     data-total="{{ total }}"
-    data-libelle-question="{{ 'aplomb.quiz.question' | t: n: '{n}', total: '{total}' | escape }}"
+    data-libelle-question="{{ libelle_question | escape }}"
   >
     <div class="quiz__tete">
       {%- if section.settings.surtitre != blank -%}
