@@ -260,6 +260,7 @@ const reinitialiser = (p, base = VENTE) => p.request.get(`${base}/__reinitialise
     await p.goto(`${ATTENTE}/`);
     ok(await p.locator('[data-cta-vente]').count() === 0, 'bouton d’achat présent');
     ok((await p.locator('.hero__ctas a').first().getAttribute('href')) === '#coulisse', 'repli du bouton produit');
+    ok(!(await p.locator('.vedette').innerText()).match(/\b0\s?€/), 'prix « 0 € » d’un produit en brouillon');
     ok(await p.locator('#liste-vedette').count() === 1, 'liste d’attente du produit vedette absente');
     ok(await p.locator('#liste-cloture').count() === 1, 'liste d’attente de clôture absente');
     ok(await p.locator('dialog[data-tiroir]').count() === 0, 'tiroir rendu en liste d’attente');

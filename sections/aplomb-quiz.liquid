@@ -134,6 +134,10 @@
           endcase
           assign resultat_titre_id = 'resultat-' | append: section.id | append: '-' | append: f
           assign contexte_achat = 'quiz-' | append: f
+          assign p_ok = false
+          if p.handle != blank and p.handle
+            assign p_ok = true
+          endif
           assign c_ok = false
           if c and c.published_at
             assign c_ok = true
@@ -150,7 +154,7 @@
         >
           <p class="label soft">{{ 'aplomb.quiz.resultat' | t }}</p>
           <{{ balise_resultat }} class="resultat__titre" id="{{ resultat_titre_id }}">
-            {%- if p != blank -%}
+            {%- if p_ok -%}
               {{ p.title }}
             {%- else -%}
               {{ cle_nom | t }}
@@ -183,7 +187,7 @@
               {%- endif -%}
 
               <div class="resultat__achat">
-                {%- if p != blank -%}
+                {%- if p_ok -%}
                   {%- capture prix_p -%}{% render 'prix', montant: p.price_min %}{%- endcapture -%}
                   <p class="resultat__prix">
                     {%- if p.price_varies -%}

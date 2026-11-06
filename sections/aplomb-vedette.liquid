@@ -3,7 +3,11 @@
   assign titre_id = 'titre-' | append: section.id
   assign points = section.blocks | where: 'type', 'point'
   assign mf = produit.metafields.aplomb
-  if produit != blank
+  assign produit_ok = false
+  if produit.handle != blank and produit.handle
+    assign produit_ok = true
+  endif
+  if produit_ok
     assign titre = section.settings.titre | default: produit.title
     capture prix
       render 'prix', montant: produit.price_min
@@ -64,7 +68,7 @@
     {%- endif -%}
 
     <div class="vedette__achat">
-      {%- if produit != blank -%}
+      {%- if produit_ok -%}
         <p class="vedette__prix">
           {%- if produit.price_varies -%}
             {{ 'aplomb.produit.des' | t: prix: prix }}

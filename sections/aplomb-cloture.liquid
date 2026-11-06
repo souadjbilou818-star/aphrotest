@@ -25,7 +25,7 @@
         <p class="cloture__quiz"><a class="lien" href="{{ quiz_url }}">{{ section.settings.cta_quiz }}</a></p>
       {%- else -%}
         <div class="cloture__ctas">
-          {%- if produit != blank -%}
+          {%- if produit.handle != blank and produit.handle -%}
             <a class="btn" href="{{ produit.url }}">{{ section.settings.cta_produit }}</a>
           {%- endif -%}
           <a class="btn btn--line" href="{{ quiz_url }}">{{ section.settings.cta_quiz }}</a>

@@ -3,7 +3,7 @@
   assign titre_id = 'titre-' | append: section.id
   assign faits = section.blocks | where: 'type', 'fait'
   assign quiz_url = settings.page_quiz.url | default: '#quiz'
-  if produit != blank
+  if produit.handle != blank and produit.handle
     assign produit_url = produit.url
   else
     assign produit_url = '#' | append: section.settings.ancre_produit

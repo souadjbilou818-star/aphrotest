@@ -103,7 +103,10 @@ CATALOGUE.forEach((p) => {
 });
 // Compléments proposés sous COULISSE 01 (metafield aplomb.complements)
 CATALOGUE[0].metafields.aplomb.complements = { value: [CATALOGUE[3], CATALOGUE[4]] };
-const parHandle = (h) => (ABSENTS ? null : CATALOGUE.find((p) => p.handle === h) || null);
+// Un produit en brouillon référencé par un réglage arrive sur Shopify comme un
+// objet creux (handle et url vides, prix 0) : on reproduit ce cas.
+const CREUX = { id: null, handle: '', url: '', title: '', price: 0, price_min: 0, variants: [], available: false, metafields: { aplomb: {}, gpsr: {} } };
+const parHandle = (h) => (ABSENTS ? (h ? CREUX : null) : CATALOGUE.find((p) => p.handle === h) || null);
 const toutesVariantes = () => CATALOGUE.flatMap((p) => p.variants);
 
 const collection = (handle, title, produits, numero, description) => ({

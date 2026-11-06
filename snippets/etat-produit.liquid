@@ -9,7 +9,7 @@
 {% enddoc %}
 {%- liquid
   assign etat = 'attente'
-  if product != blank
+  if product.handle != blank and product.handle
     if settings.launch_mode == 'vente' and product.metafields.aplomb.liste_attente.value != true
       assign etat = 'vente'
     elsif settings.launch_mode == 'reservation' and product.id == settings.produit_principal.id
