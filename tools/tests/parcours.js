@@ -264,6 +264,9 @@ const reinitialiser = (p, base = VENTE) => p.request.get(`${base}/__reinitialise
     ok(await p.locator('#liste-cloture').count() === 1, 'liste d’attente de clôture absente');
     ok(await p.locator('dialog[data-tiroir]').count() === 0, 'tiroir rendu en liste d’attente');
     ok(await p.locator('.famille__prix--attente').count() === 3, 'familles sans prix attendues');
+    ok(await p.locator('.lien-famille').count() === 0, 'lien vers une collection non publiée (404)');
+    ok(await p.locator('.famille__lien').count() === 0, 'carte de famille liée à une collection non publiée');
+    ok(await p.locator('details.menu-mobile').count() === 0, 'menu mobile vide affiché');
     const q = p.locator('aplomb-quiz');
     for (const t of ['routine', 'déjà', 'compact', 'polyvalente']) {
       await q.locator('.quiz__option:visible', { hasText: t }).click();

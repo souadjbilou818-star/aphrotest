@@ -1,6 +1,7 @@
 {% doc %}
   Liens vers les trois familles (Réglages du thème > Boutique), en éléments de liste.
-  Une famille sans collection choisie n’apparaît pas.
+  Une famille sans collection choisie, ou dont la collection n’est pas publiée
+  sur la boutique en ligne, n’apparaît pas (pas de lien vers une page 404).
 
   @param {string} [forme] - 'barre' ou 'mobile' (réservé au style)
 {% enddoc %}
@@ -18,10 +19,14 @@
         assign c = settings.collection_atelier
     endcase
     assign cle = 'aplomb.familles.' | append: f
+    assign c_ok = false
+    if c and c.published_at
+      assign c_ok = true
+    endif
   -%}
-  {%- if c != blank -%}
+  {%- if c_ok -%}
     <li class="lien-famille lien-famille--{{ forme }}">
-      <a href="{{ c.url }}" {% if collection.id == c.id %}aria-current="page"{% endif %}>
+      <a href="{{ c.url }}" {% if collection and collection.id == c.id %}aria-current="page"{% endif %}>
         <span class="lien-famille__num mono">0{{ forloop.index }}</span>
         {{ cle | t }}
       </a>

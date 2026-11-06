@@ -1,32 +1,102 @@
 {
-  "date": "2026-11-06T05:42:07.678Z",
-  "total": 5,
-  "ok": 5,
+  "date": "2026-11-06T05:49:24.728Z",
+  "total": 19,
+  "ok": 19,
   "resultats": [
     {
       "test": "Quiz : validation, toucher, clavier, retour, résultat COULISSE, mesure",
       "statut": "ok",
-      "ms": 3198
+      "ms": 3230
     },
     {
       "test": "Quiz : « petit espace » écarte les Reformers Atelier et le dit",
       "statut": "ok",
-      "ms": 2636
+      "ms": 2581
     },
     {
       "test": "Quiz : kit simple → Les Essentiels",
       "statut": "ok",
-      "ms": 2445
+      "ms": 2453
     },
     {
       "test": "Quiz en page dédiée : le bouton Retour du navigateur revient d’une question",
       "statut": "ok",
-      "ms": 1130
+      "ms": 1151
     },
     {
       "test": "Quiz → ajout au panier depuis la recommandation, tiroir ouvert",
       "statut": "ok",
-      "ms": 2757
+      "ms": 2787
+    },
+    {
+      "test": "Produit : variante Studio, prix, URL, compléments, panier",
+      "statut": "ok",
+      "ms": 464
+    },
+    {
+      "test": "Panier : quantités, limite de stock (erreur lisible), retrait, paiement natif",
+      "statut": "ok",
+      "ms": 1308
+    },
+    {
+      "test": "Page panier : quantité sans rechargement, paiement",
+      "statut": "ok",
+      "ms": 245
+    },
+    {
+      "test": "Barre collante mobile : apparaît après le bloc d’achat et ajoute au panier",
+      "statut": "ok",
+      "ms": 636
+    },
+    {
+      "test": "Galerie : flèches, compteur, visionneuse (zoom, Échap, retour du focus)",
+      "statut": "ok",
+      "ms": 712
+    },
+    {
+      "test": "Produit en liste d’attente en mode Vente (Atelier) : aucun bouton d’achat",
+      "statut": "ok",
+      "ms": 168
+    },
+    {
+      "test": "Collection : prix réels, épuisé signalé, navigation des familles",
+      "statut": "ok",
+      "ms": 206
+    },
+    {
+      "test": "Liste d’attente, produits absents : replis honnêtes, aucun bouton d’achat",
+      "statut": "ok",
+      "ms": 2543
+    },
+    {
+      "test": "Largeur 320 px : aucun débordement horizontal, aucune erreur console",
+      "statut": "ok",
+      "ms": 3534
+    },
+    {
+      "test": "Largeur 375 px : aucun débordement horizontal, aucune erreur console",
+      "statut": "ok",
+      "ms": 3560
+    },
+    {
+      "test": "Largeur 390 px : aucun débordement horizontal, aucune erreur console",
+      "statut": "ok",
+      "ms": 6458
+    },
+    {
+      "test": "Largeur 768 px : aucun débordement horizontal, aucune erreur console",
+      "statut": "ok",
+      "ms": 3501
+    },
+    {
+      "test": "Largeur 1024 px : aucun débordement horizontal, aucune erreur console",
+      "statut": "ok",
+      "ms": 3530
+    },
+    {
+      "test": "Largeur 1440 px : aucun débordement horizontal, aucune erreur console",
+      "statut": "ok",
+      "ms": 7321
     }
   ]
 }

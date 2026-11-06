@@ -134,6 +134,10 @@
           endcase
           assign resultat_titre_id = 'resultat-' | append: section.id | append: '-' | append: f
           assign contexte_achat = 'quiz-' | append: f
+          assign c_ok = false
+          if c and c.published_at
+            assign c_ok = true
+          endif
         -%}
         <article
           class="resultat"
@@ -195,7 +199,7 @@
                   {%- assign tags_quiz = 'quiz,' | append: f -%}
                   {% render 'waitlist-form', contexte: contexte_achat, tags: tags_quiz, bouton_court: true %}
                 {%- endif -%}
-                {%- if c != blank -%}
+                {%- if c_ok -%}
                   <a class="lien petit" href="{{ c.url }}" data-quiz-cta="famille">{{ 'aplomb.quiz.voir_famille' | t }} {{ cle_nom | t }}</a>
                 {%- endif -%}
               </div>

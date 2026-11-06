@@ -23,8 +23,12 @@
               assign c = settings.collection_atelier
           endcase
         endif
+        assign c_ok = false
+        if c and c.published_at
+          assign c_ok = true
+        endif
         assign prix_min = nil
-        if c != blank and c.products_count > 0
+        if c_ok and c.products_count > 0
           assign prix_min = c.products | map: 'price_min' | sort | first
         endif
         assign mis_en_avant = false
@@ -46,7 +50,7 @@
         <div class="famille__texte">
           <p class="famille__num mono">{{ block.settings.numero }}</p>
           <h3 class="famille__nom">
-            {%- if c != blank -%}
+            {%- if c_ok -%}
               <a class="famille__lien" href="{{ c.url }}">{{ block.settings.nom }}</a>
             {%- else -%}
               {{ block.settings.nom }}
@@ -60,7 +64,7 @@
             {%- else -%}
               <span class="famille__prix famille__prix--attente">{{ section.settings.texte_attente }}</span>
             {%- endif -%}
-            {%- if c != blank -%}
+            {%- if c_ok -%}
               <span class="famille__voir" aria-hidden="true">{{ section.settings.texte_voir }} →</span>
             {%- endif -%}
           </p>

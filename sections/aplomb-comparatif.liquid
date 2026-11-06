@@ -29,9 +29,13 @@
                 else
                   assign c = settings.collection_atelier
               endcase
+              assign c_ok = false
+              if c and c.published_at
+                assign c_ok = true
+              endif
             -%}
             <th scope="col" class="{% if col == avant %}is-aplomb{% endif %}">
-              {%- if c != blank -%}
+              {%- if c_ok -%}
                 <a href="{{ c.url }}">{{ section.settings[cle_nom] }}</a>
               {%- else -%}
                 {{ section.settings[cle_nom] }}
@@ -65,7 +69,7 @@
                     assign c = settings.collection_atelier
                 endcase
                 assign prix_min = nil
-                if c != blank and c.products_count > 0
+                if c and c.published_at and c.products_count > 0
                   assign prix_min = c.products | map: 'price_min' | sort | first
                 endif
               -%}

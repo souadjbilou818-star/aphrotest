@@ -6,9 +6,9 @@
  *
  * Usage : MODE=vente PORT=8765 node tools/apercu/serveur.js
  *   MODE      waitlist | reservation | vente (défaut : vente)
- *   PRODUITS  presents (défaut) | absents  (simule des produits en brouillon :
- *             les réglages produit et collection sont vides, comme sur la
- *             boutique tant que rien n’est publié)
+ *   PRODUITS  presents (défaut) | absents  (simule des produits en brouillon et
+ *             des collections non publiées, comme sur la boutique avant
+ *             l’ouverture : produits vides en Liquid, collections sans published_at)
  *
  * Routes : /  /products/:handle  /collections/:handle  /pages/trouver-mon-equipement
  *          /cart  /checkout  POST /cart/add.js  /cart/change.js  /cart  /contact
@@ -107,7 +107,7 @@ const parHandle = (h) => (ABSENTS ? null : CATALOGUE.find((p) => p.handle === h)
 const toutesVariantes = () => CATALOGUE.flatMap((p) => p.variants);
 
 const collection = (handle, title, produits, numero, description) => ({
-  id: handle.length * 1000, handle, title, url: `/collections/${handle}`, description,
+  id: handle.length * 1000, handle, title, url: `/collections/${handle}`, description, published_at: '2026-11-01T09:00:00Z',
   products: produits, products_count: produits.length, metafields: { aplomb: { numero } },
 });
 const COLLECTIONS = {
@@ -179,11 +179,14 @@ Object.assign(settings, {
   launch_mode: MODE,
   produit_principal: parHandle('coulisse-01'),
   produit_reservation: parHandle('reservation-prioritaire'),
-  collection_essentiels: ABSENTS ? null : COLLECTIONS['les-essentiels'],
-  collection_coulisse: ABSENTS ? null : COLLECTIONS.coulisse,
-  collection_atelier: ABSENTS ? null : COLLECTIONS['reformers-atelier'],
-  page_quiz: PAGES['trouver-mon-equipement'],
-  page_livraison: PAGES['livraison-et-retours'],
+  // Comme observé sur Shopify : une collection non publiée reste lisible en
+  // Liquid (sans published_at), mais sa page renvoie une 404 aux visiteurs.
+  collection_essentiels: ABSENTS ? { ...COLLECTIONS['les-essentiels'], published_at: null, products: [], products_count: 0 } : COLLECTIONS['les-essentiels'],
+  collection_coulisse: ABSENTS ? { ...COLLECTIONS.coulisse, published_at: null, products: [], products_count: 0 } : COLLECTIONS.coulisse,
+  collection_atelier: ABSENTS ? { ...COLLECTIONS['reformers-atelier'], published_at: null, products: [], products_count: 0 } : COLLECTIONS['reformers-atelier'],
+  // Une page non publiée est vide en Liquid (observé sur l’aperçu Shopify).
+  page_quiz: ABSENTS ? null : PAGES['trouver-mon-equipement'],
+  page_livraison: ABSENTS ? null : PAGES['livraison-et-retours'],
 });
 
 /* Résout les réglages typés (produit, collection, page, image…) d’un schéma. */

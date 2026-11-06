@@ -7,60 +7,54 @@
     assign montre_panier = true
   endif
 -%}
+{%- capture liens_nav -%}
+  {%- if liens.size > 0 -%}
+    {%- for link in liens -%}
+      {%- liquid
+        if link.object == blank
+          if link.type == 'collection_link' or link.type == 'page_link' or link.type == 'product_link' or link.type == 'blog_link' or link.type == 'article_link'
+            continue
+          endif
+        endif
+      -%}
+      <li><a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a></li>
+    {%- endfor -%}
+  {%- else -%}
+    {%- render 'liens-familles', forme: 'nav' -%}
+  {%- endif -%}
+{%- endcapture -%}
 <header class="masthead">
   <div class="wrap masthead__barre">
-    <details class="menu-mobile" data-menu-mobile>
-      <summary class="menu-mobile__bouton" aria-label="{{ 'aplomb.menu' | t }}">
-        {%- render 'icone', nom: 'menu' -%}
-        <span class="label">{{ 'aplomb.menu' | t }}</span>
-      </summary>
-      <nav class="menu-mobile__panneau" aria-label="{{ 'aplomb.menu' | t }}">
-        <ul>
-          {%- if liens.size > 0 -%}
-            {%- for link in liens -%}
-            {%- liquid
-              if link.object == blank
-                if link.type == 'collection_link' or link.type == 'page_link' or link.type == 'product_link' or link.type == 'blog_link' or link.type == 'article_link'
-                  continue
-                endif
-              endif
-            -%}
-              <li><a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a></li>
-            {%- endfor -%}
-          {%- else -%}
-            {%- render 'liens-familles', forme: 'mobile' -%}
-          {%- endif -%}
-          {%- if quiz_url != blank -%}
-            <li><a class="menu-mobile__quiz" href="{{ quiz_url }}">{{ section.settings.libelle_quiz }}</a></li>
-          {%- endif -%}
-        </ul>
-      </nav>
-    </details>
+    {%- if liens_nav != blank or quiz_url != blank -%}
+      <details class="menu-mobile" data-menu-mobile>
+        <summary class="menu-mobile__bouton" aria-label="{{ 'aplomb.menu' | t }}">
+          {%- render 'icone', nom: 'menu' -%}
+          <span class="label">{{ 'aplomb.menu' | t }}</span>
+        </summary>
+        <nav class="menu-mobile__panneau" aria-label="{{ 'aplomb.menu' | t }}">
+          <ul>
+            {{ liens_nav }}
+            {%- if quiz_url != blank -%}
+              <li><a class="menu-mobile__quiz" href="{{ quiz_url }}">{{ section.settings.libelle_quiz }}</a></li>
+            {%- endif -%}
+          </ul>
+        </nav>
+      </details>
+    {%- else -%}
+      <span class="menu-mobile" aria-hidden="true"></span>
+    {%- endif -%}
 
     <a class="marque" href="{{ routes.root_url }}" aria-label="{{ 'aplomb.accueil' | t }}">
       {% render 'logo', variante: 'compact', decoratif: true %}
     </a>
 
-    <nav class="masthead__nav" aria-label="{{ 'aplomb.menu' | t }}">
-      <ul>
-        {%- if liens.size > 0 -%}
-          {%- for link in liens -%}
-            {%- liquid
-              if link.object == blank
-                if link.type == 'collection_link' or link.type == 'page_link' or link.type == 'product_link' or link.type == 'blog_link' or link.type == 'article_link'
-                  continue
-                endif
-              endif
-            -%}
-            <li>
-              <a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{- link.title -}}</a>
-            </li>
-          {%- endfor -%}
-        {%- else -%}
-          {%- render 'liens-familles', forme: 'barre' -%}
-        {%- endif -%}
-      </ul>
-    </nav>
+    {%- if liens_nav != blank -%}
+      <nav class="masthead__nav" aria-label="{{ 'aplomb.menu' | t }}">
+        <ul>{{ liens_nav }}</ul>
+      </nav>
+    {%- else -%}
+      <span class="masthead__nav" aria-hidden="true"></span>
+    {%- endif -%}
 
     <div class="masthead__actions">
       {%- if quiz_url != blank -%}
