@@ -70,7 +70,7 @@
                 endif
               -%}
               <td class="{% if col == avant %}is-aplomb{% endif %}" data-col="{{ section.settings[cle_nom] | escape }}">
-                {%- if prix_min != blank -%}
+                {%- if prix_min -%}
                   {%- capture prix -%}{% render 'prix', montant: prix_min %}{%- endcapture -%}
                   {{ 'aplomb.produit.des' | t: prix: prix }}
                 {%- else -%}

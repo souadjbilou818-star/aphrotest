@@ -25,7 +25,7 @@ DX = 620  # plateau droit au repos
 Y0, Y1 = 80, 300  # planche, vue de dessus
 CY = (Y0 + Y1) / 2
 EL = 0  # décalage vertical de l'élévation (variante)
-HAUTEURS = {"simple": 620, "full": 790}
+HAUTEURS = {"simple": 660, "full": 860}
 
 
 def f(v):
@@ -63,6 +63,12 @@ def cote_v(y1, y2, x, ext_from):
     d = 8 if ext_from < x else -8
     out = [line(ext_from, y1, x + d, y1, "d-c"), line(ext_from, y2, x + d, y2, "d-c"), line(x, y1, x, y2, "d-c")]
     return "".join(out) + tick(x, y1) + tick(x, y2)
+
+
+def hachures(x1, x2, y):
+    """Hachures du sol, en un seul tracé (DOM léger)."""
+    d = "".join(f"M{x} {f(y)}l-12 12" for x in range(x1, x2, 18))
+    return path(d, "d-f")
 
 
 def plateau_dessus(x):
@@ -132,7 +138,7 @@ def svg(detail="simple", uid="d"):
     # ---------- ÉLÉVATION ----------
     sol = 560
     fixe.append(line(60, sol, 1140, sol, "d-o"))
-    fixe.append("".join(line(x, sol, x - 12, sol + 12, "d-f") for x in range(78, 1141, 18)))
+    fixe.append(hachures(78, 1141, sol))
     for x in (124, 1036):
         fixe.append(rect(x, sol - 8, 40, 8, "d-t d-fill"))  # patins antidérapants
     fixe.append(rect(100, sol - 30, 1000, 22, "d-o d-fill", 6))
@@ -146,9 +152,9 @@ def svg(detail="simple", uid="d"):
 
     # ---------- VUE PLIÉE (full) ----------
     if detail == "full":
-        pb = 700
+        pb = 780
         fixe.append(line(60, pb, 660, pb, "d-o"))
-        fixe.append("".join(line(x, pb, x - 12, pb + 12, "d-f") for x in range(78, 661, 18)))
+        fixe.append(hachures(78, 661, pb))
         fixe.append(rect(124, pb - 8, 40, 8, "d-t d-fill"))
         fixe.append(rect(100, pb - 30, 500, 22, "d-o d-fill", 6))
         fixe.append(rect(100, pb - 88, 500, 22, "d-o d-fill", 6))
@@ -159,19 +165,19 @@ def svg(detail="simple", uid="d"):
     # ---------- COTES ----------
     cotes = cote_v(Y0, Y1, 1204, 1186)                                   # B largeur
     cotes += cote_h(GX - COURSE, GX, Y0 - 34, Y0 + 4)                     # C course d'un plateau
-    cotes += cote_h(100, 1100, sol + 44, sol + 4)                         # A longueur dépliée
+    cotes += cote_h(100, 1100, sol + 70, sol + 4)                         # A longueur dépliée
     cotes += cote_v(sol - 66, sol, 40, 96)                                # E hauteur hors tout
     if detail == "full":
-        cotes += cote_h(100, 600, 744, 704)                               # D longueur pliée
+        cotes += cote_h(100, 600, 824, 784)                               # D longueur pliée
 
     lead = []
     if detail == "full":
         leaders = [
-            (300, CY + 59, 300, 352),      # 3 rails
+            (156, CY + 59, 156, 352),      # 3 rails (segment jamais couvert)
             (600, Y1 - 15, 600, 352),      # 4 charnière
             (70, CY + 62, 70, 352),        # 5 cordons
             (1156, CY + 62 + 22, 1156, 352),  # 6 poignées
-            (144, sol - 4, 144, 600),      # 7 patins
+            (144, sol - 4, 144, 578),      # 7 patins
         ]
         for (x1, y1, x2, y2) in leaders:
             lead.append(line(x1, y1, x2, y2, "d-l") + circle(x1, y1, 2.4, "d-dot"))
@@ -203,15 +209,15 @@ def pos(x, y, h):
 def calques(detail="simple"):
     h = HAUTEURS[detail]
     sol = 560
-    cotes = [("A", 600, sol + 44), ("B", 1204, CY), ("C", GX - COURSE / 2, Y0 - 34), ("E", 40, sol - 33)]
+    cotes = [("A", 600, sol + 70), ("B", 1204, CY), ("C", GX - COURSE / 2, Y0 - 34), ("E", 40, sol - 33)]
     if detail == "full":
-        cotes.append(("D", 350, 744))
+        cotes.append(("D", 350, 824))
     out = ['<div class="dessin__calques" aria-hidden="true">']
     for lettre, x, y in cotes:
         v = " cote--v" if lettre in ("B", "E") else ""
         out.append(f'<span class="cote{v}" data-cote="{lettre}" style="{pos(x, y, h)}">{lettre}</span>')
     if detail == "full":
-        for n, x, y in [(3, 300, 368), (4, 600, 368), (5, 70, 368), (6, 1156, 368), (7, 144, 616)]:
+        for n, x, y in [(3, 156, 368), (4, 600, 368), (5, 70, 368), (6, 1156, 368), (7, 144, 594)]:
             out.append(f'<span class="bulle" style="{pos(x, y, h)}">{n}</span>')
         out.append(f'<div class="dessin__mobile dessin__mobile--g"><span class="bulle" style="{pos(GX + PLAT_W / 2, CY, h)}">1</span></div>')
         out.append(f'<div class="dessin__mobile dessin__mobile--d"><span class="bulle" style="{pos(DX + PLAT_W / 2, CY, h)}">2</span></div>')

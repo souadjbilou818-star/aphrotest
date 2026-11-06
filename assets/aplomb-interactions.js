@@ -219,12 +219,17 @@
     connectedCallback() {
       const cible = document.querySelector(this.dataset.cible || '[data-cta-principal]');
       if (!cible || !('IntersectionObserver' in window)) return;
-      this.observer = new IntersectionObserver(([entry]) => {
-        const passe = !entry.isIntersecting && entry.boundingClientRect.top < 0;
-        this.classList.toggle('is-visible', passe);
-        this.toggleAttribute('inert', !passe);
-        this.setAttribute('aria-hidden', String(!passe));
-      });
+      // Marge basse immense : la cible « sort » seulement quand elle passe
+      // au-dessus de l’écran, même après un défilement très rapide.
+      this.observer = new IntersectionObserver(
+        ([entry]) => {
+          const passe = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+          this.classList.toggle('is-visible', passe);
+          this.toggleAttribute('inert', !passe);
+          this.setAttribute('aria-hidden', String(!passe));
+        },
+        { rootMargin: '0px 0px 100000px 0px' }
+      );
       this.observer.observe(cible);
     }
 

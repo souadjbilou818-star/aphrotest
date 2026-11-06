@@ -7,10 +7,15 @@
 {%- liquid
   assign centimes = montant | modulo: 100
   assign euros = montant | divided_by: 100
+  if euros >= 1000
+    assign milliers = euros | divided_by: 1000
+    assign reste = euros | modulo: 1000 | prepend: '00' | slice: -3, 3
+    assign euros = milliers | append: ' ' | append: reste
+  endif
   if centimes == 0
-    echo euros | append: ' €'
+    echo euros | append: ' €'
   else
     assign cts = centimes | prepend: '0' | slice: -2, 2
-    echo euros | append: ',' | append: cts | append: ' €'
+    echo euros | append: ',' | append: cts | append: ' €'
   endif
 -%}

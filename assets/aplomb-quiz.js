@@ -38,7 +38,10 @@
       this.form.hidden = false;
       this.barre.hidden = false;
 
-      this.form.addEventListener('pointerdown', () => { this.dernierPointeur = Date.now(); });
+      this.form.addEventListener('pointerdown', (e) => {
+        this.cibleTouchee = e.target.closest('.quiz__option');
+        this.dernierPointeur = Date.now();
+      });
       this.form.addEventListener('change', (e) => this.surChoix(e));
       this.form.addEventListener('submit', (e) => { e.preventDefault(); this.valider(); });
       this.querySelector('[data-quiz-retour]').addEventListener('click', () => this.retour());
@@ -110,8 +113,10 @@
         suivre('quiz_started', { quiz_id: this.id_, mode: this.mode });
       }
       this.ecrire();
-      // Passage automatique seulement après un toucher ou un clic.
-      if (Date.now() - this.dernierPointeur < 800) {
+      // Passage automatique seulement après un toucher ou un clic sur cette réponse.
+      const touchee = this.cibleTouchee && this.cibleTouchee.contains(input) && Date.now() - this.dernierPointeur < 800;
+      this.cibleTouchee = null;
+      if (touchee) {
         clearTimeout(this.minuteur);
         this.minuteur = setTimeout(() => this.valider(), reduit() ? 0 : AUTO_DELAI);
       }

@@ -164,7 +164,7 @@ def quiz(mode):
 
 
 def garanties(num):
-    return section("garanties", {"ancre": "garanties", "num": num, "titre": "Ce qui vous protège",
+    return section("garanties", {"ancre": "garanties", "num": num, "folio": "", "encadre": "", "titre": "Ce qui vous protège",
                                  "intro": "Vos droits, écrits simplement. Rien de plus, rien de moins."}, [
         ("garantie", {"titre": "14 jours pour changer d'avis",
                       "texte": "À compter de la réception. Les conditions de retour sont sur la page Livraison et retours.",
@@ -253,7 +253,7 @@ def index():
         }, COMPARATIF_LIGNES, "l"),
         "quiz": quiz("integre"),
         "programme": section("acte-programme", {
-            "ancre": "programme", "num": "III.", "titre": "Le programme",
+            "ancre": "programme", "num": "III.", "folio": "", "plan": "", "titre": "Le programme",
             "intro": "Vingt minutes, quatre semaines, chez vous.",
             "chapeau": "Quatre semaines pour installer la routine, sans brûler les étapes. Trois séances de vingt minutes par semaine.",
             "encart_titre": "Le rythme",
@@ -268,7 +268,7 @@ def index():
         ], "s"),
         "garanties": garanties("IV."),
         "maison": section("acte-maison", {
-            "ancre": "maison", "num": "V.", "titre": "La maison",
+            "ancre": "maison", "num": "V.", "folio": "", "titre": "La maison",
             "texte": "<p>L'Aplomb est né à Paris d'un constat simple : le Pilates se pratique mieux avec un appareil, "
                      "mais l'appareil doit tenir dans un appartement. Trois familles, du kit d'accessoires au reformer "
                      "à chariot, choisies pour leur justesse plutôt que pour leur nombre.</p>",
@@ -277,7 +277,7 @@ def index():
             "soir_titre": "L'élégance publique.",
             "soir_titre_2": "La discipline privée.",
         }, [
-            ("cadre", {"image": img("plan-09-soiree.jpg"), "generee": True, "ratio": "3/2",
+            ("cadre", {"image": img("plan-09-soiree.jpg"), "generee": True, "ratio": "3/2", "plan": "",
                        "legende": "l'élégance publique, une soirée à Paris"}),
         ], "c"),
         "faq": section("faq", {"ancre": "faq", "num": "VI.", "titre": "Vos questions",
@@ -290,7 +290,7 @@ def index():
             "titre": "Votre pratique, chez vous, dès cette semaine.",
             "texte": "COULISSE 01 pour commencer, ou quatre questions pour choisir.",
             "cta_produit": "Voir COULISSE 01",
-            "cta_quiz": "Vous hésitez ? Trouvez votre équipement en 4 questions",
+            "cta_quiz": "Trouver mon équipement",
         }),
     }
     order = ["hero", "familles", "vedette", "demo", "comparatif", "quiz", "programme", "garanties", "maison", "faq", "cloture"]

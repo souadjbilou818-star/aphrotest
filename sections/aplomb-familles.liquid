@@ -54,7 +54,7 @@
           </h3>
           <p class="famille__desc">{{ block.settings.texte }}</p>
           <p class="famille__pied">
-            {%- if prix_min != blank -%}
+            {%- if prix_min -%}
               {%- capture prix -%}{% render 'prix', montant: prix_min %}{%- endcapture -%}
               <span class="famille__prix">{{ 'aplomb.produit.des' | t: prix: prix }}</span>
             {%- else -%}

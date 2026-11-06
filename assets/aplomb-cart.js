@@ -163,6 +163,17 @@
     });
   }
 
+  async function resynchroniser() {
+    const ids = sectionsDemandees();
+    if (!ids.length) return;
+    try {
+      const r = await fetch(`${window.location.pathname}?sections=${encodeURIComponent(ids.join(','))}`, { headers: { Accept: 'application/json' } });
+      if (r.ok) remplacer(await r.json());
+    } catch (_) {
+      /* hors ligne : on garde l’affichage */
+    }
+  }
+
   /* ---------- Quantités ---------- */
   const enCours = new WeakMap();
   async function changer(ligneEl, quantite) {
@@ -177,8 +188,16 @@
       remplacer(reponse.sections);
       if (!reponse.sections) window.location.reload();
     } catch (err) {
-      erreurDans(conteneur, err.statut === 422 ? err.message : messages.erreur);
-      conteneur.removeAttribute('aria-busy');
+      // Le serveur a pu ajuster la quantité (stock) : on resynchronise l’affichage.
+      const dansTiroir = !!conteneur.closest('[data-tiroir]');
+      await resynchroniser();
+      const cible = conteneur.isConnected
+        ? conteneur
+        : dansTiroir
+          ? tiroir.querySelector('[data-panier-contenu]')
+          : document.querySelector('[data-panier-page] [data-panier-contenu]');
+      erreurDans(cible, err.statut === 422 ? err.message : messages.erreur);
+      if (cible) cible.removeAttribute('aria-busy');
     } finally {
       enCours.delete(conteneur);
     }

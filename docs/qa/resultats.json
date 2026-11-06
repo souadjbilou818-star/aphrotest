@@ -1,0 +1,102 @@
+{
+  "date": "2026-11-06T05:34:24.887Z",
+  "total": 19,
+  "ok": 19,
+  "resultats": [
+    {
+      "test": "Quiz : validation, toucher, clavier, retour, résultat COULISSE, mesure",
+      "statut": "ok",
+      "ms": 3096
+    },
+    {
+      "test": "Quiz : « petit espace » écarte les Reformers Atelier et le dit",
+      "statut": "ok",
+      "ms": 2558
+    },
+    {
+      "test": "Quiz : kit simple → Les Essentiels",
+      "statut": "ok",
+      "ms": 2440
+    },
+    {
+      "test": "Quiz en page dédiée : le bouton Retour du navigateur revient d’une question",
+      "statut": "ok",
+      "ms": 1114
+    },
+    {
+      "test": "Quiz → ajout au panier depuis la recommandation, tiroir ouvert",
+      "statut": "ok",
+      "ms": 2740
+    },
+    {
+      "test": "Produit : variante Studio, prix, URL, compléments, panier",
+      "statut": "ok",
+      "ms": 378
+    },
+    {
+      "test": "Panier : quantités, limite de stock (erreur lisible), retrait, paiement natif",
+      "statut": "ok",
+      "ms": 1334
+    },
+    {
+      "test": "Page panier : quantité sans rechargement, paiement",
+      "statut": "ok",
+      "ms": 225
+    },
+    {
+      "test": "Barre collante mobile : apparaît après le bloc d’achat et ajoute au panier",
+      "statut": "ok",
+      "ms": 611
+    },
+    {
+      "test": "Galerie : flèches, compteur, visionneuse (zoom, Échap, retour du focus)",
+      "statut": "ok",
+      "ms": 669
+    },
+    {
+      "test": "Produit en liste d’attente en mode Vente (Atelier) : aucun bouton d’achat",
+      "statut": "ok",
+      "ms": 150
+    },
+    {
+      "test": "Collection : prix réels, épuisé signalé, navigation des familles",
+      "statut": "ok",
+      "ms": 187
+    },
+    {
+      "test": "Liste d’attente, produits absents : replis honnêtes, aucun bouton d’achat",
+      "statut": "ok",
+      "ms": 2517
+    },
+    {
+      "test": "Largeur 320 px : aucun débordement horizontal, aucune erreur console",
+      "statut": "ok",
+      "ms": 3494
+    },
+    {
+      "test": "Largeur 375 px : aucun débordement horizontal, aucune erreur console",
+      "statut": "ok",
+      "ms": 3480
+    },
+    {
+      "test": "Largeur 390 px : aucun débordement horizontal, aucune erreur console",
+      "statut": "ok",
+      "ms": 6407
+    },
+    {
+      "test": "Largeur 768 px : aucun débordement horizontal, aucune erreur console",
+      "statut": "ok",
+      "ms": 3498
+    },
+    {
+      "test": "Largeur 1024 px : aucun débordement horizontal, aucune erreur console",
+      "statut": "ok",
+      "ms": 3503
+    },
+    {
+      "test": "Largeur 1440 px : aucun débordement horizontal, aucune erreur console",
+      "statut": "ok",
+      "ms": 7250
+    }
+  ]
+}

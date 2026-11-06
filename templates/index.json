@@ -374,6 +374,8 @@
       "settings": {
         "ancre": "programme",
         "num": "III.",
+        "folio": "",
+        "plan": "",
         "titre": "Le programme",
         "intro": "Vingt minutes, quatre semaines, chez vous.",
         "chapeau": "Quatre semaines pour installer la routine, sans brûler les étapes. Trois séances de vingt minutes par semaine.",
@@ -430,6 +432,8 @@
       "settings": {
         "ancre": "garanties",
         "num": "IV.",
+        "folio": "",
+        "encadre": "",
         "titre": "Ce qui vous protège",
         "intro": "Vos droits, écrits simplement. Rien de plus, rien de moins."
       },
@@ -479,6 +483,7 @@
       "settings": {
         "ancre": "maison",
         "num": "V.",
+        "folio": "",
         "titre": "La maison",
         "texte": "<p>L’Aplomb est né à Paris d’un constat simple : le Pilates se pratique mieux avec un appareil, mais l’appareil doit tenir dans un appartement. Trois familles, du kit d’accessoires au reformer à chariot, choisies pour leur justesse plutôt que pour leur nombre.</p>",
         "transparence": "Sélectionné et contrôlé à Paris, fabriqué par une usine partenaire. Le nom et l’adresse du fabricant figurent sur la page Sécurité produit.",
@@ -493,6 +498,7 @@
             "image": "shopify://shop_images/plan-09-soiree.jpg",
             "generee": true,
             "ratio": "3/2",
+            "plan": "",
             "legende": "l’élégance publique, une soirée à Paris"
           }
         }
@@ -595,7 +601,7 @@
         "titre": "Votre pratique, chez vous, dès cette semaine.",
         "texte": "COULISSE 01 pour commencer, ou quatre questions pour choisir.",
         "cta_produit": "Voir COULISSE 01",
-        "cta_quiz": "Vous hésitez ? Trouvez votre équipement en 4 questions"
+        "cta_quiz": "Trouver mon équipement"
       }
     }
   },

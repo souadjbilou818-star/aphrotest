@@ -22,8 +22,14 @@
       </nav>
     {%- endif -%}
     <div class="pied__colophon">
-      <span>© {{ 'now' | date: '%Y' }} {{ section.settings.colophon }}</span>
-      <span>{{ section.settings.mention }}</span>
+      {%- unless section.settings.colophon contains '[' and request.design_mode == false -%}
+        <span>© {{ 'now' | date: '%Y' }} {{ section.settings.colophon }}</span>
+      {%- else -%}
+        <span>© {{ 'now' | date: '%Y' }} {{ section.settings.colophon | split: '·' | first | strip }}</span>
+      {%- endunless -%}
+      {%- if settings.launch_mode == 'vente' and section.settings.mention != blank -%}
+        <span>{{ section.settings.mention }}</span>
+      {%- endif -%}
     </div>
   </div>
 </footer>
@@ -48,6 +54,7 @@
       "type": "text",
       "id": "colophon",
       "label": "Colophon",
+      "info": "Tant qu’il contient une mention entre crochets, seul le nom s’affiche sur la boutique.",
       "default": "L’Aplomb · [SIREN] · [ADRESSE]"
     },
     {

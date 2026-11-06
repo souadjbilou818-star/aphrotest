@@ -63,6 +63,7 @@ h1,
 h2,
 h3,
 h4 {
+  font-variant-numeric: lining-nums;
   font-family: var(--serif);
   font-weight: var(--serif-w);
   margin: 0;
@@ -1440,6 +1441,7 @@ html.visionneuse-ouverte {
   stroke-width: 0.85;
 }
 .d-f {
+  fill: none;
   stroke: var(--ink);
   stroke-width: 0.6;
   opacity: 0.3;
@@ -3034,4 +3036,18 @@ html.visionneuse-ouverte {
 }
 .panier-page [data-panier-contenu][aria-busy='true'] {
   opacity: 0.6;
+}
+
+/* Chiffres alignés dans les prix et les noms de produit (COULISSE 01) */
+[class*='prix'],
+.option__nom,
+.tiroir__total {
+  font-variant-numeric: lining-nums;
+}
+
+/* Produit vedette : sur mobile, le texte avant le dessin */
+@media (max-width: 999px) {
+  .vedette__texte {
+    order: -1;
+  }
 }
