@@ -68,7 +68,7 @@ h4 {
   font-weight: var(--serif-w);
   margin: 0;
   text-wrap: balance;
-  letter-spacing: -0.005em;
+  letter-spacing: var(--serif-ls, -0.005em);
 }
 p,
 ul,
@@ -3861,4 +3861,238 @@ html.visionneuse-ouverte {
   .masthead__recherche {
     display: inline-grid;
   }
+}
+
+/* ==========================================================================
+   Fiche produit v3 : style boutique (référence fournie par la marque)
+   Galerie large, colonne d’achat étroite, bouton arrondi, cartes compactes,
+   exercices en vitrine sur bande grise.
+   ========================================================================== */
+@media (min-width: 1000px) {
+  .produit {
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    column-gap: clamp(32px, 4vw, 64px);
+  }
+}
+.produit__achat {
+  gap: 14px;
+}
+.produit__titre {
+  font-size: calc(clamp(1.625rem, 1.3rem + 0.9vw, 2.125rem) * var(--serif-k, 1));
+  line-height: 1.12;
+}
+.produit__prix {
+  font: 500 1.25rem / 1.2 var(--sans);
+  letter-spacing: 0;
+}
+.produit__prix small {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+.produit .btn--plein,
+.offre .btn--plein {
+  min-height: 54px;
+  border-radius: 999px;
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--ivory);
+}
+.produit .btn--plein:hover,
+.offre .btn--plein:hover {
+  background: #000;
+  border-color: #000;
+}
+.produit .tuile {
+  border-radius: 10px;
+  background: #fff;
+}
+.associes > .label {
+  font: 600 0.9375rem / 1.3 var(--sans);
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink);
+}
+.associe__visuel {
+  height: 72px;
+  background: #f4efe9;
+  border-radius: 10px;
+}
+.associe__visuel img {
+  object-fit: contain;
+}
+
+/* Description et détails */
+.descr__titre {
+  font: 600 1.25rem / 1.2 var(--sans);
+  letter-spacing: -0.01em;
+}
+.descr__accordeons {
+  border-top: 1px solid var(--line);
+}
+.accordeon summary {
+  font: 600 1rem / 1.3 var(--sans);
+}
+
+/* Fond gris clair, pleine largeur */
+.fond--gris {
+  background: #f1f2f1;
+  max-width: none;
+  padding-inline: max(var(--gutter), calc((100% - var(--maxw)) / 2 + var(--gutter)));
+}
+.caracs.fond--gris {
+  margin-top: var(--section);
+  padding-block: var(--section-serre);
+}
+
+/* Alignement centré */
+.caracs--centre .caracs__tete {
+  justify-self: center;
+  justify-items: center;
+  text-align: center;
+}
+.caracs--centre .carac__texte {
+  justify-items: center;
+  text-align: center;
+}
+
+/* Vitrine : grandes cartes dans un panneau blanc arrondi */
+.caracs--vitrine .caracs__panneau {
+  display: grid;
+  gap: clamp(20px, 3vw, 32px);
+  padding-block: clamp(28px, 4vw, 56px);
+  background: #fff;
+  border-radius: 24px;
+  overflow: hidden;
+}
+.caracs--vitrine .caracs__tete {
+  justify-self: center;
+  justify-items: center;
+  text-align: center;
+  padding-inline: var(--gutter);
+}
+.caracs--vitrine .caracs__titre {
+  font-size: calc(clamp(1.5rem, 1.2rem + 1vw, 2.25rem) * var(--serif-k, 1));
+}
+.caracs--vitrine .caracs__liste {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  padding-inline: clamp(16px, 4vw, 48px);
+  scroll-padding-inline: clamp(16px, 4vw, 48px);
+}
+.caracs--vitrine .caracs__liste::-webkit-scrollbar {
+  display: none;
+}
+.caracs--vitrine .carac {
+  flex: 0 0 min(80%, 400px);
+  scroll-snap-align: start;
+  border: 0;
+  border-radius: 16px;
+  background: #f6f4f0;
+}
+.caracs--vitrine .carac__visuel {
+  aspect-ratio: 1;
+  background: #f6f4f0;
+}
+.caracs--vitrine .carac__visuel img {
+  object-fit: cover;
+}
+.caracs--vitrine .carac__texte {
+  padding: 18px 20px 22px;
+}
+.caracs--vitrine .carac--sans-image .carac__texte {
+  min-height: 240px;
+  align-content: end;
+  padding: 24px 26px 28px;
+}
+.caracs--vitrine .carac__num {
+  font: 600 2.75rem / 1 var(--sans);
+  color: var(--sand);
+  margin-bottom: auto;
+}
+.caracs--vitrine .carac--sans-image .carac__texte {
+  grid-template-rows: 1fr auto auto;
+}
+.caracs--vitrine .carac__titre {
+  font: 600 1.125rem / 1.25 var(--sans);
+  letter-spacing: -0.01em;
+}
+.caracs--vitrine .carac__desc {
+  font-size: 0.9375rem;
+}
+.caracs--vitrine .carrousel__nav {
+  margin-top: 4px;
+}
+.carac__titre {
+  letter-spacing: var(--serif-ls, -0.005em);
+}
+
+/* Cartes compactes (rangées des fiches produit) */
+.carte-produit--compacte .carte-produit__lien {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.carte-produit--compacte .carte-produit__visuel {
+  aspect-ratio: 1;
+  background: #f4efe9;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.carte-produit--compacte .carte-produit__visuel--contenu {
+  background: #fff;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.carte-produit--compacte .carte-produit__texte {
+  gap: 4px;
+  padding: 12px 2px 0;
+}
+.carte-produit__coloris {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+.carte-produit__coloris li {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--teinte);
+  box-shadow: inset 0 0 0 1px rgb(11 15 14 / 0.16);
+}
+.carte-produit__coloris li.carte-produit__coloris-plus {
+  width: auto;
+  height: auto;
+  background: none;
+  box-shadow: none;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+.carte-produit--compacte .carte-produit__titre {
+  font: 600 0.9375rem / 1.3 var(--sans);
+  letter-spacing: 0;
+}
+.carte-produit__variante {
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+.carte-produit--compacte .carte-produit__prix {
+  margin-top: 0;
+  font: 500 0.9375rem / 1.3 var(--sans);
+}
+.carte-produit--compacte .carte-produit__prix small {
+  display: none;
+}
+.rangee__titre {
+  font-size: calc(clamp(1.5rem, 1.2rem + 1vw, 2.25rem) * var(--serif-k, 1));
+}
+.collant .btn {
+  border-radius: 999px;
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--ivory);
 }

@@ -205,6 +205,9 @@ function defautsSchema(schema) {
 const settingsSchema = lireJson('config/settings_schema.json');
 const settings = {};
 for (const g of settingsSchema) Object.assign(settings, defautsSchema(g.settings));
+// Valeurs simples de config/settings_data.json (police, textes, mentions) ; les réglages typés sont simulés ci-dessous.
+const donnees = lireJson('config/settings_data.json').current || {};
+for (const [k, v] of Object.entries(donnees)) if (typeof v !== 'string' || !/^shopify:\/\/|^[a-z0-9-]+$/.test(v) || ['police_titres', 'launch_mode'].includes(k)) settings[k] = v;
 Object.assign(settings, {
   launch_mode: MODE,
   produit_principal: parHandle('coulisse-01'),

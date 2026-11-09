@@ -253,24 +253,29 @@ const reinitialiser = (p, base = VENTE) => p.request.get(`${base}/__reinitialise
     await p.context().close();
   });
 
-  await test('Pages produit « landing » : sections, offre finale, aucune fausse preuve', async () => {
+  await test('Fiches produit (structure de la référence) : vitrine, accordéons, cartes compactes, aucune fausse preuve', async () => {
     const p = await page(nav);
-    for (const url of ['/products/atelier-pliable', '/products/la-trousse']) {
+    for (const url of ['/products/atelier-pliable', '/products/la-trousse', '/products/coulisse-01']) {
       await reinitialiser(p);
       await p.goto(`${VENTE}${url}`);
-      ok(await p.locator('.caracs').count() >= 2, `${url} : sections de caractéristiques absentes`);
-      ok(await p.locator('.descr .accordeon').count() >= 2, `${url} : description et accordéons absents`);
+      ok(await p.locator('.caracs--vitrine .carac').count() === 5, `${url} : vitrine des exercices absente`);
+      ok(await p.locator('.descr .accordeon').count() >= 6, `${url} : détails et questions en accordéons absents`);
       ok(await p.locator('.tuile').count() === 3, `${url} : tuiles de réassurance absentes`);
+      ok(await p.locator('.produit__accroche, .produit__achat .label.soft').count() === 0, `${url} : colonne d’achat surchargée`);
+      ok(await p.locator('#completer .carte-produit--compacte').count() >= 1, `${url} : cartes compactes absentes`);
+      ok(await p.locator('#completer .carte-produit--compacte a[href="' + url + '"]').count() === 0, `${url} : le produit se propose lui-même`);
+      ok(await p.locator('.offre, #faq.faq').count() === 0, `${url} : sections hors référence`);
       ok(await p.locator('.galerie-produit__vignette').count() >= 2, `${url} : vignettes absentes`);
       await p.locator('.galerie-produit__vignette').nth(1).click();
       await p.waitForFunction(() => document.querySelector('.galerie-produit__vignette[aria-current="true"]')?.dataset.vignette === '1');
-      ok(await p.locator('.offre [data-cta-vente]').count() === 1, `${url} : offre finale sans bouton`);
       const texte = await p.locator('main').innerText();
       for (const interdit of ['Offre limitée', 'Stock limité', 'avis cinq étoiles', 'Forbes', 'Vogue', 'reformer de studio', 'Résultats rapides']) ok(!texte.includes(interdit), `${url} : « ${interdit} » présent`);
-      await p.locator('.offre [data-cta-vente]').click();
-      await p.waitForSelector('dialog[data-tiroir][open]');
-      ok(await p.locator('dialog[data-tiroir] .panier-ligne').count() === 1, `${url} : ajout depuis l'offre finale`);
-      await p.keyboard.press('Escape');
+      if (url !== '/products/atelier-pliable') {
+        await p.locator('[data-cta-principal] [data-cta-vente]').click();
+        await p.waitForSelector('dialog[data-tiroir][open]');
+        ok(await p.locator('dialog[data-tiroir] .panier-ligne').count() === 1, `${url} : ajout au panier`);
+        await p.keyboard.press('Escape');
+      }
     }
     ok(p.erreurs.length === 0, `erreurs console : ${p.erreurs.join(' | ')}`);
     await p.context().close();

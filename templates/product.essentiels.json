@@ -12,8 +12,12 @@
     "main": {
       "type": "produit-principal",
       "settings": {
-        "accroche": "Des séances Pilates complètes sur le tapis, avec cinq accessoires rangés dans un sac.",
-        "titre_associes": "À associer"
+        "afficher_famille": false,
+        "afficher_accroche": false,
+        "afficher_dispo": false,
+        "titre_associes": "Complétez votre pratique",
+        "note_livraison": "Livraison offerte",
+        "accroche": "Une séance de Pilates complète sur le tapis, avec des accessoires rangés dans un sac."
       },
       "blocks": {
         "p_1": {
@@ -36,52 +40,92 @@
             "icone": "cadenas",
             "texte": "Paiement sécurisé"
           }
-        },
-        "p_4": {
-          "type": "preuve",
-          "settings": {
-            "texte": "13 pièces, rangées dans un sac"
-          }
-        },
-        "p_5": {
-          "type": "preuve",
-          "settings": {
-            "texte": "Ballon 25 cm anti-éclatement"
-          }
-        },
-        "p_6": {
-          "type": "preuve",
-          "settings": {
-            "texte": "Anneau de Pilates 33 cm"
-          }
         }
       },
       "block_order": [
         "p_1",
         "p_2",
-        "p_3",
-        "p_4",
-        "p_5",
-        "p_6"
+        "p_3"
       ]
     },
     "description": {
       "type": "aplomb-description",
       "settings": {
         "ancre": "description",
-        "titre": "Description"
-      }
+        "titre": "Description du produit"
+      },
+      "blocks": {
+        "q_1": {
+          "type": "question",
+          "settings": {
+            "question": "Convient-il aux débutants ?",
+            "reponse": "<p>Oui. Commencez par les bandes les plus souples et des mouvements lents. En cas de douleur, de blessure ou de grossesse, demandez l’avis d’un professionnel de santé avant de commencer.</p>"
+          }
+        },
+        "q_2": {
+          "type": "question",
+          "settings": {
+            "question": "Que contient exactement le coffret ?",
+            "reponse": "<p>Un anneau de 33 cm, un ballon de 25 cm, cinq bandes de résistance, une bande en huit, une bande élastique de 180 cm, une sangle d’étirement en coton, une ceinture de résistance pour les fessiers, une poignée d’étirement pour les bras, une paire de chaussettes antidérapantes, un sac de rangement et un guide d’exercices illustré (en anglais).</p>"
+          }
+        },
+        "q_3": {
+          "type": "question",
+          "settings": {
+            "question": "Comment gonfler le ballon ?",
+            "reponse": "<p>Retirez le bouchon, insérez l’embout de gonflage, gonflez jusqu’à 25 cm environ, puis replacez le bouchon.</p>"
+          }
+        },
+        "q_4": {
+          "type": "question",
+          "settings": {
+            "question": "Les accessoires sont-ils solides ?",
+            "reponse": "<p>Le ballon est en PVC souple anti-éclatement (fiche fournisseur). Rangez les bandes à l’abri du soleil pour qu’elles gardent leur élasticité.</p>"
+          }
+        },
+        "q_5": {
+          "type": "question",
+          "settings": {
+            "question": "Peut-on l’emporter ?",
+            "reponse": "<p>Tout tient dans le sac de rangement : le coffret vous suit en voyage ou à la salle.</p>"
+          }
+        },
+        "q_6": {
+          "type": "question",
+          "settings": {
+            "question": "Comment se passe la livraison ?",
+            "reponse": "<p>La livraison est offerte. Les délais s’affichent avant le paiement, selon votre adresse, et vous recevez un e-mail avec le suivi à l’expédition.</p>"
+          }
+        },
+        "q_7": {
+          "type": "question",
+          "settings": {
+            "question": "Puis-je le retourner ?",
+            "reponse": "<p>Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. Les conditions figurent sur la page Livraison et retours.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q_1",
+        "q_2",
+        "q_3",
+        "q_4",
+        "q_5",
+        "q_6",
+        "q_7"
+      ]
     },
     "exercices": {
       "type": "aplomb-caracteristiques",
       "settings": {
         "ancre": "exercices",
         "titre": "Une séance avec le coffret",
-        "disposition": "defilement",
+        "intro": "Un accessoire après l’autre, pour travailler tout le corps sur un seul tapis.",
+        "disposition": "vitrine",
         "colonnes": "4",
-        "fond": "sable",
-        "numeroter": true,
-        "intro": "Un accessoire après l’autre, pour travailler tout le corps sur un seul tapis."
+        "fond": "gris",
+        "aligner": "centre",
+        "numeroter": true
       },
       "blocks": {
         "e_1": {
@@ -138,65 +182,16 @@
         "e_5"
       ]
     },
-    "contenu": {
-      "type": "aplomb-caracteristiques",
-      "settings": {
-        "ancre": "contenu",
-        "titre": "Ce que contient le coffret",
-        "disposition": "grille",
-        "colonnes": "4",
-        "fond": "ivoire",
-        "intro": "Cinq accessoires qui changent l’appui ou la résistance d’un même mouvement."
-      },
-      "blocks": {
-        "c_1": {
-          "type": "carte",
-          "settings": {
-            "titre": "Anneau de Pilates 33 cm",
-            "texte": "Deux poignées pour presser l’anneau entre les mains, les genoux ou les chevilles.",
-            "image_generee": false
-          }
-        },
-        "c_2": {
-          "type": "carte",
-          "settings": {
-            "titre": "Ballon de Pilates 25 cm",
-            "texte": "PVC doux et anti-éclatement, surface antidérapante, embout de gonflage fourni.",
-            "image_generee": false
-          }
-        },
-        "c_3": {
-          "type": "carte",
-          "settings": {
-            "titre": "Bandes de résistance",
-            "texte": "Cinq forces différentes, plus une bande en huit pour les bras.",
-            "image_generee": false
-          }
-        },
-        "c_4": {
-          "type": "carte",
-          "settings": {
-            "titre": "Sangle, chaussettes, sac",
-            "texte": "Une sangle d’étirement, des chaussettes antidérapantes, un sac pour tout ranger.",
-            "image_generee": false
-          }
-        }
-      },
-      "block_order": [
-        "c_1",
-        "c_2",
-        "c_3",
-        "c_4"
-      ]
-    },
     "rangee": {
       "type": "aplomb-produits",
       "settings": {
-        "ancre": "aller-plus-loin",
-        "titre": "Aller plus loin",
-        "collection": "reformers-atelier",
+        "ancre": "completer",
+        "titre": "Complétez votre espace",
+        "collection": "frontpage",
         "nombre": 8,
-        "libelle_lien": "Tout voir"
+        "style_carte": "compacte",
+        "colonnes": "4",
+        "libelle_lien": ""
       }
     },
     "en_vrai": {
@@ -222,6 +217,7 @@
         "disposition": "grille",
         "colonnes": "3",
         "fond": "ivoire",
+        "aligner": "centre",
         "intro": "Ce que vous pouvez attendre de L’Aplomb, avant comme après l’achat."
       },
       "blocks": {
@@ -258,94 +254,15 @@
         "v_2",
         "v_3"
       ]
-    },
-    "faq": {
-      "type": "faq",
-      "settings": {
-        "ancre": "faq",
-        "titre": "Questions fréquentes"
-      },
-      "blocks": {
-        "q_1": {
-          "type": "question",
-          "settings": {
-            "question": "Convient-il aux débutants ?",
-            "reponse": "<p>Oui. Commencez par les bandes les plus souples et des mouvements lents. En cas de douleur, de blessure ou de grossesse, demandez l’avis d’un professionnel de santé avant de commencer.</p>"
-          }
-        },
-        "q_2": {
-          "type": "question",
-          "settings": {
-            "question": "Que contient exactement le coffret ?",
-            "reponse": "<p>Un anneau de 33 cm, un ballon de 25 cm, cinq bandes de résistance, une bande en huit, une bande élastique de 180 cm, une sangle d’étirement en coton, une ceinture de résistance pour les fessiers, une poignée d’étirement pour les bras, une paire de chaussettes antidérapantes, un sac de rangement et un guide d’exercices illustré (en anglais).</p>"
-          }
-        },
-        "q_3": {
-          "type": "question",
-          "settings": {
-            "question": "Comment gonfler le ballon ?",
-            "reponse": "<p>Retirez le bouchon, insérez l’embout de gonflage, gonflez jusqu’à 25 cm environ, puis replacez le bouchon.</p>"
-          }
-        },
-        "q_4": {
-          "type": "question",
-          "settings": {
-            "question": "Les accessoires sont-ils solides ?",
-            "reponse": "<p>Le ballon est en PVC souple anti-éclatement (fiche fournisseur). Rangez les bandes à l’abri du soleil pour qu’elles gardent leur élasticité.</p>"
-          }
-        },
-        "q_5": {
-          "type": "question",
-          "settings": {
-            "question": "Peut-on l’emporter ?",
-            "reponse": "<p>Tout tient dans le sac de rangement : le coffret vous suit en voyage ou à la salle.</p>"
-          }
-        },
-        "q_6": {
-          "type": "question",
-          "settings": {
-            "question": "Comment se passe la livraison ?",
-            "reponse": "<p>Les délais et les frais s’affichent avant le paiement, selon votre adresse. Vous recevez un e-mail à l’expédition.</p>"
-          }
-        },
-        "q_7": {
-          "type": "question",
-          "settings": {
-            "question": "Puis-je le retourner ?",
-            "reponse": "<p>Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. Les conditions de retour figurent sur la page Livraison et retours.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "q_1",
-        "q_2",
-        "q_3",
-        "q_4",
-        "q_5",
-        "q_6",
-        "q_7"
-      ]
-    },
-    "offre": {
-      "type": "aplomb-offre",
-      "settings": {
-        "ancre": "offre",
-        "surtitre": "Les Essentiels",
-        "titre": "Votre coffret Pilates à domicile",
-        "texte": "Treize pièces, un sac, des séances complètes à votre rythme."
-      }
     }
   },
   "order": [
     "main",
     "description",
     "exercices",
-    "contenu",
     "rangee",
     "en_vrai",
     "temoignages",
-    "maison",
-    "faq",
-    "offre"
+    "maison"
   ]
 }

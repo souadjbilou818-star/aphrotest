@@ -12,8 +12,12 @@
     "main": {
       "type": "produit-principal",
       "settings": {
-        "accroche": "Deux plateaux qui coulissent l’un sans l’autre : le travail en glissé du Pilates, chez vous.",
-        "titre_associes": "À associer"
+        "afficher_famille": false,
+        "afficher_accroche": false,
+        "afficher_dispo": false,
+        "titre_associes": "Complétez votre pratique",
+        "note_livraison": "Livraison offerte",
+        "accroche": "Deux plateaux qui coulissent l’un sans l’autre : le travail en glissé du Pilates, chez vous."
       },
       "blocks": {
         "p_1": {
@@ -36,52 +40,108 @@
             "icone": "cadenas",
             "texte": "Paiement sécurisé"
           }
-        },
-        "p_4": {
-          "type": "preuve",
-          "settings": {
-            "texte": "Deux plateaux coulissants indépendants"
-          }
-        },
-        "p_5": {
-          "type": "preuve",
-          "settings": {
-            "texte": "Poignées et cordon de résistance inclus"
-          }
-        },
-        "p_6": {
-          "type": "preuve",
-          "settings": {
-            "texte": "105 × 40 cm, 3 cm d’épaisseur"
-          }
         }
       },
       "block_order": [
         "p_1",
         "p_2",
-        "p_3",
-        "p_4",
-        "p_5",
-        "p_6"
+        "p_3"
       ]
     },
     "description": {
       "type": "aplomb-description",
       "settings": {
         "ancre": "description",
-        "titre": "Description"
-      }
+        "titre": "Description du produit"
+      },
+      "blocks": {
+        "q_1": {
+          "type": "question",
+          "settings": {
+            "question": "COULISSE 01, est-ce un reformer ?",
+            "reponse": "<p>Non. C’est une planche compacte : deux plateaux coulissent chacun sur son rail. Il n’y a ni chariot, ni ressorts, ni barre de pieds. Pour un reformer complet, à chariot, voyez ATELIER Pliable.</p>"
+          }
+        },
+        "q_2": {
+          "type": "question",
+          "settings": {
+            "question": "Comment fonctionne la planche ?",
+            "reponse": "<p>Vous posez les pieds, les genoux ou les mains sur les plateaux. L’un glisse pendant que l’autre tient, ou les deux s’écartent ensemble : c’est le travail en glissé. Les poignées et le cordon de résistance ajoutent un travail des bras et du dos.</p>"
+          }
+        },
+        "q_3": {
+          "type": "question",
+          "settings": {
+            "question": "Est-ce adapté si je débute ?",
+            "reponse": "<p>Oui. Commencez lentement, plateaux proches, amplitude courte. En cas de douleur, de blessure, de grossesse ou après un accouchement, demandez l’avis d’un professionnel de santé avant de commencer.</p>"
+          }
+        },
+        "q_4": {
+          "type": "question",
+          "settings": {
+            "question": "Quelle place faut-il ?",
+            "reponse": "<p>La planche mesure 105 × 40 cm (fiche fournisseur) : comptez autour d’elle de quoi allonger les bras et les jambes, soit à peu près la place d’un tapis de yoga.</p>"
+          }
+        },
+        "q_5": {
+          "type": "question",
+          "settings": {
+            "question": "Se range-t-elle facilement ?",
+            "reponse": "<p>Oui. Elle fait 3 cm d’épaisseur : elle se range à plat, sous un lit, derrière un meuble ou contre un mur.</p>"
+          }
+        },
+        "q_6": {
+          "type": "question",
+          "settings": {
+            "question": "Qu’est-ce qui est inclus ?",
+            "reponse": "<p>La planche, les deux plateaux coulissants, les poignées et le cordon de résistance. Le détail figure dans la description du produit.</p>"
+          }
+        },
+        "q_7": {
+          "type": "question",
+          "settings": {
+            "question": "Et si quelque chose casse ?",
+            "reponse": "<p>Vous bénéficiez de la garantie légale de conformité pendant 2 ans à compter de la livraison : réparation ou remplacement, sans frais. Écrivez-nous, avec une photo si possible.</p>"
+          }
+        },
+        "q_8": {
+          "type": "question",
+          "settings": {
+            "question": "Comment se passe la livraison ?",
+            "reponse": "<p>La livraison est offerte. Les délais s’affichent avant le paiement, selon votre adresse, et vous recevez un e-mail avec le suivi à l’expédition.</p>"
+          }
+        },
+        "q_9": {
+          "type": "question",
+          "settings": {
+            "question": "Puis-je le retourner ?",
+            "reponse": "<p>Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. Les conditions figurent sur la page Livraison et retours.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q_1",
+        "q_2",
+        "q_3",
+        "q_4",
+        "q_5",
+        "q_6",
+        "q_7",
+        "q_8",
+        "q_9"
+      ]
     },
     "exercices": {
       "type": "aplomb-caracteristiques",
       "settings": {
         "ancre": "exercices",
-        "titre": "Vos premiers exercices",
-        "disposition": "defilement",
+        "titre": "Vos premiers exercices avec COULISSE 01",
+        "intro": "Un plateau sous chaque pied, ou sous chaque main. Commencez lentement, plateaux proches, puis allongez le mouvement.",
+        "disposition": "vitrine",
         "colonnes": "4",
-        "fond": "sable",
-        "numeroter": true,
-        "intro": "Un plateau sous chaque pied, ou sous chaque main. Commencez lentement, plateaux proches."
+        "fond": "gris",
+        "aligner": "centre",
+        "numeroter": true
       },
       "blocks": {
         "e_1": {
@@ -133,105 +193,16 @@
         "e_5"
       ]
     },
-    "caracteristiques": {
-      "type": "aplomb-caracteristiques",
-      "settings": {
-        "ancre": "caracteristiques",
-        "titre": "Caractéristiques clés",
-        "disposition": "grille",
-        "colonnes": "4",
-        "fond": "ivoire",
-        "intro": "Tout le travail en glissé, dans une planche qui se range à plat."
-      },
-      "blocks": {
-        "c_1": {
-          "type": "carte",
-          "settings": {
-            "titre": "Deux plateaux indépendants",
-            "texte": "Chaque plateau coulisse sur son propre rail : un côté travaille pendant que l’autre tient.",
-            "image_generee": false,
-            "image": "shopify://shop_images/f2e29f8b47bd8b2e338339bf9902.jpg"
-          }
-        },
-        "c_2": {
-          "type": "carte",
-          "settings": {
-            "titre": "Poignées et cordon",
-            "texte": "Ils s’installent sur la planche pour travailler les bras, le dos et les épaules.",
-            "image_generee": false,
-            "image": "shopify://shop_images/e91889c646d686461ef85700d425.jpg"
-          }
-        },
-        "c_3": {
-          "type": "carte",
-          "settings": {
-            "titre": "Trois coloris",
-            "texte": "Rose, lavande ou noir : la planche s’accorde à la pièce.",
-            "image_generee": false,
-            "image": "shopify://shop_images/a17a7ed34c2b8a31c3c83caba9d0.jpg"
-          }
-        },
-        "c_4": {
-          "type": "carte",
-          "settings": {
-            "titre": "Tout dans le colis",
-            "texte": "La planche, les plateaux, les poignées et le cordon de résistance.",
-            "image_generee": false,
-            "image": "shopify://shop_images/93040adb410abd48ee6f563c4581.jpg"
-          }
-        }
-      },
-      "block_order": [
-        "c_1",
-        "c_2",
-        "c_3",
-        "c_4"
-      ]
-    },
-    "au_quotidien": {
-      "type": "aplomb-image-texte",
-      "settings": {
-        "ancre": "au-quotidien",
-        "titre": "Une séance, puis on range",
-        "media_produit": 1,
-        "fond": "sable",
-        "texte": "<p>Pas de chariot, pas de ressorts, pas de montage : vous posez la planche au sol, vous pratiquez, vous la rangez.</p>",
-        "cta_libelle": "Choisir mon coloris"
-      },
-      "blocks": {
-        "pt_1": {
-          "type": "point",
-          "settings": {
-            "texte": "3 cm d’épaisseur : sous un lit ou contre un mur"
-          }
-        },
-        "pt_2": {
-          "type": "point",
-          "settings": {
-            "texte": "Surface et base antidérapantes (fiche fournisseur)"
-          }
-        },
-        "pt_3": {
-          "type": "point",
-          "settings": {
-            "texte": "Pour débuter comme pour une pratique régulière"
-          }
-        }
-      },
-      "block_order": [
-        "pt_1",
-        "pt_2",
-        "pt_3"
-      ]
-    },
     "rangee": {
       "type": "aplomb-produits",
       "settings": {
         "ancre": "completer",
-        "titre": "Compléter votre pratique",
-        "collection": "les-essentiels",
+        "titre": "Complétez votre espace",
+        "collection": "frontpage",
         "nombre": 8,
-        "libelle_lien": "Tout voir"
+        "style_carte": "compacte",
+        "colonnes": "4",
+        "libelle_lien": ""
       }
     },
     "en_vrai": {
@@ -257,6 +228,7 @@
         "disposition": "grille",
         "colonnes": "3",
         "fond": "ivoire",
+        "aligner": "centre",
         "intro": "Ce que vous pouvez attendre de L’Aplomb, avant comme après l’achat."
       },
       "blocks": {
@@ -293,111 +265,15 @@
         "v_2",
         "v_3"
       ]
-    },
-    "faq": {
-      "type": "faq",
-      "settings": {
-        "ancre": "faq",
-        "titre": "Questions fréquentes"
-      },
-      "blocks": {
-        "q_1": {
-          "type": "question",
-          "settings": {
-            "question": "COULISSE 01, est-ce un reformer ?",
-            "reponse": "<p>Non. C’est une planche compacte : deux plateaux coulissent chacun sur son rail. Il n’y a ni chariot, ni ressorts, ni barre de pieds. Pour un reformer complet, à chariot, voyez ATELIER Pliable.</p>"
-          }
-        },
-        "q_2": {
-          "type": "question",
-          "settings": {
-            "question": "Comment fonctionne la planche ?",
-            "reponse": "<p>Vous posez les pieds, les genoux ou les mains sur les plateaux. L’un glisse pendant que l’autre tient, ou les deux s’écartent ensemble : c’est le travail en glissé. Les poignées et le cordon de résistance ajoutent un travail des bras et du dos.</p>"
-          }
-        },
-        "q_3": {
-          "type": "question",
-          "settings": {
-            "question": "Est-ce adapté si je débute ?",
-            "reponse": "<p>Oui. Commencez lentement, plateaux proches, amplitude courte. En cas de douleur, de blessure, de grossesse ou après un accouchement, demandez l’avis d’un professionnel de santé avant de commencer.</p>"
-          }
-        },
-        "q_4": {
-          "type": "question",
-          "settings": {
-            "question": "Quelle place faut-il ?",
-            "reponse": "<p>La planche mesure 105 × 40 cm (fiche fournisseur) : comptez autour d’elle de quoi allonger les bras et les jambes, soit à peu près la place d’un tapis de yoga.</p>"
-          }
-        },
-        "q_5": {
-          "type": "question",
-          "settings": {
-            "question": "Se range-t-elle facilement ?",
-            "reponse": "<p>Oui. Elle fait 3 cm d’épaisseur : elle se range à plat, sous un lit, derrière un meuble ou contre un mur.</p>"
-          }
-        },
-        "q_6": {
-          "type": "question",
-          "settings": {
-            "question": "Qu’est-ce qui est inclus ?",
-            "reponse": "<p>La planche, les deux plateaux coulissants, les poignées et le cordon de résistance. Le détail figure dans la description du produit.</p>"
-          }
-        },
-        "q_7": {
-          "type": "question",
-          "settings": {
-            "question": "Comment se passe la livraison ?",
-            "reponse": "<p>COULISSE 01 et Le Coffret Essentiel sont livrés gratuitement. Les délais et les éventuels frais s’affichent avant le paiement, selon votre adresse. Vous recevez un e-mail à l’expédition.</p>"
-          }
-        },
-        "q_8": {
-          "type": "question",
-          "settings": {
-            "question": "Et si quelque chose casse ?",
-            "reponse": "<p>Vous bénéficiez de la garantie légale de conformité pendant 2 ans à compter de la livraison : réparation ou remplacement, sans frais. Écrivez-nous, avec une photo si possible.</p>"
-          }
-        },
-        "q_9": {
-          "type": "question",
-          "settings": {
-            "question": "Puis-je retourner mon achat ?",
-            "reponse": "<p>Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. Les conditions figurent sur la page Livraison et retours.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "q_1",
-        "q_2",
-        "q_3",
-        "q_4",
-        "q_5",
-        "q_6",
-        "q_7",
-        "q_8",
-        "q_9"
-      ]
-    },
-    "offre": {
-      "type": "aplomb-offre",
-      "settings": {
-        "ancre": "offre",
-        "surtitre": "Coulisse",
-        "titre": "Votre planche Pilates, chez vous",
-        "texte": "Deux plateaux coulissants, des poignées, un cordon de résistance. Livraison offerte."
-      }
     }
   },
   "order": [
     "main",
     "description",
     "exercices",
-    "caracteristiques",
-    "au_quotidien",
     "rangee",
     "en_vrai",
     "temoignages",
-    "maison",
-    "faq",
-    "offre"
+    "maison"
   ]
 }

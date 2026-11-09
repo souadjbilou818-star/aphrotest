@@ -53,7 +53,7 @@
         "type": "text",
         "id": "mention_vente",
         "label": "Mention en mode Vente",
-        "info": "Une phrase vraie et vérifiable, par exemple le pays d’expédition s’il est certain. Vide : aucune mention."
+        "info": "Une phrase vraie et vérifiable, par exemple le pays d’expédition s’il est certain. Vide : aucune mention."
       }
     ]
   },
@@ -163,6 +163,10 @@
           {
             "value": "cormorant",
             "label": "Cormorant Garamond (garalde)"
+          },
+          {
+            "value": "sans",
+            "label": "Hanken Grotesk (sans, style boutique)"
           },
           {
             "value": "bodoni",

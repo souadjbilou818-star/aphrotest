@@ -10,7 +10,11 @@
   {%- capture cartes -%}
     {%- for p in c.products limit: section.settings.nombre -%}
       {%- if p.id != product.id -%}
-        <li>{% render 'carte-produit', product: p %}</li>
+        {%- if section.settings.style_carte == 'compacte' -%}
+          <li>{% render 'carte-produit', product: p, compacte: true, sizes: '(min-width: 1000px) 23vw, 70vw' %}</li>
+        {%- else -%}
+          <li>{% render 'carte-produit', product: p %}</li>
+        {%- endif -%}
       {%- endif -%}
     {%- endfor -%}
   {%- endcapture -%}
@@ -64,6 +68,22 @@
       "max": 12,
       "step": 1,
       "default": 8
+    },
+    {
+      "type": "select",
+      "id": "style_carte",
+      "label": "Style des cartes",
+      "options": [
+        {
+          "value": "complete",
+          "label": "Complètes (famille, accroche, disponibilité)"
+        },
+        {
+          "value": "compacte",
+          "label": "Compactes (image, coloris, nom, prix)"
+        }
+      ],
+      "default": "complete"
     },
     {
       "type": "select",

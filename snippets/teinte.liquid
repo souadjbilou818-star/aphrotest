@@ -1,0 +1,32 @@
+{% doc %}
+  Couleur d’une pastille de coloris : la couleur Shopify de la valeur d’option
+  si elle existe, sinon une teinte déduite du nom (rose, noir, lavande…).
+  À utiliser dans un capture.
+
+  @param {string} nom - nom de la valeur d’option
+  @param {string} [couleur] - couleur Shopify de la valeur (swatch.color)
+{% enddoc %}
+{%- liquid
+  assign teinte = couleur | default: ''
+  if teinte == ''
+    assign nb = nom | downcase
+    if nb contains 'rose' or nb contains 'pink'
+      assign teinte = '#e8b9c4'
+    elsif nb contains 'blanc' or nb contains 'ivoire' or nb contains 'white'
+      assign teinte = '#f3efe6'
+    elsif nb contains 'noir' or nb contains 'black'
+      assign teinte = '#1b1d1c'
+    elsif nb contains 'vert' or nb contains 'forêt'
+      assign teinte = '#1f3a34'
+    elsif nb contains 'bordeaux'
+      assign teinte = '#5b1f2b'
+    elsif nb contains 'violet' or nb contains 'lavande' or nb contains 'purple'
+      assign teinte = '#9b86c5'
+    elsif nb contains 'gris' or nb contains 'gray' or nb contains 'grey'
+      assign teinte = '#9a9a96'
+    else
+      assign teinte = '#d9c8b2'
+    endif
+  endif
+  echo teinte
+-%}

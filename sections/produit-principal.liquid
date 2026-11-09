@@ -13,6 +13,7 @@
   assign famille = product.metafields.aplomb.famille.value | default: product.type
   assign complements = product.metafields.aplomb.complements.value | default: section.settings.complements
   assign accroche = product.metafields.aplomb.accroche | default: section.settings.accroche
+  assign note_livraison = section.settings.note_livraison | default: settings.info_livraison
 
   assign fil_collection = nil
   for c in product.collections
@@ -51,23 +52,24 @@
   </div>
 
   <div class="produit__achat" id="achat">
-    {%- if famille != blank -%}
+    {%- if famille != blank and section.settings.afficher_famille -%}
       <p class="label soft">{{ famille }}</p>
     {%- endif -%}
     <h1 class="produit__titre" id="{{ titre_id }}">{{ product.title }}</h1>
     <div class="produit__prix-bloc">
       <p class="produit__prix"><span data-prix>{{ prix_variant }}</span> <small>{{ 'aplomb.produit.ttc' | t }}</small></p>
-      {%- if etat == 'vente' and settings.info_livraison != blank -%}
-        <p class="produit__livraison">{{ settings.info_livraison }}</p>
+      {%- if etat == 'vente' and note_livraison != blank -%}
+        <p class="produit__livraison">{{ note_livraison }}</p>
       {%- endif -%}
     </div>
-    {%- if accroche != blank -%}
+    {%- if accroche != blank and section.settings.afficher_accroche -%}
       <p class="produit__accroche">{{ accroche }}</p>
     {%- endif -%}
 
     {% render 'selecteur-variantes', product: product, uid: section.id, seuil: seuil %}
 
     <p
+      {% unless section.settings.afficher_dispo %}hidden{% endunless %}
       class="dispo dispo--{{ etat }}"
       data-dispo
       data-stock="{{ 'aplomb.produit.dispo_stock' | t | escape }}"
@@ -188,6 +190,30 @@
   "tag": "div",
   "class": "section-produit",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "afficher_famille",
+      "label": "Afficher la famille au-dessus du titre",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "afficher_accroche",
+      "label": "Afficher l’accroche",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "afficher_dispo",
+      "label": "Afficher « Disponible »",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "note_livraison",
+      "label": "Note sous le prix",
+      "info": "Vide : le texte « Livraison » des réglages du thème. Une promesse vraie seulement (ex. « Livraison offerte » si le profil d’expédition est gratuit)."
+    },
     {
       "type": "textarea",
       "id": "accroche",

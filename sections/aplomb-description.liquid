@@ -70,6 +70,13 @@
         <dl class="accordeon__liste">{{ securite }}</dl>
       </details>
     {%- endif -%}
+
+    {%- for block in section.blocks -%}
+      <details class="accordeon" {{ block.shopify_attributes }}>
+        <summary>{{ block.settings.question }}</summary>
+        <div class="accordeon__corps rte">{{ block.settings.reponse }}</div>
+      </details>
+    {%- endfor -%}
   </div>
 </section>
 
@@ -126,6 +133,26 @@
       "id": "titre_securite",
       "label": "Titre : sécurité du produit",
       "default": "Sécurité du produit"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Comment se passe la livraison ?"
+        },
+        {
+          "type": "richtext",
+          "id": "reponse",
+          "label": "Réponse",
+          "default": "<p>Les délais et les frais s’affichent avant le paiement, selon votre adresse.</p>"
+        }
+      ]
     }
   ],
   "presets": [

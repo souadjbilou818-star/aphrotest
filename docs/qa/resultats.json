@@ -1,112 +1,112 @@
 {
-  "date": "2026-11-09T17:11:08.978Z",
+  "date": "2026-11-09T17:42:34.292Z",
   "total": 21,
   "ok": 21,
   "resultats": [
     {
       "test": "Quiz : validation, toucher, clavier, retour, résultat COULISSE, mesure",
       "statut": "ok",
-      "ms": 3194
+      "ms": 3235
     },
     {
       "test": "Quiz : « petit espace » écarte les Reformers Atelier et le dit",
       "statut": "ok",
-      "ms": 2610
+      "ms": 2478
     },
     {
       "test": "Quiz : kit simple → Les Essentiels",
       "statut": "ok",
-      "ms": 2449
+      "ms": 2438
     },
     {
       "test": "Quiz en page dédiée : le bouton Retour du navigateur revient d’une question",
       "statut": "ok",
-      "ms": 1183
+      "ms": 1186
     },
     {
       "test": "Quiz → ajout au panier depuis la recommandation, tiroir ouvert",
       "statut": "ok",
-      "ms": 2777
+      "ms": 2785
     },
     {
       "test": "Produit : fil d’Ariane, variante Studio, prix, URL, badge de stock réel, « À associer », panier",
       "statut": "ok",
-      "ms": 586
+      "ms": 530
     },
     {
       "test": "Panier : quantités, limite de stock (erreur lisible), retrait, paiement natif",
       "statut": "ok",
-      "ms": 1378
+      "ms": 1338
     },
     {
       "test": "Page panier : quantité sans rechargement, paiement",
       "statut": "ok",
-      "ms": 295
+      "ms": 267
     },
     {
       "test": "Barre collante mobile : apparaît après le bloc d’achat et ajoute au panier",
       "statut": "ok",
-      "ms": 681
+      "ms": 614
     },
     {
       "test": "Galerie : flèches, compteur, visionneuse (zoom, Échap, retour du focus)",
       "statut": "ok",
-      "ms": 816
+      "ms": 764
     },
     {
       "test": "Produit en liste d’attente en mode Vente (Atelier) : aucun bouton d’achat",
       "statut": "ok",
-      "ms": 229
+      "ms": 210
     },
     {
-      "test": "Pages produit « landing » : sections, offre finale, aucune fausse preuve",
+      "test": "Fiches produit (structure de la référence) : vitrine, accordéons, cartes compactes, aucune fausse preuve",
       "statut": "ok",
-      "ms": 802
+      "ms": 896
     },
     {
       "test": "Accueil en vente : boutique, prix réels, aucun reste de liste d’attente",
       "statut": "ok",
-      "ms": 225
+      "ms": 205
     },
     {
       "test": "Collection : prix réels, épuisé signalé, navigation des familles",
       "statut": "ok",
-      "ms": 204
+      "ms": 273
     },
     {
       "test": "Liste d’attente, produits absents : replis honnêtes, aucun bouton d’achat",
       "statut": "ok",
-      "ms": 2519
+      "ms": 2502
     },
     {
       "test": "Largeur 320 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 4356
+      "ms": 4194
     },
     {
       "test": "Largeur 375 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 4266
+      "ms": 4243
     },
     {
       "test": "Largeur 390 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 8610
+      "ms": 8130
     },
     {
       "test": "Largeur 768 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 4366
+      "ms": 4234
     },
     {
       "test": "Largeur 1024 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 4333
+      "ms": 4200
     },
     {
       "test": "Largeur 1440 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 10485
+      "ms": 9643
     }
   ]
 }

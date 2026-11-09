@@ -48,29 +48,7 @@
                 {% endif %}
               >
               {%- if pastilles -%}
-                {%- liquid
-                  assign teinte = valeur.swatch.color | default: ''
-                  if teinte == ''
-                    assign nb = nom | downcase
-                    if nb contains 'rose'
-                      assign teinte = '#e8b9c4'
-                    elsif nb contains 'blanc' or nb contains 'ivoire'
-                      assign teinte = '#f3efe6'
-                    elsif nb contains 'noir'
-                      assign teinte = '#1b1d1c'
-                    elsif nb contains 'vert' or nb contains 'forêt'
-                      assign teinte = '#1f3a34'
-                    elsif nb contains 'bordeaux'
-                      assign teinte = '#5b1f2b'
-                    elsif nb contains 'violet' or nb contains 'lavande'
-                      assign teinte = '#9b86c5'
-                    elsif nb contains 'gris'
-                      assign teinte = '#9a9a96'
-                    else
-                      assign teinte = '#d9c8b2'
-                    endif
-                  endif
-                -%}
+                {%- capture teinte -%}{% render 'teinte', nom: nom, couleur: valeur.swatch.color %}{%- endcapture -%}
                 <span class="option__pastille" style="--teinte: {{ teinte }}" aria-hidden="true"></span>
                 <span class="visually-hidden">{{ nom }}</span>
               {%- else -%}

@@ -2,11 +2,22 @@
   assign titre_id = 'titre-' | append: section.id
   assign cartes = section.blocks | where: 'type', 'carte'
 -%}
+{%- liquid
+  assign vitrine = false
+  if section.settings.disposition == 'vitrine'
+    assign vitrine = true
+  endif
+  assign carrousel = false
+  if section.settings.disposition == 'defilement' or vitrine
+    assign carrousel = true
+  endif
+-%}
 <section
-  class="wrap caracs caracs--{{ section.settings.disposition }} caracs--{{ section.settings.colonnes }} fond--{{ section.settings.fond }}"
+  class="wrap caracs caracs--{{ section.settings.disposition }} caracs--{{ section.settings.colonnes }} caracs--{{ section.settings.aligner }} fond--{{ section.settings.fond }}"
   id="{{ section.settings.ancre | default: section.id }}"
   aria-labelledby="{{ titre_id }}"
 >
+  {%- if vitrine -%}<div class="caracs__panneau">{%- endif -%}
   <div class="caracs__tete">
     {%- if section.settings.surtitre != blank -%}
       <p class="label soft">{{ section.settings.surtitre }}</p>
@@ -16,10 +27,10 @@
       <p class="caracs__intro">{{ section.settings.intro }}</p>
     {%- endif -%}
   </div>
-  {%- if section.settings.disposition == 'defilement' -%}<aplomb-carrousel class="carrousel">{%- endif -%}
+  {%- if carrousel -%}<aplomb-carrousel class="carrousel">{%- endif -%}
   <ul class="caracs__liste" role="list" data-carrousel-liste>
     {%- for block in cartes -%}
-      <li class="carac" {{ block.shopify_attributes }}>
+      <li class="carac{% if block.settings.image == blank %} carac--sans-image{% endif %}" {{ block.shopify_attributes }}>
         {%- if block.settings.image != blank -%}
           <div class="carac__visuel">
             {%- if section.settings.numeroter -%}<span class="carac__pastille mono">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>{%- endif -%}
@@ -41,13 +52,14 @@
       </li>
     {%- endfor -%}
   </ul>
-  {%- if section.settings.disposition == 'defilement' -%}
+  {%- if carrousel -%}
     <div class="carrousel__nav">
       <button class="carrousel__fleche" type="button" data-carrousel-prec aria-label="{{ 'aplomb.carrousel.precedent' | t }}">{% render 'icone', nom: 'gauche' %}</button>
       <button class="carrousel__fleche" type="button" data-carrousel-suiv aria-label="{{ 'aplomb.carrousel.suivant' | t }}">{% render 'icone', nom: 'droite' %}</button>
     </div>
     </aplomb-carrousel>
   {%- endif -%}
+  {%- if vitrine -%}</div>{%- endif -%}
   {%- if section.settings.cta_libelle != blank -%}
     <p class="caracs__cta"><a class="btn" href="{{ section.settings.cta_lien | default: '#achat' }}">{{ section.settings.cta_libelle }}</a></p>
   {%- endif -%}
@@ -92,9 +104,29 @@
         {
           "value": "defilement",
           "label": "Défilement horizontal"
+        },
+        {
+          "value": "vitrine",
+          "label": "Vitrine (grandes cartes dans un panneau)"
         }
       ],
       "default": "grille"
+    },
+    {
+      "type": "select",
+      "id": "aligner",
+      "label": "Alignement des textes",
+      "options": [
+        {
+          "value": "gauche",
+          "label": "À gauche"
+        },
+        {
+          "value": "centre",
+          "label": "Centré"
+        }
+      ],
+      "default": "gauche"
     },
     {
       "type": "select",
@@ -134,6 +166,10 @@
         {
           "value": "sable",
           "label": "Sable clair"
+        },
+        {
+          "value": "gris",
+          "label": "Gris clair"
         }
       ],
       "default": "ivoire"

@@ -7,6 +7,7 @@
   @param {string} [sizes] - attribut sizes de l’image
   @param {boolean} [prioritaire] - première rangée : chargement immédiat
   @param {string} [titre_balise] - 'h2' ou 'h3' (défaut)
+  @param {boolean} [compacte] - image carrée, coloris, nom, prix (rangées de fiche produit)
 {% enddoc %}
 {%- liquid
   assign titre_balise = titre_balise | default: 'h3'
@@ -34,7 +35,19 @@
     assign generee = true
   endif
 -%}
-<article class="carte-produit">
+{%- liquid
+  assign option_couleur = nil
+  if compacte
+    for opt in product.options_with_values
+      assign nom_opt = opt.name | downcase
+      if nom_opt contains 'couleur' or nom_opt contains 'color' or nom_opt contains 'coloris'
+        assign option_couleur = opt
+        break
+      endif
+    endfor
+  endif
+-%}
+<article class="carte-produit{% if compacte %} carte-produit--compacte{% endif %}">
   <a class="carte-produit__lien" href="{{ product.url }}">
     <div class="carte-produit__visuel{% if contenu %} carte-produit__visuel--contenu{% endif %}">
       {%- if image != blank -%}
@@ -51,12 +64,31 @@
       {%- endif -%}
     </div>
     <div class="carte-produit__texte">
-      {%- if famille != blank -%}
-        <p class="label soft">{{ famille }}</p>
-      {%- endif -%}
-      <{{ titre_balise }} class="carte-produit__titre">{{ product.title }}</{{ titre_balise }}>
-      {%- if product.metafields.aplomb.accroche != blank -%}
-        <p class="carte-produit__accroche">{{ product.metafields.aplomb.accroche }}</p>
+      {%- if compacte -%}
+        {%- if option_couleur -%}
+          <ul class="carte-produit__coloris" role="list" aria-label="{{ option_couleur.name | escape }}">
+            {%- for valeur in option_couleur.values limit: 5 -%}
+              {%- assign nom_valeur = valeur.name | default: valeur -%}
+              {%- capture teinte -%}{% render 'teinte', nom: nom_valeur, couleur: valeur.swatch.color %}{%- endcapture -%}
+              <li style="--teinte: {{ teinte }}" title="{{ nom_valeur | escape }}"><span class="visually-hidden">{{ nom_valeur }}</span></li>
+            {%- endfor -%}
+            {%- if option_couleur.values.size > 5 -%}
+              <li class="carte-produit__coloris-plus">+{{ option_couleur.values.size | minus: 5 }}</li>
+            {%- endif -%}
+          </ul>
+        {%- endif -%}
+        <{{ titre_balise }} class="carte-produit__titre">{{ product.title }}</{{ titre_balise }}>
+        {%- if option_couleur -%}
+          <p class="carte-produit__variante">{{ product.selected_or_first_available_variant.title }}</p>
+        {%- endif -%}
+      {%- else -%}
+        {%- if famille != blank -%}
+          <p class="label soft">{{ famille }}</p>
+        {%- endif -%}
+        <{{ titre_balise }} class="carte-produit__titre">{{ product.title }}</{{ titre_balise }}>
+        {%- if product.metafields.aplomb.accroche != blank -%}
+          <p class="carte-produit__accroche">{{ product.metafields.aplomb.accroche }}</p>
+        {%- endif -%}
       {%- endif -%}
       <p class="carte-produit__prix">
         {%- if product.price_varies -%}
@@ -66,7 +98,7 @@
         {%- endif %}
         <small>{{ 'aplomb.produit.ttc' | t }}</small>
       </p>
-      <p class="carte-produit__etat carte-produit__etat--{{ etat }}">
+      <p class="carte-produit__etat carte-produit__etat--{{ etat }}"{% if compacte and etat == 'vente' and product.available %} hidden{% endif %}>
         {%- case etat -%}
           {%- when 'vente' -%}
             {%- if product.available -%}
