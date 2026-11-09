@@ -66,7 +66,9 @@
             "famille": "essentiels",
             "numero": "01",
             "nom": "Les Essentiels",
-            "texte": "Des kits d’accessoires pour pratiquer sur le tapis, sans appareil à ranger."
+            "texte": "Des kits d’accessoires pour pratiquer sur le tapis, sans appareil à ranger.",
+            "image": "shopify://shop_images/coffret-1-coffret.jpg",
+            "image_generee": true
           }
         },
         "fa_2": {
@@ -84,7 +86,9 @@
             "famille": "atelier",
             "numero": "03",
             "nom": "Reformers Atelier",
-            "texte": "De vrais reformers à chariot, pour une pratique proche du studio, avec un espace dédié."
+            "texte": "De vrais reformers à chariot, pour une pratique proche du studio, avec un espace dédié.",
+            "image": "shopify://shop_images/atelier-pliable-1.jpg",
+            "image_generee": false
           }
         }
       },
@@ -266,7 +270,7 @@
         "intro": "Aucune donnée personnelle demandée. Vos réponses restent dans ce navigateur, le temps de la visite.",
         "produit_essentiels": "la-trousse",
         "produit_coulisse": "coulisse-01",
-        "produit_atelier": "atelier-chene",
+        "produit_atelier": "atelier-pliable",
         "raison_essentiels": "Un kit d’accessoires pour installer une routine sur le tapis, sans appareil à ranger.",
         "raison_coulisse": "Deux plateaux qui coulissent l’un sans l’autre : le travail en glissé d’un appareil, dans le format d’une planche qui se plie.",
         "raison_atelier": "Un vrai chariot sur rails, avec une résistance réglable : la pratique la plus proche du studio, pour qui a la place.",

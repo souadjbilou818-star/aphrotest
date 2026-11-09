@@ -30,7 +30,7 @@ ENTETE = """/*
 # Handles des produits à créer dans Shopify (docs/product-mapping.md)
 H_COULISSE = "coulisse-01"
 H_ESSENTIELS = "la-trousse"
-H_ATELIER = "atelier-chene"
+H_ATELIER = "atelier-pliable"
 
 
 def blocs(prefixe, items):
@@ -209,11 +209,13 @@ def index():
             "texte_attente": "En préparation",
         }, [
             ("famille", {"famille": "essentiels", "numero": "01", "nom": "Les Essentiels",
-                         "texte": "Des kits d'accessoires pour pratiquer sur le tapis, sans appareil à ranger."}),
+                         "texte": "Des kits d'accessoires pour pratiquer sur le tapis, sans appareil à ranger.",
+                         "image": img("coffret-1-coffret.jpg"), "image_generee": True}),
             ("famille", {"famille": "coulisse", "numero": "02", "nom": "Coulisse",
                          "texte": "Une planche pliable à deux plateaux coulissants : le travail en glissé, dans peu de place."}),
             ("famille", {"famille": "atelier", "numero": "03", "nom": "Reformers Atelier",
-                         "texte": "De vrais reformers à chariot, pour une pratique proche du studio, avec un espace dédié."}),
+                         "texte": "De vrais reformers à chariot, pour une pratique proche du studio, avec un espace dédié.",
+                         "image": img("atelier-pliable-1.jpg"), "image_generee": False}),
         ], "fa"),
         "vedette": section("aplomb-vedette", {
             "ancre": "coulisse",
@@ -377,30 +379,135 @@ def product():
     )
 
 
-def product_essentiels():
-    return produit_commun(
-        accroche="Un kit d'accessoires pour installer une routine sur le tapis, sans appareil à ranger.",
-        preuves=["Tout tient dans une pochette", "Pour débuter ou compléter une pratique"],
-        benefices=[
-            ("Rien à installer", "Vous sortez la pochette, vous déroulez le tapis, vous commencez."),
-            ("De quoi varier", "Chaque accessoire change l'appui ou la résistance d'un même mouvement."),
-            ("Le complément d'un appareil", "Les Essentiels accompagnent aussi COULISSE 01 et les Reformers Atelier."),
-        ],
-        faq_cles=("debutant", "inclus", "livraison", "casse", "retour"),
-    )
+def carte(titre, texte, image=None, generee=False):
+    d = {"titre": titre, "texte": texte, "image_generee": generee}
+    if image:
+        d["image"] = img(image)
+    return ("carte", d)
+
+
+def landing(principal, sections_milieu, faq_items, offre):
+    """Fiche produit en page de vente : achat d'abord, puis les arguments, puis l'offre finale."""
+    sections = {"main": principal}
+    order = ["main"]
+    for cle, sec in sections_milieu:
+        sections[cle] = sec
+        order.append(cle)
+    sections["specs"] = section("specs", {"ancre": "fiche-technique", "titre": "Fiche technique",
+                                          "intro": "Les mesures publiées viennent de la fiche du fournisseur, en attendant nos propres relevés."})
+    sections["temoignages"] = section("temoignages", {"ancre": "avis", "titre": "Avis",
+                                                      "intro": "Uniquement des avis réels, publiés avec l'accord de leurs auteurs."})
+    sections["garanties"] = garanties("")
+    sections["gpsr"] = section("gpsr", {"ancre": "securite", "titre": "Sécurité du produit",
+                                        "intro": "Informations exigées par le règlement européen sur la sécurité générale des produits."})
+    sections["faq"] = section("faq", {"ancre": "faq", "titre": "Questions fréquentes"}, faq_items, "q")
+    sections["offre"] = offre
+    order += ["specs", "temoignages", "garanties", "gpsr", "faq", "offre"]
+    return {"sections": sections, "order": order}
 
 
 def product_atelier():
-    return produit_commun(
-        accroche="Un reformer complet, à chariot, pour une pratique proche du studio.",
-        preuves=["Un vrai chariot sur rails", "Pliable ou à poste fixe, selon le modèle"],
-        benefices=[
-            ("Le geste du studio", "Le chariot, la résistance réglable, l'amplitude complète des mouvements."),
-            ("Une pratique qui progresse", "Vous augmentez la résistance au fil des semaines."),
-            ("Un objet qui a sa place", "Choisi pour sa tenue et ses matières, il reste dans la pièce."),
-        ],
-        faq_cles=("debutant", "place", "inclus", "livraison", "casse", "retour"),
-    )
+    principal = section("produit-principal", {
+        "accroche": "Un reformer complet, à chariot, qui se plie après la séance.",
+        "titre_description": "Description",
+    }, [("preuve", {"texte": t}) for t in ["Cadre en acier pliable", "Chariot rembourré sur rails", "Tapis de yoga inclus"]], "p")
+    milieu = [
+        ("caracteristiques", section("aplomb-caracteristiques", {
+            "ancre": "caracteristiques", "titre": "Caractéristiques clés", "disposition": "grille", "colonnes": "4", "fond": "ivoire",
+            "intro": "Ce qui fait un vrai reformer, dans un format qui se range.",
+        }, [
+            carte("Cadre en acier pliable", "Une structure en acier, stable pendant l'effort, qui se replie pour le rangement.", "atelier-pliable-4-vue.jpg"),
+            carte("Chariot matelassé rose", "Un plateau rembourré qui glisse sur ses rails, doux sous le dos et les genoux.", "atelier-pliable-1.jpg"),
+            carte("Résistance par tubes", "Des tubes en latex fixés sous le chariot règlent la résistance du mouvement.", "atelier-pliable-3-tubes.jpg"),
+            carte("Encombrement maîtrisé", "Déplié 197 × 57 × 72,5 cm, plié 108 × 55 × 29 cm (fiche fournisseur).", "atelier-pliable-2-dimensions.jpg"),
+        ], "c")),
+        ("elegance", section("aplomb-image-texte", {
+            "ancre": "au-quotidien", "titre": "Élégant et fonctionnel, au quotidien", "media_produit": 1, "fond": "sable",
+            "texte": "<p>Un appareil que l'on a envie de laisser dans la pièce, et que l'on peut ranger quand on reçoit.</p>",
+            "cta_libelle": "Choisir mon reformer",
+        }, [("point", {"texte": t}) for t in [
+            "Un pliage en quelques gestes, pour ranger le reformer contre un mur",
+            "Des matériaux choisis pour durer : acier, ABS, PP et mousse",
+            "Une finition rose et blanche qui s'accorde à la pièce",
+        ]], "pt")),
+        ("bienfaits", section("aplomb-caracteristiques", {
+            "ancre": "bienfaits", "titre": "Ce que vous gagnez", "disposition": "defilement", "colonnes": "4", "fond": "ivoire",
+        }, [
+            carte("Stabilité", "Le cadre métallique tient en place pendant chaque mouvement."),
+            carte("Confort", "Le rembourrage en mousse amortit les appuis, séance après séance."),
+            carte("Place retrouvée", "Plié, il libère la pièce en quelques secondes."),
+            carte("Discrétion", "Des lignes simples, qui se fondent dans un intérieur."),
+            carte("Simplicité", "Des réglages lisibles pour enchaîner les exercices sans interruption."),
+        ], "b")),
+        ("detail", section("aplomb-image-texte", {
+            "ancre": "detail", "titre": "Conçu dans le détail", "media_produit": 2, "inverser": True, "fond": "ivoire",
+            "texte": "<p>Le cadre en acier porte un chariot rembourré qui glisse sur ses rails. La résistance vient de tubes en latex fixés sous le chariot ; la barre de pieds se règle selon votre taille et l'exercice.</p><p>Les mesures et matériaux affichés sur cette page sont ceux de la fiche du fournisseur. Nous les vérifierons sur nos échantillons avant l'ouverture des ventes.</p>",
+        })),
+        ("demarcation", section("negations", {"ancre": "choisir", "titre": "ATELIER ou COULISSE ?",
+                                              "honnete": "ATELIER est un reformer complet. COULISSE 01 est une planche compacte, sans chariot."}, [
+            ("negation", {"non": "Vous avez un espace dédié", "explication": "ATELIER : le chariot, la barre de pieds, l'amplitude complète du reformer."}),
+            ("negation", {"non": "Vous manquez de place", "explication": "COULISSE 01 : deux plateaux coulissants sur une planche qui se plie en deux."}),
+        ], "n")),
+    ]
+    faq_items = [
+        q("Le montage est-il difficile ?", "Le reformer se monte en quelques étapes, avec la notice fournie. Comptez une personne pour tenir le cadre pendant le serrage."),
+        q("Le pliage est-il sûr ?", "Pliez toujours le reformer chariot vide et à l'arrêt, en suivant la notice. Ne le dépliez jamais avec quelqu'un dessus."),
+        q("Est-il facile à ranger ?", "Plié, il mesure 108 × 55 × 29 cm selon la fiche du fournisseur : il se range contre un mur ou dans un placard profond."),
+        q("Est-il lourd ?", "32,5 kg selon la fiche du fournisseur. Il se déplace plus facilement à deux."),
+        q("Le cadre est-il solide ?", "Le cadre est en acier. La charge maximale sera publiée sur la fiche technique dès qu'elle aura été vérifiée sur nos échantillons."),
+        q("Comment l'entretenir ?", "Un chiffon doux et humide suffit. Évitez les produits abrasifs sur le revêtement et sur le métal."),
+        q("ATELIER ou COULISSE 01 ?", "ATELIER est un reformer complet, à chariot. COULISSE 01 est une planche compacte à deux plateaux coulissants, sans chariot ni ressorts. Le quiz vous aide à choisir."),
+        q("Comment se passe la livraison ?", "Les délais et les frais s'affichent avant le paiement, selon votre adresse. Vous recevez un e-mail à l'expédition."),
+        q("Puis-je le retourner ?", "Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. Les conditions de retour figurent sur la page Livraison et retours."),
+    ]
+    offre = section("aplomb-offre", {"ancre": "offre", "surtitre": "Reformers Atelier", "titre": "Votre reformer, chez vous",
+                                     "texte": "Un vrai chariot, un cadre en acier, un tapis de yoga inclus. Et la place retrouvée après la séance."})
+    return landing(principal, milieu, faq_items, offre)
+
+
+def product_essentiels():
+    principal = section("produit-principal", {
+        "accroche": "Des séances Pilates complètes sur le tapis, avec cinq accessoires rangés dans un sac.",
+        "titre_description": "Ce que contient le coffret",
+    }, [("preuve", {"texte": t}) for t in ["13 pièces, rangées dans un sac", "Ballon 25 cm anti-éclatement", "Anneau 38 cm à cœur en fibre de verre"]], "p")
+    milieu = [
+        ("contenu", section("aplomb-caracteristiques", {
+            "ancre": "contenu", "titre": "Ce que contient le coffret", "disposition": "grille", "colonnes": "4", "fond": "ivoire",
+            "intro": "Cinq accessoires qui changent l'appui ou la résistance d'un même mouvement.",
+        }, [
+            carte("Anneau de Pilates 38 cm", "Poignées rembourrées, cœur en fibre de verre, revêtement antidérapant."),
+            carte("Ballon de Pilates 25 cm", "PVC doux et anti-éclatement, surface antidérapante, embout de gonflage fourni."),
+            carte("Bandes de résistance", "Cinq forces différentes, plus une bande en huit pour les bras."),
+            carte("Sangle, chaussettes, sac", "Une sangle d'étirement, des chaussettes antidérapantes, un sac pour tout ranger."),
+        ], "c")),
+        ("bienfaits", section("aplomb-caracteristiques", {
+            "ancre": "bienfaits", "titre": "Ce que vous travaillez", "disposition": "defilement", "colonnes": "4", "fond": "sable",
+            "intro": "Un même coffret pour tout le corps, à votre rythme.",
+        }, [
+            carte("Gainage", "Le ballon sous le dos ou le bassin soutient les exercices du centre.", "coffret-3-ballon.jpg", True),
+            carte("Bras et épaules", "L'anneau ajoute une résistance douce aux mouvements du haut du corps.", "coffret-4-anneau.jpg", True),
+            carte("Souplesse des jambes", "La sangle accompagne les étirements sans forcer.", "coffret-5-sangle.jpg", True),
+            carte("Fessiers et cuisses", "Les bandes travaillent les jambes debout comme au sol.", "coffret-6-bandes.jpg", True),
+            carte("Une séance complète", "Plusieurs accessoires, de nombreux exercices, un seul tapis.", "coffret-2-seances.jpg", True),
+        ], "b")),
+        ("detail", section("aplomb-image-texte", {
+            "ancre": "detail", "titre": "Dans le détail", "media_produit": 3, "inverser": False, "fond": "ivoire",
+            "texte": "<p>Le ballon se gonfle en quatre gestes : retirez le bouchon, insérez l'embout, gonflez jusqu'à 25 cm, replacez le bouchon. Sa surface antidérapante tient sous le dos comme sous les mains.</p><p>L'anneau garde sa forme grâce à son cœur en fibre de verre ; ses poignées rembourrées se placent entre les mains, les genoux ou les chevilles.</p>",
+            "cta_libelle": "Commander le coffret",
+        })),
+    ]
+    faq_items = [
+        q("Convient-il aux débutants ?", "Oui. Commencez par les bandes les plus souples et des mouvements lents. En cas de douleur, de blessure ou de grossesse, demandez l'avis d'un professionnel de santé avant de commencer."),
+        q("Que contient exactement le coffret ?", "Un anneau de 38 cm, un ballon de 25 cm et son embout de gonflage, cinq bandes de résistance, une bande en huit, une sangle d'étirement, une paire de chaussettes antidérapantes et un sac de rangement."),
+        q("Comment gonfler le ballon ?", "Retirez le bouchon, insérez l'embout de gonflage, gonflez jusqu'à 25 cm environ, puis replacez le bouchon."),
+        q("Les accessoires sont-ils solides ?", "Le ballon est en PVC anti-éclatement et l'anneau a un cœur en fibre de verre. Rangez les bandes à l'abri du soleil pour qu'elles gardent leur élasticité."),
+        q("Peut-on l'emporter ?", "Tout tient dans le sac de rangement : le coffret vous suit en voyage ou à la salle."),
+        q("Comment se passe la livraison ?", "Les délais et les frais s'affichent avant le paiement, selon votre adresse. Vous recevez un e-mail à l'expédition."),
+        q("Puis-je le retourner ?", "Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. Les conditions de retour figurent sur la page Livraison et retours."),
+    ]
+    offre = section("aplomb-offre", {"ancre": "offre", "surtitre": "Les Essentiels", "titre": "Votre coffret Pilates à domicile",
+                                     "texte": "Treize pièces, un sac, des séances complètes à votre rythme."})
+    return landing(principal, milieu, faq_items, offre)
 
 
 def page_quiz():

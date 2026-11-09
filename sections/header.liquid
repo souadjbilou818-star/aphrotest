@@ -44,8 +44,12 @@
       <span class="menu-mobile" aria-hidden="true"></span>
     {%- endif -%}
 
-    <a class="marque" href="{{ routes.root_url }}" aria-label="{{ 'aplomb.accueil' | t }}">
-      {% render 'logo', variante: 'compact', decoratif: true %}
+    <a class="marque" href="{{ routes.root_url }}" aria-label="{{ 'aplomb.accueil' | t }}" style="--logo-l: {{ settings.logo_largeur | default: 170 }}px">
+      {%- if settings.logo != blank -%}
+        {{- settings.logo | image_url: width: 600 | image_tag: widths: '200, 300, 400, 600', sizes: '(min-width: 900px) 280px, 160px', class: 'logo-image', alt: '', loading: 'eager' -}}
+      {%- else -%}
+        {% render 'logo', variante: 'compact', decoratif: true %}
+      {%- endif -%}
     </a>
 
     {%- if liens_nav != blank -%}

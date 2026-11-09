@@ -30,6 +30,7 @@ const locale = lireJson('locales/fr.default.json');
 
 /* ---------- Catalogue simulé ---------- */
 const imageIA = (nom, w, h, alt) => ({ src: `/design/images-ia/${nom}`, width: w, height: h, alt, aspect_ratio: w / h });
+const imageMedia = (nom, w, h, alt) => ({ src: `/design/medias/${nom}`, width: w, height: h, alt, aspect_ratio: w / h });
 let idSeq = 7000;
 function variante(produit, title, price, opts = {}) {
   const v = {
@@ -72,13 +73,25 @@ const CATALOGUE = [
     description: '<p>Description de test (aperçu local).</p>',
   }),
   produit({
-    id: 102, handle: 'la-trousse', title: 'La Trousse', type: 'Les Essentiels', suffixe: 'essentiels',
-    variantes: [variante('la-trousse', 'Default Title', 8900)], option: 'Title',
+    id: 102, handle: 'la-trousse', title: 'Le Coffret Essentiel, 13 pièces', type: 'Les Essentiels', suffixe: 'essentiels',
+    variantes: [variante('la-trousse', 'Default Title', 6900)], option: 'Title',
+    aplomb: { accroche: 'Des séances Pilates complètes sur le tapis, avec cinq accessoires rangés dans un sac.', materiaux: 'Ballon en PVC anti-éclatement ; anneau à cœur en fibre de verre', contenu_coffret: 'Anneau 38 cm, ballon 25 cm, 5 bandes, bande en huit, sangle, chaussettes, sac, embout' },
+    description: '<p>Description de test (aperçu local).</p>',
     media: [
-      media(imageIA('plan-07-coffret.jpg', 1536, 1024, 'Coffret vert et carte ivoire, image générée (test d’aperçu)'), 1),
-      media(imageIA('plan-06-posture-provisoire.jpg', 1024, 1280, 'Gainage latéral sur tapis, image générée (test d’aperçu)'), 2),
-      media(imageIA('plan-09-soiree.jpg', 1536, 1024, 'Soirée à Paris, image générée (test d’aperçu)'), 3),
-    ],
+      ['coffret-1-coffret.jpg', 'Le coffret Les Essentiels, image générée'], ['coffret-2-seances.jpg', 'Six exercices avec le coffret, image générée'],
+      ['coffret-3-ballon.jpg', 'Ballon de Pilates 25 cm, image générée'], ['coffret-4-anneau.jpg', 'Anneau de Pilates 38 cm, image générée'],
+      ['coffret-5-sangle.jpg', 'Étirement avec la sangle, image générée'], ['coffret-6-bandes.jpg', 'Bande de résistance, image générée'],
+    ].map(([n, a], i) => media(imageMedia(n, 1254, 1254, a), 10 + i)),
+  }),
+  produit({
+    id: 107, handle: 'atelier-pliable', title: 'ATELIER Pliable', type: 'Reformers Atelier', suffixe: 'atelier',
+    variantes: [variante('atelier-pliable', 'Default Title', 149000)], option: 'Title',
+    aplomb: { accroche: 'Le geste du reformer, chez vous : un vrai chariot sur un cadre en acier, qui se plie après la séance.', dimensions_deplie: '197 × 57 × 72,5 cm (fiche fournisseur)', dimensions_plie: '108 × 55 × 29 cm (fiche fournisseur)', poids: '32,5 kg (fiche fournisseur)', materiaux: 'Cadre en acier, ABS, PP, mousse (fiche fournisseur)' },
+    description: '<p>Description de test (aperçu local).</p>',
+    media: [
+      ['atelier-pliable-1.jpg', 800, 800, 'Reformer pliable ATELIER, vue de trois quarts'], ['atelier-pliable-2-dimensions.jpg', 800, 640, 'Encombrement du reformer déplié'],
+      ['atelier-pliable-3-tubes.jpg', 800, 570, 'Tubes de résistance en latex'], ['atelier-pliable-4-vue.jpg', 1024, 1024, 'Reformer pliable ATELIER avec barre de pieds'],
+    ].map(([n, w, h, a], i) => media(imageMedia(n, w, h, a), 20 + i)),
   }),
   produit({
     id: 103, handle: 'atelier-chene', title: 'ATELIER Chêne', type: 'Reformers Atelier', suffixe: 'atelier',
@@ -190,6 +203,8 @@ Object.assign(settings, {
   // Une page non publiée est vide en Liquid (observé sur l’aperçu Shopify).
   page_quiz: ABSENTS ? null : PAGES['trouver-mon-equipement'],
   page_livraison: ABSENTS ? null : PAGES['livraison-et-retours'],
+  logo: image('shopify://shop_images/laplomb-logo.png'),
+  favicon: image('shopify://shop_images/laplomb-monogramme.png'),
 });
 
 /* Résout les réglages typés (produit, collection, page, image…) d’un schéma. */
@@ -210,6 +225,7 @@ const TAILLES = { 'plan-09-soiree.jpg': [1536, 1024], 'plan-07-coffret.jpg': [15
 function image(ref) {
   if (typeof ref !== 'string' || !ref.startsWith('shopify://shop_images/')) return ref || null;
   const nom = ref.split('/').pop();
+  if (fs.existsSync(path.join(ROOT, 'design', 'medias', nom))) return imageMedia(nom, 1254, 1254, '');
   if (!fs.existsSync(path.join(ROOT, 'design', 'images-ia', nom))) return null;
   const [w, h] = TAILLES[nom] || [1600, 1067];
   return imageIA(nom, w, h, '');
@@ -299,7 +315,7 @@ engine.registerFilter('image_url', (img) => (img && img.src ? img.src : img && i
 engine.registerFilter('image_tag', (src, ...args) => {
   const a = nommes(args);
   const srcset = a.widths ? ` srcset="${String(a.widths).split(',').map((w) => `${src}?width=${w.trim()} ${w.trim()}w`).join(', ')}"` : '';
-  return `<img src="${src}"${srcset} alt="${String(a.alt || '').replace(/"/g, '&quot;')}" loading="${a.loading || 'lazy'}"${a.fetchpriority ? ` fetchpriority="${a.fetchpriority}"` : ''} sizes="${a.sizes || ''}" width="1600" height="1600">`;
+  return `<img src="${src}"${srcset}${a.class ? ` class="${a.class}"` : ''} alt="${String(a.alt || '').replace(/"/g, '&quot;')}" loading="${a.loading || 'lazy'}"${a.fetchpriority ? ` fetchpriority="${a.fetchpriority}"` : ''} sizes="${a.sizes || ''}" width="1600" height="1600">`;
 });
 engine.registerFilter('video_tag', () => '<video controls playsinline></video>');
 engine.registerFilter('external_video_tag', () => '<iframe title="vidéo"></iframe>');

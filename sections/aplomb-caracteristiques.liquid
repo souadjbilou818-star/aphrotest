@@ -1,0 +1,196 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign cartes = section.blocks | where: 'type', 'carte'
+-%}
+<section
+  class="wrap caracs caracs--{{ section.settings.disposition }} caracs--{{ section.settings.colonnes }} fond--{{ section.settings.fond }}"
+  id="{{ section.settings.ancre | default: section.id }}"
+  aria-labelledby="{{ titre_id }}"
+>
+  <div class="caracs__tete">
+    {%- if section.settings.surtitre != blank -%}
+      <p class="label soft">{{ section.settings.surtitre }}</p>
+    {%- endif -%}
+    <h2 class="caracs__titre" id="{{ titre_id }}">{{ section.settings.titre }}</h2>
+    {%- if section.settings.intro != blank -%}
+      <p class="caracs__intro">{{ section.settings.intro }}</p>
+    {%- endif -%}
+  </div>
+  <ul class="caracs__liste" role="list">
+    {%- for block in cartes -%}
+      <li class="carac" {{ block.shopify_attributes }}>
+        {%- if block.settings.image != blank -%}
+          <div class="carac__visuel">
+            {{ block.settings.image | image_url: width: 1000 | image_tag: widths: '360, 540, 720, 1000', sizes: '(min-width: 1000px) 28vw, (min-width: 640px) 45vw, 82vw', loading: 'lazy', alt: block.settings.image.alt }}
+            {%- if block.settings.image_generee and settings.credit_ia -%}
+              <span class="credit carac__credit">{{ 'aplomb.credit_ia' | t }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        <div class="carac__texte">
+          {%- unless block.settings.image != blank -%}
+            <span class="carac__num mono">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          {%- endunless -%}
+          <h3 class="carac__titre">{{ block.settings.titre }}</h3>
+          {%- if block.settings.texte != blank -%}
+            <p class="carac__desc">{{ block.settings.texte }}</p>
+          {%- endif -%}
+        </div>
+      </li>
+    {%- endfor -%}
+  </ul>
+  {%- if section.settings.cta_libelle != blank -%}
+    <p class="caracs__cta"><a class="btn" href="{{ section.settings.cta_lien | default: '#achat' }}">{{ section.settings.cta_libelle }}</a></p>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Caractéristiques",
+  "tag": "div",
+  "class": "section-caracs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre"
+    },
+    {
+      "type": "text",
+      "id": "surtitre",
+      "label": "Surtitre"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "Caractéristiques clés"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction"
+    },
+    {
+      "type": "select",
+      "id": "disposition",
+      "label": "Disposition",
+      "options": [
+        {
+          "value": "grille",
+          "label": "Grille"
+        },
+        {
+          "value": "defilement",
+          "label": "Défilement horizontal"
+        }
+      ],
+      "default": "grille"
+    },
+    {
+      "type": "select",
+      "id": "colonnes",
+      "label": "Colonnes (ordinateur)",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "fond",
+      "label": "Fond",
+      "options": [
+        {
+          "value": "ivoire",
+          "label": "Ivoire"
+        },
+        {
+          "value": "sable",
+          "label": "Sable clair"
+        }
+      ],
+      "default": "ivoire"
+    },
+    {
+      "type": "text",
+      "id": "cta_libelle",
+      "label": "Bouton (facultatif)"
+    },
+    {
+      "type": "text",
+      "id": "cta_lien",
+      "label": "Lien du bouton",
+      "info": "Vide : le bloc d’achat de la page (#achat)."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "carte",
+      "name": "Carte",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (carrée, 1000 × 1000 px)"
+        },
+        {
+          "type": "checkbox",
+          "id": "image_generee",
+          "label": "Image générée par IA (affiche la mention)",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "titre",
+          "label": "Titre",
+          "default": "Caractéristique"
+        },
+        {
+          "type": "textarea",
+          "id": "texte",
+          "label": "Texte",
+          "info": "Un fait vérifiable. Pas de chiffre inventé."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Caractéristiques",
+      "blocks": [
+        {
+          "type": "carte"
+        },
+        {
+          "type": "carte"
+        },
+        {
+          "type": "carte"
+        },
+        {
+          "type": "carte"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  }
+}
+{% endschema %}

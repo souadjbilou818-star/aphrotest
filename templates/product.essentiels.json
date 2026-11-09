@@ -12,152 +12,170 @@
     "main": {
       "type": "produit-principal",
       "settings": {
-        "accroche": "Un kit d’accessoires pour installer une routine sur le tapis, sans appareil à ranger.",
-        "titre_description": "Description"
+        "accroche": "Des séances Pilates complètes sur le tapis, avec cinq accessoires rangés dans un sac.",
+        "titre_description": "Ce que contient le coffret"
       },
       "blocks": {
         "p_1": {
           "type": "preuve",
           "settings": {
-            "texte": "Tout tient dans une pochette"
+            "texte": "13 pièces, rangées dans un sac"
           }
         },
         "p_2": {
           "type": "preuve",
           "settings": {
-            "texte": "Pour débuter ou compléter une pratique"
+            "texte": "Ballon 25 cm anti-éclatement"
+          }
+        },
+        "p_3": {
+          "type": "preuve",
+          "settings": {
+            "texte": "Anneau 38 cm à cœur en fibre de verre"
           }
         }
       },
       "block_order": [
         "p_1",
-        "p_2"
+        "p_2",
+        "p_3"
       ]
     },
-    "benefices": {
-      "type": "benefices",
+    "contenu": {
+      "type": "aplomb-caracteristiques",
       "settings": {
-        "ancre": "benefices",
-        "num": "I.",
-        "titre": "Ce qu’il change"
+        "ancre": "contenu",
+        "titre": "Ce que contient le coffret",
+        "disposition": "grille",
+        "colonnes": "4",
+        "fond": "ivoire",
+        "intro": "Cinq accessoires qui changent l’appui ou la résistance d’un même mouvement."
+      },
+      "blocks": {
+        "c_1": {
+          "type": "carte",
+          "settings": {
+            "titre": "Anneau de Pilates 38 cm",
+            "texte": "Poignées rembourrées, cœur en fibre de verre, revêtement antidérapant.",
+            "image_generee": false
+          }
+        },
+        "c_2": {
+          "type": "carte",
+          "settings": {
+            "titre": "Ballon de Pilates 25 cm",
+            "texte": "PVC doux et anti-éclatement, surface antidérapante, embout de gonflage fourni.",
+            "image_generee": false
+          }
+        },
+        "c_3": {
+          "type": "carte",
+          "settings": {
+            "titre": "Bandes de résistance",
+            "texte": "Cinq forces différentes, plus une bande en huit pour les bras.",
+            "image_generee": false
+          }
+        },
+        "c_4": {
+          "type": "carte",
+          "settings": {
+            "titre": "Sangle, chaussettes, sac",
+            "texte": "Une sangle d’étirement, des chaussettes antidérapantes, un sac pour tout ranger.",
+            "image_generee": false
+          }
+        }
+      },
+      "block_order": [
+        "c_1",
+        "c_2",
+        "c_3",
+        "c_4"
+      ]
+    },
+    "bienfaits": {
+      "type": "aplomb-caracteristiques",
+      "settings": {
+        "ancre": "bienfaits",
+        "titre": "Ce que vous travaillez",
+        "disposition": "defilement",
+        "colonnes": "4",
+        "fond": "sable",
+        "intro": "Un même coffret pour tout le corps, à votre rythme."
       },
       "blocks": {
         "b_1": {
-          "type": "benefice",
+          "type": "carte",
           "settings": {
-            "titre": "Rien à installer",
-            "texte": "Vous sortez la pochette, vous déroulez le tapis, vous commencez."
+            "titre": "Gainage",
+            "texte": "Le ballon sous le dos ou le bassin soutient les exercices du centre.",
+            "image_generee": true,
+            "image": "shopify://shop_images/coffret-3-ballon.jpg"
           }
         },
         "b_2": {
-          "type": "benefice",
+          "type": "carte",
           "settings": {
-            "titre": "De quoi varier",
-            "texte": "Chaque accessoire change l’appui ou la résistance d’un même mouvement."
+            "titre": "Bras et épaules",
+            "texte": "L’anneau ajoute une résistance douce aux mouvements du haut du corps.",
+            "image_generee": true,
+            "image": "shopify://shop_images/coffret-4-anneau.jpg"
           }
         },
         "b_3": {
-          "type": "benefice",
+          "type": "carte",
           "settings": {
-            "titre": "Le complément d’un appareil",
-            "texte": "Les Essentiels accompagnent aussi COULISSE 01 et les Reformers Atelier."
+            "titre": "Souplesse des jambes",
+            "texte": "La sangle accompagne les étirements sans forcer.",
+            "image_generee": true,
+            "image": "shopify://shop_images/coffret-5-sangle.jpg"
+          }
+        },
+        "b_4": {
+          "type": "carte",
+          "settings": {
+            "titre": "Fessiers et cuisses",
+            "texte": "Les bandes travaillent les jambes debout comme au sol.",
+            "image_generee": true,
+            "image": "shopify://shop_images/coffret-6-bandes.jpg"
+          }
+        },
+        "b_5": {
+          "type": "carte",
+          "settings": {
+            "titre": "Une séance complète",
+            "texte": "Plusieurs accessoires, de nombreux exercices, un seul tapis.",
+            "image_generee": true,
+            "image": "shopify://shop_images/coffret-2-seances.jpg"
           }
         }
       },
       "block_order": [
         "b_1",
         "b_2",
-        "b_3"
+        "b_3",
+        "b_4",
+        "b_5"
       ]
+    },
+    "detail": {
+      "type": "aplomb-image-texte",
+      "settings": {
+        "ancre": "detail",
+        "titre": "Dans le détail",
+        "media_produit": 3,
+        "inverser": false,
+        "fond": "ivoire",
+        "texte": "<p>Le ballon se gonfle en quatre gestes : retirez le bouchon, insérez l’embout, gonflez jusqu’à 25 cm, replacez le bouchon. Sa surface antidérapante tient sous le dos comme sous les mains.</p><p>L’anneau garde sa forme grâce à son cœur en fibre de verre ; ses poignées rembourrées se placent entre les mains, les genoux ou les chevilles.</p>",
+        "cta_libelle": "Commander le coffret"
+      }
     },
     "specs": {
       "type": "specs",
       "settings": {
         "ancre": "fiche-technique",
-        "num": "II.",
         "titre": "Fiche technique",
-        "intro": "Les mesures s’affichent dès qu’elles sont vérifiées. Aucun chiffre n’est publié avant."
+        "intro": "Les mesures publiées viennent de la fiche du fournisseur, en attendant nos propres relevés."
       }
-    },
-    "comparatif": {
-      "type": "aplomb-comparatif",
-      "settings": {
-        "ancre": "comparatif",
-        "num": "III.",
-        "titre": "Les trois familles, côte à côte",
-        "nom_essentiels": "Les Essentiels",
-        "nom_coulisse": "COULISSE 01",
-        "nom_atelier": "Reformers Atelier",
-        "colonne_avant": "coulisse",
-        "ligne_prix": true,
-        "libelle_prix": "Prix",
-        "prix_attente": "Bientôt",
-        "honnete": "COULISSE 01 n’est pas un reformer : ni chariot, ni ressorts."
-      },
-      "blocks": {
-        "l_1": {
-          "type": "ligne",
-          "settings": {
-            "libelle": "Ce que c’est",
-            "essentiels": "Un kit d’accessoires pour le tapis",
-            "coulisse": "Une planche pliable à deux plateaux coulissants",
-            "atelier": "Un reformer complet, à chariot"
-          }
-        },
-        "l_2": {
-          "type": "ligne",
-          "settings": {
-            "libelle": "Ce qui bouge",
-            "essentiels": "Vous, sur le tapis",
-            "coulisse": "Deux plateaux, chacun sur ses rails",
-            "atelier": "Un chariot sur rails"
-          }
-        },
-        "l_3": {
-          "type": "ligne",
-          "settings": {
-            "libelle": "Résistance",
-            "essentiels": "Bandes élastiques",
-            "coulisse": "Cordons à poignées et glissé des plateaux",
-            "atelier": "Résistance réglable du reformer"
-          }
-        },
-        "l_4": {
-          "type": "ligne",
-          "settings": {
-            "libelle": "Pendant la séance",
-            "essentiels": "La place d’un tapis",
-            "coulisse": "La planche dépliée",
-            "atelier": "La place d’un reformer"
-          }
-        },
-        "l_5": {
-          "type": "ligne",
-          "settings": {
-            "libelle": "Rangement",
-            "essentiels": "Une pochette",
-            "coulisse": "Pliée en deux",
-            "atelier": "Selon le modèle"
-          }
-        },
-        "l_6": {
-          "type": "ligne",
-          "settings": {
-            "libelle": "Pour qui",
-            "essentiels": "Débuter, compléter une pratique",
-            "coulisse": "Une pratique régulière, dans peu de place",
-            "atelier": "Une pratique proche du studio, avec un espace dédié"
-          }
-        }
-      },
-      "block_order": [
-        "l_1",
-        "l_2",
-        "l_3",
-        "l_4",
-        "l_5",
-        "l_6"
-      ]
     },
     "temoignages": {
       "type": "temoignages",
@@ -171,7 +189,7 @@
       "type": "garanties",
       "settings": {
         "ancre": "garanties",
-        "num": "IV.",
+        "num": "",
         "folio": "",
         "encadre": "",
         "titre": "Ce qui vous protège",
@@ -230,42 +248,56 @@
       "type": "faq",
       "settings": {
         "ancre": "faq",
-        "titre": "Vos questions"
+        "titre": "Questions fréquentes"
       },
       "blocks": {
         "q_1": {
           "type": "question",
           "settings": {
-            "question": "Est-ce adapté si je débute ?",
-            "reponse": "<p>Oui. Commencez lentement, plateaux proches, amplitude courte. En cas de douleur, de blessure, de grossesse ou après un accouchement, demandez l’avis d’un professionnel de santé avant de commencer.</p>"
+            "question": "Convient-il aux débutants ?",
+            "reponse": "<p>Oui. Commencez par les bandes les plus souples et des mouvements lents. En cas de douleur, de blessure ou de grossesse, demandez l’avis d’un professionnel de santé avant de commencer.</p>"
           }
         },
         "q_2": {
           "type": "question",
           "settings": {
-            "question": "Qu’est-ce qui est inclus ?",
-            "reponse": "<p>Le contenu exact de chaque édition est écrit sur la fiche du produit, sous le choix de l’édition, et dans sa fiche technique.</p>"
+            "question": "Que contient exactement le coffret ?",
+            "reponse": "<p>Un anneau de 38 cm, un ballon de 25 cm et son embout de gonflage, cinq bandes de résistance, une bande en huit, une sangle d’étirement, une paire de chaussettes antidérapantes et un sac de rangement.</p>"
           }
         },
         "q_3": {
+          "type": "question",
+          "settings": {
+            "question": "Comment gonfler le ballon ?",
+            "reponse": "<p>Retirez le bouchon, insérez l’embout de gonflage, gonflez jusqu’à 25 cm environ, puis replacez le bouchon.</p>"
+          }
+        },
+        "q_4": {
+          "type": "question",
+          "settings": {
+            "question": "Les accessoires sont-ils solides ?",
+            "reponse": "<p>Le ballon est en PVC anti-éclatement et l’anneau a un cœur en fibre de verre. Rangez les bandes à l’abri du soleil pour qu’elles gardent leur élasticité.</p>"
+          }
+        },
+        "q_5": {
+          "type": "question",
+          "settings": {
+            "question": "Peut-on l’emporter ?",
+            "reponse": "<p>Tout tient dans le sac de rangement : le coffret vous suit en voyage ou à la salle.</p>"
+          }
+        },
+        "q_6": {
           "type": "question",
           "settings": {
             "question": "Comment se passe la livraison ?",
             "reponse": "<p>Les délais et les frais s’affichent avant le paiement, selon votre adresse. Vous recevez un e-mail à l’expédition.</p>"
           }
         },
-        "q_4": {
+        "q_7": {
           "type": "question",
           "settings": {
-            "question": "Et si quelque chose casse ?",
-            "reponse": "<p>Vous bénéficiez de la garantie légale de conformité pendant 2 ans à compter de la livraison : réparation ou remplacement, sans frais. Écrivez-nous, avec une photo si possible.</p>"
-          }
-        },
-        "q_5": {
-          "type": "question",
-          "settings": {
-            "question": "Puis-je retourner mon achat ?",
-            "reponse": "<p>Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. Les conditions et les frais de retour figurent sur la page Livraison et retours.</p>"
+            "question": "Puis-je le retourner ?",
+            "reponse": "<p>Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. Les conditions de retour figurent sur la page Livraison et retours.</p>"
           }
         }
       },
@@ -274,18 +306,31 @@
         "q_2",
         "q_3",
         "q_4",
-        "q_5"
+        "q_5",
+        "q_6",
+        "q_7"
       ]
+    },
+    "offre": {
+      "type": "aplomb-offre",
+      "settings": {
+        "ancre": "offre",
+        "surtitre": "Les Essentiels",
+        "titre": "Votre coffret Pilates à domicile",
+        "texte": "Treize pièces, un sac, des séances complètes à votre rythme."
+      }
     }
   },
   "order": [
     "main",
-    "benefices",
+    "contenu",
+    "bienfaits",
+    "detail",
     "specs",
-    "comparatif",
     "temoignages",
     "garanties",
     "gpsr",
-    "faq"
+    "faq",
+    "offre"
   ]
 }

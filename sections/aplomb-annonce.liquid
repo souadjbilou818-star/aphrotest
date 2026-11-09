@@ -1,0 +1,57 @@
+{%- liquid
+  case settings.launch_mode
+    when 'vente'
+      assign texte = section.settings.texte_vente
+    when 'reservation'
+      assign texte = section.settings.texte_reservation
+    else
+      assign texte = section.settings.texte_attente
+  endcase
+-%}
+{%- if texte != blank -%}
+  <div class="annonce">
+    <p class="wrap annonce__texte">
+      {%- if section.settings.lien != blank -%}
+        <a href="{{ section.settings.lien }}">{{ texte }}</a>
+      {%- else -%}
+        {{ texte }}
+      {%- endif -%}
+    </p>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Bandeau d’annonce",
+  "class": "section-annonce",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Une information vraie et utile. Pas de « offre limitée », de stock ou de compte à rebours inventés."
+    },
+    {
+      "type": "text",
+      "id": "texte_attente",
+      "label": "Mode Liste d’attente",
+      "default": "Pré-lancement · inscrivez-vous pour être prévenu de l’ouverture"
+    },
+    {
+      "type": "text",
+      "id": "texte_reservation",
+      "label": "Mode Réservation",
+      "default": "Réservation prioritaire ouverte · remboursable à tout moment"
+    },
+    {
+      "type": "text",
+      "id": "texte_vente",
+      "label": "Mode Vente",
+      "default": "14 jours pour changer d’avis · garantie légale de 2 ans"
+    },
+    {
+      "type": "url",
+      "id": "lien",
+      "label": "Lien (facultatif)"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,101 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign p = section.settings.produit | default: product
+  assign p_ok = false
+  if p.handle != blank and p.handle
+    assign p_ok = true
+  endif
+  if p_ok
+    assign media = p.featured_media
+    capture prix
+      render 'prix', montant: p.price_min
+    endcapture
+  endif
+-%}
+{%- if p_ok -%}
+  <section class="wrap offre" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+    <div class="offre__carte">
+      <div class="offre__visuel">
+        {%- if media != blank -%}
+          {%- assign alt_o = media.alt | default: p.title -%}
+          {{ media.preview_image | image_url: width: 900 | image_tag: widths: '360, 540, 720, 900', sizes: '(min-width: 900px) 40vw, 100vw', loading: 'lazy', alt: alt_o }}
+        {%- endif -%}
+      </div>
+      <div class="offre__texte">
+        {%- if section.settings.surtitre != blank -%}
+          <p class="label soft">{{ section.settings.surtitre }}</p>
+        {%- endif -%}
+        <h2 class="offre__titre" id="{{ titre_id }}">{{ section.settings.titre | default: p.title }}</h2>
+        {%- if section.settings.texte != blank -%}
+          <p class="offre__lead">{{ section.settings.texte }}</p>
+        {%- endif -%}
+        <p class="offre__prix">
+          {%- if p.price_varies -%}
+            {{ 'aplomb.produit.des' | t: prix: prix }}
+          {%- else -%}
+            {{ prix }}
+          {%- endif %}
+          <small>{{ 'aplomb.produit.ttc' | t }}</small>
+        </p>
+        {%- if p.has_only_default_variant -%}
+          {% render 'achat', product: p, contexte: 'offre', compact: true %}
+        {%- else -%}
+          <a class="btn btn--plein" href="#achat">{{ 'aplomb.produit.choisir' | t }}</a>
+        {%- endif -%}
+        <ul class="offre__garanties">
+          {%- if settings.info_retours != blank -%}<li>{{ settings.info_retours }}</li>{%- endif -%}
+          {%- if settings.info_garantie != blank -%}<li>{{ settings.info_garantie }}</li>{%- endif -%}
+        </ul>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Offre finale",
+  "tag": "div",
+  "class": "section-offre",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "offre"
+    },
+    {
+      "type": "product",
+      "id": "produit",
+      "label": "Produit",
+      "info": "Vide : le produit de la page."
+    },
+    {
+      "type": "text",
+      "id": "surtitre",
+      "label": "Surtitre"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "info": "Vide : le nom du produit."
+    },
+    {
+      "type": "textarea",
+      "id": "texte",
+      "label": "Texte"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Offre finale"
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  }
+}
+{% endschema %}

@@ -232,7 +232,7 @@ const reinitialiser = (p, base = VENTE) => p.request.get(`${base}/__reinitialise
     await p.keyboard.press('Escape');
     await p.waitForFunction(() => !document.querySelector('dialog[data-visionneuse]').open);
     ok(await p.evaluate(() => document.activeElement.matches('[data-zoom]')), 'focus non rendu');
-    ok(await p.locator('.galerie-produit .credit').count() === 3, 'mention « Image générée » manquante');
+    ok(await p.locator('.galerie-produit .credit').count() === 6, 'mention « Image générée » manquante');
     await p.context().close();
   });
 
@@ -242,6 +242,25 @@ const reinitialiser = (p, base = VENTE) => p.request.get(`${base}/__reinitialise
     ok(await p.locator('[data-cta-principal] form[action="/contact"]').count() === 1, 'formulaire de liste d’attente absent');
     ok(await p.locator('[data-cta-principal] [data-cta-vente]').count() === 0, 'bouton d’achat présent');
     ok((await p.locator('[data-cta-principal] input[name="contact[tags]"]').getAttribute('value')).includes('atelier-chene'), 'tag produit absent');
+    await p.context().close();
+  });
+
+  await test('Pages produit « landing » : sections, offre finale, aucune fausse preuve', async () => {
+    const p = await page(nav);
+    for (const url of ['/products/atelier-pliable', '/products/la-trousse']) {
+      await reinitialiser(p);
+      await p.goto(`${VENTE}${url}`);
+      ok(await p.locator('.caracs').count() >= 2, `${url} : sections de caractéristiques absentes`);
+      ok(await p.locator('.image-texte').count() >= 1, `${url} : section image et texte absente`);
+      ok(await p.locator('.offre [data-cta-vente]').count() === 1, `${url} : offre finale sans bouton`);
+      const texte = await p.locator('main').innerText();
+      for (const interdit of ['Offre limitée', 'Stock limité', 'avis cinq étoiles', 'Forbes', 'Vogue', 'reformer de studio', 'Résultats rapides']) ok(!texte.includes(interdit), `${url} : « ${interdit} » présent`);
+      await p.locator('.offre [data-cta-vente]').click();
+      await p.waitForSelector('dialog[data-tiroir][open]');
+      ok(await p.locator('dialog[data-tiroir] .panier-ligne').count() === 1, `${url} : ajout depuis l'offre finale`);
+      await p.keyboard.press('Escape');
+    }
+    ok(p.erreurs.length === 0, `erreurs console : ${p.erreurs.join(' | ')}`);
     await p.context().close();
   });
 
@@ -283,7 +302,7 @@ const reinitialiser = (p, base = VENTE) => p.request.get(`${base}/__reinitialise
 
   /* ---------- Réactivité, erreurs console, captures ---------- */
   const PAGES = [
-    ['accueil', '/'], ['produit', '/products/coulisse-01'], ['trousse', '/products/la-trousse'],
+    ['accueil', '/'], ['produit', '/products/coulisse-01'], ['trousse', '/products/la-trousse'], ['atelier', '/products/atelier-pliable'],
     ['quiz', '/pages/trouver-mon-equipement'], ['collection', '/collections/coulisse'], ['panier', '/cart'],
   ];
   const LARGEURS = [320, 375, 390, 768, 1024, 1440];

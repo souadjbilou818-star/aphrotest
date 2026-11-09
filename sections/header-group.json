@@ -7,9 +7,14 @@
       "settings": {
         "menu": ""
       }
+    },
+    "annonce": {
+      "type": "aplomb-annonce",
+      "settings": {}
     }
   },
   "order": [
+    "annonce",
     "header"
   ]
 }

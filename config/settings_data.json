@@ -27,6 +27,9 @@
     "collection_coulisse": "coulisse",
     "collection_atelier": "reformers-atelier",
     "page_quiz": "trouver-mon-equipement",
-    "page_livraison": "livraison-et-retours"
+    "page_livraison": "livraison-et-retours",
+    "logo": "shopify://shop_images/laplomb-logo.png",
+    "logo_largeur": 170,
+    "favicon": "shopify://shop_images/laplomb-monogramme.png"
   }
 }

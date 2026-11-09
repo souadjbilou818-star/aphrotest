@@ -12,152 +12,231 @@
     "main": {
       "type": "produit-principal",
       "settings": {
-        "accroche": "Un reformer complet, à chariot, pour une pratique proche du studio.",
+        "accroche": "Un reformer complet, à chariot, qui se plie après la séance.",
         "titre_description": "Description"
       },
       "blocks": {
         "p_1": {
           "type": "preuve",
           "settings": {
-            "texte": "Un vrai chariot sur rails"
+            "texte": "Cadre en acier pliable"
           }
         },
         "p_2": {
           "type": "preuve",
           "settings": {
-            "texte": "Pliable ou à poste fixe, selon le modèle"
+            "texte": "Chariot rembourré sur rails"
+          }
+        },
+        "p_3": {
+          "type": "preuve",
+          "settings": {
+            "texte": "Tapis de yoga inclus"
           }
         }
       },
       "block_order": [
         "p_1",
-        "p_2"
+        "p_2",
+        "p_3"
       ]
     },
-    "benefices": {
-      "type": "benefices",
+    "caracteristiques": {
+      "type": "aplomb-caracteristiques",
       "settings": {
-        "ancre": "benefices",
-        "num": "I.",
-        "titre": "Ce qu’il change"
+        "ancre": "caracteristiques",
+        "titre": "Caractéristiques clés",
+        "disposition": "grille",
+        "colonnes": "4",
+        "fond": "ivoire",
+        "intro": "Ce qui fait un vrai reformer, dans un format qui se range."
+      },
+      "blocks": {
+        "c_1": {
+          "type": "carte",
+          "settings": {
+            "titre": "Cadre en acier pliable",
+            "texte": "Une structure en acier, stable pendant l’effort, qui se replie pour le rangement.",
+            "image_generee": false,
+            "image": "shopify://shop_images/atelier-pliable-4-vue.jpg"
+          }
+        },
+        "c_2": {
+          "type": "carte",
+          "settings": {
+            "titre": "Chariot matelassé rose",
+            "texte": "Un plateau rembourré qui glisse sur ses rails, doux sous le dos et les genoux.",
+            "image_generee": false,
+            "image": "shopify://shop_images/atelier-pliable-1.jpg"
+          }
+        },
+        "c_3": {
+          "type": "carte",
+          "settings": {
+            "titre": "Résistance par tubes",
+            "texte": "Des tubes en latex fixés sous le chariot règlent la résistance du mouvement.",
+            "image_generee": false,
+            "image": "shopify://shop_images/atelier-pliable-3-tubes.jpg"
+          }
+        },
+        "c_4": {
+          "type": "carte",
+          "settings": {
+            "titre": "Encombrement maîtrisé",
+            "texte": "Déplié 197 × 57 × 72,5 cm, plié 108 × 55 × 29 cm (fiche fournisseur).",
+            "image_generee": false,
+            "image": "shopify://shop_images/atelier-pliable-2-dimensions.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "c_1",
+        "c_2",
+        "c_3",
+        "c_4"
+      ]
+    },
+    "elegance": {
+      "type": "aplomb-image-texte",
+      "settings": {
+        "ancre": "au-quotidien",
+        "titre": "Élégant et fonctionnel, au quotidien",
+        "media_produit": 1,
+        "fond": "sable",
+        "texte": "<p>Un appareil que l’on a envie de laisser dans la pièce, et que l’on peut ranger quand on reçoit.</p>",
+        "cta_libelle": "Choisir mon reformer"
+      },
+      "blocks": {
+        "pt_1": {
+          "type": "point",
+          "settings": {
+            "texte": "Un pliage en quelques gestes, pour ranger le reformer contre un mur"
+          }
+        },
+        "pt_2": {
+          "type": "point",
+          "settings": {
+            "texte": "Des matériaux choisis pour durer : acier, ABS, PP et mousse"
+          }
+        },
+        "pt_3": {
+          "type": "point",
+          "settings": {
+            "texte": "Une finition rose et blanche qui s’accorde à la pièce"
+          }
+        }
+      },
+      "block_order": [
+        "pt_1",
+        "pt_2",
+        "pt_3"
+      ]
+    },
+    "bienfaits": {
+      "type": "aplomb-caracteristiques",
+      "settings": {
+        "ancre": "bienfaits",
+        "titre": "Ce que vous gagnez",
+        "disposition": "defilement",
+        "colonnes": "4",
+        "fond": "ivoire"
       },
       "blocks": {
         "b_1": {
-          "type": "benefice",
+          "type": "carte",
           "settings": {
-            "titre": "Le geste du studio",
-            "texte": "Le chariot, la résistance réglable, l’amplitude complète des mouvements."
+            "titre": "Stabilité",
+            "texte": "Le cadre métallique tient en place pendant chaque mouvement.",
+            "image_generee": false
           }
         },
         "b_2": {
-          "type": "benefice",
+          "type": "carte",
           "settings": {
-            "titre": "Une pratique qui progresse",
-            "texte": "Vous augmentez la résistance au fil des semaines."
+            "titre": "Confort",
+            "texte": "Le rembourrage en mousse amortit les appuis, séance après séance.",
+            "image_generee": false
           }
         },
         "b_3": {
-          "type": "benefice",
+          "type": "carte",
           "settings": {
-            "titre": "Un objet qui a sa place",
-            "texte": "Choisi pour sa tenue et ses matières, il reste dans la pièce."
+            "titre": "Place retrouvée",
+            "texte": "Plié, il libère la pièce en quelques secondes.",
+            "image_generee": false
+          }
+        },
+        "b_4": {
+          "type": "carte",
+          "settings": {
+            "titre": "Discrétion",
+            "texte": "Des lignes simples, qui se fondent dans un intérieur.",
+            "image_generee": false
+          }
+        },
+        "b_5": {
+          "type": "carte",
+          "settings": {
+            "titre": "Simplicité",
+            "texte": "Des réglages lisibles pour enchaîner les exercices sans interruption.",
+            "image_generee": false
           }
         }
       },
       "block_order": [
         "b_1",
         "b_2",
-        "b_3"
+        "b_3",
+        "b_4",
+        "b_5"
+      ]
+    },
+    "detail": {
+      "type": "aplomb-image-texte",
+      "settings": {
+        "ancre": "detail",
+        "titre": "Conçu dans le détail",
+        "media_produit": 2,
+        "inverser": true,
+        "fond": "ivoire",
+        "texte": "<p>Le cadre en acier porte un chariot rembourré qui glisse sur ses rails. La résistance vient de tubes en latex fixés sous le chariot ; la barre de pieds se règle selon votre taille et l’exercice.</p><p>Les mesures et matériaux affichés sur cette page sont ceux de la fiche du fournisseur. Nous les vérifierons sur nos échantillons avant l’ouverture des ventes.</p>"
+      }
+    },
+    "demarcation": {
+      "type": "negations",
+      "settings": {
+        "ancre": "choisir",
+        "titre": "ATELIER ou COULISSE ?",
+        "honnete": "ATELIER est un reformer complet. COULISSE 01 est une planche compacte, sans chariot."
+      },
+      "blocks": {
+        "n_1": {
+          "type": "negation",
+          "settings": {
+            "non": "Vous avez un espace dédié",
+            "explication": "ATELIER : le chariot, la barre de pieds, l’amplitude complète du reformer."
+          }
+        },
+        "n_2": {
+          "type": "negation",
+          "settings": {
+            "non": "Vous manquez de place",
+            "explication": "COULISSE 01 : deux plateaux coulissants sur une planche qui se plie en deux."
+          }
+        }
+      },
+      "block_order": [
+        "n_1",
+        "n_2"
       ]
     },
     "specs": {
       "type": "specs",
       "settings": {
         "ancre": "fiche-technique",
-        "num": "II.",
         "titre": "Fiche technique",
-        "intro": "Les mesures s’affichent dès qu’elles sont vérifiées. Aucun chiffre n’est publié avant."
+        "intro": "Les mesures publiées viennent de la fiche du fournisseur, en attendant nos propres relevés."
       }
-    },
-    "comparatif": {
-      "type": "aplomb-comparatif",
-      "settings": {
-        "ancre": "comparatif",
-        "num": "III.",
-        "titre": "Les trois familles, côte à côte",
-        "nom_essentiels": "Les Essentiels",
-        "nom_coulisse": "COULISSE 01",
-        "nom_atelier": "Reformers Atelier",
-        "colonne_avant": "coulisse",
-        "ligne_prix": true,
-        "libelle_prix": "Prix",
-        "prix_attente": "Bientôt",
-        "honnete": "COULISSE 01 n’est pas un reformer : ni chariot, ni ressorts."
-      },
-      "blocks": {
-        "l_1": {
-          "type": "ligne",
-          "settings": {
-            "libelle": "Ce que c’est",
-            "essentiels": "Un kit d’accessoires pour le tapis",
-            "coulisse": "Une planche pliable à deux plateaux coulissants",
-            "atelier": "Un reformer complet, à chariot"
-          }
-        },
-        "l_2": {
-          "type": "ligne",
-          "settings": {
-            "libelle": "Ce qui bouge",
-            "essentiels": "Vous, sur le tapis",
-            "coulisse": "Deux plateaux, chacun sur ses rails",
-            "atelier": "Un chariot sur rails"
-          }
-        },
-        "l_3": {
-          "type": "ligne",
-          "settings": {
-            "libelle": "Résistance",
-            "essentiels": "Bandes élastiques",
-            "coulisse": "Cordons à poignées et glissé des plateaux",
-            "atelier": "Résistance réglable du reformer"
-          }
-        },
-        "l_4": {
-          "type": "ligne",
-          "settings": {
-            "libelle": "Pendant la séance",
-            "essentiels": "La place d’un tapis",
-            "coulisse": "La planche dépliée",
-            "atelier": "La place d’un reformer"
-          }
-        },
-        "l_5": {
-          "type": "ligne",
-          "settings": {
-            "libelle": "Rangement",
-            "essentiels": "Une pochette",
-            "coulisse": "Pliée en deux",
-            "atelier": "Selon le modèle"
-          }
-        },
-        "l_6": {
-          "type": "ligne",
-          "settings": {
-            "libelle": "Pour qui",
-            "essentiels": "Débuter, compléter une pratique",
-            "coulisse": "Une pratique régulière, dans peu de place",
-            "atelier": "Une pratique proche du studio, avec un espace dédié"
-          }
-        }
-      },
-      "block_order": [
-        "l_1",
-        "l_2",
-        "l_3",
-        "l_4",
-        "l_5",
-        "l_6"
-      ]
     },
     "temoignages": {
       "type": "temoignages",
@@ -171,7 +250,7 @@
       "type": "garanties",
       "settings": {
         "ancre": "garanties",
-        "num": "IV.",
+        "num": "",
         "folio": "",
         "encadre": "",
         "titre": "Ce qui vous protège",
@@ -230,49 +309,70 @@
       "type": "faq",
       "settings": {
         "ancre": "faq",
-        "titre": "Vos questions"
+        "titre": "Questions fréquentes"
       },
       "blocks": {
         "q_1": {
           "type": "question",
           "settings": {
-            "question": "Est-ce adapté si je débute ?",
-            "reponse": "<p>Oui. Commencez lentement, plateaux proches, amplitude courte. En cas de douleur, de blessure, de grossesse ou après un accouchement, demandez l’avis d’un professionnel de santé avant de commencer.</p>"
+            "question": "Le montage est-il difficile ?",
+            "reponse": "<p>Le reformer se monte en quelques étapes, avec la notice fournie. Comptez une personne pour tenir le cadre pendant le serrage.</p>"
           }
         },
         "q_2": {
           "type": "question",
           "settings": {
-            "question": "Quelle place faut-il ?",
-            "reponse": "<p>Pendant la séance : la planche dépliée, et de quoi allonger les bras et les jambes autour. Les dimensions exactes de chaque produit figurent dans sa fiche technique dès qu’elles sont vérifiées ; nous ne publions aucune mesure avant.</p>"
+            "question": "Le pliage est-il sûr ?",
+            "reponse": "<p>Pliez toujours le reformer chariot vide et à l’arrêt, en suivant la notice. Ne le dépliez jamais avec quelqu’un dessus.</p>"
           }
         },
         "q_3": {
           "type": "question",
           "settings": {
-            "question": "Qu’est-ce qui est inclus ?",
-            "reponse": "<p>Le contenu exact de chaque édition est écrit sur la fiche du produit, sous le choix de l’édition, et dans sa fiche technique.</p>"
+            "question": "Est-il facile à ranger ?",
+            "reponse": "<p>Plié, il mesure 108 × 55 × 29 cm selon la fiche du fournisseur : il se range contre un mur ou dans un placard profond.</p>"
           }
         },
         "q_4": {
+          "type": "question",
+          "settings": {
+            "question": "Est-il lourd ?",
+            "reponse": "<p>32,5 kg selon la fiche du fournisseur. Il se déplace plus facilement à deux.</p>"
+          }
+        },
+        "q_5": {
+          "type": "question",
+          "settings": {
+            "question": "Le cadre est-il solide ?",
+            "reponse": "<p>Le cadre est en acier. La charge maximale sera publiée sur la fiche technique dès qu’elle aura été vérifiée sur nos échantillons.</p>"
+          }
+        },
+        "q_6": {
+          "type": "question",
+          "settings": {
+            "question": "Comment l’entretenir ?",
+            "reponse": "<p>Un chiffon doux et humide suffit. Évitez les produits abrasifs sur le revêtement et sur le métal.</p>"
+          }
+        },
+        "q_7": {
+          "type": "question",
+          "settings": {
+            "question": "ATELIER ou COULISSE 01 ?",
+            "reponse": "<p>ATELIER est un reformer complet, à chariot. COULISSE 01 est une planche compacte à deux plateaux coulissants, sans chariot ni ressorts. Le quiz vous aide à choisir.</p>"
+          }
+        },
+        "q_8": {
           "type": "question",
           "settings": {
             "question": "Comment se passe la livraison ?",
             "reponse": "<p>Les délais et les frais s’affichent avant le paiement, selon votre adresse. Vous recevez un e-mail à l’expédition.</p>"
           }
         },
-        "q_5": {
+        "q_9": {
           "type": "question",
           "settings": {
-            "question": "Et si quelque chose casse ?",
-            "reponse": "<p>Vous bénéficiez de la garantie légale de conformité pendant 2 ans à compter de la livraison : réparation ou remplacement, sans frais. Écrivez-nous, avec une photo si possible.</p>"
-          }
-        },
-        "q_6": {
-          "type": "question",
-          "settings": {
-            "question": "Puis-je retourner mon achat ?",
-            "reponse": "<p>Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. Les conditions et les frais de retour figurent sur la page Livraison et retours.</p>"
+            "question": "Puis-je le retourner ?",
+            "reponse": "<p>Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. Les conditions de retour figurent sur la page Livraison et retours.</p>"
           }
         }
       },
@@ -282,18 +382,34 @@
         "q_3",
         "q_4",
         "q_5",
-        "q_6"
+        "q_6",
+        "q_7",
+        "q_8",
+        "q_9"
       ]
+    },
+    "offre": {
+      "type": "aplomb-offre",
+      "settings": {
+        "ancre": "offre",
+        "surtitre": "Reformers Atelier",
+        "titre": "Votre reformer, chez vous",
+        "texte": "Un vrai chariot, un cadre en acier, un tapis de yoga inclus. Et la place retrouvée après la séance."
+      }
     }
   },
   "order": [
     "main",
-    "benefices",
+    "caracteristiques",
+    "elegance",
+    "bienfaits",
+    "detail",
+    "demarcation",
     "specs",
-    "comparatif",
     "temoignages",
     "garanties",
     "gpsr",
-    "faq"
+    "faq",
+    "offre"
   ]
 }

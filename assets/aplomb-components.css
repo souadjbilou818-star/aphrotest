@@ -3051,3 +3051,286 @@ html.visionneuse-ouverte {
     order: -1;
   }
 }
+
+/* ---------- Logo image (réglages du thème) ---------- */
+.marque .logo-image {
+  display: block;
+  width: min(var(--logo-l, 170px), 44vw);
+  height: auto;
+}
+@media (max-width: 899px) {
+  .marque .logo-image {
+    width: min(150px, 40vw);
+  }
+}
+.pied .marque .logo-image {
+  width: min(260px, 64vw);
+}
+.logo-image--clair {
+  filter: invert(1) brightness(0.96) sepia(0.12);
+}
+
+/* ---------- Bandeau d’annonce ---------- */
+.annonce {
+  background: var(--forest);
+  color: var(--ivory);
+}
+.annonce__texte {
+  margin: 0 auto;
+  padding-block: 9px;
+  text-align: center;
+  font: 500 0.8125rem / 1.35 var(--sans);
+  letter-spacing: 0.02em;
+}
+.annonce a {
+  color: inherit;
+  text-decoration-color: rgb(246 242 233 / 0.5);
+}
+.annonce + .masthead,
+.section-annonce + .shopify-section .masthead {
+  top: 0;
+}
+
+/* ---------- Fonds de section ---------- */
+.fond--sable {
+  background: var(--sand-light);
+  max-width: none;
+  padding-inline: max(var(--gutter), calc((100% - var(--maxw)) / 2 + var(--gutter)));
+}
+
+/* ---------- Caractéristiques ---------- */
+.caracs {
+  padding-top: var(--section);
+  display: grid;
+  gap: clamp(20px, 3vw, 36px);
+}
+.caracs.fond--sable {
+  margin-top: var(--section);
+  padding-block: var(--section-serre);
+}
+.caracs__tete {
+  display: grid;
+  gap: 10px;
+  max-width: 46rem;
+}
+.caracs__titre {
+  font-size: var(--fs-acte);
+  line-height: 1.04;
+}
+.caracs__intro {
+  color: var(--ink-soft);
+  max-width: 52ch;
+}
+.caracs__liste {
+  list-style: none;
+  display: grid;
+  gap: clamp(14px, 2vw, 24px);
+}
+.carac {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r-2);
+  overflow: hidden;
+}
+.carac__visuel {
+  position: relative;
+  aspect-ratio: 1;
+  background: var(--sand-light);
+  overflow: hidden;
+}
+.carac__visuel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.carac__credit {
+  position: absolute;
+  left: 8px;
+  bottom: 6px;
+  background: var(--paper);
+  padding: 0 6px;
+}
+.carac__texte {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  padding: 16px 18px 18px;
+}
+.carac__num {
+  font-size: 0.75rem;
+  color: var(--oxblood);
+}
+.carac__titre {
+  font: var(--serif-w) var(--fs-h4) / 1.15 var(--serif);
+}
+.carac__desc {
+  font-size: var(--fs-small);
+  color: var(--ink-soft);
+}
+.caracs__cta {
+  margin-top: 4px;
+}
+@media (min-width: 640px) {
+  .caracs--grille .caracs__liste {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1000px) {
+  .caracs--grille.caracs--3 .caracs__liste {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .caracs--grille.caracs--4 .caracs__liste {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.caracs--defilement .caracs__liste {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  margin-inline: calc(-1 * max(var(--gutter), env(safe-area-inset-left, 0px)));
+  padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px));
+  scroll-padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-bottom: 8px;
+}
+.caracs--defilement .carac {
+  flex: 0 0 min(78%, 320px);
+  scroll-snap-align: start;
+}
+@media (min-width: 1200px) {
+  .caracs--defilement .caracs__liste {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    overflow: visible;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+}
+
+/* ---------- Image et texte ---------- */
+.image-texte {
+  padding-top: var(--section);
+  display: grid;
+  gap: clamp(20px, 4vw, 56px);
+  align-items: center;
+}
+.image-texte.fond--sable {
+  margin-top: var(--section);
+  padding-block: var(--section-serre);
+}
+.image-texte__visuel {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+.image-texte__cadre {
+  aspect-ratio: 1;
+  background: var(--sand-light);
+  border-radius: var(--r-2);
+  overflow: hidden;
+}
+.image-texte__cadre img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.image-texte__texte {
+  display: grid;
+  gap: 16px;
+  align-content: center;
+}
+.image-texte__titre {
+  font-size: var(--fs-acte);
+  line-height: 1.04;
+}
+.image-texte__corps {
+  font-size: var(--fs-lead);
+  line-height: 1.55;
+  max-width: 48ch;
+}
+@media (min-width: 900px) {
+  .image-texte {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .image-texte--inverse .image-texte__visuel {
+    order: 2;
+  }
+}
+
+/* ---------- Offre finale ---------- */
+.offre {
+  padding-top: var(--section);
+}
+.offre__carte {
+  display: grid;
+  gap: 0;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: var(--r-2);
+  overflow: hidden;
+  box-shadow: inset 0 3px 0 var(--oxblood);
+}
+.offre__visuel {
+  aspect-ratio: 4 / 3;
+  background: var(--sand-light);
+}
+.offre__visuel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.offre__texte {
+  display: grid;
+  gap: 14px;
+  align-content: center;
+  padding: clamp(20px, 4vw, 48px);
+}
+.offre__titre {
+  font-size: var(--fs-acte);
+  line-height: 1.04;
+}
+.offre__lead {
+  color: var(--ink-soft);
+  max-width: 44ch;
+}
+.offre__prix {
+  font: var(--serif-w) calc(1.75rem * var(--serif-k, 1)) / 1.1 var(--serif);
+  font-variant-numeric: lining-nums;
+}
+.offre__prix small {
+  font: 400 0.6875rem / 1 var(--mono);
+  color: var(--ink-soft);
+  margin-left: 4px;
+}
+.offre__garanties {
+  list-style: none;
+  display: grid;
+  gap: 4px;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+.offre__garanties li::before {
+  content: '— ';
+  color: var(--oxblood);
+}
+@media (min-width: 900px) {
+  .offre__carte {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .offre__visuel {
+    aspect-ratio: auto;
+    min-height: 100%;
+  }
+}
+
+/* Photos produit sur fond blanc : affichées entières (aucune cote coupée) */
+.carac__visuel,
+.image-texte__cadre {
+  background: #fff;
+}
+.carac__visuel img,
+.image-texte__cadre img {
+  object-fit: contain;
+}

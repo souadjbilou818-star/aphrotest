@@ -1,0 +1,165 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign points = section.blocks | where: 'type', 'point'
+  assign image = section.settings.image
+  assign generee = section.settings.image_generee
+  if image == blank and product and section.settings.media_produit > 0
+    assign index = section.settings.media_produit | minus: 1
+    assign media = product.media[index]
+    if media.media_type == 'image'
+      assign image = media.preview_image
+      assign alt_bas = media.alt | downcase
+      if alt_bas contains 'image générée'
+        assign generee = true
+      else
+        assign generee = false
+      endif
+    endif
+  endif
+-%}
+<section
+  class="wrap image-texte{% if section.settings.inverser %} image-texte--inverse{% endif %} fond--{{ section.settings.fond }}"
+  id="{{ section.settings.ancre | default: section.id }}"
+  aria-labelledby="{{ titre_id }}"
+>
+  <div class="image-texte__visuel">
+    {%- if image != blank -%}
+      <div class="image-texte__cadre">
+        {{ image | image_url: width: 1400 | image_tag: widths: '480, 720, 960, 1200, 1400', sizes: '(min-width: 900px) 48vw, 100vw', loading: 'lazy', alt: image.alt }}
+      </div>
+      {%- if generee and settings.credit_ia -%}
+        <span class="credit">{{ 'aplomb.credit_ia' | t }}</span>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+  <div class="image-texte__texte">
+    {%- if section.settings.surtitre != blank -%}
+      <p class="label soft">{{ section.settings.surtitre }}</p>
+    {%- endif -%}
+    <h2 class="image-texte__titre" id="{{ titre_id }}">{{ section.settings.titre }}</h2>
+    {%- if section.settings.texte != blank -%}
+      <div class="image-texte__corps rte">{{ section.settings.texte }}</div>
+    {%- endif -%}
+    {%- if points.size > 0 -%}
+      <ul class="preuves">
+        {%- for block in points -%}
+          <li {{ block.shopify_attributes }}>{{ block.settings.texte }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+    {%- if section.settings.cta_libelle != blank -%}
+      <p><a class="btn" href="{{ section.settings.cta_lien | default: '#achat' }}">{{ section.settings.cta_libelle }}</a></p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image et texte",
+  "tag": "div",
+  "class": "section-image-texte",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "media_produit",
+      "label": "Sinon : média du produit n°",
+      "info": "Sur une fiche produit, sans image choisie : utilise ce média du produit (0 = aucun).",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "image_generee",
+      "label": "Image générée par IA (affiche la mention)",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "inverser",
+      "label": "Image à droite",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "fond",
+      "label": "Fond",
+      "options": [
+        {
+          "value": "ivoire",
+          "label": "Ivoire"
+        },
+        {
+          "value": "sable",
+          "label": "Sable clair"
+        }
+      ],
+      "default": "ivoire"
+    },
+    {
+      "type": "text",
+      "id": "surtitre",
+      "label": "Surtitre"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "Dans le détail"
+    },
+    {
+      "type": "richtext",
+      "id": "texte",
+      "label": "Texte"
+    },
+    {
+      "type": "text",
+      "id": "cta_libelle",
+      "label": "Bouton (facultatif)"
+    },
+    {
+      "type": "text",
+      "id": "cta_lien",
+      "label": "Lien du bouton",
+      "info": "Vide : le bloc d’achat de la page (#achat)."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Point",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "texte",
+          "label": "Texte",
+          "default": "Un fait vérifiable"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image et texte"
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  }
+}
+{% endschema %}

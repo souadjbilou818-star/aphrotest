@@ -134,6 +134,28 @@
     "name": "Marque",
     "settings": [
       {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo (PNG transparent)",
+        "info": "Remplace le logo dessiné. Format conseillé : 2000 px de large, fond transparent."
+      },
+      {
+        "type": "range",
+        "id": "logo_largeur",
+        "label": "Largeur du logo dans l’en-tête (ordinateur)",
+        "min": 100,
+        "max": 280,
+        "step": 10,
+        "unit": "px",
+        "default": 170
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "Carré, 512 × 512 px."
+      },
+      {
         "type": "select",
         "id": "police_titres",
         "label": "Police des titres",
