@@ -276,6 +276,22 @@ const reinitialiser = (p, base = VENTE) => p.request.get(`${base}/__reinitialise
     await p.context().close();
   });
 
+  await test('Accueil en vente : boutique, prix réels, aucun reste de liste d’attente', async () => {
+    const p = await page(nav);
+    await p.goto(`${VENTE}/`);
+    ok((await p.locator('.hero__ctas a').first().getAttribute('href')) === '#boutique', 'bouton principal vers la boutique');
+    ok(await p.locator('#boutique .carte-produit').count() === 3, 'trois produits dans « La boutique »');
+    ok(await p.locator('#boutique .carte-produit', { hasText: '€' }).count() === 3, 'prix absents des cartes');
+    ok(await p.locator('.image-texte__prix').count() === 3, 'prix réels des blocs produit');
+    for (const [ancre, url] of [['#coulisse', '/products/coulisse-01'], ['#atelier', '/products/atelier-pliable'], ['#coffret', '/products/la-trousse']]) {
+      ok((await p.locator(`${ancre} .btn`).getAttribute('href')) === url, `${ancre} : bouton vers la fiche`);
+    }
+    const texte = (await p.locator('main').innerText()).toLowerCase();
+    for (const interdit of ['liste d’attente', 'bientôt', 'en préparation', 'pré-lancement', 'expédié depuis la france']) ok(!texte.includes(interdit), `« ${interdit} » présent`);
+    ok(p.erreurs.length === 0, `erreurs console : ${p.erreurs.join(' | ')}`);
+    await p.context().close();
+  });
+
   await test('Collection : prix réels, épuisé signalé, navigation des familles', async () => {
     const p = await page(nav);
     await p.goto(`${VENTE}/collections/all`);
@@ -291,13 +307,11 @@ const reinitialiser = (p, base = VENTE) => p.request.get(`${base}/__reinitialise
     await p.goto(`${ATTENTE}/`);
     ok(await p.locator('[data-cta-vente]').count() === 0, 'bouton d’achat présent');
     ok((await p.locator('.hero__ctas a').first().getAttribute('href')) === '#coulisse', 'repli du bouton produit');
-    ok(!(await p.locator('.vedette').innerText()).match(/\b0\s?€/), 'prix « 0 € » d’un produit en brouillon');
-    ok(await p.locator('#liste-vedette').count() === 1, 'liste d’attente du produit vedette absente');
-    ok(await p.locator('#liste-cloture').count() === 1, 'liste d’attente de clôture absente');
+    ok(!(await p.locator('main').innerText()).match(/\b0\s?€/), 'prix « 0 € » d’un produit en brouillon');
+    ok(await p.locator('.image-texte__prix').count() === 0, 'prix affiché pour un produit en brouillon');
+    ok(await p.locator('#boutique').count() === 0, 'rangée « La boutique » affichée sans collection publiée');
     ok(await p.locator('dialog[data-tiroir]').count() === 0, 'tiroir rendu en liste d’attente');
-    ok(await p.locator('.famille__prix--attente').count() === 3, 'familles sans prix attendues');
     ok(await p.locator('.lien-famille').count() === 0, 'lien vers une collection non publiée (404)');
-    ok(await p.locator('.famille__lien').count() === 0, 'carte de famille liée à une collection non publiée');
     ok(await p.locator('details.menu-mobile').count() === 0, 'menu mobile vide affiché');
     const q = p.locator('aplomb-quiz');
     for (const t of ['routine', 'déjà', 'compact', 'polyvalente']) {

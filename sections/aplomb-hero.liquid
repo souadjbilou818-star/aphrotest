@@ -3,7 +3,9 @@
   assign titre_id = 'titre-' | append: section.id
   assign faits = section.blocks | where: 'type', 'fait'
   assign quiz_url = settings.page_quiz.url | default: '#quiz'
-  if produit.handle != blank and produit.handle
+  if section.settings.lien_principal != blank and settings.launch_mode == 'vente'
+    assign produit_url = section.settings.lien_principal
+  elsif produit.handle != blank and produit.handle
     assign produit_url = produit.url
   else
     assign produit_url = '#' | append: section.settings.ancre_produit
@@ -149,6 +151,12 @@
       "label": "Ancre de repli du bouton produit",
       "info": "Utilisée tant que le produit n’est pas en ligne.",
       "default": "coulisse"
+    },
+    {
+      "type": "text",
+      "id": "lien_principal",
+      "label": "Lien du bouton principal",
+      "info": "Une ancre de la page (#boutique) ou une adresse (/products/…). Vide : le produit mis en avant."
     },
     {
       "type": "url",

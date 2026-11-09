@@ -59,40 +59,37 @@ def q(question, reponse):
 
 FAQ = {
     "reformer": q("COULISSE 01, est-ce un reformer ?",
-                  "Non. C'est une planche compacte : deux plateaux rembourrés coulissent sur des rails intégrés, "
-                  "un sur chaque moitié. Il n'y a ni chariot, ni ressorts, ni barre de pieds. Pour un reformer "
-                  "complet, à chariot, voyez la famille Reformers Atelier."),
+                  "Non. C'est une planche compacte : deux plateaux coulissent chacun sur son rail. Il n'y a ni chariot, "
+                  "ni ressorts, ni barre de pieds. Pour un reformer complet, à chariot, voyez ATELIER Pliable."),
     "fonctionne": q("Comment fonctionne la planche ?",
                     "Vous posez les pieds, les genoux ou les mains sur les plateaux. L'un glisse pendant que l'autre "
-                    "tient, ou les deux s'écartent ensemble : c'est le travail en glissé. Les cordons à poignées, "
-                    "accrochés aux extrémités, ajoutent une résistance pour les bras et le dos."),
+                    "tient, ou les deux s'écartent ensemble : c'est le travail en glissé. Les poignées et le cordon de résistance "
+                    "ajoutent un travail des bras et du dos."),
     "debutant": q("Est-ce adapté si je débute ?",
                   "Oui. Commencez lentement, plateaux proches, amplitude courte. En cas de douleur, de blessure, "
                   "de grossesse ou après un accouchement, demandez l'avis d'un professionnel de santé avant de commencer."),
     "place": q("Quelle place faut-il ?",
-               "Pendant la séance : la planche dépliée, et de quoi allonger les bras et les jambes autour. "
-               "Les dimensions exactes de chaque produit figurent dans sa fiche technique dès qu'elles sont vérifiées ; "
-               "nous ne publions aucune mesure avant."),
+               "La planche mesure 105 × 40 cm (fiche fournisseur) : comptez autour d'elle de quoi allonger les bras et les jambes, "
+               "soit à peu près la place d'un tapis de yoga."),
     "rangement": q("Se range-t-elle facilement ?",
-                   "Elle se plie en deux, en son milieu : pliée, elle fait la moitié de sa longueur. "
-                   "Ses dimensions pliées figurent dans la fiche technique."),
+                   "Oui. Elle fait 3 cm d'épaisseur : elle se range à plat, sous un lit, derrière un meuble ou contre un mur."),
     "inclus": q("Qu'est-ce qui est inclus ?",
-                "Le contenu exact de chaque édition est écrit sur la fiche du produit, sous le choix de l'édition, "
-                "et dans sa fiche technique."),
+                "La planche, les deux plateaux coulissants, les poignées et le cordon de résistance. "
+                "Le détail figure dans la description du produit."),
     "livraison": q("Comment se passe la livraison ?",
-                   "Les délais et les frais s'affichent avant le paiement, selon votre adresse. "
-                   "Vous recevez un e-mail à l'expédition."),
+                   "COULISSE 01 et Le Coffret Essentiel sont livrés gratuitement. Les délais et les éventuels frais s'affichent "
+                   "avant le paiement, selon votre adresse. Vous recevez un e-mail à l'expédition."),
     "casse": q("Et si quelque chose casse ?",
                "Vous bénéficiez de la garantie légale de conformité pendant 2 ans à compter de la livraison : "
                "réparation ou remplacement, sans frais. Écrivez-nous, avec une photo si possible."),
     "retour": q("Puis-je retourner mon achat ?",
                 "Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. "
-                "Les conditions et les frais de retour figurent sur la page Livraison et retours."),
+                "Les conditions figurent sur la page Livraison et retours."),
 }
 
 COMPARATIF_LIGNES = [
     ("ligne", {"libelle": "Ce que c'est", "essentiels": "Un kit d'accessoires pour le tapis",
-               "coulisse": "Une planche pliable à deux plateaux coulissants",
+               "coulisse": "Une planche à deux plateaux coulissants",
                "atelier": "Un reformer complet, à chariot"}),
     ("ligne", {"libelle": "Ce qui bouge", "essentiels": "Vous, sur le tapis",
                "coulisse": "Deux plateaux, chacun sur ses rails",
@@ -101,10 +98,10 @@ COMPARATIF_LIGNES = [
                "coulisse": "Cordons à poignées et glissé des plateaux",
                "atelier": "Résistance réglable du reformer"}),
     ("ligne", {"libelle": "Pendant la séance", "essentiels": "La place d'un tapis",
-               "coulisse": "La planche dépliée",
+               "coulisse": "La planche, 105 × 40 cm",
                "atelier": "La place d'un reformer"}),
     ("ligne", {"libelle": "Rangement", "essentiels": "Une pochette",
-               "coulisse": "Pliée en deux",
+               "coulisse": "À plat, 3 cm d'épaisseur",
                "atelier": "Selon le modèle"}),
     ("ligne", {"libelle": "Pour qui", "essentiels": "Débuter, compléter une pratique",
                "coulisse": "Une pratique régulière, dans peu de place",
@@ -136,11 +133,11 @@ def quiz(mode):
         ]),
         question("equipement", "Quel type d'équipement vous correspond ?", 3, [
             ("Un kit simple et accessible", "essentiels", "Vous voulez un kit simple : rien à installer, rien à régler.", "aucune"),
-            ("Un appareil compact et polyvalent", "coulisse", "Vous voulez un appareil compact : deux plateaux, des cordons, une planche qui se plie.", "aucune"),
+            ("Un appareil compact et polyvalent", "coulisse", "Vous voulez un appareil compact : deux plateaux, des poignées, une planche qui se range à plat.", "aucune"),
             ("Une expérience proche d'un studio", "atelier", "Vous voulez retrouver le studio : un chariot sur rails, une résistance réglable.", "aucune"),
         ]),
         question("espace", "De quel espace disposez-vous ?", 2, [
-            ("Un petit espace", "essentiels coulisse", "Peu de place : un kit tient dans une pochette, la planche se plie en deux.", "atelier"),
+            ("Un petit espace", "essentiels coulisse", "Peu de place : un kit tient dans un sac, la planche se range à plat.", "atelier"),
             ("Une pièce polyvalente", "coulisse atelier", "Une pièce polyvalente : un appareil qui se range après la séance.", "aucune"),
             ("Un espace dédié", "atelier", "Un espace dédié : la place d'un reformer complet.", "aucune"),
         ]),
@@ -156,7 +153,7 @@ def quiz(mode):
         "produit_coulisse": H_COULISSE,
         "produit_atelier": H_ATELIER,
         "raison_essentiels": "Un kit d'accessoires pour installer une routine sur le tapis, sans appareil à ranger.",
-        "raison_coulisse": "Deux plateaux qui coulissent l'un sans l'autre : le travail en glissé d'un appareil, dans le format d'une planche qui se plie.",
+        "raison_coulisse": "Deux plateaux qui coulissent l'un sans l'autre : le travail en glissé d'un appareil, dans le format d'une planche qui se range à plat.",
         "raison_atelier": "Un vrai chariot sur rails, avec une résistance réglable : la pratique la plus proche du studio, pour qui a la place.",
         "note": "Ce quiz oriente un achat ; il ne remplace pas un avis médical. En cas de douleur, de blessure ou de grossesse, demandez conseil avant de commencer.",
     }
@@ -179,124 +176,6 @@ def garanties(num):
                       "texte": "Vous payez sur la page de paiement Shopify ; nous ne voyons jamais votre carte.",
                       "mode": "vente"}),
     ], "g")
-
-
-def index():
-    sections = {
-        "hero": section("aplomb-hero", {
-            "surtitre": "Pilates à domicile · Paris",
-            "titre": "Le Pilates chez soi, avec aplomb.",
-            "titre_accent": "avec aplomb",
-            "texte": "Trois familles d'équipement, du kit d'accessoires au reformer à chariot. En tête : COULISSE 01, "
-                     "une planche pliable dont les deux plateaux coulissent l'un sans l'autre.",
-            "cta_produit": "Découvrir COULISSE 01",
-            "cta_quiz": "Trouver mon équipement",
-            "ordre_cta": "produit",
-            "ancre_produit": "coulisse",
-            "visuel": "dessin",
-            "legende_dessin": "COULISSE 01, vue de dessus et élévation. Faites défiler : les plateaux coulissent l'un après l'autre.",
-        }, [
-            ("fait", {"texte": "Deux plateaux rembourrés, indépendants"}),
-            ("fait", {"texte": "Se plie en deux pour le rangement"}),
-            ("fait", {"texte": "Cordons de résistance et poignées"}),
-        ], "f"),
-        "familles": section("aplomb-familles", {
-            "ancre": "familles",
-            "titre": "Trois familles, une même exigence",
-            "intro": "Choisissez selon votre pratique et votre place.",
-            "famille_avant": "coulisse",
-            "texte_voir": "Voir",
-            "texte_attente": "En préparation",
-        }, [
-            ("famille", {"famille": "essentiels", "numero": "01", "nom": "Les Essentiels",
-                         "texte": "Des kits d'accessoires pour pratiquer sur le tapis, sans appareil à ranger.",
-                         "image": img("coffret-1-coffret.jpg"), "image_generee": True}),
-            ("famille", {"famille": "coulisse", "numero": "02", "nom": "Coulisse",
-                         "texte": "Une planche pliable à deux plateaux coulissants : le travail en glissé, dans peu de place."}),
-            ("famille", {"famille": "atelier", "numero": "03", "nom": "Reformers Atelier",
-                         "texte": "De vrais reformers à chariot, pour une pratique proche du studio, avec un espace dédié.",
-                         "image": img("atelier-pliable-0-ambiance.jpg"), "image_generee": True}),
-        ], "fa"),
-        "vedette": section("aplomb-vedette", {
-            "ancre": "coulisse",
-            "produit": H_COULISSE,
-            "surtitre": "02 — Coulisse · le produit phare",
-            "titre": "COULISSE 01",
-            "texte": "<p>Une planche compacte, pliable en son milieu. Sur chaque moitié, un plateau rembourré coulisse sur "
-                     "ses rails, indépendamment de l'autre : écarts, fentes, gainage en glissé. Des cordons à poignées "
-                     "s'accrochent aux extrémités pour le haut du corps.</p>",
-            "nomenclature": "Plateau coulissant gauche\nPlateau coulissant droit\nRails intégrés\nCharnière de pliage\n"
-                            "Cordons de résistance\nPoignées\nPatins antidérapants",
-            "tag_attente": "coulisse-01",
-        }, [
-            ("point", {"texte": "Deux plateaux rembourrés, chacun sur ses rails"}),
-            ("point", {"texte": "Se plie en deux, en son milieu"}),
-            ("point", {"texte": "Cordons de résistance et poignées"}),
-        ], "p"),
-        "demo": section("aplomb-demo", {
-            "ancre": "demonstration", "num": "I.", "titre": "Comment ça coulisse",
-            "intro": "Un plateau sous chaque pied, ou sous chaque main. L'un glisse, l'autre tient : c'est tout le travail.",
-            "produit": H_COULISSE, "ratio": "16/9",
-            "legende_dessin": "Faites défiler : le plateau gauche s'écarte d'abord, puis le droit.",
-        }, [
-            ("mouvement", {"titre": "L'écart", "texte": "Un pied sur chaque plateau. Vous écartez, puis vous ramenez, lentement.",
-                           "travail": "Adducteurs · gainage"}),
-            ("mouvement", {"titre": "La fente glissée", "texte": "Un pied sur un plateau qui recule, puis revient, pendant que l'autre tient.",
-                           "travail": "Fessiers · cuisses · équilibre"}),
-            ("mouvement", {"titre": "La planche glissée", "texte": "Mains au sol, pieds sur les plateaux : vous ramenez les genoux vers la poitrine.",
-                           "travail": "Abdominaux · épaules"}),
-        ], "m"),
-        "comparatif": section("aplomb-comparatif", {
-            "ancre": "comparatif", "num": "II.", "titre": "Laquelle vous correspond",
-            "intro": "Trois familles, trois façons de pratiquer. Aucune n'est meilleure dans l'absolu.",
-            "nom_essentiels": "Les Essentiels", "nom_coulisse": "COULISSE 01", "nom_atelier": "Reformers Atelier",
-            "colonne_avant": "coulisse", "ligne_prix": True, "libelle_prix": "Prix", "prix_attente": "Bientôt",
-            "honnete": "COULISSE 01 n'est pas un reformer : ni chariot, ni ressorts. Pour un reformer complet, voyez les Reformers Atelier.",
-        }, COMPARATIF_LIGNES, "l"),
-        "quiz": quiz("integre"),
-        "programme": section("acte-programme", {
-            "ancre": "programme", "num": "III.", "folio": "", "plan": "", "titre": "Le programme",
-            "intro": "Vingt minutes, quatre semaines, chez vous.",
-            "chapeau": "Quatre semaines pour installer la routine, sans brûler les étapes. Trois séances de vingt minutes par semaine.",
-            "encart_titre": "Le rythme",
-            "encart_texte": "Trois séances par semaine. Le reste du temps, l'appareil se range.",
-            "image": img("plan-06-posture-provisoire.jpg"), "ratio": "4/5", "generee": True,
-            "legende": "posture de gainage latéral, sur tapis",
-        }, [
-            ("semaine", {"numero": "Sem. 1", "titre": "L'alignement", "texte": "Placer le bassin, respirer, trouver l'axe."}),
-            ("semaine", {"numero": "Sem. 2", "titre": "Le centre", "texte": "Gainage, mouvements lents, amplitude courte."}),
-            ("semaine", {"numero": "Sem. 3", "titre": "Le glissé", "texte": "Plus d'amplitude, plus de contrôle."}),
-            ("semaine", {"numero": "Sem. 4", "titre": "L'aplomb", "texte": "Enchaîner, tenir, recommencer."}),
-        ], "s"),
-        "garanties": garanties("IV."),
-        "maison": section("acte-maison", {
-            "ancre": "maison", "num": "V.", "folio": "", "titre": "La maison",
-            "texte": "<p>L'Aplomb est né à Paris d'un constat simple : le Pilates se pratique mieux avec un appareil, "
-                     "mais l'appareil doit tenir dans un appartement. Trois familles, du kit d'accessoires au reformer "
-                     "à chariot, choisies pour leur justesse plutôt que pour leur nombre.</p>",
-            "transparence": "Sélectionné et contrôlé à Paris, fabriqué par une usine partenaire. Le nom et l'adresse du fabricant figurent sur la page Sécurité produit.",
-            "soir_label": "La maison, le soir",
-            "soir_titre": "L'élégance publique.",
-            "soir_titre_2": "La discipline privée.",
-        }, [
-            ("cadre", {"image": img("plan-09-soiree.jpg"), "generee": True, "ratio": "3/2", "plan": "",
-                       "legende": "l'élégance publique, une soirée à Paris"}),
-        ], "c"),
-        "faq": section("faq", {"ancre": "faq", "num": "VI.", "titre": "Vos questions",
-                               "intro": "Les réponses courtes aux questions qu'on nous pose le plus."},
-                       [FAQ[k] for k in ("reformer", "fonctionne", "debutant", "place", "rangement", "inclus", "livraison", "casse", "retour")], "q"),
-        "cloture": section("aplomb-cloture", {
-            "ancre": "cloture",
-            "titre_attente": "La liste d'attente est ouverte.",
-            "texte_attente": "Nous vous écrivons à l'ouverture, avec les prix définitifs et les délais de livraison. Pas avant.",
-            "titre": "Votre pratique, chez vous, dès cette semaine.",
-            "texte": "COULISSE 01 pour commencer, ou quatre questions pour choisir.",
-            "cta_produit": "Voir COULISSE 01",
-            "cta_quiz": "Trouver mon équipement",
-        }),
-    }
-    order = ["hero", "familles", "vedette", "demo", "comparatif", "quiz", "programme", "garanties", "maison", "faq", "cloture"]
-    return {"sections": sections, "order": order}
 
 
 TUILES = [("tuile", {"icone": "cadenas", "texte": "Paiement sécurisé"}),
@@ -359,30 +238,6 @@ def produit_commun(accroche, preuves, benefices, faq_cles, num_debut=1, avec_dem
     return {"sections": sections, "order": order}
 
 
-def product():
-    return produit_commun(
-        accroche="Une planche pliable, deux plateaux qui coulissent l'un sans l'autre, des cordons à poignées.",
-        preuves=["Deux plateaux rembourrés, indépendants", "Rails intégrés à la planche", "Se plie en deux, en son milieu"],
-        benefices=[
-            ("Un travail en glissé, à la maison", "Le glissé demande du contrôle à chaque centimètre : c'est là que le centre travaille."),
-            ("Deux côtés, deux rythmes", "Chaque plateau bouge seul. Vous travaillez un côté pendant que l'autre tient."),
-            ("Rangée en un geste", "La planche se plie en son milieu. Pliée, elle fait la moitié de sa longueur."),
-        ],
-        etapes=[
-            ("Dépliez", "Posez la planche à plat, sur un sol dur ou un tapis fin.", "la planche se déplie sur un parquet"),
-            ("Placez-vous", "Pieds, genoux ou mains sur les plateaux, selon le mouvement.", "deux pieds sur les plateaux, vue de profil"),
-            ("Coulissez", "Un plateau glisse, l'autre tient. Lentement, puis plus loin.", "un plateau s'écarte, l'autre reste en place"),
-        ],
-        avec_negations=("Une planche à deux plateaux coulissants, pas un reformer.", [
-            ("Pas un reformer", "Ni chariot, ni ressorts, ni barre de pieds. Pour cela, voyez les Reformers Atelier."),
-            ("Pas un appareil médical", "Il ne soigne rien. En cas de douleur, demandez l'avis d'un professionnel de santé."),
-            ("Pas un abonnement", "Vous achetez l'appareil, une fois. Aucun paiement récurrent."),
-        ]),
-        faq_cles=("reformer", "fonctionne", "debutant", "place", "rangement", "inclus", "livraison", "casse", "retour"),
-        avec_demo=True,
-    )
-
-
 def carte(titre, texte, image=None, generee=False):
     d = {"titre": titre, "texte": texte, "image_generee": generee}
     if image:
@@ -395,10 +250,148 @@ def maison_valeurs():
         "ancre": "maison", "titre": "Une maison, trois engagements", "disposition": "grille", "colonnes": "3", "fond": "ivoire",
         "intro": "Ce que vous pouvez attendre de L'Aplomb, avant comme après l'achat.",
     }, [
-        carte("Choisir peu, choisir bien", "Trois familles d'équipement, sélectionnées et contrôlées à Paris avant d'entrer au catalogue.", "plan-06-posture-provisoire.jpg", True),
-        carte("Dire vrai", "Pas de faux avis, pas de compte à rebours, pas de prix barré. Les mesures sont publiées quand elles sont vérifiées.", "plan-09-soiree.jpg", True),
-        carte("Penser aux appartements", "Des appareils qui se plient, se rangent et se font oublier entre deux séances.", "coffret-1-coffret.jpg", True),
+        carte("Choisir peu, choisir bien", "Trois familles d'équipement, choisies pour leur justesse plutôt que pour leur nombre.", "plan-06-posture-provisoire.jpg", True),
+        carte("Dire vrai", "Pas de faux avis, pas de compte à rebours, pas de prix barré. Les mesures viennent des fiches de nos fournisseurs.", "atelier-pliable-0-ambiance.jpg", True),
+        carte("Penser aux appartements", "Des équipements qui se rangent et se font oublier entre deux séances.", "coffret-1-coffret.jpg", True),
     ], "v")
+
+
+# Fichiers d'images Shopify (photos fournisseur de COULISSE 01, déjà dans Fichiers)
+IMG_COULISSE_ROSE = "0c2d1da44e298772ffb0f69115cd.jpg"
+IMG_COULISSE_ROSE_2 = "e91889c646d686461ef85700d425.jpg"
+IMG_COULISSE_ROSE_3 = "f2e29f8b47bd8b2e338339bf9902.jpg"
+IMG_COULISSE_NOIR = "a17a7ed34c2b8a31c3c83caba9d0.jpg"
+IMG_COULISSE_COLIS = "93040adb410abd48ee6f563c4581.jpg"
+
+TUILES_OFFERTE = [("tuile", {"icone": "camion", "texte": "Livraison offerte"}),
+                  ("tuile", {"icone": "retour", "texte": "14 jours pour changer d'avis"}),
+                  ("tuile", {"icone": "cadenas", "texte": "Paiement sécurisé"})]
+
+
+def confiance(fond="ivoire"):
+    return section("aplomb-caracteristiques", {
+        "ancre": "confiance", "titre": "Commander en confiance", "disposition": "grille", "colonnes": "4", "fond": fond,
+        "intro": "Vos droits, écrits simplement.",
+    }, [
+        carte("Livraison offerte", "Sur COULISSE 01 et Le Coffret Essentiel. Les délais s'affichent avant le paiement, selon votre adresse."),
+        carte("14 jours pour changer d'avis", "À compter de la réception, sans avoir à vous justifier. Remboursement sur le moyen de paiement utilisé."),
+        carte("Garantie légale de 2 ans", "Réparation ou remplacement sans frais si le produit présente un défaut de conformité."),
+        carte("Paiement sécurisé", "Vous payez sur la page de paiement Shopify : vos données de carte ne nous sont jamais transmises."),
+    ], "k")
+
+
+def index():
+    sections = {
+        "hero": section("aplomb-hero", {
+            "surtitre": "Pilates à domicile",
+            "titre": "Le Pilates chez soi, avec aplomb.",
+            "titre_accent": "avec aplomb",
+            "texte": "Une planche à plateaux coulissants, un coffret d'accessoires, un reformer qui se range : "
+                     "tout pour pratiquer chez vous, sans studio et sans abonnement.",
+            "cta_produit": "Voir la boutique",
+            "lien_principal": "#boutique",
+            "cta_quiz": "Trouver mon équipement",
+            "ordre_cta": "produit",
+            "visuel": "image",
+            "image": img("atelier-pliable-0-ambiance.jpg"),
+            "image_generee": True,
+        }, [
+            ("fait", {"texte": "Livraison offerte sur COULISSE 01 et le Coffret"}),
+            ("fait", {"texte": "14 jours pour changer d'avis"}),
+            ("fait", {"texte": "Paiement sécurisé"}),
+        ], "f"),
+        "boutique": section("aplomb-produits", {
+            "ancre": "boutique", "titre": "La boutique", "collection": "frontpage", "nombre": 6, "colonnes": "3", "libelle_lien": "",
+        }),
+        "coulisse": section("aplomb-image-texte", {
+            "ancre": "coulisse", "produit": H_COULISSE, "image": img(IMG_COULISSE_ROSE), "fond": "ivoire",
+            "surtitre": "Le produit phare", "titre": "COULISSE 01",
+            "texte": "<p>Deux plateaux qui coulissent chacun sur son rail, l'un sans l'autre. Un pied, un genou ou une main "
+                     "sur chaque plateau : l'un glisse, l'autre tient. C'est le travail en glissé du Pilates, sur une planche "
+                     "qui se range à plat.</p>",
+            "cta_libelle": "Choisir mon coloris",
+        }, [("point", {"texte": t}) for t in [
+            "Deux plateaux coulissants indépendants",
+            "Poignées et cordon de résistance inclus",
+            "105 × 40 cm, 3 cm d'épaisseur : se glisse sous un lit",
+            "Rose, lavande ou noir",
+        ]], "c"),
+        "atelier": section("aplomb-image-texte", {
+            "ancre": "atelier", "produit": H_ATELIER, "image": img("atelier-pliable-0-ambiance.jpg"), "image_generee": True,
+            "inverser": True, "fond": "sable",
+            "surtitre": "Le reformer qui se range", "titre": "ATELIER Pliable",
+            "texte": "<p>Un vrai reformer, avec son chariot sur rails et son cadre en acier, qui se replie après la séance.</p>",
+            "cta_libelle": "Découvrir ATELIER Pliable",
+        }, [("point", {"texte": t}) for t in [
+            "Chariot rembourré sur rails, cadre en acier",
+            "Plié : 108 × 55 × 29 cm (fiche fournisseur)",
+            "Tapis de yoga inclus",
+        ]], "a"),
+        "coffret": section("aplomb-image-texte", {
+            "ancre": "coffret", "produit": H_ESSENTIELS, "image": img("coffret-1-coffret.jpg"), "image_generee": True,
+            "fond": "ivoire",
+            "surtitre": "Pour commencer sur le tapis", "titre": "Le Coffret Essentiel",
+            "texte": "<p>Treize pièces pour une séance complète sans appareil : chaque accessoire change l'appui ou la résistance "
+                     "d'un même mouvement.</p>",
+            "cta_libelle": "Choisir mon coffret",
+        }, [("point", {"texte": t}) for t in [
+            "Anneau de 33 cm, ballon de 25 cm, 5 bandes de résistance",
+            "Sangle, bande en huit, chaussettes antidérapantes",
+            "Tout se range dans un sac",
+        ]], "e"),
+        "quiz": quiz("integre"),
+        "confiance": confiance("sable"),
+        "faq": section("faq", {"ancre": "faq", "titre": "Questions fréquentes",
+                               "intro": "Les réponses courtes aux questions qu'on nous pose le plus."},
+                       [FAQ[k] for k in ("reformer", "debutant", "livraison", "retour", "casse", "place")], "q"),
+    }
+    order = ["hero", "boutique", "coulisse", "atelier", "coffret", "quiz", "confiance", "faq"]
+    return {"sections": sections, "order": order}
+
+
+def product():
+    """COULISSE 01 (modèle par défaut des produits) : structure de fiche boutique."""
+    principal = section("produit-principal", {
+        "accroche": "Deux plateaux qui coulissent l'un sans l'autre : le travail en glissé du Pilates, chez vous.",
+        "titre_associes": "À associer",
+    }, TUILES_OFFERTE + [("preuve", {"texte": t}) for t in [
+        "Deux plateaux coulissants indépendants", "Poignées et cordon de résistance inclus", "105 × 40 cm, 3 cm d'épaisseur"]], "p")
+    milieu = [
+        ("exercices", section("aplomb-caracteristiques", {
+            "ancre": "exercices", "titre": "Vos premiers exercices", "disposition": "defilement", "colonnes": "4", "fond": "sable",
+            "numeroter": True, "intro": "Un plateau sous chaque pied, ou sous chaque main. Commencez lentement, plateaux proches.",
+        }, [
+            carte("L'écart", "Debout, un pied sur chaque plateau : vous écartez les jambes, puis vous ramenez, lentement. Adducteurs et gainage."),
+            carte("La fente glissée", "Un pied sur un plateau qui recule, puis revient, pendant que l'autre tient. Fessiers, cuisses, équilibre."),
+            carte("La planche glissée", "Mains au sol, pieds sur les plateaux : vous ramenez les genoux vers la poitrine. Abdominaux, épaules."),
+            carte("Les bras aux poignées", "Les poignées en main, vous tirez le cordon en gardant le dos long. Bras, dos, épaules."),
+            carte("Le grimpeur", "En planche, vous ramenez un genou puis l'autre, plateaux alternés. Cardio et sangle abdominale."),
+        ], "e")),
+        ("caracteristiques", section("aplomb-caracteristiques", {
+            "ancre": "caracteristiques", "titre": "Caractéristiques clés", "disposition": "grille", "colonnes": "4", "fond": "ivoire",
+            "intro": "Tout le travail en glissé, dans une planche qui se range à plat.",
+        }, [
+            carte("Deux plateaux indépendants", "Chaque plateau coulisse sur son propre rail : un côté travaille pendant que l'autre tient.", IMG_COULISSE_ROSE_3),
+            carte("Poignées et cordon", "Ils s'installent sur la planche pour travailler les bras, le dos et les épaules.", IMG_COULISSE_ROSE_2),
+            carte("Trois coloris", "Rose, lavande ou noir : la planche s'accorde à la pièce.", IMG_COULISSE_NOIR),
+            carte("Tout dans le colis", "La planche, les plateaux, les poignées et le cordon de résistance.", IMG_COULISSE_COLIS),
+        ], "c")),
+        ("au_quotidien", section("aplomb-image-texte", {
+            "ancre": "au-quotidien", "titre": "Une séance, puis on range", "media_produit": 1, "fond": "sable",
+            "texte": "<p>Pas de chariot, pas de ressorts, pas de montage : vous posez la planche au sol, vous pratiquez, vous la rangez.</p>",
+            "cta_libelle": "Choisir mon coloris",
+        }, [("point", {"texte": t}) for t in [
+            "3 cm d'épaisseur : sous un lit ou contre un mur",
+            "Surface et base antidérapantes (fiche fournisseur)",
+            "Pour débuter comme pour une pratique régulière",
+        ]], "pt")),
+    ]
+    faq_items = [FAQ[k] for k in ("reformer", "fonctionne", "debutant", "place", "rangement", "inclus", "livraison", "casse", "retour")]
+    offre = section("aplomb-offre", {"ancre": "offre", "surtitre": "Coulisse", "titre": "Votre planche Pilates, chez vous",
+                                     "texte": "Deux plateaux coulissants, des poignées, un cordon de résistance. Livraison offerte."})
+    rangee = section("aplomb-produits", {"ancre": "completer", "titre": "Compléter votre pratique", "collection": "les-essentiels",
+                                         "nombre": 8, "libelle_lien": "Tout voir"})
+    return landing(principal, milieu, faq_items, offre, rangee)
 
 
 def landing(principal, sections_milieu, faq_items, offre, rangee):
@@ -475,7 +468,7 @@ def product_atelier():
 def product_essentiels():
     principal = section("produit-principal", {
         "accroche": "Des séances Pilates complètes sur le tapis, avec cinq accessoires rangés dans un sac.", "titre_associes": "À associer",
-    }, TUILES + [("preuve", {"texte": t}) for t in ["13 pièces, rangées dans un sac", "Ballon 25 cm anti-éclatement", "Anneau 38 cm à cœur en fibre de verre"]], "p")
+    }, TUILES_OFFERTE + [("preuve", {"texte": t}) for t in ["13 pièces, rangées dans un sac", "Ballon 25 cm anti-éclatement", "Anneau de Pilates 33 cm"]], "p")
     milieu = [
         ("exercices", section("aplomb-caracteristiques", {
             "ancre": "exercices", "titre": "Une séance avec le coffret", "disposition": "defilement", "colonnes": "4", "fond": "sable",
@@ -491,7 +484,7 @@ def product_essentiels():
             "ancre": "contenu", "titre": "Ce que contient le coffret", "disposition": "grille", "colonnes": "4", "fond": "ivoire",
             "intro": "Cinq accessoires qui changent l'appui ou la résistance d'un même mouvement.",
         }, [
-            carte("Anneau de Pilates 38 cm", "Poignées rembourrées, cœur en fibre de verre, revêtement antidérapant."),
+            carte("Anneau de Pilates 33 cm", "Deux poignées pour presser l'anneau entre les mains, les genoux ou les chevilles."),
             carte("Ballon de Pilates 25 cm", "PVC doux et anti-éclatement, surface antidérapante, embout de gonflage fourni."),
             carte("Bandes de résistance", "Cinq forces différentes, plus une bande en huit pour les bras."),
             carte("Sangle, chaussettes, sac", "Une sangle d'étirement, des chaussettes antidérapantes, un sac pour tout ranger."),
@@ -499,9 +492,9 @@ def product_essentiels():
     ]
     faq_items = [
         q("Convient-il aux débutants ?", "Oui. Commencez par les bandes les plus souples et des mouvements lents. En cas de douleur, de blessure ou de grossesse, demandez l'avis d'un professionnel de santé avant de commencer."),
-        q("Que contient exactement le coffret ?", "Un anneau de 38 cm, un ballon de 25 cm et son embout de gonflage, cinq bandes de résistance, une bande en huit, une sangle d'étirement, une paire de chaussettes antidérapantes et un sac de rangement."),
+        q("Que contient exactement le coffret ?", "Un anneau de 33 cm, un ballon de 25 cm, cinq bandes de résistance, une bande en huit, une bande élastique de 180 cm, une sangle d'étirement en coton, une ceinture de résistance pour les fessiers, une poignée d'étirement pour les bras, une paire de chaussettes antidérapantes, un sac de rangement et un guide d'exercices illustré (en anglais)."),
         q("Comment gonfler le ballon ?", "Retirez le bouchon, insérez l'embout de gonflage, gonflez jusqu'à 25 cm environ, puis replacez le bouchon."),
-        q("Les accessoires sont-ils solides ?", "Le ballon est en PVC anti-éclatement et l'anneau a un cœur en fibre de verre. Rangez les bandes à l'abri du soleil pour qu'elles gardent leur élasticité."),
+        q("Les accessoires sont-ils solides ?", "Le ballon est en PVC souple anti-éclatement (fiche fournisseur). Rangez les bandes à l'abri du soleil pour qu'elles gardent leur élasticité."),
         q("Peut-on l'emporter ?", "Tout tient dans le sac de rangement : le coffret vous suit en voyage ou à la salle."),
         q("Comment se passe la livraison ?", "Les délais et les frais s'affichent avant le paiement, selon votre adresse. Vous recevez un e-mail à l'expédition."),
         q("Puis-je le retourner ?", "Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. Les conditions de retour figurent sur la page Livraison et retours."),
@@ -520,7 +513,7 @@ def page_quiz():
 def collection():
     return {"sections": {"main": section("collection", {
         "par_page": 12, "libelle_familles": "Les familles",
-        "texte_vide": "Cette famille arrive bientôt. Inscrivez-vous à la liste d'attente depuis l'accueil.",
+        "texte_vide": "Cette famille arrive bientôt. En attendant, découvrez les autres familles.",
         "texte_quiz": "Vous hésitez ? Quatre questions pour choisir",
     })}, "order": ["main"]}
 

@@ -10,7 +10,9 @@
     },
     "annonce": {
       "type": "aplomb-annonce",
-      "settings": {}
+      "settings": {
+        "texte_vente": "Livraison offerte sur COULISSE 01 et le Coffret Essentiel · 14 jours pour changer d’avis"
+      }
     }
   },
   "order": [

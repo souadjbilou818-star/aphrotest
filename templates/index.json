@@ -12,34 +12,35 @@
     "hero": {
       "type": "aplomb-hero",
       "settings": {
-        "surtitre": "Pilates à domicile · Paris",
+        "surtitre": "Pilates à domicile",
         "titre": "Le Pilates chez soi, avec aplomb.",
         "titre_accent": "avec aplomb",
-        "texte": "Trois familles d’équipement, du kit d’accessoires au reformer à chariot. En tête : COULISSE 01, une planche pliable dont les deux plateaux coulissent l’un sans l’autre.",
-        "cta_produit": "Découvrir COULISSE 01",
+        "texte": "Une planche à plateaux coulissants, un coffret d’accessoires, un reformer qui se range : tout pour pratiquer chez vous, sans studio et sans abonnement.",
+        "cta_produit": "Voir la boutique",
+        "lien_principal": "#boutique",
         "cta_quiz": "Trouver mon équipement",
         "ordre_cta": "produit",
-        "ancre_produit": "coulisse",
-        "visuel": "dessin",
-        "legende_dessin": "COULISSE 01, vue de dessus et élévation. Faites défiler : les plateaux coulissent l’un après l’autre."
+        "visuel": "image",
+        "image": "shopify://shop_images/atelier-pliable-0-ambiance.jpg",
+        "image_generee": true
       },
       "blocks": {
         "f_1": {
           "type": "fait",
           "settings": {
-            "texte": "Deux plateaux rembourrés, indépendants"
+            "texte": "Livraison offerte sur COULISSE 01 et le Coffret"
           }
         },
         "f_2": {
           "type": "fait",
           "settings": {
-            "texte": "Se plie en deux pour le rangement"
+            "texte": "14 jours pour changer d’avis"
           }
         },
         "f_3": {
           "type": "fait",
           "settings": {
-            "texte": "Cordons de résistance et poignées"
+            "texte": "Paiement sécurisé"
           }
         }
       },
@@ -49,214 +50,139 @@
         "f_3"
       ]
     },
-    "familles": {
-      "type": "aplomb-familles",
+    "boutique": {
+      "type": "aplomb-produits",
       "settings": {
-        "ancre": "familles",
-        "titre": "Trois familles, une même exigence",
-        "intro": "Choisissez selon votre pratique et votre place.",
-        "famille_avant": "coulisse",
-        "texte_voir": "Voir",
-        "texte_attente": "En préparation"
-      },
-      "blocks": {
-        "fa_1": {
-          "type": "famille",
-          "settings": {
-            "famille": "essentiels",
-            "numero": "01",
-            "nom": "Les Essentiels",
-            "texte": "Des kits d’accessoires pour pratiquer sur le tapis, sans appareil à ranger.",
-            "image": "shopify://shop_images/coffret-1-coffret.jpg",
-            "image_generee": true
-          }
-        },
-        "fa_2": {
-          "type": "famille",
-          "settings": {
-            "famille": "coulisse",
-            "numero": "02",
-            "nom": "Coulisse",
-            "texte": "Une planche pliable à deux plateaux coulissants : le travail en glissé, dans peu de place."
-          }
-        },
-        "fa_3": {
-          "type": "famille",
-          "settings": {
-            "famille": "atelier",
-            "numero": "03",
-            "nom": "Reformers Atelier",
-            "texte": "De vrais reformers à chariot, pour une pratique proche du studio, avec un espace dédié.",
-            "image": "shopify://shop_images/atelier-pliable-0-ambiance.jpg",
-            "image_generee": true
-          }
-        }
-      },
-      "block_order": [
-        "fa_1",
-        "fa_2",
-        "fa_3"
-      ]
+        "ancre": "boutique",
+        "titre": "La boutique",
+        "collection": "frontpage",
+        "nombre": 6,
+        "colonnes": "3",
+        "libelle_lien": ""
+      }
     },
-    "vedette": {
-      "type": "aplomb-vedette",
+    "coulisse": {
+      "type": "aplomb-image-texte",
       "settings": {
         "ancre": "coulisse",
         "produit": "coulisse-01",
-        "surtitre": "02 — Coulisse · le produit phare",
+        "image": "shopify://shop_images/0c2d1da44e298772ffb0f69115cd.jpg",
+        "fond": "ivoire",
+        "surtitre": "Le produit phare",
         "titre": "COULISSE 01",
-        "texte": "<p>Une planche compacte, pliable en son milieu. Sur chaque moitié, un plateau rembourré coulisse sur ses rails, indépendamment de l’autre : écarts, fentes, gainage en glissé. Des cordons à poignées s’accrochent aux extrémités pour le haut du corps.</p>",
-        "nomenclature": "Plateau coulissant gauche\nPlateau coulissant droit\nRails intégrés\nCharnière de pliage\nCordons de résistance\nPoignées\nPatins antidérapants",
-        "tag_attente": "coulisse-01"
+        "texte": "<p>Deux plateaux qui coulissent chacun sur son rail, l’un sans l’autre. Un pied, un genou ou une main sur chaque plateau : l’un glisse, l’autre tient. C’est le travail en glissé du Pilates, sur une planche qui se range à plat.</p>",
+        "cta_libelle": "Choisir mon coloris"
       },
       "blocks": {
-        "p_1": {
+        "c_1": {
           "type": "point",
           "settings": {
-            "texte": "Deux plateaux rembourrés, chacun sur ses rails"
+            "texte": "Deux plateaux coulissants indépendants"
           }
         },
-        "p_2": {
+        "c_2": {
           "type": "point",
           "settings": {
-            "texte": "Se plie en deux, en son milieu"
+            "texte": "Poignées et cordon de résistance inclus"
           }
         },
-        "p_3": {
+        "c_3": {
           "type": "point",
           "settings": {
-            "texte": "Cordons de résistance et poignées"
+            "texte": "105 × 40 cm, 3 cm d’épaisseur : se glisse sous un lit"
+          }
+        },
+        "c_4": {
+          "type": "point",
+          "settings": {
+            "texte": "Rose, lavande ou noir"
           }
         }
       },
       "block_order": [
-        "p_1",
-        "p_2",
-        "p_3"
+        "c_1",
+        "c_2",
+        "c_3",
+        "c_4"
       ]
     },
-    "demo": {
-      "type": "aplomb-demo",
+    "atelier": {
+      "type": "aplomb-image-texte",
       "settings": {
-        "ancre": "demonstration",
-        "num": "I.",
-        "titre": "Comment ça coulisse",
-        "intro": "Un plateau sous chaque pied, ou sous chaque main. L’un glisse, l’autre tient : c’est tout le travail.",
-        "produit": "coulisse-01",
-        "ratio": "16/9",
-        "legende_dessin": "Faites défiler : le plateau gauche s’écarte d’abord, puis le droit."
+        "ancre": "atelier",
+        "produit": "atelier-pliable",
+        "image": "shopify://shop_images/atelier-pliable-0-ambiance.jpg",
+        "image_generee": true,
+        "inverser": true,
+        "fond": "sable",
+        "surtitre": "Le reformer qui se range",
+        "titre": "ATELIER Pliable",
+        "texte": "<p>Un vrai reformer, avec son chariot sur rails et son cadre en acier, qui se replie après la séance.</p>",
+        "cta_libelle": "Découvrir ATELIER Pliable"
       },
       "blocks": {
-        "m_1": {
-          "type": "mouvement",
+        "a_1": {
+          "type": "point",
           "settings": {
-            "titre": "L’écart",
-            "texte": "Un pied sur chaque plateau. Vous écartez, puis vous ramenez, lentement.",
-            "travail": "Adducteurs · gainage"
+            "texte": "Chariot rembourré sur rails, cadre en acier"
           }
         },
-        "m_2": {
-          "type": "mouvement",
+        "a_2": {
+          "type": "point",
           "settings": {
-            "titre": "La fente glissée",
-            "texte": "Un pied sur un plateau qui recule, puis revient, pendant que l’autre tient.",
-            "travail": "Fessiers · cuisses · équilibre"
+            "texte": "Plié : 108 × 55 × 29 cm (fiche fournisseur)"
           }
         },
-        "m_3": {
-          "type": "mouvement",
+        "a_3": {
+          "type": "point",
           "settings": {
-            "titre": "La planche glissée",
-            "texte": "Mains au sol, pieds sur les plateaux : vous ramenez les genoux vers la poitrine.",
-            "travail": "Abdominaux · épaules"
+            "texte": "Tapis de yoga inclus"
           }
         }
       },
       "block_order": [
-        "m_1",
-        "m_2",
-        "m_3"
+        "a_1",
+        "a_2",
+        "a_3"
       ]
     },
-    "comparatif": {
-      "type": "aplomb-comparatif",
+    "coffret": {
+      "type": "aplomb-image-texte",
       "settings": {
-        "ancre": "comparatif",
-        "num": "II.",
-        "titre": "Laquelle vous correspond",
-        "intro": "Trois familles, trois façons de pratiquer. Aucune n’est meilleure dans l’absolu.",
-        "nom_essentiels": "Les Essentiels",
-        "nom_coulisse": "COULISSE 01",
-        "nom_atelier": "Reformers Atelier",
-        "colonne_avant": "coulisse",
-        "ligne_prix": true,
-        "libelle_prix": "Prix",
-        "prix_attente": "Bientôt",
-        "honnete": "COULISSE 01 n’est pas un reformer : ni chariot, ni ressorts. Pour un reformer complet, voyez les Reformers Atelier."
+        "ancre": "coffret",
+        "produit": "la-trousse",
+        "image": "shopify://shop_images/coffret-1-coffret.jpg",
+        "image_generee": true,
+        "fond": "ivoire",
+        "surtitre": "Pour commencer sur le tapis",
+        "titre": "Le Coffret Essentiel",
+        "texte": "<p>Treize pièces pour une séance complète sans appareil : chaque accessoire change l’appui ou la résistance d’un même mouvement.</p>",
+        "cta_libelle": "Choisir mon coffret"
       },
       "blocks": {
-        "l_1": {
-          "type": "ligne",
+        "e_1": {
+          "type": "point",
           "settings": {
-            "libelle": "Ce que c’est",
-            "essentiels": "Un kit d’accessoires pour le tapis",
-            "coulisse": "Une planche pliable à deux plateaux coulissants",
-            "atelier": "Un reformer complet, à chariot"
+            "texte": "Anneau de 33 cm, ballon de 25 cm, 5 bandes de résistance"
           }
         },
-        "l_2": {
-          "type": "ligne",
+        "e_2": {
+          "type": "point",
           "settings": {
-            "libelle": "Ce qui bouge",
-            "essentiels": "Vous, sur le tapis",
-            "coulisse": "Deux plateaux, chacun sur ses rails",
-            "atelier": "Un chariot sur rails"
+            "texte": "Sangle, bande en huit, chaussettes antidérapantes"
           }
         },
-        "l_3": {
-          "type": "ligne",
+        "e_3": {
+          "type": "point",
           "settings": {
-            "libelle": "Résistance",
-            "essentiels": "Bandes élastiques",
-            "coulisse": "Cordons à poignées et glissé des plateaux",
-            "atelier": "Résistance réglable du reformer"
-          }
-        },
-        "l_4": {
-          "type": "ligne",
-          "settings": {
-            "libelle": "Pendant la séance",
-            "essentiels": "La place d’un tapis",
-            "coulisse": "La planche dépliée",
-            "atelier": "La place d’un reformer"
-          }
-        },
-        "l_5": {
-          "type": "ligne",
-          "settings": {
-            "libelle": "Rangement",
-            "essentiels": "Une pochette",
-            "coulisse": "Pliée en deux",
-            "atelier": "Selon le modèle"
-          }
-        },
-        "l_6": {
-          "type": "ligne",
-          "settings": {
-            "libelle": "Pour qui",
-            "essentiels": "Débuter, compléter une pratique",
-            "coulisse": "Une pratique régulière, dans peu de place",
-            "atelier": "Une pratique proche du studio, avec un espace dédié"
+            "texte": "Tout se range dans un sac"
           }
         }
       },
       "block_order": [
-        "l_1",
-        "l_2",
-        "l_3",
-        "l_4",
-        "l_5",
-        "l_6"
+        "e_1",
+        "e_2",
+        "e_3"
       ]
     },
     "quiz": {
@@ -272,7 +198,7 @@
         "produit_coulisse": "coulisse-01",
         "produit_atelier": "atelier-pliable",
         "raison_essentiels": "Un kit d’accessoires pour installer une routine sur le tapis, sans appareil à ranger.",
-        "raison_coulisse": "Deux plateaux qui coulissent l’un sans l’autre : le travail en glissé d’un appareil, dans le format d’une planche qui se plie.",
+        "raison_coulisse": "Deux plateaux qui coulissent l’un sans l’autre : le travail en glissé d’un appareil, dans le format d’une planche qui se range à plat.",
         "raison_atelier": "Un vrai chariot sur rails, avec une résistance réglable : la pratique la plus proche du studio, pour qui a la place.",
         "note": "Ce quiz oriente un achat ; il ne remplace pas un avis médical. En cas de douleur, de blessure ou de grossesse, demandez conseil avant de commencer."
       },
@@ -336,7 +262,7 @@
             "exclut_1": "aucune",
             "option_2": "Un appareil compact et polyvalent",
             "oriente_2": "coulisse",
-            "argument_2": "Vous voulez un appareil compact : deux plateaux, des cordons, une planche qui se plie.",
+            "argument_2": "Vous voulez un appareil compact : deux plateaux, des poignées, une planche qui se range à plat.",
             "exclut_2": "aucune",
             "option_3": "Une expérience proche d’un studio",
             "oriente_3": "atelier",
@@ -353,7 +279,7 @@
             "aide": "",
             "option_1": "Un petit espace",
             "oriente_1": "essentiels coulisse",
-            "argument_1": "Peu de place : un kit tient dans une pochette, la planche se plie en deux.",
+            "argument_1": "Peu de place : un kit tient dans un sac, la planche se range à plat.",
             "exclut_1": "atelier",
             "option_2": "Une pièce polyvalente",
             "oriente_2": "coulisse atelier",
@@ -373,150 +299,62 @@
         "q_4"
       ]
     },
-    "programme": {
-      "type": "acte-programme",
+    "confiance": {
+      "type": "aplomb-caracteristiques",
       "settings": {
-        "ancre": "programme",
-        "num": "III.",
-        "folio": "",
-        "plan": "",
-        "titre": "Le programme",
-        "intro": "Vingt minutes, quatre semaines, chez vous.",
-        "chapeau": "Quatre semaines pour installer la routine, sans brûler les étapes. Trois séances de vingt minutes par semaine.",
-        "encart_titre": "Le rythme",
-        "encart_texte": "Trois séances par semaine. Le reste du temps, l’appareil se range.",
-        "image": "shopify://shop_images/plan-06-posture-provisoire.jpg",
-        "ratio": "4/5",
-        "generee": true,
-        "legende": "posture de gainage latéral, sur tapis"
+        "ancre": "confiance",
+        "titre": "Commander en confiance",
+        "disposition": "grille",
+        "colonnes": "4",
+        "fond": "sable",
+        "intro": "Vos droits, écrits simplement."
       },
       "blocks": {
-        "s_1": {
-          "type": "semaine",
+        "k_1": {
+          "type": "carte",
           "settings": {
-            "numero": "Sem. 1",
-            "titre": "L’alignement",
-            "texte": "Placer le bassin, respirer, trouver l’axe."
+            "titre": "Livraison offerte",
+            "texte": "Sur COULISSE 01 et Le Coffret Essentiel. Les délais s’affichent avant le paiement, selon votre adresse.",
+            "image_generee": false
           }
         },
-        "s_2": {
-          "type": "semaine",
-          "settings": {
-            "numero": "Sem. 2",
-            "titre": "Le centre",
-            "texte": "Gainage, mouvements lents, amplitude courte."
-          }
-        },
-        "s_3": {
-          "type": "semaine",
-          "settings": {
-            "numero": "Sem. 3",
-            "titre": "Le glissé",
-            "texte": "Plus d’amplitude, plus de contrôle."
-          }
-        },
-        "s_4": {
-          "type": "semaine",
-          "settings": {
-            "numero": "Sem. 4",
-            "titre": "L’aplomb",
-            "texte": "Enchaîner, tenir, recommencer."
-          }
-        }
-      },
-      "block_order": [
-        "s_1",
-        "s_2",
-        "s_3",
-        "s_4"
-      ]
-    },
-    "garanties": {
-      "type": "garanties",
-      "settings": {
-        "ancre": "garanties",
-        "num": "IV.",
-        "folio": "",
-        "encadre": "",
-        "titre": "Ce qui vous protège",
-        "intro": "Vos droits, écrits simplement. Rien de plus, rien de moins."
-      },
-      "blocks": {
-        "g_1": {
-          "type": "garantie",
+        "k_2": {
+          "type": "carte",
           "settings": {
             "titre": "14 jours pour changer d’avis",
-            "texte": "À compter de la réception. Les conditions de retour sont sur la page Livraison et retours.",
-            "mode": "tous"
+            "texte": "À compter de la réception, sans avoir à vous justifier. Remboursement sur le moyen de paiement utilisé.",
+            "image_generee": false
           }
         },
-        "g_2": {
-          "type": "garantie",
+        "k_3": {
+          "type": "carte",
           "settings": {
-            "titre": "Garantie légale de conformité, 2 ans",
-            "texte": "Réparation ou remplacement sans frais si le produit présente un défaut.",
-            "mode": "tous"
+            "titre": "Garantie légale de 2 ans",
+            "texte": "Réparation ou remplacement sans frais si le produit présente un défaut de conformité.",
+            "image_generee": false
           }
         },
-        "g_3": {
-          "type": "garantie",
+        "k_4": {
+          "type": "carte",
           "settings": {
-            "titre": "Sécurité du produit",
-            "texte": "Fabricant identifié, avertissements et notice : tout est sur la page Sécurité produit.",
-            "mode": "tous"
-          }
-        },
-        "g_4": {
-          "type": "garantie",
-          "settings": {
-            "titre": "Paiement natif Shopify",
-            "texte": "Vous payez sur la page de paiement Shopify ; nous ne voyons jamais votre carte.",
-            "mode": "vente"
+            "titre": "Paiement sécurisé",
+            "texte": "Vous payez sur la page de paiement Shopify : vos données de carte ne nous sont jamais transmises.",
+            "image_generee": false
           }
         }
       },
       "block_order": [
-        "g_1",
-        "g_2",
-        "g_3",
-        "g_4"
-      ]
-    },
-    "maison": {
-      "type": "acte-maison",
-      "settings": {
-        "ancre": "maison",
-        "num": "V.",
-        "folio": "",
-        "titre": "La maison",
-        "texte": "<p>L’Aplomb est né à Paris d’un constat simple : le Pilates se pratique mieux avec un appareil, mais l’appareil doit tenir dans un appartement. Trois familles, du kit d’accessoires au reformer à chariot, choisies pour leur justesse plutôt que pour leur nombre.</p>",
-        "transparence": "Sélectionné et contrôlé à Paris, fabriqué par une usine partenaire. Le nom et l’adresse du fabricant figurent sur la page Sécurité produit.",
-        "soir_label": "La maison, le soir",
-        "soir_titre": "L’élégance publique.",
-        "soir_titre_2": "La discipline privée."
-      },
-      "blocks": {
-        "c_1": {
-          "type": "cadre",
-          "settings": {
-            "image": "shopify://shop_images/plan-09-soiree.jpg",
-            "generee": true,
-            "ratio": "3/2",
-            "plan": "",
-            "legende": "l’élégance publique, une soirée à Paris"
-          }
-        }
-      },
-      "block_order": [
-        "c_1"
+        "k_1",
+        "k_2",
+        "k_3",
+        "k_4"
       ]
     },
     "faq": {
       "type": "faq",
       "settings": {
         "ancre": "faq",
-        "num": "VI.",
-        "titre": "Vos questions",
+        "titre": "Questions fréquentes",
         "intro": "Les réponses courtes aux questions qu’on nous pose le plus."
       },
       "blocks": {
@@ -524,63 +362,42 @@
           "type": "question",
           "settings": {
             "question": "COULISSE 01, est-ce un reformer ?",
-            "reponse": "<p>Non. C’est une planche compacte : deux plateaux rembourrés coulissent sur des rails intégrés, un sur chaque moitié. Il n’y a ni chariot, ni ressorts, ni barre de pieds. Pour un reformer complet, à chariot, voyez la famille Reformers Atelier.</p>"
+            "reponse": "<p>Non. C’est une planche compacte : deux plateaux coulissent chacun sur son rail. Il n’y a ni chariot, ni ressorts, ni barre de pieds. Pour un reformer complet, à chariot, voyez ATELIER Pliable.</p>"
           }
         },
         "q_2": {
-          "type": "question",
-          "settings": {
-            "question": "Comment fonctionne la planche ?",
-            "reponse": "<p>Vous posez les pieds, les genoux ou les mains sur les plateaux. L’un glisse pendant que l’autre tient, ou les deux s’écartent ensemble : c’est le travail en glissé. Les cordons à poignées, accrochés aux extrémités, ajoutent une résistance pour les bras et le dos.</p>"
-          }
-        },
-        "q_3": {
           "type": "question",
           "settings": {
             "question": "Est-ce adapté si je débute ?",
             "reponse": "<p>Oui. Commencez lentement, plateaux proches, amplitude courte. En cas de douleur, de blessure, de grossesse ou après un accouchement, demandez l’avis d’un professionnel de santé avant de commencer.</p>"
           }
         },
-        "q_4": {
-          "type": "question",
-          "settings": {
-            "question": "Quelle place faut-il ?",
-            "reponse": "<p>Pendant la séance : la planche dépliée, et de quoi allonger les bras et les jambes autour. Les dimensions exactes de chaque produit figurent dans sa fiche technique dès qu’elles sont vérifiées ; nous ne publions aucune mesure avant.</p>"
-          }
-        },
-        "q_5": {
-          "type": "question",
-          "settings": {
-            "question": "Se range-t-elle facilement ?",
-            "reponse": "<p>Elle se plie en deux, en son milieu : pliée, elle fait la moitié de sa longueur. Ses dimensions pliées figurent dans la fiche technique.</p>"
-          }
-        },
-        "q_6": {
-          "type": "question",
-          "settings": {
-            "question": "Qu’est-ce qui est inclus ?",
-            "reponse": "<p>Le contenu exact de chaque édition est écrit sur la fiche du produit, sous le choix de l’édition, et dans sa fiche technique.</p>"
-          }
-        },
-        "q_7": {
+        "q_3": {
           "type": "question",
           "settings": {
             "question": "Comment se passe la livraison ?",
-            "reponse": "<p>Les délais et les frais s’affichent avant le paiement, selon votre adresse. Vous recevez un e-mail à l’expédition.</p>"
+            "reponse": "<p>COULISSE 01 et Le Coffret Essentiel sont livrés gratuitement. Les délais et les éventuels frais s’affichent avant le paiement, selon votre adresse. Vous recevez un e-mail à l’expédition.</p>"
           }
         },
-        "q_8": {
+        "q_4": {
+          "type": "question",
+          "settings": {
+            "question": "Puis-je retourner mon achat ?",
+            "reponse": "<p>Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. Les conditions figurent sur la page Livraison et retours.</p>"
+          }
+        },
+        "q_5": {
           "type": "question",
           "settings": {
             "question": "Et si quelque chose casse ?",
             "reponse": "<p>Vous bénéficiez de la garantie légale de conformité pendant 2 ans à compter de la livraison : réparation ou remplacement, sans frais. Écrivez-nous, avec une photo si possible.</p>"
           }
         },
-        "q_9": {
+        "q_6": {
           "type": "question",
           "settings": {
-            "question": "Puis-je retourner mon achat ?",
-            "reponse": "<p>Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. Les conditions et les frais de retour figurent sur la page Livraison et retours.</p>"
+            "question": "Quelle place faut-il ?",
+            "reponse": "<p>La planche mesure 105 × 40 cm (fiche fournisseur) : comptez autour d’elle de quoi allonger les bras et les jambes, soit à peu près la place d’un tapis de yoga.</p>"
           }
         }
       },
@@ -590,36 +407,18 @@
         "q_3",
         "q_4",
         "q_5",
-        "q_6",
-        "q_7",
-        "q_8",
-        "q_9"
+        "q_6"
       ]
-    },
-    "cloture": {
-      "type": "aplomb-cloture",
-      "settings": {
-        "ancre": "cloture",
-        "titre_attente": "La liste d’attente est ouverte.",
-        "texte_attente": "Nous vous écrivons à l’ouverture, avec les prix définitifs et les délais de livraison. Pas avant.",
-        "titre": "Votre pratique, chez vous, dès cette semaine.",
-        "texte": "COULISSE 01 pour commencer, ou quatre questions pour choisir.",
-        "cta_produit": "Voir COULISSE 01",
-        "cta_quiz": "Trouver mon équipement"
-      }
     }
   },
   "order": [
     "hero",
-    "familles",
-    "vedette",
-    "demo",
-    "comparatif",
+    "boutique",
+    "coulisse",
+    "atelier",
+    "coffret",
     "quiz",
-    "programme",
-    "garanties",
-    "maison",
-    "faq",
-    "cloture"
+    "confiance",
+    "faq"
   ]
 }

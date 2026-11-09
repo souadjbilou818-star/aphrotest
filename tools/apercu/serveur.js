@@ -30,6 +30,11 @@ const locale = lireJson('locales/fr.default.json');
 
 /* ---------- Catalogue simulé ---------- */
 const imageIA = (nom, w, h, alt) => ({ src: `/design/images-ia/${nom}`, width: w, height: h, alt, aspect_ratio: w / h });
+const TAILLES = {
+  'plan-09-soiree.jpg': [1536, 1024], 'plan-07-coffret.jpg': [1536, 1024], 'plan-06-posture-provisoire.jpg': [1024, 1280],
+  'atelier-pliable-0-ambiance.jpg': [1122, 1402], '0c2d1da44e298772ffb0f69115cd.jpg': [664, 653], 'e91889c646d686461ef85700d425.jpg': [664, 653],
+  'f2e29f8b47bd8b2e338339bf9902.jpg': [669, 635], 'a17a7ed34c2b8a31c3c83caba9d0.jpg': [661, 629], '93040adb410abd48ee6f563c4581.jpg': [667, 658],
+};
 const imageMedia = (nom, w, h, alt) => ({ src: `/design/medias/${nom}`, width: w, height: h, alt, aspect_ratio: w / h });
 let idSeq = 7000;
 function variante(produit, title, price, opts = {}) {
@@ -69,8 +74,14 @@ const CATALOGUE = [
       variante('coulisse-01', 'Essentielle', 14900, { contenu: 'La planche, deux cordons de résistance, deux poignées.' }),
       variante('coulisse-01', 'Studio', 18900, { stock: 3, contenu: 'L’Essentielle, plus des chaussettes antidérapantes et une housse de rangement.' }),
     ],
-    aplomb: { accroche: 'Une planche pliable, deux plateaux qui coulissent l’un sans l’autre, des cordons à poignées.' },
+    aplomb: { accroche: 'Deux plateaux qui coulissent l’un sans l’autre : le travail en glissé du Pilates, chez vous.', dimensions_deplie: '105 × 40 × 3 cm (fiche fournisseur)' },
     description: '<p>Description de test (aperçu local).</p>',
+    media: [
+      ['0c2d1da44e298772ffb0f69115cd.jpg', 664, 653, 'COULISSE 01 rose : la planche, les deux plateaux coulissants, les poignées et le cordon de résistance'],
+      ['e91889c646d686461ef85700d425.jpg', 664, 653, 'COULISSE 01 rose, vue de trois quarts'],
+      ['a17a7ed34c2b8a31c3c83caba9d0.jpg', 661, 629, 'COULISSE 01 noir, vue de trois quarts'],
+      ['93040adb410abd48ee6f563c4581.jpg', 667, 658, 'Contenu du colis COULISSE 01'],
+    ].map(([n, w, h, a], i) => media(imageMedia(n, w, h, a), 30 + i)),
   }),
   produit({
     id: 102, handle: 'la-trousse', title: 'Le Coffret Essentiel, 13 pièces', type: 'Les Essentiels', suffixe: 'essentiels',
@@ -131,9 +142,10 @@ const COLLECTIONS = {
   'les-essentiels': collection('les-essentiels', 'Les Essentiels', CATALOGUE.filter((p) => p.type === 'Les Essentiels'), '01',
     '<p>Des kits d’accessoires pour pratiquer sur le tapis, sans appareil à ranger.</p>'),
   coulisse: collection('coulisse', 'Coulisse', CATALOGUE.filter((p) => p.type === 'Coulisse'), '02',
-    '<p>Une planche pliable à deux plateaux coulissants.</p>'),
+    '<p>Une planche à deux plateaux coulissants.</p>'),
   'reformers-atelier': collection('reformers-atelier', 'Reformers Atelier', CATALOGUE.filter((p) => p.type === 'Reformers Atelier'), '03',
     '<p>De vrais reformers à chariot.</p>'),
+  frontpage: collection('frontpage', 'Page d’accueil', ['coulisse-01', 'la-trousse', 'atelier-pliable'].map((h) => CATALOGUE.find((p) => p.handle === h)), '', ''),
 };
 CATALOGUE.forEach((p) => { p.collections = Object.values(COLLECTIONS).filter((c) => c.products.includes(p)); });
 const PAGES = {
@@ -223,11 +235,10 @@ function resoudre(valeurs, schemaSettings) {
   }
   return out;
 }
-const TAILLES = { 'plan-09-soiree.jpg': [1536, 1024], 'plan-07-coffret.jpg': [1536, 1024], 'plan-06-posture-provisoire.jpg': [1024, 1280] };
 function image(ref) {
   if (typeof ref !== 'string' || !ref.startsWith('shopify://shop_images/')) return ref || null;
   const nom = ref.split('/').pop();
-  if (fs.existsSync(path.join(ROOT, 'design', 'medias', nom))) return imageMedia(nom, 1254, 1254, '');
+  if (fs.existsSync(path.join(ROOT, 'design', 'medias', nom))) return imageMedia(nom, ...(TAILLES[nom] || [1254, 1254]), '');
   if (!fs.existsSync(path.join(ROOT, 'design', 'images-ia', nom))) return null;
   const [w, h] = TAILLES[nom] || [1600, 1067];
   return imageIA(nom, w, h, '');

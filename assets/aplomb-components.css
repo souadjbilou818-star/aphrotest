@@ -2780,6 +2780,12 @@ html.visionneuse-ouverte {
   height: 100%;
   object-fit: cover;
 }
+.carte-produit__visuel--contenu {
+  background: #fff;
+}
+.carte-produit__visuel--contenu img {
+  object-fit: contain;
+}
 .carte-produit__credit {
   position: absolute;
   left: 10px;
@@ -3250,6 +3256,16 @@ html.visionneuse-ouverte {
 .image-texte__titre {
   font-size: var(--fs-acte);
   line-height: 1.04;
+}
+.image-texte__prix {
+  font-family: var(--serif);
+  font-size: 1.625rem;
+  line-height: 1.2;
+}
+.image-texte__prix small {
+  font: 400 0.75rem / 1 var(--sans);
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
 }
 .image-texte__corps {
   font-size: var(--fs-lead);
@@ -3765,6 +3781,9 @@ html.visionneuse-ouverte {
 @media (min-width: 1000px) {
   .rangee__liste > li {
     flex-basis: calc((100% - 3 * 16px) / 4);
+  }
+  .rangee--3 .rangee__liste > li {
+    flex-basis: calc((100% - 2 * 16px) / 3);
   }
 }
 .reel__photo {

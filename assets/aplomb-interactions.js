@@ -87,6 +87,11 @@
         const i = Number(el.dataset.choixOption) - 1;
         if (sel[i]) el.textContent = sel[i];
       });
+      if (v && v.media) {
+        const media = page.querySelector(`[id$="-${v.media}"][data-media-index]`);
+        const galerie = media && media.closest('aplomb-galerie');
+        if (galerie && typeof galerie.defiler === 'function') galerie.defiler(Number(media.dataset.mediaIndex));
+      }
       if (v) {
         const url = new URL(window.location.href);
         url.searchParams.set('variant', v.id);

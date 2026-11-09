@@ -15,10 +15,12 @@
     {%- endfor -%}
   {%- endcapture -%}
   {%- if cartes != blank -%}
-    <section class="wrap rangee" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+    <section class="wrap rangee rangee--{{ section.settings.colonnes }}" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
       <div class="rangee__tete">
         <h2 class="rangee__titre" id="{{ titre_id }}">{{ section.settings.titre }}</h2>
-        <a class="btn btn--line btn--sm" href="{{ c.url }}">{{ section.settings.libelle_lien }}</a>
+        {%- if section.settings.libelle_lien != blank -%}
+          <a class="btn btn--line btn--sm" href="{{ c.url }}">{{ section.settings.libelle_lien }}</a>
+        {%- endif -%}
       </div>
       <aplomb-carrousel class="carrousel">
         <ul class="rangee__liste" role="list" data-carrousel-liste>{{ cartes }}</ul>
@@ -64,9 +66,26 @@
       "default": 8
     },
     {
+      "type": "select",
+      "id": "colonnes",
+      "label": "Produits visibles sur ordinateur",
+      "options": [
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ],
+      "default": "4"
+    },
+    {
       "type": "text",
       "id": "libelle_lien",
       "label": "Lien vers la collection",
+      "info": "Vide : pas de lien.",
       "default": "Tout voir"
     }
   ],

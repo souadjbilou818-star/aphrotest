@@ -19,8 +19,8 @@
         "p_1": {
           "type": "tuile",
           "settings": {
-            "icone": "cadenas",
-            "texte": "Paiement sécurisé"
+            "icone": "camion",
+            "texte": "Livraison offerte"
           }
         },
         "p_2": {
@@ -33,8 +33,8 @@
         "p_3": {
           "type": "tuile",
           "settings": {
-            "icone": "bouclier",
-            "texte": "Garantie légale 2 ans"
+            "icone": "cadenas",
+            "texte": "Paiement sécurisé"
           }
         },
         "p_4": {
@@ -52,7 +52,7 @@
         "p_6": {
           "type": "preuve",
           "settings": {
-            "texte": "Anneau 38 cm à cœur en fibre de verre"
+            "texte": "Anneau de Pilates 33 cm"
           }
         }
       },
@@ -152,8 +152,8 @@
         "c_1": {
           "type": "carte",
           "settings": {
-            "titre": "Anneau de Pilates 38 cm",
-            "texte": "Poignées rembourrées, cœur en fibre de verre, revêtement antidérapant.",
+            "titre": "Anneau de Pilates 33 cm",
+            "texte": "Deux poignées pour presser l’anneau entre les mains, les genoux ou les chevilles.",
             "image_generee": false
           }
         },
@@ -229,7 +229,7 @@
           "type": "carte",
           "settings": {
             "titre": "Choisir peu, choisir bien",
-            "texte": "Trois familles d’équipement, sélectionnées et contrôlées à Paris avant d’entrer au catalogue.",
+            "texte": "Trois familles d’équipement, choisies pour leur justesse plutôt que pour leur nombre.",
             "image_generee": true,
             "image": "shopify://shop_images/plan-06-posture-provisoire.jpg"
           }
@@ -238,16 +238,16 @@
           "type": "carte",
           "settings": {
             "titre": "Dire vrai",
-            "texte": "Pas de faux avis, pas de compte à rebours, pas de prix barré. Les mesures sont publiées quand elles sont vérifiées.",
+            "texte": "Pas de faux avis, pas de compte à rebours, pas de prix barré. Les mesures viennent des fiches de nos fournisseurs.",
             "image_generee": true,
-            "image": "shopify://shop_images/plan-09-soiree.jpg"
+            "image": "shopify://shop_images/atelier-pliable-0-ambiance.jpg"
           }
         },
         "v_3": {
           "type": "carte",
           "settings": {
             "titre": "Penser aux appartements",
-            "texte": "Des appareils qui se plient, se rangent et se font oublier entre deux séances.",
+            "texte": "Des équipements qui se rangent et se font oublier entre deux séances.",
             "image_generee": true,
             "image": "shopify://shop_images/coffret-1-coffret.jpg"
           }
@@ -277,7 +277,7 @@
           "type": "question",
           "settings": {
             "question": "Que contient exactement le coffret ?",
-            "reponse": "<p>Un anneau de 38 cm, un ballon de 25 cm et son embout de gonflage, cinq bandes de résistance, une bande en huit, une sangle d’étirement, une paire de chaussettes antidérapantes et un sac de rangement.</p>"
+            "reponse": "<p>Un anneau de 33 cm, un ballon de 25 cm, cinq bandes de résistance, une bande en huit, une bande élastique de 180 cm, une sangle d’étirement en coton, une ceinture de résistance pour les fessiers, une poignée d’étirement pour les bras, une paire de chaussettes antidérapantes, un sac de rangement et un guide d’exercices illustré (en anglais).</p>"
           }
         },
         "q_3": {
@@ -291,7 +291,7 @@
           "type": "question",
           "settings": {
             "question": "Les accessoires sont-ils solides ?",
-            "reponse": "<p>Le ballon est en PVC anti-éclatement et l’anneau a un cœur en fibre de verre. Rangez les bandes à l’abri du soleil pour qu’elles gardent leur élasticité.</p>"
+            "reponse": "<p>Le ballon est en PVC souple anti-éclatement (fiche fournisseur). Rangez les bandes à l’abri du soleil pour qu’elles gardent leur élasticité.</p>"
           }
         },
         "q_5": {

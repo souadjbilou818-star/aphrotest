@@ -16,7 +16,7 @@
 
   assign fil_collection = nil
   for c in product.collections
-    if c.published_at and c.handle != 'accessoires'
+    if c.published_at and c.handle != 'accessoires' and c.handle != 'frontpage'
       assign fil_collection = c
       break
     endif

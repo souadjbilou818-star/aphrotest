@@ -46,10 +46,16 @@
       <p class="message achat__erreur" role="alert" data-achat-erreur hidden></p>
       {%- unless compact -%}
         <div class="achat__paiement">{{ form | payment_terms }}</div>
-        <p class="mention">
+        {%- capture mention -%}
           {{- settings.mention_vente -}}
-          {%- unless settings.date_expedition contains '[' or settings.date_expedition == blank %} · {{ settings.date_expedition }}{% endunless -%}
-        </p>
+          {%- unless settings.date_expedition contains '[' or settings.date_expedition == blank -%}
+            {%- if settings.mention_vente != blank %} · {% endif -%}
+            {{- settings.date_expedition -}}
+          {%- endunless -%}
+        {%- endcapture -%}
+        {%- if mention != blank -%}
+          <p class="mention">{{ mention }}</p>
+        {%- endif -%}
       {%- endunless -%}
     {%- endform -%}
   {%- when 'reservation' -%}

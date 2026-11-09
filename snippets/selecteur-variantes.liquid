@@ -100,7 +100,7 @@
               assign stock_v = v.inventory_quantity
             endif
           -%}
-          {"id":{{ v.id }},"titre":{{ v.title | json }},"options":{{ v.options | json }},"disponible":{{ v.available | json }},"prix":{{ prix_v | json }},"stock_bas":{{ stock_v }}}
+          {"id":{{ v.id }},"titre":{{ v.title | json }},"options":{{ v.options | json }},"disponible":{{ v.available | json }},"prix":{{ prix_v | json }},"stock_bas":{{ stock_v }},"media":{{ v.featured_media.id | default: 0 }}}
           {%- unless forloop.last %},{% endunless -%}
         {%- endfor -%}
       ]

@@ -9,9 +9,9 @@
  */
 {
   "current": {
-    "launch_mode": "waitlist",
+    "launch_mode": "vente",
     "date_expedition": "[DATE D’EXPÉDITION]",
-    "mention_vente": "Expédié depuis la France",
+    "mention_vente": "",
     "info_livraison": "Délais et frais affichés avant le paiement, selon votre adresse.",
     "info_retours": "14 jours pour changer d’avis, à compter de la réception.",
     "info_garantie": "Garantie légale de conformité : 2 ans.",

@@ -263,7 +263,7 @@
           "type": "carte",
           "settings": {
             "titre": "Choisir peu, choisir bien",
-            "texte": "Trois familles d’équipement, sélectionnées et contrôlées à Paris avant d’entrer au catalogue.",
+            "texte": "Trois familles d’équipement, choisies pour leur justesse plutôt que pour leur nombre.",
             "image_generee": true,
             "image": "shopify://shop_images/plan-06-posture-provisoire.jpg"
           }
@@ -272,16 +272,16 @@
           "type": "carte",
           "settings": {
             "titre": "Dire vrai",
-            "texte": "Pas de faux avis, pas de compte à rebours, pas de prix barré. Les mesures sont publiées quand elles sont vérifiées.",
+            "texte": "Pas de faux avis, pas de compte à rebours, pas de prix barré. Les mesures viennent des fiches de nos fournisseurs.",
             "image_generee": true,
-            "image": "shopify://shop_images/plan-09-soiree.jpg"
+            "image": "shopify://shop_images/atelier-pliable-0-ambiance.jpg"
           }
         },
         "v_3": {
           "type": "carte",
           "settings": {
             "titre": "Penser aux appartements",
-            "texte": "Des appareils qui se plient, se rangent et se font oublier entre deux séances.",
+            "texte": "Des équipements qui se rangent et se font oublier entre deux séances.",
             "image_generee": true,
             "image": "shopify://shop_images/coffret-1-coffret.jpg"
           }

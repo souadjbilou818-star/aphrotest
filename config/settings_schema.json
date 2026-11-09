@@ -53,7 +53,7 @@
         "type": "text",
         "id": "mention_vente",
         "label": "Mention en mode Vente",
-        "default": "Expédié depuis la France"
+        "info": "Une phrase vraie et vérifiable, par exemple le pays d’expédition s’il est certain. Vide : aucune mention."
       }
     ]
   },

@@ -5,7 +5,8 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "menu": "aplomb-pied"
+        "menu": "aplomb-pied",
+        "maison": "Le Pilates à domicile, pensé pour les appartements."
       }
     }
   },

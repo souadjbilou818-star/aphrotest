@@ -67,7 +67,7 @@
       "placeholder": "prenom@exemple.fr",
       "cta": "Rejoindre la liste d’attente",
       "cta_court": "Liste d’attente",
-      "consentement_html": "En cliquant sur « {{ bouton }} », vous acceptez de recevoir les e-mails de L’Aplomb sur le lancement. Désinscription en un clic, à tout moment. <a href=\"{{ url }}\">Politique de confidentialité</a>",
+      "consentement_html": "En cliquant sur « {{ bouton }} », vous acceptez de recevoir les e-mails de L’Aplomb. Désinscription en un clic, à tout moment. <a href=\"{{ url }}\">Politique de confidentialité</a>",
       "succes": "C’est noté. Nous vous écrivons à l’ouverture, et pas avant.",
       "erreur": "Vérifiez l’adresse e-mail : elle semble incomplète.",
       "produit": "Être prévenu de l’ouverture"
@@ -89,7 +89,7 @@
       "ttc": "TTC",
       "galerie": "Galerie",
       "video": "Vidéo · son réel",
-      "choisir": "Choisir mon édition",
+      "choisir": "Choisir et commander",
       "voir": "Voir {{ titre }}",
       "des": "dès {{ prix }}",
       "quantite": "Quantité",
@@ -160,7 +160,7 @@
     },
     "newsletter": {
       "titre": "La lettre de L’Aplomb",
-      "texte": "Les nouveautés et les ouvertures, une fois par mois au plus.",
+      "texte": "Les nouveaux produits et des conseils de pratique, une fois par mois au plus.",
       "cta": "S’inscrire",
       "succes": "C’est noté. À bientôt dans votre boîte de réception."
     },

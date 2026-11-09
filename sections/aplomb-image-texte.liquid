@@ -3,6 +3,22 @@
   assign points = section.blocks | where: 'type', 'point'
   assign image = section.settings.image
   assign generee = section.settings.image_generee
+  assign lie = section.settings.produit
+  assign lie_ok = false
+  if lie.handle != blank and lie.handle
+    assign lie_ok = true
+  endif
+  assign cta_lien = section.settings.cta_lien | default: '#achat'
+  if lie_ok and section.settings.cta_lien == blank
+    assign cta_lien = lie.url
+  endif
+  if image == blank and lie_ok and lie.featured_media
+    assign image = lie.featured_media.preview_image
+    assign alt_lie = lie.featured_media.alt | downcase
+    if alt_lie contains 'image générée'
+      assign generee = true
+    endif
+  endif
   if image == blank and product and section.settings.media_produit > 0
     assign index = section.settings.media_produit | minus: 1
     assign media = product.media[index]
@@ -38,6 +54,16 @@
       <p class="label soft">{{ section.settings.surtitre }}</p>
     {%- endif -%}
     <h2 class="image-texte__titre" id="{{ titre_id }}">{{ section.settings.titre }}</h2>
+    {%- if lie_ok -%}
+      {%- capture prix_lie -%}{% render 'prix', montant: lie.price_min %}{%- endcapture -%}
+      <p class="image-texte__prix">
+        {%- if lie.price_varies -%}
+          {{ 'aplomb.produit.des' | t: prix: prix_lie }}
+        {%- else -%}
+          {{ prix_lie }}
+        {%- endif %} <small>{{ 'aplomb.produit.ttc' | t }}</small>
+      </p>
+    {%- endif -%}
     {%- if section.settings.texte != blank -%}
       <div class="image-texte__corps rte">{{ section.settings.texte }}</div>
     {%- endif -%}
@@ -49,7 +75,7 @@
       </ul>
     {%- endif -%}
     {%- if section.settings.cta_libelle != blank -%}
-      <p><a class="btn" href="{{ section.settings.cta_lien | default: '#achat' }}">{{ section.settings.cta_libelle }}</a></p>
+      <p><a class="btn" href="{{ cta_lien }}">{{ section.settings.cta_libelle }}</a></p>
     {%- endif -%}
   </div>
 </section>
@@ -64,6 +90,12 @@
       "type": "text",
       "id": "ancre",
       "label": "Ancre"
+    },
+    {
+      "type": "product",
+      "id": "produit",
+      "label": "Produit lié",
+      "info": "Affiche son prix réel ; le bouton mène à sa fiche et sa première image sert de repli."
     },
     {
       "type": "image_picker",
