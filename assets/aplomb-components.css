@@ -4096,3 +4096,6 @@ html.visionneuse-ouverte {
   border-color: var(--ink);
   color: var(--ivory);
 }
+.image-texte__cadre--plein img {
+  object-fit: cover;
+}

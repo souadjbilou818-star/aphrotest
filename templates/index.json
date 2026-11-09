@@ -111,13 +111,13 @@
       "settings": {
         "ancre": "atelier",
         "produit": "atelier-pliable",
-        "image": "shopify://shop_images/atelier-pliable-0-ambiance.jpg",
+        "image": "shopify://shop_images/atelier-pliable-plie-salon-1.jpg",
         "image_generee": true,
         "inverser": true,
         "fond": "sable",
         "surtitre": "Le reformer qui se range",
         "titre": "ATELIER Pliable",
-        "texte": "<p>Un vrai reformer, avec son chariot sur rails et son cadre en acier, qui se replie après la séance.</p>",
+        "texte": "<p>Un vrai reformer, avec son chariot sur rails et son cadre en acier. Après la séance, il se replie et tient debout contre un mur.</p>",
         "cta_libelle": "Découvrir ATELIER Pliable"
       },
       "blocks": {

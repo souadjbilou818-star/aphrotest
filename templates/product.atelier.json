@@ -184,6 +184,44 @@
         "e_5"
       ]
     },
+    "rangement": {
+      "type": "aplomb-image-texte",
+      "settings": {
+        "ancre": "rangement",
+        "image": "shopify://shop_images/atelier-pliable-plie-salon-2.jpg",
+        "image_generee": true,
+        "fond": "ivoire",
+        "surtitre": "Après la séance",
+        "titre": "Plié, il se range contre un mur",
+        "texte": "<p>Chariot vide et à l’arrêt, vous repliez le cadre en suivant la notice : le reformer tient debout, dans l’angle d’une pièce, jusqu’à la prochaine séance.</p>",
+        "cta_libelle": "Choisir ATELIER Pliable"
+      },
+      "blocks": {
+        "r_1": {
+          "type": "point",
+          "settings": {
+            "texte": "Plié : 108 × 55 × 29 cm (fiche fournisseur)"
+          }
+        },
+        "r_2": {
+          "type": "point",
+          "settings": {
+            "texte": "Déplié : 197 × 57 × 72,5 cm (fiche fournisseur)"
+          }
+        },
+        "r_3": {
+          "type": "point",
+          "settings": {
+            "texte": "32,5 kg : il se déplace plus facilement à deux"
+          }
+        }
+      },
+      "block_order": [
+        "r_1",
+        "r_2",
+        "r_3"
+      ]
+    },
     "rangee": {
       "type": "aplomb-produits",
       "settings": {
@@ -262,6 +300,7 @@
     "main",
     "description",
     "exercices",
+    "rangement",
     "rangee",
     "en_vrai",
     "temoignages",

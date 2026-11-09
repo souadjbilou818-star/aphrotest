@@ -317,10 +317,10 @@ def index():
             "Rose, lavande ou noir",
         ]], "c"),
         "atelier": section("aplomb-image-texte", {
-            "ancre": "atelier", "produit": H_ATELIER, "image": img("atelier-pliable-0-ambiance.jpg"), "image_generee": True,
+            "ancre": "atelier", "produit": H_ATELIER, "image": img("atelier-pliable-plie-salon-1.jpg"), "image_generee": True,
             "inverser": True, "fond": "sable",
             "surtitre": "Le reformer qui se range", "titre": "ATELIER Pliable",
-            "texte": "<p>Un vrai reformer, avec son chariot sur rails et son cadre en acier, qui se replie après la séance.</p>",
+            "texte": "<p>Un vrai reformer, avec son chariot sur rails et son cadre en acier. Après la séance, il se replie et tient debout contre un mur.</p>",
             "cta_libelle": "Découvrir ATELIER Pliable",
         }, [("point", {"texte": t}) for t in [
             "Chariot rembourré sur rails, cadre en acier",
@@ -426,7 +426,18 @@ def product_atelier():
         q("Comment se passe la livraison ?", "Les délais et les frais s'affichent avant le paiement, selon votre adresse. Vous recevez un e-mail à l'expédition."),
         RETOUR,
     ]
-    return landing(principal, [("exercices", exercices)], faq_items)
+    rangement = section("aplomb-image-texte", {
+        "ancre": "rangement", "image": img("atelier-pliable-plie-salon-2.jpg"), "image_generee": True, "fond": "ivoire",
+        "surtitre": "Après la séance", "titre": "Plié, il se range contre un mur",
+        "texte": "<p>Chariot vide et à l'arrêt, vous repliez le cadre en suivant la notice : le reformer tient debout, "
+                 "dans l'angle d'une pièce, jusqu'à la prochaine séance.</p>",
+        "cta_libelle": "Choisir ATELIER Pliable",
+    }, [("point", {"texte": t}) for t in [
+        "Plié : 108 × 55 × 29 cm (fiche fournisseur)",
+        "Déplié : 197 × 57 × 72,5 cm (fiche fournisseur)",
+        "32,5 kg : il se déplace plus facilement à deux",
+    ]], "r")
+    return landing(principal, [("exercices", exercices), ("rangement", rangement)], faq_items)
 
 
 def product_essentiels():

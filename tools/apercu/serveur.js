@@ -32,7 +32,8 @@ const locale = lireJson('locales/fr.default.json');
 const imageIA = (nom, w, h, alt) => ({ src: `/design/images-ia/${nom}`, width: w, height: h, alt, aspect_ratio: w / h });
 const TAILLES = {
   'plan-09-soiree.jpg': [1536, 1024], 'plan-07-coffret.jpg': [1536, 1024], 'plan-06-posture-provisoire.jpg': [1024, 1280],
-  'atelier-pliable-0-ambiance.jpg': [1122, 1402], '0c2d1da44e298772ffb0f69115cd.jpg': [664, 653], 'e91889c646d686461ef85700d425.jpg': [664, 653],
+  'atelier-pliable-0-ambiance.jpg': [1122, 1402], 'atelier-pliable-5-plie.jpg': [753, 941], 'atelier-pliable-6-plie.jpg': [753, 941],
+  'atelier-pliable-plie-salon-1.jpg': [1672, 941], 'atelier-pliable-plie-salon-2.jpg': [1672, 941], '0c2d1da44e298772ffb0f69115cd.jpg': [664, 653], 'e91889c646d686461ef85700d425.jpg': [664, 653],
   'f2e29f8b47bd8b2e338339bf9902.jpg': [669, 635], 'a17a7ed34c2b8a31c3c83caba9d0.jpg': [661, 629], '93040adb410abd48ee6f563c4581.jpg': [667, 658],
 };
 const imageMedia = (nom, w, h, alt) => ({ src: `/design/medias/${nom}`, width: w, height: h, alt, aspect_ratio: w / h });
@@ -101,6 +102,8 @@ const CATALOGUE = [
     description: '<p>Description de test (aperçu local).</p>',
     media: [
       ['atelier-pliable-0-ambiance.jpg', 1122, 1402, 'Reformer ATELIER Pliable dans un salon lumineux, image générée'],
+      ['atelier-pliable-5-plie.jpg', 753, 941, 'ATELIER Pliable replié, debout contre un mur, image générée'],
+      ['atelier-pliable-6-plie.jpg', 753, 941, 'ATELIER Pliable replié, plateau rose visible, image générée'],
       ['atelier-pliable-1.jpg', 800, 800, 'Reformer pliable ATELIER, vue de trois quarts'], ['atelier-pliable-2-dimensions.jpg', 800, 640, 'Encombrement du reformer déplié'],
       ['atelier-pliable-3-tubes.jpg', 800, 570, 'Tubes de résistance en latex'], ['atelier-pliable-4-vue.jpg', 1024, 1024, 'Reformer pliable ATELIER avec barre de pieds'],
     ].map(([n, w, h, a], i) => media(imageMedia(n, w, h, a), 20 + i)),

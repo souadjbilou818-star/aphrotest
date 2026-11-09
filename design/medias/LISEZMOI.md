@@ -4,6 +4,7 @@
 |---|---|---|
 | `laplomb-logo.png`, `laplomb-monogramme.png` | Logo fourni (page xPage), fond transparent | Logo de marque |
 | `atelier-pliable-0-ambiance.jpg` | Visuel d’ambiance fourni le 9 novembre 2026 (reformer rose dans un salon), traité comme image générée | Mention « image générée » ; à retirer seulement s’il s’agit d’une vraie photo |
+| `atelier-pliable-plie-salon-1/2.jpg`, `atelier-pliable-5/6-plie.jpg` | Visuels du reformer replié fournis le 9 novembre 2026 (originaux 16:9 et recadrages 4:5 pour la galerie), traités comme images générées | Mention « image générée » |
 | `atelier-pliable-1…4.jpg` | Photos du fournisseur du reformer pliable (recadrées, textes retirés) | **Vérifier l’autorisation d’usage du fournisseur** |
 | `coffret-*.jpg` | Visuels L’APLOMB fournis le 9 novembre 2026, générés par IA | Mention « image générée » dans le texte alternatif |
 

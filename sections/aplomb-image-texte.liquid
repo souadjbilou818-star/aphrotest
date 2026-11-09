@@ -40,8 +40,19 @@
 >
   <div class="image-texte__visuel">
     {%- if image != blank -%}
-      {%- assign ratio_cadre = image.aspect_ratio | default: 1 | at_least: 0.8 | at_most: 1.25 | round: 4 -%}
-      <div class="image-texte__cadre" style="--cadre-ratio: {{ ratio_cadre }}">
+      {%- liquid
+        assign ratio_brut = image.aspect_ratio | default: 1
+        assign ratio_cadre = ratio_brut | at_least: 0.8 | at_most: 1.5 | round: 4
+        comment
+          Photo d’ambiance plus large (ou plus haute) que le cadre : recadrée pour le remplir.
+          Photo détourée de forme proche : affichée entière sur fond blanc.
+        endcomment
+        assign recadrer = false
+        if ratio_brut > 1.5 or ratio_brut < 0.8
+          assign recadrer = true
+        endif
+      -%}
+      <div class="image-texte__cadre{% if recadrer %} image-texte__cadre--plein{% endif %}" style="--cadre-ratio: {{ ratio_cadre }}">
         {{ image | image_url: width: 1400 | image_tag: widths: '480, 720, 960, 1200, 1400', sizes: '(min-width: 900px) 48vw, 100vw', loading: 'lazy', alt: image.alt }}
       </div>
       {%- if generee and settings.credit_ia -%}
