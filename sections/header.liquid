@@ -70,6 +70,9 @@
       {%- elsif mode == 'waitlist' -%}
         <a class="btn btn--line btn--sm" href="{{ routes.root_url }}#liste-cloture-email">{{ 'aplomb.waitlist.cta_court' | t }}</a>
       {%- endif -%}
+      <a class="panier-lien masthead__recherche" href="{{ routes.search_url }}" aria-label="{{ 'aplomb.recherche' | t }}">
+        {%- render 'icone', nom: 'recherche' -%}
+      </a>
       {%- if montre_panier -%}
         <a class="panier-lien" href="{{ routes.cart_url }}" data-panier-ouvrir>
           {%- render 'icone', nom: 'panier' -%}

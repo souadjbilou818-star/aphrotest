@@ -6,11 +6,14 @@
   @param {string} contexte - identifiant unique du formulaire sur la page
   @param {string} [tags] - tags supplémentaires, séparés par des virgules
   @param {boolean} [bouton_court] - libellé court sur le bouton
+  @param {boolean} [bouton_lettre] - formulaire de lettre d’information (libellés dédiés)
 {% enddoc %}
 {%- liquid
   assign form_id = 'liste-' | append: contexte
   assign tous_tags = 'waitlist,aplomb'
-  if bouton_court
+  if bouton_lettre
+    assign bouton = 'aplomb.newsletter.cta' | t
+  elsif bouton_court
     assign bouton = 'aplomb.waitlist.produit' | t
   else
     assign bouton = 'aplomb.waitlist.cta' | t
@@ -21,7 +24,11 @@
 -%}
 {%- form 'customer', id: form_id, class: 'waitlist' -%}
   {%- if form.posted_successfully? -%}
-    <p class="message message--ok" role="status">{{ 'aplomb.waitlist.succes' | t }}</p>
+    {%- if bouton_lettre -%}
+      <p class="message message--ok" role="status">{{ 'aplomb.newsletter.succes' | t }}</p>
+    {%- else -%}
+      <p class="message message--ok" role="status">{{ 'aplomb.waitlist.succes' | t }}</p>
+    {%- endif -%}
   {%- else -%}
     <input type="hidden" name="contact[tags]" value="{{ tous_tags }}">
     <label class="label" for="{{ form_id }}-email">{{ 'aplomb.waitlist.label' | t }}</label>

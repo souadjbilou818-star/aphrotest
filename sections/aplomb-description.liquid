@@ -1,0 +1,143 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign mf = product.metafields.aplomb
+  assign g = product.metafields.gpsr
+  assign cles = 'dimensions_deplie,dimensions_plie,poids,charge_max,materiaux,resistance_elastiques,contenu_coffret' | split: ','
+  assign libelles = 'Dimensions dépliées|Dimensions pliées|Poids|Charge maximale testée|Matériaux|Résistance|Contenu' | split: '|'
+  assign g_cles = 'fabricant,adresse,email,reference,avertissements' | split: ','
+  assign g_libelles = 'Fabricant|Adresse|Contact|Référence|Avertissements' | split: '|'
+-%}
+<section class="wrap descr" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+  <div class="descr__texte">
+    <h2 class="descr__titre" id="{{ titre_id }}">{{ section.settings.titre }}</h2>
+    {%- if product.description != blank -%}
+      <div class="rte descr__corps">{{ product.description }}</div>
+    {%- endif -%}
+  </div>
+
+  <div class="descr__accordeons">
+    {%- capture fiche -%}
+      {%- for cle in cles -%}
+        {%- if mf[cle] != blank -%}
+          <div><dt>{{ libelles[forloop.index0] }}</dt><dd>{{ mf[cle] | escape }}</dd></div>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- if fiche != blank -%}
+      <details class="accordeon" {% if section.settings.ouvrir_fiche %}open{% endif %}>
+        <summary>{{ section.settings.titre_fiche }}</summary>
+        <dl class="accordeon__liste">{{ fiche }}</dl>
+      </details>
+    {%- endif -%}
+
+    {%- if section.settings.entretien != blank or mf.materiaux != blank -%}
+      <details class="accordeon">
+        <summary>{{ section.settings.titre_entretien }}</summary>
+        <div class="accordeon__corps rte">
+          {%- if mf.materiaux != blank -%}<p>{{ mf.materiaux | escape }}</p>{%- endif -%}
+          {{ section.settings.entretien }}
+        </div>
+      </details>
+    {%- endif -%}
+
+    <details class="accordeon">
+      <summary>{{ section.settings.titre_livraison }}</summary>
+      <div class="accordeon__corps">
+        <ul class="infos-achat">
+          {%- if settings.info_livraison != blank -%}<li><b class="label">Livraison</b> <span>{{ settings.info_livraison }}</span></li>{%- endif -%}
+          {%- if settings.info_retours != blank -%}<li><b class="label">Retours</b> <span>{{ settings.info_retours }}</span></li>{%- endif -%}
+          {%- if settings.info_garantie != blank -%}<li><b class="label">Garantie</b> <span>{{ settings.info_garantie }}</span></li>{%- endif -%}
+        </ul>
+        {%- if settings.page_livraison != blank -%}
+          <p><a class="lien petit" href="{{ settings.page_livraison.url }}">{{ settings.page_livraison.title }}</a></p>
+        {%- endif -%}
+      </div>
+    </details>
+
+    {%- capture securite -%}
+      {%- for cle in g_cles -%}
+        {%- if g[cle] != blank -%}
+          <div><dt>{{ g_libelles[forloop.index0] }}</dt><dd>{{ g[cle] | escape | newline_to_br }}</dd></div>
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if g.notice_url != blank -%}
+        <div><dt>Notice</dt><dd><a class="lien" href="{{ g.notice_url }}">PDF</a></dd></div>
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- if securite != blank -%}
+      <details class="accordeon">
+        <summary>{{ section.settings.titre_securite }}</summary>
+        <dl class="accordeon__liste">{{ securite }}</dl>
+      </details>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Description et détails",
+  "tag": "div",
+  "class": "section-descr",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "description"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "Description"
+    },
+    {
+      "type": "text",
+      "id": "titre_fiche",
+      "label": "Titre : fiche technique",
+      "default": "Fiche technique"
+    },
+    {
+      "type": "checkbox",
+      "id": "ouvrir_fiche",
+      "label": "Fiche technique ouverte par défaut",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "titre_entretien",
+      "label": "Titre : matériaux et entretien",
+      "default": "Matériaux et entretien"
+    },
+    {
+      "type": "richtext",
+      "id": "entretien",
+      "label": "Conseils d’entretien",
+      "default": "<p>Un chiffon doux et humide suffit. Évitez les produits abrasifs.</p>"
+    },
+    {
+      "type": "text",
+      "id": "titre_livraison",
+      "label": "Titre : livraison et retours",
+      "default": "Livraison et retours"
+    },
+    {
+      "type": "text",
+      "id": "titre_securite",
+      "label": "Titre : sécurité du produit",
+      "default": "Sécurité du produit"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Description et détails"
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  }
+}
+{% endschema %}

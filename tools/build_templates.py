@@ -299,16 +299,20 @@ def index():
     return {"sections": sections, "order": order}
 
 
+TUILES = [("tuile", {"icone": "cadenas", "texte": "Paiement sécurisé"}),
+          ("tuile", {"icone": "retour", "texte": "14 jours pour changer d'avis"}),
+          ("tuile", {"icone": "bouclier", "texte": "Garantie légale 2 ans"})]
+
+
 def produit_commun(accroche, preuves, benefices, faq_cles, num_debut=1, avec_demo=False, avec_negations=None, etapes=None):
     romains = ["I.", "II.", "III.", "IV.", "V.", "VI.", "VII.", "VIII."]
     n = iter(romains[num_debut - 1:])
     sections = {
-        "main": section("produit-principal", {
-            "accroche": accroche,
-            "titre_description": "Description",
-        }, [("preuve", {"texte": t}) for t in preuves], "p"),
+        "main": section("produit-principal", {"accroche": accroche, "titre_associes": "À associer"},
+                        TUILES + [("preuve", {"texte": t}) for t in preuves], "p"),
+        "description": section("aplomb-description", {"ancre": "description", "titre": "Description"}),
     }
-    order = ["main"]
+    order = ["main", "description"]
     if avec_demo:
         sections["demo"] = section("aplomb-demo", {
             "ancre": "demonstration", "num": next(n), "titre": "Comment ça coulisse",
@@ -386,32 +390,52 @@ def carte(titre, texte, image=None, generee=False):
     return ("carte", d)
 
 
-def landing(principal, sections_milieu, faq_items, offre):
-    """Fiche produit en page de vente : achat d'abord, puis les arguments, puis l'offre finale."""
-    sections = {"main": principal}
-    order = ["main"]
+def maison_valeurs():
+    return section("aplomb-caracteristiques", {
+        "ancre": "maison", "titre": "Une maison, trois engagements", "disposition": "grille", "colonnes": "3", "fond": "ivoire",
+        "intro": "Ce que vous pouvez attendre de L'Aplomb, avant comme après l'achat.",
+    }, [
+        carte("Choisir peu, choisir bien", "Trois familles d'équipement, sélectionnées et contrôlées à Paris avant d'entrer au catalogue.", "plan-06-posture-provisoire.jpg", True),
+        carte("Dire vrai", "Pas de faux avis, pas de compte à rebours, pas de prix barré. Les mesures sont publiées quand elles sont vérifiées.", "plan-09-soiree.jpg", True),
+        carte("Penser aux appartements", "Des appareils qui se plient, se rangent et se font oublier entre deux séances.", "coffret-1-coffret.jpg", True),
+    ], "v")
+
+
+def landing(principal, sections_milieu, faq_items, offre, rangee):
+    """Fiche produit (structure type « boutique ») : achat, description et détails,
+    exercices, arguments, rangée de produits, photos clientes, valeurs, FAQ, offre."""
+    sections = {"main": principal,
+                "description": section("aplomb-description", {"ancre": "description", "titre": "Description"})}
+    order = ["main", "description"]
     for cle, sec in sections_milieu:
         sections[cle] = sec
         order.append(cle)
-    sections["specs"] = section("specs", {"ancre": "fiche-technique", "titre": "Fiche technique",
-                                          "intro": "Les mesures publiées viennent de la fiche du fournisseur, en attendant nos propres relevés."})
+    sections["rangee"] = rangee
+    sections["en_vrai"] = section("aplomb-galerie-reelle", {"ancre": "en-vrai", "titre": "En vrai, chez vous"})
     sections["temoignages"] = section("temoignages", {"ancre": "avis", "titre": "Avis",
                                                       "intro": "Uniquement des avis réels, publiés avec l'accord de leurs auteurs."})
-    sections["garanties"] = garanties("")
-    sections["gpsr"] = section("gpsr", {"ancre": "securite", "titre": "Sécurité du produit",
-                                        "intro": "Informations exigées par le règlement européen sur la sécurité générale des produits."})
+    sections["maison"] = maison_valeurs()
     sections["faq"] = section("faq", {"ancre": "faq", "titre": "Questions fréquentes"}, faq_items, "q")
     sections["offre"] = offre
-    order += ["specs", "temoignages", "garanties", "gpsr", "faq", "offre"]
+    order += ["rangee", "en_vrai", "temoignages", "maison", "faq", "offre"]
     return {"sections": sections, "order": order}
 
 
 def product_atelier():
     principal = section("produit-principal", {
-        "accroche": "Un reformer complet, à chariot, qui se plie après la séance.",
-        "titre_description": "Description",
-    }, [("preuve", {"texte": t}) for t in ["Cadre en acier pliable", "Chariot rembourré sur rails", "Tapis de yoga inclus"]], "p")
+        "accroche": "Un reformer complet, à chariot, qui se plie après la séance.", "titre_associes": "À associer",
+    }, TUILES + [("preuve", {"texte": t}) for t in ["Cadre en acier pliable", "Chariot rembourré sur rails", "Tapis de yoga inclus"]], "p")
     milieu = [
+        ("exercices", section("aplomb-caracteristiques", {
+            "ancre": "exercices", "titre": "Vos premiers exercices", "disposition": "defilement", "colonnes": "4", "fond": "sable",
+            "intro": "Cinq mouvements pour prendre le reformer en main. Commencez lentement, résistance faible.",
+        }, [
+            carte("Le travail de pieds", "Allongée sur le chariot, pieds sur la barre : vous poussez, vous revenez sans laisser claquer le chariot."),
+            carte("Le pont", "Pieds sur la barre, vous déroulez le dos vertèbre par vertèbre, puis vous redescendez."),
+            carte("Les bras aux cordes", "Assise, une poignée dans chaque main : vous tirez vers l'arrière en gardant le dos long."),
+            carte("La sirène", "Assise de côté, une main sur la barre : vous poussez le chariot et allongez le flanc."),
+            carte("Genou vers poitrine", "À genoux, mains sur la barre : vous repoussez le chariot avec une jambe, puis vous ramenez."),
+        ], "e")),
         ("caracteristiques", section("aplomb-caracteristiques", {
             "ancre": "caracteristiques", "titre": "Caractéristiques clés", "disposition": "grille", "colonnes": "4", "fond": "ivoire",
             "intro": "Ce qui fait un vrai reformer, dans un format qui se range.",
@@ -430,24 +454,6 @@ def product_atelier():
             "Des matériaux choisis pour durer : acier, ABS, PP et mousse",
             "Une finition rose et blanche qui s'accorde à la pièce",
         ]], "pt")),
-        ("bienfaits", section("aplomb-caracteristiques", {
-            "ancre": "bienfaits", "titre": "Ce que vous gagnez", "disposition": "defilement", "colonnes": "4", "fond": "ivoire",
-        }, [
-            carte("Stabilité", "Le cadre métallique tient en place pendant chaque mouvement."),
-            carte("Confort", "Le rembourrage en mousse amortit les appuis, séance après séance."),
-            carte("Place retrouvée", "Plié, il libère la pièce en quelques secondes."),
-            carte("Discrétion", "Des lignes simples, qui se fondent dans un intérieur."),
-            carte("Simplicité", "Des réglages lisibles pour enchaîner les exercices sans interruption."),
-        ], "b")),
-        ("detail", section("aplomb-image-texte", {
-            "ancre": "detail", "titre": "Conçu dans le détail", "media_produit": 2, "inverser": True, "fond": "ivoire",
-            "texte": "<p>Le cadre en acier porte un chariot rembourré qui glisse sur ses rails. La résistance vient de tubes en latex fixés sous le chariot ; la barre de pieds se règle selon votre taille et l'exercice.</p><p>Les mesures et matériaux affichés sur cette page sont ceux de la fiche du fournisseur. Nous les vérifierons sur nos échantillons avant l'ouverture des ventes.</p>",
-        })),
-        ("demarcation", section("negations", {"ancre": "choisir", "titre": "ATELIER ou COULISSE ?",
-                                              "honnete": "ATELIER est un reformer complet. COULISSE 01 est une planche compacte, sans chariot."}, [
-            ("negation", {"non": "Vous avez un espace dédié", "explication": "ATELIER : le chariot, la barre de pieds, l'amplitude complète du reformer."}),
-            ("negation", {"non": "Vous manquez de place", "explication": "COULISSE 01 : deux plateaux coulissants sur une planche qui se plie en deux."}),
-        ], "n")),
     ]
     faq_items = [
         q("Le montage est-il difficile ?", "Le reformer se monte en quelques étapes, avec la notice fournie. Comptez une personne pour tenir le cadre pendant le serrage."),
@@ -455,22 +461,32 @@ def product_atelier():
         q("Est-il facile à ranger ?", "Plié, il mesure 108 × 55 × 29 cm selon la fiche du fournisseur : il se range contre un mur ou dans un placard profond."),
         q("Est-il lourd ?", "32,5 kg selon la fiche du fournisseur. Il se déplace plus facilement à deux."),
         q("Le cadre est-il solide ?", "Le cadre est en acier. La charge maximale sera publiée sur la fiche technique dès qu'elle aura été vérifiée sur nos échantillons."),
-        q("Comment l'entretenir ?", "Un chiffon doux et humide suffit. Évitez les produits abrasifs sur le revêtement et sur le métal."),
         q("ATELIER ou COULISSE 01 ?", "ATELIER est un reformer complet, à chariot. COULISSE 01 est une planche compacte à deux plateaux coulissants, sans chariot ni ressorts. Le quiz vous aide à choisir."),
         q("Comment se passe la livraison ?", "Les délais et les frais s'affichent avant le paiement, selon votre adresse. Vous recevez un e-mail à l'expédition."),
         q("Puis-je le retourner ?", "Oui. Vous disposez de 14 jours après réception pour exercer votre droit de rétractation. Les conditions de retour figurent sur la page Livraison et retours."),
     ]
     offre = section("aplomb-offre", {"ancre": "offre", "surtitre": "Reformers Atelier", "titre": "Votre reformer, chez vous",
                                      "texte": "Un vrai chariot, un cadre en acier, un tapis de yoga inclus. Et la place retrouvée après la séance."})
-    return landing(principal, milieu, faq_items, offre)
+    rangee = section("aplomb-produits", {"ancre": "completer", "titre": "Compléter votre espace", "collection": "les-essentiels",
+                                         "nombre": 8, "libelle_lien": "Tout voir"})
+    return landing(principal, milieu, faq_items, offre, rangee)
 
 
 def product_essentiels():
     principal = section("produit-principal", {
-        "accroche": "Des séances Pilates complètes sur le tapis, avec cinq accessoires rangés dans un sac.",
-        "titre_description": "Ce que contient le coffret",
-    }, [("preuve", {"texte": t}) for t in ["13 pièces, rangées dans un sac", "Ballon 25 cm anti-éclatement", "Anneau 38 cm à cœur en fibre de verre"]], "p")
+        "accroche": "Des séances Pilates complètes sur le tapis, avec cinq accessoires rangés dans un sac.", "titre_associes": "À associer",
+    }, TUILES + [("preuve", {"texte": t}) for t in ["13 pièces, rangées dans un sac", "Ballon 25 cm anti-éclatement", "Anneau 38 cm à cœur en fibre de verre"]], "p")
     milieu = [
+        ("exercices", section("aplomb-caracteristiques", {
+            "ancre": "exercices", "titre": "Une séance avec le coffret", "disposition": "defilement", "colonnes": "4", "fond": "sable",
+            "numeroter": True, "intro": "Un accessoire après l'autre, pour travailler tout le corps sur un seul tapis.",
+        }, [
+            carte("Le ballon sous le dos", "Allongée, le ballon sous les omoplates : vous enroulez le buste, puis vous redescendez lentement.", "coffret-3-ballon.jpg", True),
+            carte("L'anneau entre les mains", "Bras tendus, vous pressez l'anneau sans hausser les épaules, puis vous relâchez.", "coffret-4-anneau.jpg", True),
+            carte("La sangle sous le pied", "Assise ou allongée, la sangle accompagne l'étirement de la jambe, sans forcer.", "coffret-5-sangle.jpg", True),
+            carte("La bande aux genoux", "En pont ou debout, la bande au-dessus des genoux réveille fessiers et cuisses.", "coffret-6-bandes.jpg", True),
+            carte("Tout le corps", "Enchaînez les accessoires pour une séance complète, à votre rythme.", "coffret-2-seances.jpg", True),
+        ], "e")),
         ("contenu", section("aplomb-caracteristiques", {
             "ancre": "contenu", "titre": "Ce que contient le coffret", "disposition": "grille", "colonnes": "4", "fond": "ivoire",
             "intro": "Cinq accessoires qui changent l'appui ou la résistance d'un même mouvement.",
@@ -480,21 +496,6 @@ def product_essentiels():
             carte("Bandes de résistance", "Cinq forces différentes, plus une bande en huit pour les bras."),
             carte("Sangle, chaussettes, sac", "Une sangle d'étirement, des chaussettes antidérapantes, un sac pour tout ranger."),
         ], "c")),
-        ("bienfaits", section("aplomb-caracteristiques", {
-            "ancre": "bienfaits", "titre": "Ce que vous travaillez", "disposition": "defilement", "colonnes": "4", "fond": "sable",
-            "intro": "Un même coffret pour tout le corps, à votre rythme.",
-        }, [
-            carte("Gainage", "Le ballon sous le dos ou le bassin soutient les exercices du centre.", "coffret-3-ballon.jpg", True),
-            carte("Bras et épaules", "L'anneau ajoute une résistance douce aux mouvements du haut du corps.", "coffret-4-anneau.jpg", True),
-            carte("Souplesse des jambes", "La sangle accompagne les étirements sans forcer.", "coffret-5-sangle.jpg", True),
-            carte("Fessiers et cuisses", "Les bandes travaillent les jambes debout comme au sol.", "coffret-6-bandes.jpg", True),
-            carte("Une séance complète", "Plusieurs accessoires, de nombreux exercices, un seul tapis.", "coffret-2-seances.jpg", True),
-        ], "b")),
-        ("detail", section("aplomb-image-texte", {
-            "ancre": "detail", "titre": "Dans le détail", "media_produit": 3, "inverser": False, "fond": "ivoire",
-            "texte": "<p>Le ballon se gonfle en quatre gestes : retirez le bouchon, insérez l'embout, gonflez jusqu'à 25 cm, replacez le bouchon. Sa surface antidérapante tient sous le dos comme sous les mains.</p><p>L'anneau garde sa forme grâce à son cœur en fibre de verre ; ses poignées rembourrées se placent entre les mains, les genoux ou les chevilles.</p>",
-            "cta_libelle": "Commander le coffret",
-        })),
     ]
     faq_items = [
         q("Convient-il aux débutants ?", "Oui. Commencez par les bandes les plus souples et des mouvements lents. En cas de douleur, de blessure ou de grossesse, demandez l'avis d'un professionnel de santé avant de commencer."),
@@ -507,7 +508,9 @@ def product_essentiels():
     ]
     offre = section("aplomb-offre", {"ancre": "offre", "surtitre": "Les Essentiels", "titre": "Votre coffret Pilates à domicile",
                                      "texte": "Treize pièces, un sac, des séances complètes à votre rythme."})
-    return landing(principal, milieu, faq_items, offre)
+    rangee = section("aplomb-produits", {"ancre": "aller-plus-loin", "titre": "Aller plus loin", "collection": "reformers-atelier",
+                                         "nombre": 8, "libelle_lien": "Tout voir"})
+    return landing(principal, milieu, faq_items, offre, rangee)
 
 
 def page_quiz():

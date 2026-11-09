@@ -188,6 +188,30 @@
         "id": "credit_ia",
         "label": "Afficher « Image générée » sous les images marquées comme générées",
         "default": true
+      },
+      {
+        "type": "header",
+        "content": "Réseaux sociaux"
+      },
+      {
+        "type": "url",
+        "id": "reseau_instagram",
+        "label": "Instagram"
+      },
+      {
+        "type": "url",
+        "id": "reseau_tiktok",
+        "label": "TikTok"
+      },
+      {
+        "type": "url",
+        "id": "reseau_pinterest",
+        "label": "Pinterest"
+      },
+      {
+        "type": "url",
+        "id": "reseau_youtube",
+        "label": "YouTube"
       }
     ]
   }

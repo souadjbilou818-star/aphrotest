@@ -149,19 +149,27 @@ const reinitialiser = (p, base = VENTE) => p.request.get(`${base}/__reinitialise
   });
 
   /* ---------- Fiche produit ---------- */
-  await test('Produit : variante Studio, prix, URL, compléments, panier', async () => {
+  await test('Produit : fil d’Ariane, variante Studio, prix, URL, badge de stock réel, « À associer », panier', async () => {
     const p = await page(nav);
     await reinitialiser(p);
     await p.goto(`${VENTE}/products/coulisse-01`);
+    ok(await p.locator('.fil a').count() >= 1, 'fil d’Ariane absent');
+    ok(await p.locator('[data-badge-stock]:visible').count() === 0, 'badge de stock affiché sans stock suivi');
     await p.locator('.option', { hasText: 'Studio' }).click();
     ok((await p.locator('.produit__prix [data-prix]').textContent()).includes('189'), 'prix non mis à jour');
     ok(p.url().includes('variant='), 'URL non mise à jour');
     ok((await p.locator('[data-cta-principal] [data-cta-vente]').textContent()).includes('189'), 'libellé du bouton non mis à jour');
-    ok(await p.locator('[data-complement]').count() === 1, 'le complément épuisé ne doit pas être proposé');
-    await p.locator('.complement').click();
-    await p.locator('[data-cta-principal] [data-cta-vente]').click();
+    ok((await p.locator('[data-badge-stock]').textContent()).includes('3'), 'badge « Plus que 3 en stock » attendu (stock réel 3)');
+    await p.locator('.option', { has: p.locator('.option__nom', { hasText: /^Essentielle$/ }) }).click();
+    ok(await p.locator('[data-badge-stock]:visible').count() === 0, 'badge resté visible sur une variante sans stock bas');
+    await p.locator('.option', { hasText: 'Studio' }).click();
+    ok(await p.locator('.associe').count() === 2, 'deux produits associés attendus');
+    ok(await p.locator('.associe__ajout').count() === 1, 'le produit épuisé ne doit pas avoir de bouton');
+    await p.locator('.associe__ajout').click();
     await p.waitForSelector('dialog[data-tiroir][open]');
-    ok(await p.locator('dialog[data-tiroir] .panier-ligne').count() === 2, 'produit + complément attendus');
+    await p.keyboard.press('Escape');
+    await p.locator('[data-cta-principal] [data-cta-vente]').click();
+    await p.waitForFunction(() => document.querySelectorAll('dialog[data-tiroir] .panier-ligne').length === 2);
     ok((await p.locator('[data-panier-total]').textContent()).includes('207'), `total attendu 207 € : ${await p.locator('[data-panier-total]').textContent()}`);
     await p.screenshot({ path: path.join(CAPTURES, 'panier-tiroir-390.png') });
     await p.context().close();
@@ -251,7 +259,11 @@ const reinitialiser = (p, base = VENTE) => p.request.get(`${base}/__reinitialise
       await reinitialiser(p);
       await p.goto(`${VENTE}${url}`);
       ok(await p.locator('.caracs').count() >= 2, `${url} : sections de caractéristiques absentes`);
-      ok(await p.locator('.image-texte').count() >= 1, `${url} : section image et texte absente`);
+      ok(await p.locator('.descr .accordeon').count() >= 2, `${url} : description et accordéons absents`);
+      ok(await p.locator('.tuile').count() === 3, `${url} : tuiles de réassurance absentes`);
+      ok(await p.locator('.galerie-produit__vignette').count() >= 2, `${url} : vignettes absentes`);
+      await p.locator('.galerie-produit__vignette').nth(1).click();
+      await p.waitForFunction(() => document.querySelector('.galerie-produit__vignette[aria-current="true"]')?.dataset.vignette === '1');
       ok(await p.locator('.offre [data-cta-vente]').count() === 1, `${url} : offre finale sans bouton`);
       const texte = await p.locator('main').innerText();
       for (const interdit of ['Offre limitée', 'Stock limité', 'avis cinq étoiles', 'Forbes', 'Vogue', 'reformer de studio', 'Résultats rapides']) ok(!texte.includes(interdit), `${url} : « ${interdit} » présent`);

@@ -35,9 +35,44 @@
       {%- endfor -%}
     {%- endcapture -%}
     {%- if liens_pied != blank -%}
-      <nav aria-label="{{ section.settings.menu.title | escape }}">
+      <nav class="pied__menu" aria-label="{{ section.settings.menu.title | escape }}">
+        <p class="label pied__menu-titre">{{ section.settings.menu.title }}</p>
         <ul>{{ liens_pied }}</ul>
       </nav>
+    {%- endif -%}
+    {%- capture liens_pied_2 -%}
+      {%- for link in section.settings.menu_2.links -%}
+        {%- liquid
+          if link.object == blank
+            if link.type == 'collection_link' or link.type == 'page_link' or link.type == 'product_link' or link.type == 'blog_link' or link.type == 'article_link'
+              continue
+            endif
+          endif
+        -%}
+        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- if liens_pied_2 != blank -%}
+      <nav class="pied__menu" aria-label="{{ section.settings.menu_2.title | escape }}">
+        <p class="label pied__menu-titre">{{ section.settings.menu_2.title }}</p>
+        <ul>{{ liens_pied_2 }}</ul>
+      </nav>
+    {%- endif -%}
+    {%- if section.settings.lettre -%}
+      <div class="pied__lettre">
+        <p class="label pied__menu-titre">{{ 'aplomb.newsletter.titre' | t }}</p>
+        <p class="pied__lettre-texte">{{ 'aplomb.newsletter.texte' | t }}</p>
+        {% render 'waitlist-form', contexte: 'lettre', tags: 'newsletter', bouton_lettre: true %}
+      </div>
+    {%- endif -%}
+    {%- capture reseaux -%}
+      {%- if settings.reseau_instagram != blank -%}<li><a href="{{ settings.reseau_instagram }}" rel="me noopener" target="_blank">Instagram</a></li>{%- endif -%}
+      {%- if settings.reseau_tiktok != blank -%}<li><a href="{{ settings.reseau_tiktok }}" rel="me noopener" target="_blank">TikTok</a></li>{%- endif -%}
+      {%- if settings.reseau_pinterest != blank -%}<li><a href="{{ settings.reseau_pinterest }}" rel="me noopener" target="_blank">Pinterest</a></li>{%- endif -%}
+      {%- if settings.reseau_youtube != blank -%}<li><a href="{{ settings.reseau_youtube }}" rel="me noopener" target="_blank">YouTube</a></li>{%- endif -%}
+    {%- endcapture -%}
+    {%- if reseaux != blank -%}
+      <nav class="pied__reseaux" aria-label="{{ 'aplomb.reseaux' | t }}"><ul>{{ reseaux }}</ul></nav>
     {%- endif -%}
     <div class="pied__colophon">
       {%- unless section.settings.colophon contains '[' and request.design_mode == false -%}
@@ -45,8 +80,15 @@
       {%- else -%}
         <span>© {{ 'now' | date: '%Y' }} {{ section.settings.colophon | split: '·' | first | strip }}</span>
       {%- endunless -%}
-      {%- if settings.launch_mode == 'vente' and section.settings.mention != blank -%}
-        <span>{{ section.settings.mention }}</span>
+      {%- if settings.launch_mode == 'vente' -%}
+        {%- if section.settings.mention != blank -%}<span>{{ section.settings.mention }}</span>{%- endif -%}
+        {%- if shop.enabled_payment_types.size > 0 -%}
+          <ul class="pied__paiements" role="list">
+            {%- for type in shop.enabled_payment_types -%}
+              <li>{{ type | payment_type_svg_tag: class: 'pied__paiement' }}</li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
       {%- endif -%}
     </div>
   </div>
@@ -56,6 +98,17 @@
 {
   "name": "Pied de page",
   "settings": [
+    {
+      "type": "link_list",
+      "id": "menu_2",
+      "label": "Second menu (facultatif)"
+    },
+    {
+      "type": "checkbox",
+      "id": "lettre",
+      "label": "Inscription à la lettre",
+      "default": true
+    },
     {
       "type": "text",
       "id": "maison",

@@ -30,6 +30,10 @@
     "page_livraison": "livraison-et-retours",
     "logo": "shopify://shop_images/laplomb-logo.png",
     "logo_largeur": 170,
-    "favicon": "shopify://shop_images/laplomb-monogramme.png"
+    "favicon": "shopify://shop_images/laplomb-monogramme.png",
+    "reseau_instagram": "",
+    "reseau_tiktok": "",
+    "reseau_pinterest": "",
+    "reseau_youtube": ""
   }
 }

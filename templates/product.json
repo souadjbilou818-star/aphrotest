@@ -13,22 +13,43 @@
       "type": "produit-principal",
       "settings": {
         "accroche": "Une planche pliable, deux plateaux qui coulissent l’un sans l’autre, des cordons à poignées.",
-        "titre_description": "Description"
+        "titre_associes": "À associer"
       },
       "blocks": {
         "p_1": {
+          "type": "tuile",
+          "settings": {
+            "icone": "cadenas",
+            "texte": "Paiement sécurisé"
+          }
+        },
+        "p_2": {
+          "type": "tuile",
+          "settings": {
+            "icone": "retour",
+            "texte": "14 jours pour changer d’avis"
+          }
+        },
+        "p_3": {
+          "type": "tuile",
+          "settings": {
+            "icone": "bouclier",
+            "texte": "Garantie légale 2 ans"
+          }
+        },
+        "p_4": {
           "type": "preuve",
           "settings": {
             "texte": "Deux plateaux rembourrés, indépendants"
           }
         },
-        "p_2": {
+        "p_5": {
           "type": "preuve",
           "settings": {
             "texte": "Rails intégrés à la planche"
           }
         },
-        "p_3": {
+        "p_6": {
           "type": "preuve",
           "settings": {
             "texte": "Se plie en deux, en son milieu"
@@ -38,8 +59,18 @@
       "block_order": [
         "p_1",
         "p_2",
-        "p_3"
+        "p_3",
+        "p_4",
+        "p_5",
+        "p_6"
       ]
+    },
+    "description": {
+      "type": "aplomb-description",
+      "settings": {
+        "ancre": "description",
+        "titre": "Description"
+      }
     },
     "demo": {
       "type": "aplomb-demo",
@@ -440,6 +471,7 @@
   },
   "order": [
     "main",
+    "description",
     "demo",
     "benefices",
     "etapes",

@@ -77,6 +77,16 @@
       if (dispo && v) {
         dispo.textContent = v.disponible ? dispo.dataset.stock || 'Disponible' : dispo.dataset.epuise || 'Épuisé pour le moment';
       }
+      const badge = page.querySelector('[data-badge-stock]');
+      if (badge && v) {
+        const n = v.stock_bas;
+        badge.hidden = !n;
+        if (n) badge.textContent = (badge.dataset.modele || '{n}').replace('{n}', n);
+      }
+      this.querySelectorAll('[data-choix-option]').forEach((el) => {
+        const i = Number(el.dataset.choixOption) - 1;
+        if (sel[i]) el.textContent = sel[i];
+      });
       if (v) {
         const url = new URL(window.location.href);
         url.searchParams.set('variant', v.id);
@@ -98,6 +108,9 @@
       const suiv = this.querySelector('[data-suivant]');
       if (prec) prec.addEventListener('click', () => this.defiler(this.index - 1));
       if (suiv) suiv.addEventListener('click', () => this.defiler(this.index + 1));
+
+      this.vignettes = [...this.querySelectorAll('[data-vignette]')];
+      this.vignettes.forEach((v) => v.addEventListener('click', () => this.defiler(Number(v.dataset.vignette))));
 
       if ('IntersectionObserver' in window && this.items.length > 1) {
         this.obs = new IntersectionObserver(
@@ -131,6 +144,10 @@
 
     majCompteur() {
       if (this.compteur) this.compteur.textContent = `${this.index + 1} / ${this.items.length}`;
+      (this.vignettes || []).forEach((v, i) => {
+        if (i === this.index) v.setAttribute('aria-current', 'true');
+        else v.removeAttribute('aria-current');
+      });
     }
 
     defiler(i) {
@@ -238,6 +255,32 @@
     }
   }
 
+  /* ---------- Carrousel (flèches sur une liste à défilement horizontal) ---------- */
+  class AplombCarrousel extends HTMLElement {
+    connectedCallback() {
+      this.liste = this.querySelector('[data-carrousel-liste]');
+      this.prec = this.querySelector('[data-carrousel-prec]');
+      this.suiv = this.querySelector('[data-carrousel-suiv]');
+      if (!this.liste || !this.prec || !this.suiv) return;
+      const pas = () => {
+        const item = this.liste.firstElementChild;
+        return item ? item.getBoundingClientRect().width + 16 : this.liste.clientWidth * 0.8;
+      };
+      this.prec.addEventListener('click', () => this.liste.scrollBy({ left: -pas(), behavior: doux() }));
+      this.suiv.addEventListener('click', () => this.liste.scrollBy({ left: pas(), behavior: doux() }));
+      this.maj = () => {
+        const max = this.liste.scrollWidth - this.liste.clientWidth - 2;
+        this.prec.disabled = this.liste.scrollLeft <= 2;
+        this.suiv.disabled = this.liste.scrollLeft >= max;
+        this.classList.toggle('carrousel--inutile', max <= 0);
+      };
+      this.liste.addEventListener('scroll', () => requestAnimationFrame(this.maj), { passive: true });
+      window.addEventListener('resize', this.maj, { passive: true });
+      this.maj();
+    }
+  }
+
+  if (!customElements.get('aplomb-carrousel')) customElements.define('aplomb-carrousel', AplombCarrousel);
   if (!customElements.get('aplomb-variantes')) customElements.define('aplomb-variantes', AplombVariantes);
   if (!customElements.get('aplomb-galerie')) customElements.define('aplomb-galerie', AplombGalerie);
   if (!customElements.get('aplomb-collant')) customElements.define('aplomb-collant', AplombCollant);

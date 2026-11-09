@@ -1,0 +1,85 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign c = section.settings.collection
+  assign c_ok = false
+  if c and c.published_at and c.products_count > 0
+    assign c_ok = true
+  endif
+-%}
+{%- if c_ok -%}
+  {%- capture cartes -%}
+    {%- for p in c.products limit: section.settings.nombre -%}
+      {%- if p.id != product.id -%}
+        <li>{% render 'carte-produit', product: p %}</li>
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- if cartes != blank -%}
+    <section class="wrap rangee" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+      <div class="rangee__tete">
+        <h2 class="rangee__titre" id="{{ titre_id }}">{{ section.settings.titre }}</h2>
+        <a class="btn btn--line btn--sm" href="{{ c.url }}">{{ section.settings.libelle_lien }}</a>
+      </div>
+      <aplomb-carrousel class="carrousel">
+        <ul class="rangee__liste" role="list" data-carrousel-liste>{{ cartes }}</ul>
+        <div class="carrousel__nav">
+          <button class="carrousel__fleche" type="button" data-carrousel-prec aria-label="{{ 'aplomb.carrousel.precedent' | t }}">{% render 'icone', nom: 'gauche' %}</button>
+          <button class="carrousel__fleche" type="button" data-carrousel-suiv aria-label="{{ 'aplomb.carrousel.suivant' | t }}">{% render 'icone', nom: 'droite' %}</button>
+        </div>
+      </aplomb-carrousel>
+    </section>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Rangée de produits",
+  "tag": "div",
+  "class": "section-rangee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "Compléter votre espace"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Masquée tant que la collection n’est pas publiée ou qu’elle est vide."
+    },
+    {
+      "type": "range",
+      "id": "nombre",
+      "label": "Nombre de produits",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "text",
+      "id": "libelle_lien",
+      "label": "Lien vers la collection",
+      "default": "Tout voir"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rangée de produits"
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  }
+}
+{% endschema %}

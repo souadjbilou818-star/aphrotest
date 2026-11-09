@@ -1,6 +1,7 @@
 {%- liquid
   assign variant = product.selected_or_first_available_variant
   assign titre_id = 'titre-' | append: section.id
+  assign tuiles = section.blocks | where: 'type', 'tuile'
   assign preuves = section.blocks | where: 'type', 'preuve'
   capture etat
     render 'etat-produit', product: product
@@ -12,9 +13,40 @@
   assign famille = product.metafields.aplomb.famille.value | default: product.type
   assign complements = product.metafields.aplomb.complements.value | default: section.settings.complements
   assign accroche = product.metafields.aplomb.accroche | default: section.settings.accroche
+
+  assign fil_collection = nil
+  for c in product.collections
+    if c.published_at and c.handle != 'accessoires'
+      assign fil_collection = c
+      break
+    endif
+  endfor
+
+  assign stock_bas = false
+  assign seuil = 0
+  if etat == 'vente'
+    assign seuil = section.settings.seuil_stock
+  endif
+  if seuil > 0 and variant.inventory_management == 'shopify' and variant.inventory_quantity > 0 and variant.inventory_quantity <= seuil
+    assign stock_bas = true
+  endif
+  assign modele_stock = 'aplomb.produit.stock_bas' | t: n: '{n}'
 -%}
 <section class="wrap produit" aria-labelledby="{{ titre_id }}" data-produit-id="{{ product.id }}">
+  <nav class="fil" aria-label="{{ 'aplomb.produit.fil' | t }}">
+    <ol>
+      <li><a href="{{ routes.root_url }}">{{ 'aplomb.produit.fil_accueil' | t }}</a></li>
+      {%- if fil_collection -%}
+        <li><a href="{{ fil_collection.url }}">{{ fil_collection.title }}</a></li>
+      {%- endif -%}
+      <li><span aria-current="page">{{ product.title }}</span></li>
+    </ol>
+  </nav>
+
   <div class="produit__medias">
+    <p class="produit__badge" data-badge-stock data-modele="{{ modele_stock | escape }}" {% unless stock_bas %}hidden{% endunless %}>
+      {%- if stock_bas -%}{{ 'aplomb.produit.stock_bas' | t: n: variant.inventory_quantity }}{%- endif -%}
+    </p>
     {% render 'galerie-produit', product: product, uid: section.id %}
   </div>
 
@@ -23,59 +55,55 @@
       <p class="label soft">{{ famille }}</p>
     {%- endif -%}
     <h1 class="produit__titre" id="{{ titre_id }}">{{ product.title }}</h1>
+    <div class="produit__prix-bloc">
+      <p class="produit__prix"><span data-prix>{{ prix_variant }}</span> <small>{{ 'aplomb.produit.ttc' | t }}</small></p>
+      {%- if etat == 'vente' and settings.info_livraison != blank -%}
+        <p class="produit__livraison">{{ settings.info_livraison }}</p>
+      {%- endif -%}
+    </div>
     {%- if accroche != blank -%}
       <p class="produit__accroche">{{ accroche }}</p>
     {%- endif -%}
 
-    <div class="produit__prix-ligne">
-      <p class="produit__prix"><span data-prix>{{ prix_variant }}</span> <small>{{ 'aplomb.produit.ttc' | t }}</small></p>
-      <p
-        class="dispo dispo--{{ etat }}"
-        data-dispo
-        data-stock="{{ 'aplomb.produit.dispo_stock' | t | escape }}"
-        data-epuise="{{ 'aplomb.produit.dispo_epuise' | t | escape }}"
-      >
-        {%- case etat -%}
-          {%- when 'vente' -%}
-            {%- if variant.available -%}
-              {{ 'aplomb.produit.dispo_stock' | t }}
-            {%- else -%}
-              {{ 'aplomb.produit.dispo_epuise' | t }}
-            {%- endif -%}
-          {%- when 'reservation' -%}
-            {{ 'aplomb.produit.dispo_reservation' | t }}
-          {%- else -%}
-            {{ 'aplomb.produit.dispo_attente' | t }}
-        {%- endcase -%}
-      </p>
-    </div>
+    {% render 'selecteur-variantes', product: product, uid: section.id, seuil: seuil %}
 
-    {% render 'selecteur-variantes', product: product, uid: section.id %}
+    <p
+      class="dispo dispo--{{ etat }}"
+      data-dispo
+      data-stock="{{ 'aplomb.produit.dispo_stock' | t | escape }}"
+      data-epuise="{{ 'aplomb.produit.dispo_epuise' | t | escape }}"
+    >
+      {%- case etat -%}
+        {%- when 'vente' -%}
+          {%- if variant.available -%}
+            {{ 'aplomb.produit.dispo_stock' | t }}
+          {%- else -%}
+            {{ 'aplomb.produit.dispo_epuise' | t }}
+          {%- endif -%}
+        {%- when 'reservation' -%}
+          {{ 'aplomb.produit.dispo_reservation' | t }}
+        {%- else -%}
+          {{ 'aplomb.produit.dispo_attente' | t }}
+      {%- endcase -%}
+    </p>
 
     {%- if section.settings.mention_prix != blank -%}
       <p class="mention">{{ section.settings.mention_prix }}</p>
     {%- endif -%}
 
     <div data-cta-principal>
-      {% render 'achat', product: product, contexte: 'produit', variant: variant, complements: complements %}
+      {% render 'achat', product: product, contexte: 'produit', variant: variant %}
     </div>
 
-    <ul class="infos-achat">
-      {%- if settings.info_livraison != blank -%}
-        <li><b class="label">Livraison</b> <span>{{ settings.info_livraison }}</span></li>
-      {%- endif -%}
-      {%- if settings.info_retours != blank -%}
-        <li><b class="label">Retours</b> <span>{{ settings.info_retours }}</span></li>
-      {%- endif -%}
-      {%- if settings.info_garantie != blank -%}
-        <li><b class="label">Garantie</b> <span>{{ settings.info_garantie }}</span></li>
-      {%- endif -%}
-      {%- if etat == 'vente' and settings.info_paiement != blank -%}
-        <li><b class="label">Paiement</b> <span>{{ settings.info_paiement }}</span></li>
-      {%- endif -%}
-    </ul>
-    {%- if settings.page_livraison != blank -%}
-      <a class="lien petit" href="{{ settings.page_livraison.url }}">{{ settings.page_livraison.title }}</a>
+    {%- if tuiles.size > 0 -%}
+      <ul class="tuiles" role="list">
+        {%- for block in tuiles -%}
+          <li class="tuile" {{ block.shopify_attributes }}>
+            {%- render 'icone', nom: block.settings.icone -%}
+            <span>{{ block.settings.texte }}</span>
+          </li>
+        {%- endfor -%}
+      </ul>
     {%- endif -%}
 
     {%- if preuves.size > 0 -%}
@@ -86,11 +114,49 @@
       </ul>
     {%- endif -%}
 
-    {%- if product.description != blank -%}
-      <details class="produit__description">
-        <summary class="label">{{ section.settings.titre_description }}</summary>
-        <div class="rte">{{ product.description }}</div>
-      </details>
+    {%- capture liste_associes -%}
+      {%- for c in complements limit: 3 -%}
+        {%- liquid
+          capture etat_c
+            render 'etat-produit', product: c
+          endcapture
+          assign etat_c = etat_c | strip
+          assign vc = c.selected_or_first_available_variant
+        -%}
+        {%- if etat_c == 'vente' and c.id != product.id -%}
+          {%- capture prix_c -%}{% render 'prix', montant: vc.price %}{%- endcapture -%}
+          <li class="associe">
+            <a class="associe__visuel" href="{{ c.url }}" tabindex="-1" aria-hidden="true">
+              {%- if c.featured_media -%}
+                {{ c.featured_media.preview_image | image_url: width: 240 | image_tag: widths: '120, 240', sizes: '72px', loading: 'lazy', alt: '' }}
+              {%- endif -%}
+            </a>
+            <div class="associe__texte">
+              <a class="associe__titre" href="{{ c.url }}">{{ c.title }}</a>
+              {%- unless c.has_only_default_variant -%}<span class="associe__variante mono">{{ vc.title }}</span>{%- endunless -%}
+              <span class="associe__prix">{{ prix_c }}</span>
+            </div>
+            {%- if vc.available -%}
+              {%- assign form_associe = 'associe-' | append: section.id | append: '-' | append: c.id -%}
+              {%- form 'product', c, id: form_associe, class: 'associe__form', data-panier: 'ajax' -%}
+                <input type="hidden" name="id" value="{{ vc.id }}">
+                <button class="associe__ajout" type="submit" name="add" aria-label="{{ 'aplomb.produit.ajouter_associe' | t: titre: c.title | escape }}">
+                  {%- render 'icone', nom: 'plus' -%}
+                </button>
+                <p class="message achat__erreur" role="alert" data-achat-erreur hidden></p>
+              {%- endform -%}
+            {%- else -%}
+              <span class="associe__epuise mono">{{ 'aplomb.produit.dispo_epuise' | t }}</span>
+            {%- endif -%}
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- if liste_associes != blank -%}
+      <div class="associes">
+        <h2 class="label">{{ section.settings.titre_associes }}</h2>
+        <ul role="list">{{ liste_associes }}</ul>
+      </div>
     {%- endif -%}
   </div>
 </section>
@@ -131,24 +197,72 @@
     {
       "type": "textarea",
       "id": "mention_prix",
-      "label": "Mention sous le prix",
+      "label": "Mention sous le bouton",
       "info": "Une phrase vérifiable seulement. Pas de prix barré, pas de compte à rebours."
+    },
+    {
+      "type": "range",
+      "id": "seuil_stock",
+      "label": "Badge « Plus que N en stock » à partir de",
+      "info": "Calculé sur le stock réel de la variante (suivi Shopify). Jamais affiché sans suivi de stock.",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "titre_associes",
+      "label": "Titre des produits associés",
+      "default": "À associer"
     },
     {
       "type": "product_list",
       "id": "complements",
-      "label": "Produits en complément",
-      "info": "Proposés en cases à cocher sous le bouton d’achat. Remplacés par le metafield aplomb.complements du produit.",
+      "label": "Produits associés",
+      "info": "Remplacés par le metafield aplomb.complements du produit. Seuls les produits en vente s’affichent.",
       "limit": 3
-    },
-    {
-      "type": "text",
-      "id": "titre_description",
-      "label": "Titre de la description",
-      "default": "Description"
     }
   ],
   "blocks": [
+    {
+      "type": "tuile",
+      "name": "Tuile de réassurance",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icone",
+          "label": "Icône",
+          "options": [
+            {
+              "value": "cadenas",
+              "label": "Cadenas (paiement)"
+            },
+            {
+              "value": "retour",
+              "label": "Flèche retour (rétractation)"
+            },
+            {
+              "value": "bouclier",
+              "label": "Bouclier (garantie)"
+            },
+            {
+              "value": "camion",
+              "label": "Camion (livraison)"
+            }
+          ],
+          "default": "cadenas"
+        },
+        {
+          "type": "text",
+          "id": "texte",
+          "label": "Texte",
+          "info": "Une promesse vraie et tenue.",
+          "default": "Paiement sécurisé"
+        }
+      ]
+    },
     {
       "type": "preuve",
       "name": "Fait vérifiable",

@@ -1,0 +1,92 @@
+{%- liquid
+  assign titre_id = 'titre-' | append: section.id
+  assign photos = section.blocks | where: 'type', 'photo'
+  assign nb = 0
+  for block in photos
+    if block.settings.image != blank
+      assign nb = nb | plus: 1
+    endif
+  endfor
+-%}
+{%- if nb > 0 -%}
+  <section class="wrap reel" id="{{ section.settings.ancre | default: section.id }}" aria-labelledby="{{ titre_id }}">
+    <div class="rangee__tete">
+      <h2 class="rangee__titre" id="{{ titre_id }}">{{ section.settings.titre }}</h2>
+    </div>
+    <aplomb-carrousel class="carrousel">
+      <ul class="reel__liste" role="list" data-carrousel-liste>
+        {%- for block in photos -%}
+          {%- if block.settings.image != blank -%}
+            <li class="reel__photo" {{ block.shopify_attributes }}>
+              {{ block.settings.image | image_url: width: 800 | image_tag: widths: '320, 480, 640, 800', sizes: '(min-width: 1000px) 22vw, 70vw', loading: 'lazy', alt: block.settings.image.alt }}
+              {%- if block.settings.legende != blank -%}
+                <p class="reel__legende mono">{{ block.settings.legende }}</p>
+              {%- endif -%}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+      <div class="carrousel__nav">
+        <button class="carrousel__fleche" type="button" data-carrousel-prec aria-label="{{ 'aplomb.carrousel.precedent' | t }}">{% render 'icone', nom: 'gauche' %}</button>
+        <button class="carrousel__fleche" type="button" data-carrousel-suiv aria-label="{{ 'aplomb.carrousel.suivant' | t }}">{% render 'icone', nom: 'droite' %}</button>
+      </div>
+    </aplomb-carrousel>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "En vrai (photos clientes)",
+  "tag": "div",
+  "class": "section-reel",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Uniquement des photos réelles de clientes et clients, publiées avec leur accord écrit. Pas d’image générée ici. La section reste masquée tant qu’aucune photo n’est ajoutée."
+    },
+    {
+      "type": "text",
+      "id": "ancre",
+      "label": "Ancre",
+      "default": "en-vrai"
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre",
+      "default": "En vrai, chez vous"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "photo",
+      "name": "Photo",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo (portrait 4:5)"
+        },
+        {
+          "type": "text",
+          "id": "legende",
+          "label": "Légende (prénom, ville…)",
+          "info": "Avec l’accord de la personne."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "En vrai (photos clientes)"
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  }
+}
+{% endschema %}

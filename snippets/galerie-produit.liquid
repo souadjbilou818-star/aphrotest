@@ -63,6 +63,15 @@
       {%- endfor -%}
     </ul>
     {%- if total > 1 -%}
+      <ul class="galerie-produit__vignettes" role="list" data-vignettes>
+        {%- for media in product.media -%}
+          <li>
+            <button class="galerie-produit__vignette" type="button" data-vignette="{{ forloop.index0 }}" aria-label="{{ 'aplomb.produit.image' | t: n: forloop.index, total: total }}" {% if forloop.first %}aria-current="true"{% endif %}>
+              {{ media.preview_image | image_url: width: 200 | image_tag: widths: '100, 200', sizes: '80px', loading: 'lazy', alt: '' }}
+            </button>
+          </li>
+        {%- endfor -%}
+      </ul>
       <div class="galerie-produit__nav">
         <button class="galerie-produit__fleche" type="button" data-precedent aria-label="{{ 'aplomb.produit.precedente' | t }}">
           {%- render 'icone', nom: 'gauche' -%}

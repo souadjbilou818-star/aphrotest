@@ -16,11 +16,13 @@
       <p class="caracs__intro">{{ section.settings.intro }}</p>
     {%- endif -%}
   </div>
-  <ul class="caracs__liste" role="list">
+  {%- if section.settings.disposition == 'defilement' -%}<aplomb-carrousel class="carrousel">{%- endif -%}
+  <ul class="caracs__liste" role="list" data-carrousel-liste>
     {%- for block in cartes -%}
       <li class="carac" {{ block.shopify_attributes }}>
         {%- if block.settings.image != blank -%}
           <div class="carac__visuel">
+            {%- if section.settings.numeroter -%}<span class="carac__pastille mono">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>{%- endif -%}
             {{ block.settings.image | image_url: width: 1000 | image_tag: widths: '360, 540, 720, 1000', sizes: '(min-width: 1000px) 28vw, (min-width: 640px) 45vw, 82vw', loading: 'lazy', alt: block.settings.image.alt }}
             {%- if block.settings.image_generee and settings.credit_ia -%}
               <span class="credit carac__credit">{{ 'aplomb.credit_ia' | t }}</span>
@@ -39,6 +41,13 @@
       </li>
     {%- endfor -%}
   </ul>
+  {%- if section.settings.disposition == 'defilement' -%}
+    <div class="carrousel__nav">
+      <button class="carrousel__fleche" type="button" data-carrousel-prec aria-label="{{ 'aplomb.carrousel.precedent' | t }}">{% render 'icone', nom: 'gauche' %}</button>
+      <button class="carrousel__fleche" type="button" data-carrousel-suiv aria-label="{{ 'aplomb.carrousel.suivant' | t }}">{% render 'icone', nom: 'droite' %}</button>
+    </div>
+    </aplomb-carrousel>
+  {%- endif -%}
   {%- if section.settings.cta_libelle != blank -%}
     <p class="caracs__cta"><a class="btn" href="{{ section.settings.cta_lien | default: '#achat' }}">{{ section.settings.cta_libelle }}</a></p>
   {%- endif -%}

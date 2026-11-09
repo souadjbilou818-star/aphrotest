@@ -8,7 +8,6 @@
   @param {object} product - le produit
   @param {string} contexte - identifiant unique sur la page ('produit', 'vedette', 'quiz'…)
   @param {object} [variant] - variante présélectionnée
-  @param {object} [complements] - produits proposés en complément (cases à cocher)
   @param {boolean} [compact] - masque les mentions sous le bouton
 {% enddoc %}
 {%- liquid
@@ -27,30 +26,6 @@
   {%- when 'vente' -%}
     {%- form 'product', product, id: form_id, class: 'achat', data-panier: 'ajax', novalidate: 'novalidate' -%}
       <input type="hidden" name="id" value="{{ variant.id }}" data-variant-input>
-      {%- if complements != blank -%}
-        <fieldset class="complements">
-          <legend class="label">{{ 'aplomb.produit.complements' | t }}</legend>
-          {%- for c in complements -%}
-            {%- liquid
-              capture etat_c
-                render 'etat-produit', product: c
-              endcapture
-              assign etat_c = etat_c | strip
-              assign vc = c.selected_or_first_available_variant
-            -%}
-            {%- if etat_c == 'vente' and vc.available and c.id != product.id -%}
-              {%- capture prix_c -%}{% render 'prix', montant: vc.price %}{%- endcapture -%}
-              <label class="complement">
-                <input type="checkbox" value="{{ vc.id }}" data-complement data-titre="{{ c.title | escape }}">
-                <span class="complement__texte">
-                  <span class="complement__titre">{{ c.title }}</span>
-                  <span class="complement__prix">+ {{ prix_c }}</span>
-                </span>
-              </label>
-            {%- endif -%}
-          {%- endfor -%}
-        </fieldset>
-      {%- endif -%}
       <button
         class="btn btn--plein"
         type="submit"
@@ -70,6 +45,7 @@
       </button>
       <p class="message achat__erreur" role="alert" data-achat-erreur hidden></p>
       {%- unless compact -%}
+        <div class="achat__paiement">{{ form | payment_terms }}</div>
         <p class="mention">
           {{- settings.mention_vente -}}
           {%- unless settings.date_expedition contains '[' or settings.date_expedition == blank %} · {{ settings.date_expedition }}{% endunless -%}

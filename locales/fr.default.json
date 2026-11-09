@@ -103,7 +103,11 @@
       "suivante": "Image suivante",
       "complements": "À ajouter si vous le souhaitez",
       "complement": "Ajouter {{ titre }} ({{ prix }})",
-      "dessin": "Dessin technique, en attendant les photos du produit"
+      "dessin": "Dessin technique, en attendant les photos du produit",
+      "fil": "Fil d’Ariane",
+      "fil_accueil": "Accueil",
+      "stock_bas": "Plus que {{ n }} en stock",
+      "ajouter_associe": "Ajouter {{ titre }} au panier"
     },
     "credit_ia": "Image générée",
     "cadre": {
@@ -149,6 +153,18 @@
     "visionneuse": {
       "titre": "Agrandissement",
       "zoom": "Zoomer ou dézoomer"
-    }
+    },
+    "carrousel": {
+      "precedent": "Précédent",
+      "suivant": "Suivant"
+    },
+    "newsletter": {
+      "titre": "La lettre de L’Aplomb",
+      "texte": "Les nouveautés et les ouvertures, une fois par mois au plus.",
+      "cta": "S’inscrire",
+      "succes": "C’est noté. À bientôt dans votre boîte de réception."
+    },
+    "recherche": "Rechercher",
+    "reseaux": "L’Aplomb sur les réseaux"
   }
 }

@@ -115,7 +115,7 @@ CATALOGUE.forEach((p) => {
   if (p.has_only_default_variant) p.options_with_values = [];
 });
 // Compléments proposés sous COULISSE 01 (metafield aplomb.complements)
-CATALOGUE[0].metafields.aplomb.complements = { value: [CATALOGUE[3], CATALOGUE[4]] };
+CATALOGUE[0].metafields.aplomb.complements = { value: ['chaussettes', 'patins-feutre'].map((h) => CATALOGUE.find((p) => p.handle === h)) };
 // Un produit en brouillon référencé par un réglage arrive sur Shopify comme un
 // objet creux (handle et url vides, prix 0) : on reproduit ce cas.
 const CREUX = { id: null, handle: '', url: '', title: '', price: 0, price_min: 0, variants: [], available: false, metafields: { aplomb: {}, gpsr: {} } };
@@ -134,6 +134,7 @@ const COLLECTIONS = {
   'reformers-atelier': collection('reformers-atelier', 'Reformers Atelier', CATALOGUE.filter((p) => p.type === 'Reformers Atelier'), '03',
     '<p>De vrais reformers à chariot.</p>'),
 };
+CATALOGUE.forEach((p) => { p.collections = Object.values(COLLECTIONS).filter((c) => c.products.includes(p)); });
 const PAGES = {
   'trouver-mon-equipement': { title: 'Trouver mon équipement', handle: 'trouver-mon-equipement', url: '/pages/trouver-mon-equipement' },
   'livraison-et-retours': { title: 'Livraison et retours', handle: 'livraison-et-retours', url: '/pages/livraison-et-retours' },
@@ -324,6 +325,7 @@ engine.registerFilter('link_to', (txt, url) => `<a href="${url}">${txt}</a>`);
 engine.registerFilter('structured_data', () => '{}');
 engine.registerFilter('handleize', (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''));
 engine.registerFilter('default_pagination', () => '');
+engine.registerFilter('payment_terms', () => '');
 // Comme Shopify : division entière quand le diviseur est un entier.
 engine.registerFilter('divided_by', (a, b) => (Number.isInteger(Number(b)) ? Math.floor(Number(a) / Number(b)) : Number(a) / Number(b)));
 
