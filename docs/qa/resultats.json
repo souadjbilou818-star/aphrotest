@@ -1,107 +1,107 @@
 {
-  "date": "2026-11-09T02:07:50.663Z",
+  "date": "2026-11-09T02:21:07.713Z",
   "total": 20,
   "ok": 20,
   "resultats": [
     {
       "test": "Quiz : validation, toucher, clavier, retour, résultat COULISSE, mesure",
       "statut": "ok",
-      "ms": 3199
+      "ms": 3105
     },
     {
       "test": "Quiz : « petit espace » écarte les Reformers Atelier et le dit",
       "statut": "ok",
-      "ms": 2618
+      "ms": 2617
     },
     {
       "test": "Quiz : kit simple → Les Essentiels",
       "statut": "ok",
-      "ms": 2443
+      "ms": 2492
     },
     {
       "test": "Quiz en page dédiée : le bouton Retour du navigateur revient d’une question",
       "statut": "ok",
-      "ms": 1187
+      "ms": 1202
     },
     {
       "test": "Quiz → ajout au panier depuis la recommandation, tiroir ouvert",
       "statut": "ok",
-      "ms": 2784
+      "ms": 2754
     },
     {
       "test": "Produit : fil d’Ariane, variante Studio, prix, URL, badge de stock réel, « À associer », panier",
       "statut": "ok",
-      "ms": 564
+      "ms": 520
     },
     {
       "test": "Panier : quantités, limite de stock (erreur lisible), retrait, paiement natif",
       "statut": "ok",
-      "ms": 1359
+      "ms": 1366
     },
     {
       "test": "Page panier : quantité sans rechargement, paiement",
       "statut": "ok",
-      "ms": 262
+      "ms": 286
     },
     {
       "test": "Barre collante mobile : apparaît après le bloc d’achat et ajoute au panier",
       "statut": "ok",
-      "ms": 642
+      "ms": 640
     },
     {
       "test": "Galerie : flèches, compteur, visionneuse (zoom, Échap, retour du focus)",
       "statut": "ok",
-      "ms": 786
+      "ms": 849
     },
     {
       "test": "Produit en liste d’attente en mode Vente (Atelier) : aucun bouton d’achat",
       "statut": "ok",
-      "ms": 182
+      "ms": 234
     },
     {
       "test": "Pages produit « landing » : sections, offre finale, aucune fausse preuve",
       "statut": "ok",
-      "ms": 692
+      "ms": 754
     },
     {
       "test": "Collection : prix réels, épuisé signalé, navigation des familles",
       "statut": "ok",
-      "ms": 223
+      "ms": 215
     },
     {
       "test": "Liste d’attente, produits absents : replis honnêtes, aucun bouton d’achat",
       "statut": "ok",
-      "ms": 2559
+      "ms": 2472
     },
     {
       "test": "Largeur 320 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 4238
+      "ms": 4275
     },
     {
       "test": "Largeur 375 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 4227
+      "ms": 4258
     },
     {
       "test": "Largeur 390 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 8223
+      "ms": 8253
     },
     {
       "test": "Largeur 768 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 4253
+      "ms": 4304
     },
     {
       "test": "Largeur 1024 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 4302
+      "ms": 4253
     },
     {
       "test": "Largeur 1440 px : aucun débordement horizontal, aucune erreur console",
       "statut": "ok",
-      "ms": 9595
+      "ms": 9871
     }
   ]
 }

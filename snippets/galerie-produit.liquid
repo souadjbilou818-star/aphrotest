@@ -13,8 +13,17 @@
 {%- liquid
   assign total = product.media.size
   assign famille = product.metafields.aplomb.famille.value | default: product.type | downcase
+  comment
+    Le cadre prend la forme de la première image (entre 4:5 et 1:1). Une image
+    de même forme remplit le cadre ; les autres (photos détourées sur fond blanc)
+    y sont contenues sans être recadrées.
+  endcomment
+  assign ratio = 1
+  if total > 0 and product.media.first.preview_image
+    assign ratio = product.media.first.preview_image.aspect_ratio | at_least: 0.8 | at_most: 1 | round: 4
+  endif
 -%}
-<aplomb-galerie class="galerie-produit" data-uid="{{ uid }}">
+<aplomb-galerie class="galerie-produit" data-uid="{{ uid }}" style="--galerie-ratio: {{ ratio }}">
   {%- if total > 0 -%}
     <ul class="galerie-produit__liste" role="list" data-galerie-liste tabindex="-1">
       {%- for media in product.media -%}
@@ -25,6 +34,11 @@
           if alt_bas contains 'image générée' or alt_bas contains 'image generee'
             assign generee = true
           endif
+          assign ecart = media.preview_image.aspect_ratio | minus: ratio | abs
+          assign plein = false
+          if ecart < 0.04
+            assign plein = true
+          endif
           if forloop.first
             assign chargement = 'eager'
             assign priorite = 'high'
@@ -33,7 +47,7 @@
             assign priorite = 'auto'
           endif
         -%}
-        <li class="galerie-produit__media galerie-produit__media--{{ media.media_type }}" id="media-{{ uid }}-{{ media.id }}" data-media-index="{{ forloop.index0 }}">
+        <li class="galerie-produit__media galerie-produit__media--{{ media.media_type }}{% if plein %} galerie-produit__media--plein{% endif %}" id="media-{{ uid }}-{{ media.id }}" data-media-index="{{ forloop.index0 }}">
           {%- case media.media_type -%}
             {%- when 'image' -%}
               <button class="galerie-produit__zoom" type="button" data-zoom="{{ forloop.index0 }}" aria-label="{{ 'aplomb.produit.agrandir' | t: n: forloop.index }}">

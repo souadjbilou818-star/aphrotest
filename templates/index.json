@@ -87,8 +87,8 @@
             "numero": "03",
             "nom": "Reformers Atelier",
             "texte": "De vrais reformers à chariot, pour une pratique proche du studio, avec un espace dédié.",
-            "image": "shopify://shop_images/atelier-pliable-1.jpg",
-            "image_generee": false
+            "image": "shopify://shop_images/atelier-pliable-0-ambiance.jpg",
+            "image_generee": true
           }
         }
       },

@@ -7,7 +7,7 @@
 
   @param {object} product - le produit
   @param {string} uid - identifiant unique (section.id)
-  @param {number} [seuil] - seuil du badge « Plus que N en stock » (0 : jamais)
+  @param {number} [seuil] - seuil du badge « Plus que N en stock » (0 : jamais)
 {% enddoc %}
 {%- unless product.has_only_default_variant -%}
   <aplomb-variantes class="variantes" data-uid="{{ uid }}">

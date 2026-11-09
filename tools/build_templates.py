@@ -215,7 +215,7 @@ def index():
                          "texte": "Une planche pliable à deux plateaux coulissants : le travail en glissé, dans peu de place."}),
             ("famille", {"famille": "atelier", "numero": "03", "nom": "Reformers Atelier",
                          "texte": "De vrais reformers à chariot, pour une pratique proche du studio, avec un espace dédié.",
-                         "image": img("atelier-pliable-1.jpg"), "image_generee": False}),
+                         "image": img("atelier-pliable-0-ambiance.jpg"), "image_generee": True}),
         ], "fa"),
         "vedette": section("aplomb-vedette", {
             "ancre": "coulisse",

@@ -89,6 +89,7 @@ const CATALOGUE = [
     aplomb: { accroche: 'Le geste du reformer, chez vous : un vrai chariot sur un cadre en acier, qui se plie après la séance.', dimensions_deplie: '197 × 57 × 72,5 cm (fiche fournisseur)', dimensions_plie: '108 × 55 × 29 cm (fiche fournisseur)', poids: '32,5 kg (fiche fournisseur)', materiaux: 'Cadre en acier, ABS, PP, mousse (fiche fournisseur)' },
     description: '<p>Description de test (aperçu local).</p>',
     media: [
+      ['atelier-pliable-0-ambiance.jpg', 1122, 1402, 'Reformer ATELIER Pliable dans un salon lumineux, image générée'],
       ['atelier-pliable-1.jpg', 800, 800, 'Reformer pliable ATELIER, vue de trois quarts'], ['atelier-pliable-2-dimensions.jpg', 800, 640, 'Encombrement du reformer déplié'],
       ['atelier-pliable-3-tubes.jpg', 800, 570, 'Tubes de résistance en latex'], ['atelier-pliable-4-vue.jpg', 1024, 1024, 'Reformer pliable ATELIER avec barre de pieds'],
     ].map(([n, w, h, a], i) => media(imageMedia(n, w, h, a), 20 + i)),

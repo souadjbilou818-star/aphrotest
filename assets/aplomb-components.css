@@ -2780,6 +2780,14 @@ html.visionneuse-ouverte {
   height: 100%;
   object-fit: cover;
 }
+.carte-produit__credit {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  margin: 0;
+  background: var(--paper);
+  padding: 0 6px;
+}
 .carte-produit__attente {
   font: 400 0.75rem / 1 var(--mono);
   color: var(--ink-soft);
@@ -3326,6 +3334,7 @@ html.visionneuse-ouverte {
 /* Photos produit sur fond blanc : affichées entières (aucune cote coupée) */
 .carac__visuel,
 .image-texte__cadre {
+  aspect-ratio: var(--cadre-ratio, 1);
   background: #fff;
 }
 .carac__visuel img,
@@ -3391,18 +3400,21 @@ html.visionneuse-ouverte {
   .galerie-produit__media,
   .galerie-produit__media:first-child {
     flex: 0 0 100%;
-    aspect-ratio: 1;
+    aspect-ratio: var(--galerie-ratio, 1);
   }
   .galerie-produit__nav {
     display: flex;
   }
 }
 .galerie-produit__media {
-  aspect-ratio: 1;
+  aspect-ratio: var(--galerie-ratio, 1);
   background: #fff;
 }
 .galerie-produit__media img {
   object-fit: contain;
+}
+.galerie-produit__media--plein img {
+  object-fit: cover;
 }
 .galerie-produit__vignettes {
   list-style: none;
