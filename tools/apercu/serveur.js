@@ -142,15 +142,15 @@ const COLLECTIONS = {
   'les-essentiels': collection('les-essentiels', 'Les Essentiels', CATALOGUE.filter((p) => p.type === 'Les Essentiels'), '01',
     '<p>Des kits d’accessoires pour pratiquer sur le tapis, sans appareil à ranger.</p>'),
   coulisse: collection('coulisse', 'Coulisse', CATALOGUE.filter((p) => p.type === 'Coulisse'), '02',
-    '<p>Une planche à deux plateaux coulissants.</p>'),
+    '<p>Une planche à deux plateaux coulissants : le travail en glissé du Pilates, dans peu de place.</p>'),
   'reformers-atelier': collection('reformers-atelier', 'Reformers Atelier', CATALOGUE.filter((p) => p.type === 'Reformers Atelier'), '03',
     '<p>De vrais reformers à chariot.</p>'),
   frontpage: collection('frontpage', 'Page d’accueil', ['coulisse-01', 'la-trousse', 'atelier-pliable'].map((h) => CATALOGUE.find((p) => p.handle === h)), '', ''),
 };
 CATALOGUE.forEach((p) => { p.collections = Object.values(COLLECTIONS).filter((c) => c.products.includes(p)); });
 const PAGES = {
-  'trouver-mon-equipement': { title: 'Trouver mon équipement', handle: 'trouver-mon-equipement', url: '/pages/trouver-mon-equipement' },
-  'livraison-et-retours': { title: 'Livraison et retours', handle: 'livraison-et-retours', url: '/pages/livraison-et-retours' },
+  'trouver-mon-equipement': { title: 'Trouver mon équipement', handle: 'trouver-mon-equipement', url: '/pages/trouver-mon-equipement', published_at: '2026-11-09T09:00:00Z' },
+  'livraison-et-retours': { title: 'Livraison et retours', handle: 'livraison-et-retours', url: '/pages/livraison-et-retours', published_at: '2026-11-09T09:00:00Z' },
 };
 
 /* ---------- Panier simulé ---------- */

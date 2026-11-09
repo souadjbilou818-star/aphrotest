@@ -30,6 +30,11 @@
               continue
             endif
           endif
+          if link.type == 'page_link' or link.type == 'collection_link'
+            unless link.object.published_at
+              continue
+            endunless
+          endif
         -%}
         <li><a href="{{ link.url }}">{{ link.title }}</a></li>
       {%- endfor -%}
@@ -47,6 +52,11 @@
             if link.type == 'collection_link' or link.type == 'page_link' or link.type == 'product_link' or link.type == 'blog_link' or link.type == 'article_link'
               continue
             endif
+          endif
+          if link.type == 'page_link' or link.type == 'collection_link'
+            unless link.object.published_at
+              continue
+            endunless
           endif
         -%}
         <li><a href="{{ link.url }}">{{ link.title }}</a></li>
