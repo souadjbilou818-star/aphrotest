@@ -1,4 +1,8 @@
 {%- liquid
+  assign logo = settings.logo
+  unless logo.src
+    assign logo = images['laplomb-logo.png']
+  endunless
   assign mode = settings.launch_mode
   assign liens = section.settings.menu.links
   assign quiz_url = settings.page_quiz.url
@@ -45,8 +49,8 @@
     {%- endif -%}
 
     <a class="marque" href="{{ routes.root_url }}" aria-label="{{ 'aplomb.accueil' | t }}" style="--logo-l: {{ settings.logo_largeur | default: 170 }}px">
-      {%- if settings.logo != blank -%}
-        {{- settings.logo | image_url: width: 600 | image_tag: widths: '200, 300, 400, 600', sizes: '(min-width: 900px) 280px, 160px', class: 'logo-image', alt: '', loading: 'eager' -}}
+      {%- if logo.src -%}
+        {{- logo | image_url: width: 600 | image_tag: widths: '200, 300, 400, 600', sizes: '(min-width: 900px) 280px, 160px', class: 'logo-image', alt: '', loading: 'eager' -}}
       {%- else -%}
         {% render 'logo', variante: 'compact', decoratif: true %}
       {%- endif -%}

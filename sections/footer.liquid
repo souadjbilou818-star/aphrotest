@@ -3,8 +3,14 @@
   <div class="wrap grid pied__grille">
     <div class="pied__marque">
       <a class="marque" href="{{ routes.root_url }}" aria-label="{{ 'aplomb.accueil' | t }}">
-        {%- if settings.logo != blank -%}
-          {{- settings.logo | image_url: width: 800 | image_tag: widths: '300, 500, 800', sizes: '260px', class: 'logo-image logo-image--clair', alt: '', loading: 'lazy' -}}
+        {%- liquid
+          assign logo = settings.logo
+          unless logo.src
+            assign logo = images['laplomb-logo.png']
+          endunless
+        -%}
+        {%- if logo.src -%}
+          {{- logo | image_url: width: 800 | image_tag: widths: '300, 500, 800', sizes: '260px', class: 'logo-image logo-image--clair', alt: '', loading: 'lazy' -}}
         {%- else -%}
           {% render 'logo', variante: 'principal', decoratif: true %}
         {%- endif -%}

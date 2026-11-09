@@ -338,6 +338,7 @@ function globaux() {
     shop: { name: 'L’Aplomb', privacy_policy: { url: '/policies/privacy-policy' } },
     routes: { root_url: '/', cart_url: '/cart', all_products_collection_url: '/collections/all', search_url: '/search' },
     cart: cartObjet(), content_for_header: '', canonical_url: 'http://localhost/',
+    images: Object.fromEntries(fs.readdirSync(path.join(ROOT, 'design', 'medias')).filter((n) => /\.(png|jpe?g)$/.test(n)).map((n) => [n, imageMedia(n, 1254, 1254, '')])),
   };
 }
 
